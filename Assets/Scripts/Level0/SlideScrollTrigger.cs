@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Field1NextLevel : MonoBehaviour
+public class SlideScrollTrigger : MonoBehaviour
 {
 
     public Transform targetCameraPosition; // Drag the new camera position here in Inspector
@@ -15,24 +15,21 @@ public class Field1NextLevel : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("collision");
         mainCamera = Camera.main;
-
     }
     private void Update()
     {
         if (moveCamera)
         {
-            // Smoothly move camera towards target
+            
             mainCamera.transform.position = Vector3.Lerp(
                 mainCamera.transform.position,
                 targetCameraPosition.position,
                 moveSpeed * Time.deltaTime
             );
-            // Move player object
+            
             player.transform.position = targetPlayerPosition.position;
 
-            // Stop moving when camera is close enough
             if (Vector3.Distance(mainCamera.transform.position, targetCameraPosition.position) < .01f)
             {
                 mainCamera.transform.position = targetCameraPosition.position;
