@@ -3,13 +3,14 @@ using UnityEngine;
 public class SlideScrollTrigger : MonoBehaviour
 {
 
-    public Transform targetCameraPosition; // Drag the new camera position here in Inspector
-    public float moveSpeed = 2f;           // Adjust speed of camera movement
+    public Transform targetCameraPosition;
+    public float moveSpeed = 2f;
     private bool moveCamera = false;
 
     private Camera mainCamera;
     public Transform targetPlayerPosition;
 
+    [SerializeField] private float arrivalThreshold = 0.01f;
     [SerializeField]
     public GameObject player;
 
@@ -21,24 +22,50 @@ public class SlideScrollTrigger : MonoBehaviour
     {
         if (moveCamera)
         {
-            
-            mainCamera.transform.position = Vector3.Lerp(
-                mainCamera.transform.position,
-                targetCameraPosition.position,
-                moveSpeed * Time.deltaTime
-            );
-            
-            player.transform.position = targetPlayerPosition.position;
+            HandleCameraMovement();
 
-            if (Vector3.Distance(mainCamera.transform.position, targetCameraPosition.position) < .01f)
-            {
-                mainCamera.transform.position = targetCameraPosition.position;
-                moveCamera = false;
-
-            }
         }
 
     }
+    private void HandleCameraMovement()
+    {
+        MoveCameraTowardsTarget();
+        MovePlayerToTarget();
+
+        if (HasCameraReachedTarget())
+        {
+            CompleteCameraTransition();
+        }
+    }
+    private void MoveCameraTowardsTarget()
+    {
+        mainCamera.transform.position = Vector3.Lerp(
+            mainCamera.transform.position,
+            targetCameraPosition.position,
+            moveSpeed * Time.deltaTime
+        );
+    }
+    private void MovePlayerToTarget()
+    {
+        player.transform.position = targetPlayerPosition.position;
+    }
+    private bool HasCameraReachedTarget()
+    {
+        return Vector3.Distance(
+            mainCamera.transform.position,
+            targetCameraPosition.position
+        ) < arrivalThreshold;
+    }
+    private void CompleteCameraTransition()
+    {
+        SnapCameraToTarget();
+        moveCamera = false;
+    }
+    private void SnapCameraToTarget()
+    {
+        mainCamera.transform.position = targetCameraPosition.position;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
