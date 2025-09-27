@@ -8,10 +8,8 @@ public class Field1NextLevel : MonoBehaviour
     private bool moveCamera = false;
 
     private Camera mainCamera;
-
-    
-
     public Transform targetPlayerPosition;
+
     [SerializeField]
     public GameObject player;
 
@@ -19,8 +17,6 @@ public class Field1NextLevel : MonoBehaviour
     {
         Debug.Log("collision");
         mainCamera = Camera.main;
-        
-
 
     }
     private void Update()
@@ -33,14 +29,14 @@ public class Field1NextLevel : MonoBehaviour
                 targetCameraPosition.position,
                 moveSpeed * Time.deltaTime
             );
+            // Move player object
             player.transform.position = targetPlayerPosition.position;
+
             // Stop moving when camera is close enough
-            if (Vector3.Distance(mainCamera.transform.position, targetCameraPosition.position) < 0.01f)
+            if (Vector3.Distance(mainCamera.transform.position, targetCameraPosition.position) < .01f)
             {
                 mainCamera.transform.position = targetCameraPosition.position;
                 moveCamera = false;
-                //need to move player to next level
-                
 
             }
         }
@@ -48,11 +44,9 @@ public class Field1NextLevel : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collision");
-        Debug.Log(collision.tag);
+
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("collision with player");
             moveCamera = true;
         }
     }
