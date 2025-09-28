@@ -15,8 +15,6 @@ public class PlayerAwarenessController : MonoBehaviour
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         _player = playerObj.transform;
-
-
     }
 
     // Update is called once per frame

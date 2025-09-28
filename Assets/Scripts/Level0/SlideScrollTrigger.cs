@@ -34,7 +34,6 @@ public class SlideScrollTrigger : MonoBehaviour
             HandleCameraMovement();
             
         }
-
     }
 
     private void HandleCameraMovement()

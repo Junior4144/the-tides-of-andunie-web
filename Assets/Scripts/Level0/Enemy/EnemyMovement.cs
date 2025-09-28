@@ -5,28 +5,21 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private EnemyAttribute _enemyAttribute;
 
-
     private Rigidbody2D _rigidbody;
     private PlayerAwarenessController _playerAwarenessController;
     private Vector2 _targetDirection;
-    private float _changeDirectionCooldown;
-    private Camera _camera;
     private RaycastHit2D[] _obstacleCollisions;
     private float _obstacleAvoidanceCooldown;
     private Vector2 _obstacleAvoidanceTargetDirection;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerAwarenessController = GetComponent<PlayerAwarenessController>();
         _targetDirection = transform.up;
-        _camera = Camera.main;
         _obstacleCollisions = new RaycastHit2D[10];
     }
 
-    // Update is called once per frame
     private void FixedUpdate()
     {
         UpdateTargetDirection();
@@ -35,24 +28,8 @@ public class EnemyMovement : MonoBehaviour
     }
     private void UpdateTargetDirection()
     {
-        HandleRandomDirectionChange();
         HandlePlayerTargeting();
         HandleObstacle();
-        HandleEnemyOffScreen();
-    }
-
-    private void HandleRandomDirectionChange()
-    {
-        _changeDirectionCooldown -= Time.deltaTime;
-
-        if (_changeDirectionCooldown <= 0)
-        {
-            float angleChange = Random.Range(-90f, 90f);
-            Quaternion rotation = Quaternion.AngleAxis(angleChange, transform.forward);
-            _targetDirection = rotation * _targetDirection;
-
-            _changeDirectionCooldown = Random.Range(15f, 15f);
-        }
     }
 
     private void HandlePlayerTargeting()
@@ -63,23 +40,6 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void HandleEnemyOffScreen()
-    {
-        Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
-        //left and right
-        if ((screenPosition.x < _enemyAttribute.ScreenBorder && _targetDirection.x < 0) ||
-            screenPosition.x > _camera.pixelWidth - _enemyAttribute.ScreenBorder && _targetDirection.x > 0)
-        {
-            _targetDirection = new Vector2(-_targetDirection.x, _targetDirection.y);
-        }
-
-        //bottom and top
-        if ((screenPosition.y < _enemyAttribute.ScreenBorder && _targetDirection.y < 0) ||
-    screenPosition.y > _camera.pixelHeight - _enemyAttribute.ScreenBorder && _targetDirection.y > 0)
-        {
-            _targetDirection = new Vector2(_targetDirection.x, -_targetDirection.y);
-        }
-    }
 
     private void HandleObstacle()
     {
@@ -126,7 +86,6 @@ public class EnemyMovement : MonoBehaviour
         {
             return;
         }
-
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward, _targetDirection);
         Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _enemyAttribute.RotationSpeed * Time.deltaTime);
 
@@ -135,9 +94,7 @@ public class EnemyMovement : MonoBehaviour
     }
     private void SetVelocity()
     {
-
         _rigidbody.linearVelocity = transform.up * _enemyAttribute.Speed;
-
     }
 
 }
