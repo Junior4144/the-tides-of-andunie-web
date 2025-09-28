@@ -23,6 +23,7 @@ public class CannonBall : MonoBehaviour
     void Update()
     {
         DestroyWhenOffScreen();
+        
     }
     private void DestroyWhenOffScreen()
     {
@@ -36,5 +37,9 @@ public class CannonBall : MonoBehaviour
             Destroy(gameObject);
 
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
     }
 }
