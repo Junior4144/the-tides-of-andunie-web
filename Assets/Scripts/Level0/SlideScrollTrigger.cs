@@ -2,17 +2,24 @@ using UnityEngine;
 
 public class SlideScrollTrigger : MonoBehaviour
 {
-
-    public Transform targetCameraPosition;
-    public float moveSpeed = 2f;
+    private Camera mainCamera;
     private bool moveCamera = false;
 
-    private Camera mainCamera;
+    [Header("Camera Settings")]
+    public Transform targetCameraPosition;
     public Transform targetPlayerPosition;
 
-    [SerializeField] private float arrivalThreshold = 0.01f;
+
     [SerializeField]
-    public GameObject player;
+    public float moveSpeed;
+    
+
+    [Header("Player Settings")]
+    [SerializeField] private float arrivalThreshold = 0.01f;
+    [SerializeField] public GameObject player;
+
+    
+    
 
     private void Start()
     {
