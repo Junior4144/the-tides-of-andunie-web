@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 2189173565753242931}
   - component: {fileID: 2751188400658604942}
   - component: {fileID: 2319986614684013021}
-  - component: {fileID: -6289227322230852477}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -229,18 +228,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
---- !u!114 &-6289227322230852477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6974104183215885149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9065566d30c37df48986cbbed8eda3e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySituationController
-  OnDied:
-    m_PersistentCalls:
-      m_Calls: []
