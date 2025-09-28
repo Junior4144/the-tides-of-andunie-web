@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SlideScrollTrigger : MonoBehaviour
 {
@@ -18,8 +20,8 @@ public class SlideScrollTrigger : MonoBehaviour
     [SerializeField] private float arrivalThreshold = 0.01f;
     [SerializeField] public GameObject player;
 
-    
-    
+
+    public EnemyManager enemyManager;
 
     private void Start()
     {
@@ -30,10 +32,11 @@ public class SlideScrollTrigger : MonoBehaviour
         if (moveCamera)
         {
             HandleCameraMovement();
-
+            
         }
 
     }
+
     private void HandleCameraMovement()
     {
         MoveCameraTowardsTarget();
@@ -42,7 +45,13 @@ public class SlideScrollTrigger : MonoBehaviour
         if (HasCameraReachedTarget())
         {
             CompleteCameraTransition();
+            DestroyAllEnemies();
         }
+    }
+    private void DestroyAllEnemies()
+    {
+        enemyManager.DestroyAllEnemies();
+        Destroy(gameObject);
     }
     private void MoveCameraTowardsTarget()
     {
