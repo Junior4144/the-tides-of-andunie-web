@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class CannonBall : MonoBehaviour
+public class CannonBallStraight : MonoBehaviour
 {
-    private GameObject player;
     private Rigidbody2D rb;
     public float force;
     private Camera _camera;
@@ -13,27 +12,26 @@ public class CannonBall : MonoBehaviour
     }
     void Start()
     {
-        ShootTowardsPlayer();
+        ShootStraight();
+    }
+    void ShootStraight()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        Vector2 direction = Vector2.left;
+
+        rb.linearVelocity = direction * force;
     }
 
     void Update()
     {
         DestroyWhenOffScreen();
-    }
-    public void ShootTowardsPlayer()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
 
-        Vector3 direction = player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
     }
     private void DestroyWhenOffScreen()
     {
         Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
 
         if (screenPosition.x < 0 ||
-            
             screenPosition.y < 0 ||
             screenPosition.y > _camera.pixelHeight)
         {
@@ -47,6 +45,5 @@ public class CannonBall : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
     }
 }

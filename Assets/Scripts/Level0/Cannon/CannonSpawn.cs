@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CannonShoot : MonoBehaviour
+public class CannonSpawn : MonoBehaviour
 {
 
     public GameObject cannon;
@@ -15,14 +15,14 @@ public class CannonShoot : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if(timer > 2)
+        if(timer > 1)
         {
             timer = 0;
-            shoot();
+            spawnCannonBall();
         }
     }
 
-    void shoot()
+    void spawnCannonBall()
     {
         Instantiate(cannon, cannonPosition.position, Quaternion.identity);
     }
