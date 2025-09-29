@@ -26,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
         RotateTowardsTarget();
         SetVelocity();
     }
+
     private void UpdateTargetDirection()
     {
         HandlePlayerTargeting();
@@ -39,7 +40,6 @@ public class EnemyMovement : MonoBehaviour
             _targetDirection = _playerAwarenessController.DirectionToPlayer;
         }
     }
-
 
     private void HandleObstacle()
     {
@@ -92,9 +92,9 @@ public class EnemyMovement : MonoBehaviour
         _rigidbody.SetRotation(rotation);
 
     }
+
     private void SetVelocity()
     {
         _rigidbody.linearVelocity = transform.up * _enemyAttribute.Speed;
     }
-
 }
