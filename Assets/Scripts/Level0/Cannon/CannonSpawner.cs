@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CannonSpawner : MonoBehaviour
 {
+
+
     [SerializeField]
     private GameObject _cannonBallPrefab;
 
@@ -26,10 +28,12 @@ public class CannonSpawner : MonoBehaviour
             Instantiate(_cannonBallPrefab, transform.position, Quaternion.identity);
             SetTimeUntillSpawn();
         }
+
     }
 
     private void SetTimeUntillSpawn()
     {
         _timeUntillSpawn = Random.Range(_miniumSpawnTime, _maxiumSpawnTime);
     }
+
 }
