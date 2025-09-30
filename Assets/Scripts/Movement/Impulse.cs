@@ -24,7 +24,8 @@ public class Impulse : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName))
+        // Only do impulse if the other collider has an impulse script and its on the right layer
+        if (otherCollider.GetComponent<Impulse>() && otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName))
         {
             DoImpulse(otherCollider);
         }
