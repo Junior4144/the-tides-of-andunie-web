@@ -7,14 +7,21 @@ public class PlayerSteeringMovement : MonoBehaviour
     public float rotationSpeed = 200f;
 
     private Rigidbody2D body;
+    private Impulse impulseScript;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        impulseScript = GetComponentInChildren<Impulse>();
     }
 
     void Update()
     {
+        if (impulseScript != null && impulseScript.IsInImpulse())
+        {
+            return;
+        }
+
         float yInput = Input.GetAxis("Vertical");
         float xInput = Input.GetAxis("Horizontal");
 
