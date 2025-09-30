@@ -2,47 +2,33 @@ using UnityEngine;
 
 public class MeleeController : MonoBehaviour
 {
-    // Allows you to change private variables in Unity
     [SerializeField]
     private float _damage = 20;
 
-    [SerializeField]
-    private LayerMask _layermaskOfEnemy;
-
-    [SerializeField]
-    private GameObject _attackPoint;
-
-    [SerializeField]
-    private float _attackCircleRadius = 0.5f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        attack();
+        Debug.Log("Started Melee Script");
     }
 
-    // Update is called once per frame
+
     void Update()
-    {
-        
-    }
+    {}
 
-    // Called from animation keyframe
-    public void attack()
+    public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // An array of all the enemies in a circular radius around the weapon
-        Collider2D[] enemy = Physics2D.OverlapCircleAll(_attackPoint.transform.position, _attackCircleRadius, _layermaskOfEnemy);
+        Debug.Log("Collision Detected");
 
-        foreach (Collider2D enemyGameObject in enemy)
+        if (IsEnemy(otherCollider))
         {
-            Debug.Log("Hit enemy");
-            enemyGameObject.GetComponent<HealthController>().TakeDamage(_damage);
+            Attack(otherCollider.gameObject);
         }
     }
-    
-    // Draws the attack circle
-    private void OnDrawGizmos()
+
+    private bool IsEnemy(Collider2D otherCollider) => otherCollider.gameObject.layer == LayerMask.NameToLayer("Enemy");
+
+    private void Attack(GameObject enemyObject)
     {
-        Gizmos.DrawWireSphere(_attackPoint.transform.position, _attackCircleRadius);
+        Debug.Log("Enemy Hit");
+        enemyObject.GetComponent<HealthController>().TakeDamage(_damage);
     }
 }
