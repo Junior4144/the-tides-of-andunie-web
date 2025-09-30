@@ -16,8 +16,6 @@ public class MeleeController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        Debug.Log("Collision Detected");
-
         if (IsEnemy(otherCollider))
         {
             Attack(otherCollider.gameObject);
@@ -28,7 +26,6 @@ public class MeleeController : MonoBehaviour
 
     private void Attack(GameObject enemyObject)
     {
-        Debug.Log("Enemy Hit");
         enemyObject.GetComponent<HealthController>().TakeDamage(_damage);
     }
 }

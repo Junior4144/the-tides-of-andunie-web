@@ -11,11 +11,13 @@ public class EnemyMovement : MonoBehaviour
     private RaycastHit2D[] _obstacleCollisions;
     private float _obstacleAvoidanceCooldown;
     private Vector2 _obstacleAvoidanceTargetDirection;
+    private Impulse impulseScript;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerAwarenessController = GetComponent<PlayerAwarenessController>();
+        impulseScript = GetComponentInChildren<Impulse>();
         _targetDirection = transform.up;
         _obstacleCollisions = new RaycastHit2D[10];
     }
@@ -95,6 +97,11 @@ public class EnemyMovement : MonoBehaviour
 
     private void SetVelocity()
     {
+        if (impulseScript != null && impulseScript.IsInImpulse())
+        {
+            return;
+        }
+
         _rigidbody.linearVelocity = transform.up * _enemyAttribute.Speed;
     }
 }
