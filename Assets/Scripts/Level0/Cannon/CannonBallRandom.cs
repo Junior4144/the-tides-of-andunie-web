@@ -19,6 +19,7 @@ public class CannonBallRandom : MonoBehaviour
     }
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         ShootRandomly();
     }
     void Update()
@@ -30,18 +31,15 @@ public class CannonBallRandom : MonoBehaviour
     {
         Vector3 randomTarget = GetRandomPosition();
 
-        Vector3 direction = randomTarget - transform.position;
-        rb.linearVelocity = direction.normalized * force;
+        rb.linearVelocity = (randomTarget - transform.position).normalized * force;
     }
     public Vector3 GetRandomPosition()
     {
-        rb = GetComponent<Rigidbody2D>();
-        Vector3 randomTarget = new Vector3(
+        return new Vector3(
             0f,
             Random.Range(minY, maxY),
             0f
-        );
-        return randomTarget;
+            );
     }
     private void DestroyWhenOffScreen()
     {
@@ -62,13 +60,11 @@ public class CannonBallRandom : MonoBehaviour
         {
             healthController.TakeDamage(_enemyAttribute.DamageAmount);
         }
-        if (collision.CompareTag("CannonBall") == false && 
-            collision.CompareTag("Enemy") == false && 
-            collision.CompareTag("Building") == false &&
-            collision.CompareTag("Fallen Tree") == false
-            )
+
+        if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
+
     }
 }

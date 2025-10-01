@@ -48,13 +48,11 @@ public class CannonBallStraight : MonoBehaviour
         {
             healthController.TakeDamage(_enemyAttribute.DamageAmount);
         }
-        if (collision.CompareTag("CannonBall") == false && 
-            collision.CompareTag("Enemy") == false && 
-            collision.CompareTag("Building") == false &&
-            collision.CompareTag("Fallen Tree") == false
-            )
+
+        if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
+
     }
 }
