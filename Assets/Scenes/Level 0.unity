@@ -804,7 +804,7 @@ Transform:
   m_GameObject: {fileID: 472483915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.3978, y: 10.5961, z: 0}
+  m_LocalPosition: {x: -26.3978, y: 41.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2931,6 +2931,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -39, y: -12, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -38, y: -12, z: 0}
     second:
       serializedVersion: 2
@@ -3386,16 +3396,6 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 2
       m_TileSpriteIndex: 2
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: -39, y: -9, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -10928,11 +10928,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.858166
+      value: 9.76
       objectReference: {fileID: 0}
     - target: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.360682
+      value: -10.56
       objectReference: {fileID: 0}
     - target: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
       propertyPath: m_LocalPosition.z

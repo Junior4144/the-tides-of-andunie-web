@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 5964115122223233578}
   - component: {fileID: 647132197650355952}
   - component: {fileID: 8830256735774858008}
+  - component: {fileID: 3345131069029436499}
   m_Layer: 0
   m_Name: CannonBallRandom
   m_TagString: CannonBall
@@ -203,3 +204,25 @@ MonoBehaviour:
   force: 10
   minY: -15
   maxY: 15
+--- !u!95 &3345131069029436499
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068964041877335735}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2595f84695aa278438fc1f24790cda4a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
