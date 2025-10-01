@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerSteeringMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 200f;
-
+    private Vector2 _movementInput;
     private Rigidbody2D body;
 
     void Start()
@@ -26,5 +27,10 @@ public class PlayerSteeringMovement : MonoBehaviour
         {
             body.angularVelocity = -xInput * rotationSpeed;
         }
+    }
+    private void OnMove(InputValue inputValue)
+    {
+        //whenever the player moves
+        _movementInput = inputValue.Get<Vector2>(); //
     }
 }
