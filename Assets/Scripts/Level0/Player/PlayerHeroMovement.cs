@@ -2,20 +2,27 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerSteeringMovement : MonoBehaviour
+public class PlayerHeroMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 200f;
     private Vector2 _movementInput;
     private Rigidbody2D body;
+    private Impulse impulseScript;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        impulseScript = GetComponentInChildren<Impulse>();
     }
 
     void Update()
     {
+        if (impulseScript != null && impulseScript.IsInImpulse())
+        {
+            return;
+        }
+
         float yInput = Input.GetAxis("Vertical");
         float xInput = Input.GetAxis("Horizontal");
 
@@ -27,10 +34,5 @@ public class PlayerSteeringMovement : MonoBehaviour
         {
             body.angularVelocity = -xInput * rotationSpeed;
         }
-    }
-    private void OnMove(InputValue inputValue)
-    {
-        //whenever the player moves
-        _movementInput = inputValue.Get<Vector2>(); //
     }
 }
