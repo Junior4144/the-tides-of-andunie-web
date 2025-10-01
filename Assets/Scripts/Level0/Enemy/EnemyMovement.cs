@@ -68,6 +68,7 @@ public class EnemyMovement : MonoBehaviour
 
             if (_obstacleAvoidanceCooldown <= 0)
             {
+
                 _obstacleAvoidanceTargetDirection = obstacleCollision.normal;
                 _obstacleAvoidanceCooldown = 0.5f;
             }
@@ -75,8 +76,6 @@ public class EnemyMovement : MonoBehaviour
             var targetRotation = Quaternion.LookRotation(transform.forward, _obstacleAvoidanceTargetDirection);
             var rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _enemyAttribute.RotationSpeed * Time.deltaTime);
 
-
-            
             _targetDirection = rotation * Vector2.up;
             break;
         }
