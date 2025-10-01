@@ -21,7 +21,7 @@ public class BuildingDestructable : MonoBehaviour
 
         if (audioSource != null && explosionSound != null)
         {
-            audioSource.PlayOneShot(explosionSound, 5.0f);
+            audioSource.PlayOneShot(explosionSound);
         }
     }
     
