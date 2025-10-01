@@ -9,9 +9,7 @@ public class MeleeController : MonoBehaviour
     private string _layerName;
 
     void Start()
-    {
-        Debug.Log("Started Melee Script");
-    }
+    {}
 
 
     void Update()

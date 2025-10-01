@@ -24,16 +24,14 @@ public class Impulse : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // Only do impulse if the other collider has an impulse script and its on the right layer
-        if (otherCollider.GetComponent<Impulse>() && otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName))
-        {
+        if (otherCollider.gameObject.name == "ImpulseCollider" && otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName))
+        {   
             DoImpulse(otherCollider);
         }
     }
 
     public void DoImpulse(Collider2D enemyCollider)
     {
-        Debug.Log($"Impulse Collision Detected. Source: {transform.parent.gameObject.name}, OtherCollider: {enemyCollider.name}");
         _playerRigidbody.AddForce(ImpulseDirection(enemyCollider) * _impulseForce, ForceMode2D.Impulse);
         _impulseTimer = _impulseDuration;
     }
