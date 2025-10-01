@@ -119,6 +119,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &145608385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 775321515913061211, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
+  m_PrefabInstance: {fileID: 306516920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &145608389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145608385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Impulse
+  _impulseForce: 5
+  _impulseDuration: 0.3
+  _layerName: Freindly
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
 --- !u!1001 &306516920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,22 +148,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1875549119561044845, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
-      propertyPath: _layerName
-      value: Default
-      objectReference: {fileID: 0}
-    - target: {fileID: 3543302567213916018, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4194405975748742327, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
-      propertyPath: _impulseForce
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4700613940918989310, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
-      propertyPath: m_Radius
-      value: 0.45
-      objectReference: {fileID: 0}
     - target: {fileID: 6974104183215885149, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -190,8 +195,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 775321515913061211, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 145608389}
   m_SourcePrefab: {fileID: 100100000, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
+--- !u!1 &389107012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1749672105243374152, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+  m_PrefabInstance: {fileID: 7067170922776277457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &389107016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389107012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Impulse
+  _impulseForce: 5
+  _impulseDuration: 0.3
+  _layerName: Enemy
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +442,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3074225943125918988
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3880876523009983039, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_Name
+      value: ImpulseCollider
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
 --- !u!1001 &7067170922776277457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -421,10 +507,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 140088138506105263, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 972147263853389966, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -469,18 +551,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHeroAldarion
       objectReference: {fileID: 0}
-    - target: {fileID: 8045057174674881548, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      propertyPath: m_AngularDamping
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8381677641978207556, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      propertyPath: _impulseForce
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1749672105243374152, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 389107016}
   m_SourcePrefab: {fileID: 100100000, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -490,3 +567,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 7067170922776277457}
   - {fileID: 306516920}
+  - {fileID: 3074225943125918988}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8353749739833740229}
   - component: {fileID: 140088138506105263}
-  - component: {fileID: 8381677641978207556}
+  - component: {fileID: 6557164427547001206}
   m_Layer: 7
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -69,7 +69,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &8381677641978207556
+--- !u!114 &6557164427547001206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,8 +82,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impulse
   _impulseForce: 10
-  _impulseDuration: 0.28
+  _impulseDuration: 0.3
   _layerName: Enemy
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
