@@ -4,7 +4,7 @@ public class CannonSpawn : MonoBehaviour
 {
 
     public GameObject cannon;
-    public Transform cannonPosition;
+    
 
     private float timer;
     void Start()
@@ -24,6 +24,6 @@ public class CannonSpawn : MonoBehaviour
 
     void spawnCannonBall()
     {
-        Instantiate(cannon, cannonPosition.position, Quaternion.identity);
+        Instantiate(cannon, transform.position, Quaternion.identity);
     }
 }

@@ -27,8 +27,8 @@ public class CannonBall : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
 
-        Vector3 direction = player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+        
+        rb.linearVelocity = (player.transform.position - transform.position).normalized * force;
     }
     private void DestroyWhenOffScreen()
     {
@@ -52,11 +52,7 @@ public class CannonBall : MonoBehaviour
             healthController.TakeDamage(_enemyAttribute.DamageAmount);
         }
 
-        if (collision.CompareTag("CannonBall") == false && 
-            collision.CompareTag("Enemy") == false && 
-            collision.CompareTag("Building") == false &&
-            collision.CompareTag("Fallen Tree") == false
-            )
+        if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
