@@ -25,7 +25,6 @@ public class BuildingDestructable : MonoBehaviour
     {
         if (!hasExploded)
         {
-
             Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
 
             if (screenPosition.x >= 0 &&
@@ -37,9 +36,6 @@ public class BuildingDestructable : MonoBehaviour
                 hasExploded = true;
                 Instantiate(fire, transform.position, Quaternion.identity);
             }
-        
-
-
         }
 
     }

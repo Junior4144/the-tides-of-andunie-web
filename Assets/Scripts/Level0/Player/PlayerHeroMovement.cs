@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerSteeringMovement : MonoBehaviour
+public class PlayerHeroMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 200f;
-
+    private Vector2 _movementInput;
     private Rigidbody2D body;
     private Impulse impulseScript;
 

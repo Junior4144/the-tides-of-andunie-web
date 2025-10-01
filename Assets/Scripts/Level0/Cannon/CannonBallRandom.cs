@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CannonBallRandom : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CannonBallRandom : MonoBehaviour
     public float minY = -10f;
     public float maxY = 10f;
 
+    [SerializeField]
+    private EnemyAttribute _enemyAttribute;
     private void Awake()
     {
         _camera = Camera.main;
@@ -54,6 +57,11 @@ public class CannonBallRandom : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var healthController = collision.GetComponentInParent<HealthController>();
+        if (healthController != null && collision.CompareTag("Player"))
+        {
+            healthController.TakeDamage(_enemyAttribute.DamageAmount);
+        }
         if (collision.CompareTag("CannonBall") == false && 
             collision.CompareTag("Enemy") == false && 
             collision.CompareTag("Building") == false &&

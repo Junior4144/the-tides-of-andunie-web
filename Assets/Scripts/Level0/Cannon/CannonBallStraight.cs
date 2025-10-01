@@ -6,6 +6,8 @@ public class CannonBallStraight : MonoBehaviour
     public float force;
     private Camera _camera;
 
+    [SerializeField]
+    private EnemyAttribute _enemyAttribute;
     private void Awake()
     {
         _camera = Camera.main;
@@ -41,6 +43,11 @@ public class CannonBallStraight : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var healthController = collision.GetComponentInParent<HealthController>();
+        if (healthController != null && collision.CompareTag("Player"))
+        {
+            healthController.TakeDamage(_enemyAttribute.DamageAmount);
+        }
         if (collision.CompareTag("CannonBall") == false && 
             collision.CompareTag("Enemy") == false && 
             collision.CompareTag("Building") == false &&
