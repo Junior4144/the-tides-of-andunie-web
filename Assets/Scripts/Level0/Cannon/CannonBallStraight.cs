@@ -41,7 +41,11 @@ public class CannonBallStraight : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("CannonBall") == false && collision.CompareTag("Enemy") == false && collision.CompareTag("Building") == false)
+        if (collision.CompareTag("CannonBall") == false && 
+            collision.CompareTag("Enemy") == false && 
+            collision.CompareTag("Building") == false &&
+            collision.CompareTag("Fallen Tree") == false
+            )
         {
             Destroy(gameObject);
         }
