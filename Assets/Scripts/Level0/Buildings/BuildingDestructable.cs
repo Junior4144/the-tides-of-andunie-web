@@ -16,13 +16,15 @@ public class BuildingDestructable : MonoBehaviour
 
     void HandleExplosion()
     {
-        GameObject explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
-        AudioSource audioSource = explosionInstance.GetComponent<AudioSource>();
+        Instantiate(explosion, transform.position, Quaternion.identity);
 
-        if (audioSource != null && explosionSound != null)
+        if (!explosionSound)
         {
-            audioSource.PlayOneShot(explosionSound);
+            Debug.LogWarning("Explosion sound null. Playing no sound effect.");
+            return;
         }
+
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
     }
     
 }
