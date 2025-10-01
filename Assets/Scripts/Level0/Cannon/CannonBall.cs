@@ -16,12 +16,33 @@ public abstract class CannonBall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision == null) return;
+
+        if (IsValidBuildingCollision(collision))
+            HandleDestroyObject();
+
+
         if (collision.CompareTag("Player"))
         {
-            HandleDamage(collision);
-            Destroy(gameObject);
+            HandlePlayerCollision(collision);
         }
     }
+
+    private bool IsValidBuildingCollision(Collider2D collision)
+    {
+        if (!collision.CompareTag("Building")) return false;
+
+        return collision.GetComponent<BuildingDestructable>().hasExploded == false;
+    }
+
+    void HandlePlayerCollision(Collider2D collision)
+    {
+        HandleDamage(collision);
+        HandleDestroyObject();
+    }
+
     void HandleDamage(Collider2D collision) => 
         collision.GetComponentInParent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
+
+    void HandleDestroyObject() => Destroy(gameObject);
 }
