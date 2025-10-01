@@ -20,7 +20,7 @@ public class CannonBallRandom : MonoBehaviour
     }
     void Update()
     {
-        DestroyWhenOffScreen();
+        //DestroyWhenOffScreen();
 
     }
     public void ShootRandomly()

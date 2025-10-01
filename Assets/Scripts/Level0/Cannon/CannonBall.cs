@@ -18,7 +18,7 @@ public class CannonBall : MonoBehaviour
 
     void Update()
     {
-        DestroyWhenOffScreen();
+        //DestroyWhenOffScreen();
     }
     public void ShootTowardsPlayer()
     {

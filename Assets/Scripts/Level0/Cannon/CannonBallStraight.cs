@@ -24,7 +24,7 @@ public class CannonBallStraight : MonoBehaviour
 
     void Update()
     {
-        DestroyWhenOffScreen();
+        //DestroyWhenOffScreen();
 
     }
     private void DestroyWhenOffScreen()

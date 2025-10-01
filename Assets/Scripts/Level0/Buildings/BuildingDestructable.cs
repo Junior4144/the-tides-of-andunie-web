@@ -3,6 +3,7 @@ using UnityEngine;
 public class BuildingDestructable : MonoBehaviour
 {
     public GameObject explosion;
+    public GameObject fire;
     public bool hasExploded = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,6 +19,7 @@ public class BuildingDestructable : MonoBehaviour
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
             hasExploded = true;
+            Instantiate(fire, transform.position, Quaternion.identity);
         }
         
     }
