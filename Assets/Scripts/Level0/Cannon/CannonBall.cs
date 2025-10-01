@@ -7,7 +7,7 @@ public abstract class CannonBall : MonoBehaviour
 
     protected Rigidbody2D rb;
 
-    private void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Shoot();
@@ -20,7 +20,6 @@ public abstract class CannonBall : MonoBehaviour
 
         if (IsValidBuildingCollision(collision))
             HandleDestroyObject();
-
 
         if (collision.CompareTag("Player"))
         {
