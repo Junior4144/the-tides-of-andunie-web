@@ -7,10 +7,7 @@ public class CannonSpawn : MonoBehaviour
     
 
     private float timer;
-    void Start()
-    {
-        
-    }
+
     void Update()
     {
         timer += Time.deltaTime;
