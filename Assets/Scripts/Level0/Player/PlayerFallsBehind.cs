@@ -20,7 +20,7 @@ public class PlayerFallsBehind : MonoBehaviour
         {
             if (_playerHealth != null)
             {
-                _playerHealth.TakeDamage(_enemyAttribute.DamageAmount); // reduce health by 10
+                _playerHealth.TakeDamage(_enemyAttribute.DamageAmount);
             }
         }
     }
