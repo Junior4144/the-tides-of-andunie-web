@@ -81,8 +81,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 20
-  _impulseDuration: 0.3
+  _impulseForce: 10
+  _impulseDuration: 0.28
   _layerName: Enemy
 --- !u!1 &7409650198408161721
 GameObject:
@@ -137,7 +137,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 10
-  m_AngularDamping: 0.05
+  m_AngularDamping: 10
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -217,6 +217,9 @@ MonoBehaviour:
   _damageOverTime: 0
   _damageInterval: 1
   OnDied:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &891014065511496078

@@ -68,7 +68,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.55
+  m_Radius: 0.45
 --- !u!114 &4194405975748742327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 20
+  _impulseForce: 10
   _impulseDuration: 0.28
   _layerName: Freindly
 --- !u!1 &5938135631140115468
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 5938135631140115468}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.32, y: 0.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -226,7 +226,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 70
+  m_Mass: 1
   m_LinearDamping: 10
   m_AngularDamping: 10
   m_GravityScale: 0
@@ -345,5 +345,8 @@ MonoBehaviour:
   _damageOverTime: 0
   _damageInterval: 1
   OnDied:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []

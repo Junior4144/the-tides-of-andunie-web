@@ -131,6 +131,18 @@ PrefabInstance:
       propertyPath: _layerName
       value: Default
       objectReference: {fileID: 0}
+    - target: {fileID: 3543302567213916018, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194405975748742327, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
+      propertyPath: _impulseForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700613940918989310, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
+      propertyPath: m_Radius
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 6974104183215885149, guid: 44873b2e7e246b84fa6d97e6a05fce15, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -411,7 +423,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 140088138506105263, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: m_Radius
-      value: 0.55
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 972147263853389966, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: m_LocalPosition.x
@@ -453,25 +465,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1749672105243374152, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: m_Name
       value: PlayerHeroAldarion
       objectReference: {fileID: 0}
-    - target: {fileID: 8381677641978207556, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      propertyPath: _layerName
-      value: Player
+    - target: {fileID: 8045057174674881548, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: m_AngularDamping
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8381677641978207556, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: _impulseForce
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8381677641978207556, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      propertyPath: _impulseDuration
-      value: 0.28
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
