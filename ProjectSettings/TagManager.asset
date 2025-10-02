@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - CannonBall
+  - Building
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -46,17 +48,20 @@ TagManager:
   - name: Background
     uniqueID: 801640079
     locked: 0
-  - name: Collectable
-    uniqueID: 2018676903
-    locked: 0
   - name: Building
     uniqueID: 3136098669
+    locked: 0
+  - name: Collectable
+    uniqueID: 2018676903
     locked: 0
   - name: Player
     uniqueID: 2854826609
     locked: 0
   - name: Enemy
     uniqueID: 2558213843
+    locked: 0
+  - name: Animations
+    uniqueID: 1612012425
     locked: 0
   m_RenderingLayers:
   - Default
