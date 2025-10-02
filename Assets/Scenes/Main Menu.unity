@@ -185,8 +185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255608
-  m_fontColor: {r: 0.9743725, g: 1, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -342,17 +342,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 579427847750050862, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
+      propertyPath: m_Size.x
+      value: 10.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 579427847750050862, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
+      propertyPath: m_Size.y
+      value: 5.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 579427847750050862, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7315730018616159102, guid: 1ff4f1738c28462409054519ee2b018b, type: 3}
+    - target: {fileID: 579427847750050862, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 831376322602156014, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
       propertyPath: m_Name
       value: Background
       objectReference: {fileID: 0}
     - target: {fileID: 5739515045514538058, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
       propertyPath: m_LocalScale.x
-      value: 80
+      value: 0.84583783
       objectReference: {fileID: 0}
     - target: {fileID: 5739515045514538058, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
       propertyPath: m_LocalScale.y
-      value: 62
+      value: 0.89773506
       objectReference: {fileID: 0}
     - target: {fileID: 5739515045514538058, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
       propertyPath: m_LocalPosition.x
@@ -360,7 +376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739515045514538058, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0181
       objectReference: {fileID: 0}
     - target: {fileID: 5739515045514538058, guid: 8442fa7a5189dca449e621b518fb0b07, type: 3}
       propertyPath: m_LocalPosition.z
@@ -567,8 +583,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255608
-  m_fontColor: {r: 0.9743725, g: 1, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -832,7 +848,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1094,7 +1110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 0.19607843}
+  m_Color: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
