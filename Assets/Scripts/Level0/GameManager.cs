@@ -6,13 +6,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _timeToWaitBeforeExit;
 
-    public void OnPlayerDied()
-    {
+    public void OnPlayerDied() =>
         Invoke(nameof(EndGame), _timeToWaitBeforeExit);
-    }
 
-    private void EndGame()
-    {
+    private void EndGame() =>
         SceneManager.LoadScene("Main Menu");
-    }
 }
