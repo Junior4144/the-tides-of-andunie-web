@@ -11,25 +11,16 @@ public class HealthController : MonoBehaviour
     private float _currentHealth = 100;
     [SerializeField]
     private float _maxHealth = 100;
-    [SerializeField]
-    private float _damageOverTime = 10;
-    [SerializeField]
-
-    private float _damageInterval = 1;
-
-    void Start() =>
-        StartCoroutine(DamageOverTime());
-
 
     public float GetPercentHealth() =>
          _currentHealth / _maxHealth;
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damageAmount)
     {
         if (_currentHealth == 0)
             return;
 
-        _currentHealth -= amount;
+        _currentHealth -= damageAmount;
 
         OnHealthChanged.Invoke();
 
@@ -51,14 +42,5 @@ public class HealthController : MonoBehaviour
 
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
-    }
-
-    private IEnumerator DamageOverTime()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(_damageInterval);
-            TakeDamage(_damageOverTime);
-        }
     }
 }

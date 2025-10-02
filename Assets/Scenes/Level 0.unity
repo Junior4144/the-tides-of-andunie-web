@@ -1658,6 +1658,7 @@ GameObject:
   - component: {fileID: 765328238}
   - component: {fileID: 765328239}
   - component: {fileID: 765328240}
+  - component: {fileID: 765328241}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1813,6 +1814,20 @@ MonoBehaviour:
   targetPoint: {fileID: 1825869538}
   moveSpeed: 3
   waitTime: 1
+--- !u!114 &765328241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765328234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce457f764d1910b4d90b556e38c576db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  duration: 0.5
+  magnitude: 0.3
 --- !u!4 &773435369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
@@ -1884,11 +1899,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.358164
+      value: 26.5
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.4506817
+      value: -7.01
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3154,7 +3169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.840681
+      value: -10.03
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -48916,11 +48931,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.018164
+      value: 30.61
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.9506817
+      value: -4.89
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.z
