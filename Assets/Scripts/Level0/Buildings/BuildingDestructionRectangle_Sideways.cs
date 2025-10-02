@@ -22,6 +22,7 @@ public class BuildingDestructionRectangle_Sideways : BuildingDestructable
 
         SpawnExplosion();
         SpawnFire();
+        SpawnFireSound();
         hasExploded = true;
 
     }

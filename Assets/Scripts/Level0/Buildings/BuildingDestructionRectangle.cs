@@ -19,6 +19,7 @@ public class BuildingDestructionRectangle : BuildingDestructable
     {
         SpawnExplosion();
         SpawnFire(fireOffsets);
+        SpawnFireSound();
         hasExploded = true;
         PlayExplosionSound(_explosionSound);
     }

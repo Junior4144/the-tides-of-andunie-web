@@ -4,6 +4,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 {
     public GameObject explosion;
     public GameObject fire;
+    public GameObject fireSound;
     public bool hasExploded = false;
     private Camera _camera;
 
@@ -38,6 +39,14 @@ public abstract class BuildingDestructable : MonoBehaviour
     {
         foreach (var offset in offsets)
             Instantiate(fire, transform.position + (Vector3)offset, Quaternion.identity);
+    }
+
+    protected void SpawnFireSound()
+    {
+        if (fireSound != null)
+        {
+            Instantiate(fireSound, transform.position, Quaternion.identity, transform);
+        }
     }
 
     protected void PlayExplosionSound(AudioClip explosionSound)
