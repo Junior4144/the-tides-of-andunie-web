@@ -1797,6 +1797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
   targetSpeed: 3
   accelerationTime: 3
+  direction: {x: -1, y: 0, z: 0}
 --- !u!114 &765328240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26850,8 +26851,8 @@ Tilemap:
   - first: {x: -65, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 16
-      m_TileSpriteIndex: 29
+      m_TileIndex: 8
+      m_TileSpriteIndex: 25
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -47785,7 +47786,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 4fece0774343c104d9741a7c788c9b7d, type: 2}
   - m_RefCount: 129
     m_Data: {fileID: 11400000, guid: 41178edb31bbc9548b10afac365baba2, type: 2}
-  - m_RefCount: 26
+  - m_RefCount: 27
     m_Data: {fileID: 11400000, guid: c39d9e5bc1f2f944faffa754e886ef77, type: 2}
   - m_RefCount: 39
     m_Data: {fileID: 11400000, guid: 0d6a143d55046434a9c75d8e9d4b8843, type: 2}
@@ -47801,7 +47802,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: e045684f57119564cba2f8da9c525f60, type: 2}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 88ccc12b4b2d6614f90d849406d1a446, type: 2}
-  - m_RefCount: 153
+  - m_RefCount: 152
     m_Data: {fileID: 11400000, guid: bf237a312323b7540a8ee0629742930f, type: 2}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 563f9f1c78e4c12419ff188d5c705bde, type: 2}
@@ -47942,7 +47943,7 @@ Tilemap:
     m_Data: {fileID: -6405582830355974013, guid: 8af9cf672bdac3341b86ef45870afac0, type: 3}
   - m_RefCount: 129
     m_Data: {fileID: 1256630309, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
-  - m_RefCount: 26
+  - m_RefCount: 27
     m_Data: {fileID: 1029488233, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
   - m_RefCount: 38
     m_Data: {fileID: -329784222, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
@@ -47950,7 +47951,7 @@ Tilemap:
     m_Data: {fileID: 1260410304, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
   - m_RefCount: 28
     m_Data: {fileID: 4519550491569873886, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
-  - m_RefCount: 153
+  - m_RefCount: 152
     m_Data: {fileID: -1995514071, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 467060018, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
