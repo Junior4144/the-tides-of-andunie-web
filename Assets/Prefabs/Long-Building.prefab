@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4900169842736365851}
   - component: {fileID: 4937761239862547523}
   - component: {fileID: 7801575688263269771}
-  - component: {fileID: -2462235236227105977}
+  - component: {fileID: 6550491524361231422}
   m_Layer: 0
   m_Name: Long-Building
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.0033, y: 6.6343, z: 0}
-  m_LocalScale: {x: 3.9008524, y: 8.765379, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: -1158868627
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: adcb838651e214a40b081d26f1869571, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,19 +126,19 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.037606478, y: 0.011579514}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 4, y: 9}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.0461345, y: 9.062256}
   m_EdgeRadius: 0
---- !u!114 &-2462235236227105977
+--- !u!114 &6550491524361231422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,9 +147,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8667303902771730893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1556c189cb9bba04fa79f39edbde6f84, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f7942db86ec57744832bbafc9b25698, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BuildingDestructable
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingDestructionRectangle
   explosion: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
-  fire: {fileID: 8592979675058465939, guid: 6474c93afa31ed144a2a326ec559b959, type: 3}
+  fire: {fileID: 8254015427989947637, guid: 64d00be1687a4114aa25102b41996ccc, type: 3}
   hasExploded: 0
+  fireOffsets:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 0, y: 2}
+  - {x: 0, y: -2}
+  _explosionSound: {fileID: 8300000, guid: b46f9310267236c408da69d18a6a71f5, type: 3}

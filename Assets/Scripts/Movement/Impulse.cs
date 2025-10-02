@@ -19,9 +19,7 @@ public class Impulse : MonoBehaviour
     void Update()
     {
         if (_impulseTimer > 0f)
-        {
             _impulseTimer -= Time.deltaTime;
-        }
     }
 
     public void OnTriggerEnter2D(Collider2D otherCollider)

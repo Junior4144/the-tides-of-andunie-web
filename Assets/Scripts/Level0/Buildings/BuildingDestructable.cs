@@ -1,58 +1,56 @@
 using UnityEngine;
 
-public class BuildingDestructable : MonoBehaviour
+public abstract class BuildingDestructable : MonoBehaviour
 {
     public GameObject explosion;
-    public AudioClip explosionSound;
     public GameObject fire;
     public bool hasExploded = false;
-    Camera _camera;
+    private Camera _camera;
 
-
-    private void LateUpdate()
-    {
-        _camera = Camera.main;
-    }
+    private void LateUpdate() => _camera = Camera.main;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("CannonBall") & !hasExploded)
-        {
-            HandleExplosion();
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-        }
+        if (
+            !collision.gameObject.CompareTag("CannonBall") ||
+            hasExploded ||
+            !CheckCameraBoundaries(GetScreenPosition())
+        ) return;
+ 
+        HandleExplosion();
     }
 
-    void HandleExplosion()
+    public bool CheckCameraBoundaries(Vector2 screenPosition)
     {
-        if (IsOnScreen())
-        {
-            Instantiate(explosion, transform.position, Quaternion.identity);
-            Instantiate(fire, transform.position, Quaternion.identity);
-            hasExploded = true;
-            PlayExplosionSound();
-        }
-    }
-
-    private bool IsOnScreen()
-    {
-        Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
-
-        return screenPosition.x >= 0 &&
+        return (
+            screenPosition.x >= 0 &&
             screenPosition.x <= _camera.pixelWidth &&
             screenPosition.y >= 0 &&
-            screenPosition.y <= _camera.pixelHeight;
+            screenPosition.y <= _camera.pixelHeight
+        );
     }
 
-    private void PlayExplosionSound()
+    public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
+
+    public Vector2 GetScreenPosition() => _camera.WorldToScreenPoint(transform.position);
+
+    protected void SpawnFire(Vector2[] offsets)
     {
-        if (!explosionSound)
-        {
-            Debug.LogWarning("Explosion sound null. Playing no sound effect.");
-            return;
-        }
-
-        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+        foreach (var offset in offsets)
+            Instantiate(fire, transform.position + (Vector3)offset, Quaternion.identity);
     }
+
+    protected void PlayExplosionSound(AudioClip explosionSound)
+    {
+        if (explosionSound != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position, 1.0f);
+        }
+        else
+        {
+            Debug.LogError("ExplosionSound is Null. Playing no Sound");
+        }
+    }
+
+    protected abstract void HandleExplosion();
 }

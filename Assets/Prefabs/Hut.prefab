@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1244897031593099641}
   - component: {fileID: 7342771787798845729}
   - component: {fileID: 3024483241446032244}
-  - component: {fileID: -599070452334977097}
+  - component: {fileID: 7768959387476625604}
   m_Layer: 0
   m_Name: Hut
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: -1158868627
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,7 +128,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &-599070452334977097
+--- !u!114 &7768959387476625604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,10 +137,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7157380196520005194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1556c189cb9bba04fa79f39edbde6f84, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f43643240efd5a4795aaac7fc80a241, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Destructable
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingDestructionCircle
   explosion: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
-  explosionSound: {fileID: 8300000, guid: b46f9310267236c408da69d18a6a71f5, type: 3}
   fire: {fileID: 5762877728198257355, guid: 391aaef0ae90465429a83235b55e5ebc, type: 3}
   hasExploded: 0
+  fireOffsets:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
+  _explosionSound: {fileID: 8300000, guid: b46f9310267236c408da69d18a6a71f5, type: 3}

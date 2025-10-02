@@ -18,21 +18,15 @@ public class PlayerHeroMovement : MonoBehaviour
 
     void Update()
     {
-        if (impulseScript != null && impulseScript.IsInImpulse())
-        {
-            return;
-        }
+        if (impulseScript != null && impulseScript.IsInImpulse()) return;
 
         float yInput = Input.GetAxis("Vertical");
         float xInput = Input.GetAxis("Horizontal");
 
         if (Math.Abs(yInput) > 0)
-        {
             body.linearVelocity = transform.up * yInput * moveSpeed;
-        }
+
         if (Math.Abs(xInput) > 0)
-        {
             body.angularVelocity = -xInput * rotationSpeed;
-        }
     }
 }

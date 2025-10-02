@@ -7,21 +7,19 @@ public class PlayerFallsBehind : MonoBehaviour
     [SerializeField]
     private EnemyAttribute _enemyAttribute;
     private HealthController _playerHealth;
-    private void Start()
-    {
+
+    private void Start() =>
         _playerHealth = GetComponent<HealthController>();
-    }
     void Update()
     {
         _camera = Camera.main;
-        float rightEdge = _camera.transform.position.x + (_camera.orthographicSize * _camera.aspect);
+        float rightEdge = DetermineCameraRightBorder();
 
         if (transform.position.x > rightEdge)
-        {
             if (_playerHealth != null)
-            {
                 _playerHealth.TakeDamage(_enemyAttribute.DamageAmount);
-            }
-        }
     }
+
+    public float DetermineCameraRightBorder() =>
+        _camera.transform.position.x + (_camera.orthographicSize * _camera.aspect);
 }

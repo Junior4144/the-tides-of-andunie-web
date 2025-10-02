@@ -12,9 +12,7 @@ public class EnemyManager : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             if (enemy != null)
-            {
                 Destroy(enemy);
-            }
         }
     }
 }
