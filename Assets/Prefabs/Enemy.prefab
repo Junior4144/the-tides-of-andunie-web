@@ -161,8 +161,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1736753453
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 3468676886420404900, guid: e6abf5f0542f3fd4da97272a930ea3dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -341,13 +341,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a590227d2b547614cb10d4317c73fb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthController
-  _currentHealth: 100
-  _maxHealth: 100
-  _damageOverTime: 0
-  _damageInterval: 1
   OnDied:
     m_PersistentCalls:
       m_Calls: []
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+  _currentHealth: 100
+  _maxHealth: 100
+  _damageOverTime: 0
+  _damageInterval: 1
