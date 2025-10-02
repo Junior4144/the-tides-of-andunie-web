@@ -1137,6 +1137,10 @@ PrefabInstance:
       propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1230952698}
+    - target: {fileID: 6557164427547001206, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: _impulseDuration
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: m_Name
       value: PlayerHeroAldarion
@@ -1826,8 +1830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce457f764d1910b4d90b556e38c576db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShake
-  duration: 0.5
-  magnitude: 0.3
+  defaultDuration: 0.5
+  defaultMagnitude: 0.3
 --- !u!4 &773435369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
@@ -2504,6 +2508,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerExplosion
   explosion: {fileID: 3985085195428137128, guid: 406dd628dc90e1a458d0259a73664b1d, type: 3}
+  duration: 0.25
+  magnitude: 0.3
 --- !u!1 &1266157338
 GameObject:
   m_ObjectHideFlags: 0
