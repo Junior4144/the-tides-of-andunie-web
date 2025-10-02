@@ -32,7 +32,7 @@ public class HealthController : MonoBehaviour
 
     public UnityEvent OnHealthChanged;
 
-    private void TakeDamage(float amount)
+    public void TakeDamage(float amount)
     {
         if (_currentHealth == 0)
         {
@@ -54,7 +54,7 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    private void AddHealth(float amount)
+    public void AddHealth(float amount)
     {
         if (_currentHealth == _maxHealth)
         {

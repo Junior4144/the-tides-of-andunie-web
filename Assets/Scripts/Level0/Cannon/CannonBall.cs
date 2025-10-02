@@ -1,52 +1,27 @@
 using UnityEngine;
 
-public class CannonBall : MonoBehaviour
+public abstract class CannonBall : MonoBehaviour 
 {
-    private GameObject player;
-    private Rigidbody2D rb;
-    public float force;
-    private Camera _camera;
+    [SerializeField]
+    private EnemyAttribute _enemyAttribute;
 
-    private void Awake()
-    {
-        _camera = Camera.main;
-    }
-    void Start()
-    {
-        ShootTowardsPlayer();
-    }
+    protected Rigidbody2D rb;
 
-    void Update()
-    {
-        DestroyWhenOffScreen();
-    }
-    public void ShootTowardsPlayer()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
-
-        Vector3 direction = player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+        Shoot();
     }
-    private void DestroyWhenOffScreen()
-    {
-        Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
+    protected abstract void Shoot();
 
-        if (screenPosition.x < 0 ||
-            
-            screenPosition.y < 0 ||
-            screenPosition.y > _camera.pixelHeight)
-        {
-            Destroy(gameObject);
-
-        }
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("CannonBall") == false && collision.CompareTag("Enemy") == false && collision.CompareTag("Building") == false)
+        if (collision.CompareTag("Player"))
         {
+            HandleDamage(collision);
             Destroy(gameObject);
         }
-
     }
+    void HandleDamage(Collider2D collision) => 
+        collision.GetComponentInParent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
 }
