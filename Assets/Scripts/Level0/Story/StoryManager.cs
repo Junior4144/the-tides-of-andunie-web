@@ -4,46 +4,46 @@ using UnityEngine;
 public class StoryManager : MonoBehaviour
 {
     public string spawnerTag = "CannonSpawner";
-    Camera _camera;
-    [SerializeField]
-    public GameObject spawnerParent;
-    [SerializeField] private CameraMovement cameraMovement;
 
+    [SerializeField] private GameObject spawnerParent;
+    [SerializeField] private CameraMovement cameraMovement;
     [SerializeField] private GameObject playerHero;
 
-    private void Awake()
-    {
+    private Camera _camera;
+
+    private void Awake() =>
         _camera = Camera.main; 
-    }
     void Start() =>
         StartCoroutine(RunEvents());
 
-
     IEnumerator RunEvents()
     {
-        Debug.Log("Scene Started");
-
         yield return new WaitForSeconds(3f);
 
-        //move camera towards ocean
-        //return towards middle
-        CameraSlide CameraSldier = _camera.GetComponent<CameraSlide>();
-        CameraSldier.SlideCamera();
+        MovingCameraTowardsShip();
+
         PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
-        movement.enabled = false;
 
-        //activateSpawners
-
-        //all tribal people run away
+        DisablePlayerMovement(movement);
 
         yield return new WaitForSeconds(3f);
-        movement.enabled = true;
+
+        EnablePlayerMovement(movement);
+
         ActivateAllSpawners();
 
-        //Camera start slideScrolling
-        cameraMovement.enabled = true;
-
+        ActivateCameraSlideScroll();
     }
+
+    void DisablePlayerMovement(PlayerHeroMovement movement) => movement.enabled = false;
+    void EnablePlayerMovement(PlayerHeroMovement movement) => movement.enabled = true;
+
+    void MovingCameraTowardsShip()
+    {
+        CameraSlide CameraSldier = _camera.GetComponent<CameraSlide>();
+        CameraSldier.SlideCamera();
+    }
+
     void ActivateAllSpawners() =>
         ActivateAllChildren(spawnerParent);
 
@@ -55,4 +55,8 @@ public class StoryManager : MonoBehaviour
             ActivateAllChildren(child.gameObject); 
         }
     }
+
+    void ActivateCameraSlideScroll() =>
+        cameraMovement.enabled = true;
+
 }
