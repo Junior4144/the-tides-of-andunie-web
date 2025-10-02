@@ -19,10 +19,10 @@ public abstract class BuildingDestructable : MonoBehaviour
     }
     public bool CheckCameraBoundaries(Vector2 screenPosition)
     {
-        return (screenPosition.x >= 0 &&
-            screenPosition.x <= _camera.pixelWidth &&
-            screenPosition.y >= 0 &&
-            screenPosition.y <= _camera.pixelHeight)
+        return (screenPosition.x >= -3f &&
+            screenPosition.x <= _camera.pixelWidth + 3f &&
+            screenPosition.y >= -3f &&
+            screenPosition.y <= _camera.pixelHeight + 3f)
             ? true : false;
     }
     public void SpawnExplosion() =>
