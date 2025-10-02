@@ -12,23 +12,14 @@ public class BuildingDestructionRectangle : BuildingDestructable
         new (0f, -2f)
     };
 
+    [SerializeField]
+    private AudioClip _explosionSound;
+
     protected override void HandleExplosion()
     {
-        if (hasExploded) return;
-
-        Vector2 screenPosition = GetScreenPosition();
-
-        if (!(CheckCameraBoundaries(screenPosition))) return;
-
         SpawnExplosion();
-        SpawnFire();
+        SpawnFire(fireOffsets);
         hasExploded = true;
-
-    }
-
-    void SpawnFire()
-    {
-        foreach (var offset in fireOffsets)
-            Instantiate(fire, transform.position + (Vector3)offset, Quaternion.identity);
+        PlayExplosionSound(_explosionSound);
     }
 }
