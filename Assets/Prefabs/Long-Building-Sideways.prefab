@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3479826202136810029}
   - component: {fileID: 8507688724103096417}
   - component: {fileID: 5004922246235458493}
-  - component: {fileID: 8805238140614153128}
+  - component: {fileID: 3649228451425534032}
   m_Layer: 0
   m_Name: Long-Building-Sideways
   m_TagString: Building
@@ -138,7 +138,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8805238140614153128
+--- !u!114 &3649228451425534032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,9 +147,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1374440302270286179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1556c189cb9bba04fa79f39edbde6f84, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f7942db86ec57744832bbafc9b25698, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BuildingDestructable
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingDestructionRectangle
   explosion: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
-  fire: {fileID: 5762877728198257355, guid: 391aaef0ae90465429a83235b55e5ebc, type: 3}
+  fire: {fileID: 8254015427989947637, guid: 64d00be1687a4114aa25102b41996ccc, type: 3}
   hasExploded: 0
+  _camera: {fileID: 0}

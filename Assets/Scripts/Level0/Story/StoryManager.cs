@@ -11,7 +11,6 @@ public class StoryManager : MonoBehaviour
 
     [SerializeField] private GameObject playerHero;
 
-    private PlayerHeroMovement playerMovement;
     private void Awake()
     {
         _camera = Camera.main; 
@@ -33,12 +32,9 @@ public class StoryManager : MonoBehaviour
         PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
         movement.enabled = false;
 
-
         //activateSpawners
 
         //all tribal people run away
-
-
 
         yield return new WaitForSeconds(3f);
         movement.enabled = true;
