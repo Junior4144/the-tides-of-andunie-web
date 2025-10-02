@@ -13,6 +13,9 @@ public class EndGame : MonoBehaviour
     private void EndSession() =>
         SceneManager.LoadScene("Main Menu");
 
-    private void OnTriggerEnter2D(Collider2D collision) =>
-        EndCurrentSession();
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+            EndCurrentSession();
+    }
 }

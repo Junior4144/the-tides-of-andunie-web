@@ -18,13 +18,13 @@ public class StoryManager : MonoBehaviour
 
     IEnumerator RunEvents()
     {
-        yield return new WaitForSeconds(3f);
-
-        MovingCameraTowardsShip();
-
         PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
 
         DisablePlayerMovement(movement);
+
+        yield return new WaitForSeconds(3f);
+
+        MovingCameraTowardsShip();
 
         yield return new WaitForSeconds(3f);
 
