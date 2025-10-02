@@ -2,25 +2,33 @@ using UnityEngine;
 
 public class BuildingDestructionRectangle : BuildingDestructable
 {
+    [SerializeField]
+    private Vector2[] fireOffsets =
+    {
+        Vector2.zero,
+        new (1f, 0f),
+        new (-1f, 0f),
+        new (0f, 2f),
+        new (0f, -2f)
+    };
+
     protected override void HandleExplosion()
     {
-        if (!hasExploded)
-        {
-            Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
+        if (hasExploded) return;
 
-            if (screenPosition.x >= 0 &&
-                screenPosition.x <= _camera.pixelWidth &&
-                screenPosition.y >= 0 &&
-                screenPosition.y <= _camera.pixelHeight)
-            {
-                Instantiate(explosion, transform.position, Quaternion.identity);
-                hasExploded = true;
-                Instantiate(fire, transform.position, Quaternion.identity);
-                Instantiate(fire, transform.position + new Vector3(1f, 0f, 0f), Quaternion.identity);
-                Instantiate(fire, transform.position + new Vector3(-1f, 0f, 0f), Quaternion.identity);
-                Instantiate(fire, transform.position + new Vector3(0f, 2f, 0f), Quaternion.identity);
-                Instantiate(fire, transform.position + new Vector3(0f, -2f, 0f), Quaternion.identity);
-            }
-        }
+        Vector2 screenPosition = GetScreenPosition();
+
+        if (!(CheckCameraBoundaries(screenPosition))) return;
+
+        SpawnExplosion();
+        SpawnFire();
+        hasExploded = true;
+
+    }
+
+    void SpawnFire()
+    {
+        foreach (var offset in fireOffsets)
+            Instantiate(fire, transform.position + (Vector3)offset, Quaternion.identity);
     }
 }
