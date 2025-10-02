@@ -5,6 +5,9 @@ public class CameraShake : MonoBehaviour
 {
     public static CameraShake instance;
 
+    [SerializeField]
+    private AudioClip shakeImpactSound;
+
     private void Awake() =>
         instance = this;
 
@@ -15,6 +18,7 @@ public class CameraShake : MonoBehaviour
     public void Shake(float duration, float magnitude)
     {
         StopAllCoroutines();
+        PlayImpactSound();
         StartCoroutine(ShakeCoroutine(duration, magnitude));
     }
 
@@ -35,6 +39,18 @@ public class CameraShake : MonoBehaviour
         }
 
         transform.position = originalPos;
+    }
+
+    private void PlayImpactSound()
+    {
+        if (shakeImpactSound != null)
+        {
+            AudioSource.PlayClipAtPoint(shakeImpactSound, transform.position, 0.1f);
+        }
+        else
+        {
+            Debug.LogError("ShakeImpactSound is Null. Playing no Sound");
+        }
     }
 
 }

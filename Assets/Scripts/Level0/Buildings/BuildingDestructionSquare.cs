@@ -11,23 +11,15 @@ public class BuildingDestructionSquare : BuildingDestructable
         new (0f, 1f),
         new(0f, -1f)
     };
+
+    [SerializeField]
+    private AudioClip _explosionSound;
+
     protected override void HandleExplosion()
     {
-        if (hasExploded) return;
-
-        Vector2 screenPosition = GetScreenPosition();
-
-        if (!(CheckCameraBoundaries(screenPosition))) return;
-
         SpawnExplosion();
-        SpawnFire();
+        SpawnFire(fireOffsets);
         hasExploded = true;
+        PlayExplosionSound(_explosionSound);
     }
-    void SpawnFire()
-    {
-        foreach (var offset in fireOffsets)
-            Instantiate(fire, transform.position + (Vector3)offset, Quaternion.identity);
-    }
-
-
 }
