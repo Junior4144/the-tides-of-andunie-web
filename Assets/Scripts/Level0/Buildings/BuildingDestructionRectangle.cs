@@ -18,7 +18,9 @@ public class BuildingDestructionRectangle : BuildingDestructable
     protected override void HandleExplosion()
     {
         SpawnExplosion();
-        SpawnFire(fireOffsets);
+        ReplaceSprite();
+
+        SpawnNewFire();
         SpawnFireSound();
         hasExploded = true;
         PlayExplosionSound(_explosionSound);

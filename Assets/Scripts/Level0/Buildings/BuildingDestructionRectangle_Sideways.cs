@@ -20,6 +20,7 @@ public class BuildingDestructionRectangle_Sideways : BuildingDestructable
 
         if (!(CheckCameraBoundaries(screenPosition))) return;
 
+
         SpawnExplosion();
         SpawnFire();
         SpawnFireSound();

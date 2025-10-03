@@ -35,6 +35,7 @@ public class StoryManager : MonoBehaviour
         ActivateAllSpawners();
 
         StartSlideScroll();
+        yield return null;
     }
 
     void DisablePlayerMovement(PlayerHeroMovement movement) => movement.enabled = false;

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: b5af53247eb56634c84b2b513060523e
+guid: 3fd48d7923b16b84ea172595a8c06b62
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2396385200594351744
-    second: Fire_small3_0
+      213: 2689507488792724111
+    second: Fire_small10_cycle_0
+  - first:
+      213: -6477570120065492502
+    second: Fire_small10_cycle_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fire_small3_0
+      name: Fire_small10_cycle_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 5
-        width: 17
-        height: 21
+        x: 7
+        y: 3
+        width: 21
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 089029d4b545ebed0800000000000000
-      internalID: -2396385200594351744
+      spriteID: f824e3abfcc035520800000000000000
+      internalID: 2689507488792724111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_small10_cycle_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 4
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae9dfc1ab4c0b16a0800000000000000
+      internalID: -6477570120065492502
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Fire_small3_0: -2396385200594351744
+      Fire_small10_cycle_0: 2689507488792724111
+      Fire_small10_cycle_1: -6477570120065492502
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
