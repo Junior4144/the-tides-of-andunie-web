@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public abstract class CannonBall : MonoBehaviour 
@@ -7,10 +8,13 @@ public abstract class CannonBall : MonoBehaviour
 
     protected Rigidbody2D rb;
 
+    private CinemachineImpulseSource _impulseSource;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Shoot();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
     protected abstract void Shoot();
 
@@ -24,7 +28,9 @@ public abstract class CannonBall : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             HandlePlayerCollision(collision);
+            HandleCameraShake();
         }
+        
     }
 
     private bool IsValidBuildingCollision(Collider2D collision)
@@ -44,4 +50,5 @@ public abstract class CannonBall : MonoBehaviour
         collision.GetComponentInParent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
 
     void HandleDestroyObject() => Destroy(gameObject);
+    void HandleCameraShake() => CameraShakeManager.instance.CameraShakeA(_impulseSource);
 }

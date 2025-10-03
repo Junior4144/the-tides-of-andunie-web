@@ -8,16 +8,14 @@ public class SceneFade : MonoBehaviour
 {
     private Image _sceneFadeImage;
 
-    private void Awake()
-    {
-        _sceneFadeImage =GetComponent<Image>();
-
-    }
+    private void Awake() =>
+        _sceneFadeImage = GetComponent<Image>();
 
     public IEnumerator FadeInCoroutine(float duration)
     {
-        Color startColor = new Color(_sceneFadeImage.color.r, _sceneFadeImage.color.g, _sceneFadeImage.color.b, 1);//alpha value = 1
-        Color targetColor = new Color(_sceneFadeImage.color.r, _sceneFadeImage.color.g, _sceneFadeImage.color.b, 0);
+
+        (Color startColor, Color targetColor) = ObtainColor(1f, 0f);
+
         yield return FadeCorotine(startColor, targetColor, duration);
 
         gameObject.SetActive(false);
@@ -25,10 +23,10 @@ public class SceneFade : MonoBehaviour
 
     public IEnumerator FadeOutCoroutine(float duration)
     {
-        Color startColor = new Color(_sceneFadeImage.color.r, _sceneFadeImage.color.g, _sceneFadeImage.color.b,0);
-        Color targetColor = new Color(_sceneFadeImage.color.r, _sceneFadeImage.color.g, _sceneFadeImage.color.b, 1);
+        (Color startColor, Color targetColor) = ObtainColor(0f, 1f);
 
         gameObject.SetActive(true);
+
         yield return FadeCorotine(startColor, targetColor, duration);
     }
 
@@ -37,14 +35,21 @@ public class SceneFade : MonoBehaviour
         float elapsedTime = 0;
         float elaspedPercentage = 0;
 
-        //change very frame
-        while(elaspedPercentage < 1)
+        while (elaspedPercentage < 1)
         {
             elaspedPercentage = elapsedTime / duration;
             _sceneFadeImage.color = Color.Lerp(startColor, targetColor, elaspedPercentage);
-            yield return null; //waits for next frame
+            yield return null; 
             elapsedTime += Time.deltaTime;
         }
     }
+    (Color, Color) ObtainColor(float startIndex, float targetIndex)
+    {
+        Color startColor = new Color(_sceneFadeImage.color.r, _sceneFadeImage.color.g, _sceneFadeImage.color.b, startIndex);
+        Color targetColor = new Color(_sceneFadeImage.color.r, _sceneFadeImage.color.g, _sceneFadeImage.color.b, targetIndex);
+        return (startColor, targetColor);
+    }
 }
+
+
 

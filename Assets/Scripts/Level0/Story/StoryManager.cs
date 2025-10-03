@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class StoryManager : MonoBehaviour
@@ -6,16 +7,19 @@ public class StoryManager : MonoBehaviour
     public string spawnerTag = "CannonSpawner";
 
     [SerializeField] private GameObject spawnerParent;
-    [SerializeField] private CameraMovement cameraMovement;
     [SerializeField] private GameObject playerHero;
+    [SerializeField] private CameraTarget target;
 
-    private Camera _camera;
+    [SerializeField]
+    public CinemachineCamera playerCam;
+    [SerializeField]
+    public CinemachineCamera cutsceneCam;
+    [SerializeField]
+    public float cutsceneDuration = 3f;
 
-    private void Awake() =>
-        _camera = Camera.main; 
     void Start() =>
         StartCoroutine(RunEvents());
-
+        
     IEnumerator RunEvents()
     {
         PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
@@ -25,14 +29,12 @@ public class StoryManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         MovingCameraTowardsShip();
-
         yield return new WaitForSeconds(3f);
-
         EnablePlayerMovement(movement);
 
         ActivateAllSpawners();
 
-        ActivateCameraSlideScroll();
+        StartSlideScroll();
     }
 
     void DisablePlayerMovement(PlayerHeroMovement movement) => movement.enabled = false;
@@ -40,8 +42,15 @@ public class StoryManager : MonoBehaviour
 
     void MovingCameraTowardsShip()
     {
-        CameraSlide CameraSldier = _camera.GetComponent<CameraSlide>();
-        CameraSldier.SlideCamera();
+        cutsceneCam.Priority = 20;
+        StartCoroutine(ReturnToPlayer());
+    }
+    IEnumerator ReturnToPlayer()
+    {
+        yield return new WaitForSeconds(cutsceneDuration);
+
+        cutsceneCam.Priority = 0;
+        playerCam.Priority = 20;
     }
 
     void ActivateAllSpawners() =>
@@ -55,8 +64,10 @@ public class StoryManager : MonoBehaviour
             ActivateAllChildren(child.gameObject); 
         }
     }
+    void StartSlideScroll() =>
+        target.enabled = true;
 
-    void ActivateCameraSlideScroll() =>
-        cameraMovement.enabled = true;
+
+
 
 }

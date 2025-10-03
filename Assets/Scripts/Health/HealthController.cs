@@ -29,8 +29,6 @@ public class HealthController : MonoBehaviour
 
         if (_currentHealth == 0)
             OnDied.Invoke();
-
-        Debug.Log($"{_currentHealth}");
     }
 
     public void AddHealth(float amount)
@@ -45,6 +43,5 @@ public class HealthController : MonoBehaviour
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
 
-        Debug.Log($"{_currentHealth}");
     }
 }
