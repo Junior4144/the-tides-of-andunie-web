@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4265695567105658404}
   - component: {fileID: 891014065511496078}
   - component: {fileID: 3785840057097831652}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: PlayerHeroAldarion
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -214,10 +214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a590227d2b547614cb10d4317c73fb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthController
-  _currentHealth: 100
-  _maxHealth: 100
-  _damageOverTime: 0
-  _damageInterval: 1
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -260,6 +256,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _currentHealth: 100
+  _maxHealth: 100
 --- !u!114 &891014065511496078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5832726163560954680}
   - component: {fileID: 643291119363548266}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -365,13 +363,13 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1440140687
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 1080180648499165357, guid: 6b24223ac985a4a2fb1330aba736473e, type: 3}
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: 8ea54830c174d0a49906d99e23f9bfa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
