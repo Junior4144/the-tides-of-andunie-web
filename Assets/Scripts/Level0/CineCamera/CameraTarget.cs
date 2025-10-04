@@ -9,13 +9,13 @@ public class CameraTarget : MonoBehaviour
 
     private float currentX;
 
-    void Start()
-    {
+    void Start() =>
         currentX = transform.position.x;
-    }
 
     void Update()
     {
+        if (player == null || playerRb == null) return;
+
         float adjustedSpeed = CalculateXAxisMovement();
 
         currentX += -adjustedSpeed * Time.deltaTime;
@@ -27,8 +27,6 @@ public class CameraTarget : MonoBehaviour
         float adjustedSpeed = scrollSpeed - Mathf.Abs(playerRb.linearVelocity.y) * yInfluence;
         return Mathf.Max(0f, adjustedSpeed);
     }
-    private void HandleYAxisMovement()
-    {
+    private void HandleYAxisMovement() =>
         transform.position = new Vector3(currentX, player.position.y, transform.position.z);
-    }
 }

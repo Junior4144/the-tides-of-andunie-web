@@ -14,7 +14,7 @@ public class CameraShakeManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void CameraShakeA(CinemachineImpulseSource impulseSource) 
+    public void CameraShake(CinemachineImpulseSource impulseSource)
     {
         impulseSource.GenerateImpulseWithForce(globalShakeForce);
         PlayImpactSound();
@@ -22,12 +22,8 @@ public class CameraShakeManager : MonoBehaviour
     private void PlayImpactSound()
     {
         if (shakeImpactSound != null)
-        {
             AudioSource.PlayClipAtPoint(shakeImpactSound, transform.position, 0.1f);
-        }
         else
-        {
             Debug.LogError("ShakeImpactSound is Null. Playing no Sound");
-        }
     }
 }

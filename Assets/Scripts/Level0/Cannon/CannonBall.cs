@@ -10,12 +10,21 @@ public abstract class CannonBall : MonoBehaviour
 
     private CinemachineImpulseSource _impulseSource;
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Shoot();
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
+    private void Update()
+    {
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        if (viewportPos.x < 0 || viewportPos.y > 1 || viewportPos.y < 0)
+            Destroy(gameObject);
+    }
+
     protected abstract void Shoot();
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -50,5 +59,5 @@ public abstract class CannonBall : MonoBehaviour
         collision.GetComponentInParent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
 
     void HandleDestroyObject() => Destroy(gameObject);
-    void HandleCameraShake() => CameraShakeManager.instance.CameraShakeA(_impulseSource);
+    void HandleCameraShake() => CameraShakeManager.instance.CameraShake(_impulseSource);
 }
