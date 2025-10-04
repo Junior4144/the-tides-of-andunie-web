@@ -22,17 +22,17 @@ public class StoryManager : MonoBehaviour
         
     IEnumerator RunEvents()
     {
-        PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
+        //PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
 
-        DisablePlayerMovement(movement);
+        //DisablePlayerMovement(movement);
 
-        yield return new WaitForSeconds(3f);
+        //yield return new WaitForSeconds(3f);
 
-        MovingCameraTowardsShip();
-        yield return new WaitForSeconds(3f);
-        EnablePlayerMovement(movement);
+        //MovingCameraTowardsShip();
+        //yield return new WaitForSeconds(3f);
+        //EnablePlayerMovement(movement);
 
-        ActivateAllSpawners();
+        //ActivateAllSpawners();
 
         StartSlideScroll();
         yield return null;
