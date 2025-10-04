@@ -35,14 +35,9 @@ public abstract class BuildingDestructable : MonoBehaviour
         HandleExplosion();
     }
 
-    public bool CheckCameraBoundaries(Vector2 screenPosition)
+    public bool CheckCameraBoundaries(Vector2 screenPosition, float padding = 500f) //like an inch lol
     {
-        return (
-            screenPosition.x >= 0 &&
-            screenPosition.x <= _camera.pixelWidth &&
-            screenPosition.y >= 0 &&
-            screenPosition.y <= _camera.pixelHeight
-        );
+        return screenPosition.x > 0 - padding;
     }
     public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
 
