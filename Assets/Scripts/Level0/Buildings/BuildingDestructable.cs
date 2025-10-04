@@ -57,6 +57,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         HandleExplosion();
 
+        if(player == null) return;
         float distance = Vector2.Distance(player.transform.position, transform.position);
 
         if (player != null && distance < explosionRadius)
@@ -68,7 +69,7 @@ public abstract class BuildingDestructable : MonoBehaviour
     {
         return screenPosition.x > 0 - padding;
     }
-    public bool CheckCameraAllBoundary(Vector2 screenPosition, float padding = 500f)
+    public bool CheckCameraAllBoundary(Vector2 screenPosition, float padding = 0f)
     {
         return screenPosition.x > -padding &&
                screenPosition.x < Screen.width + padding &&

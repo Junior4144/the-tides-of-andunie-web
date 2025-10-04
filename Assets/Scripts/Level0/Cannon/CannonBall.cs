@@ -10,12 +10,21 @@ public abstract class CannonBall : MonoBehaviour
 
     private CinemachineImpulseSource _impulseSource;
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Shoot();
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
+    private void Update()
+    {
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        if (viewportPos.x < 0 || viewportPos.y > 1 || viewportPos.y < 0)
+            Destroy(gameObject);
+    }
+
     protected abstract void Shoot();
 
     private void OnTriggerEnter2D(Collider2D collision)
