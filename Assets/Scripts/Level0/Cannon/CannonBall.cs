@@ -1,52 +1,54 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
-public class CannonBall : MonoBehaviour
+public abstract class CannonBall : MonoBehaviour 
 {
-    private GameObject player;
-    private Rigidbody2D rb;
-    public float force;
-    private Camera _camera;
+    [SerializeField]
+    private EnemyAttribute _enemyAttribute;
 
-    private void Awake()
-    {
-        _camera = Camera.main;
-    }
+    protected Rigidbody2D rb;
+
+    private CinemachineImpulseSource _impulseSource;
+
     void Start()
     {
-        ShootTowardsPlayer();
-    }
-
-    void Update()
-    {
-        DestroyWhenOffScreen();
-    }
-    public void ShootTowardsPlayer()
-    {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
-
-        Vector3 direction = player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+        Shoot();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
-    private void DestroyWhenOffScreen()
-    {
-        Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
+    protected abstract void Shoot();
 
-        if (screenPosition.x < 0 ||
-            
-            screenPosition.y < 0 ||
-            screenPosition.y > _camera.pixelHeight)
-        {
-            Destroy(gameObject);
-
-        }
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("CannonBall") == false && collision.CompareTag("Enemy") == false && collision.CompareTag("Building") == false)
-        {
-            Destroy(gameObject);
-        }
+        if (collision == null) return;
 
+        if (IsValidBuildingCollision(collision))
+            HandleDestroyObject();
+
+        if (collision.CompareTag("Player"))
+        {
+            HandlePlayerCollision(collision);
+            HandleCameraShake();
+        }
+        
     }
+
+    private bool IsValidBuildingCollision(Collider2D collision)
+    {
+        if (!collision.CompareTag("Building")) return false;
+
+        return collision.GetComponent<BuildingDestructable>().hasExploded == false;
+    }
+
+    void HandlePlayerCollision(Collider2D collision)
+    {
+        HandleDamage(collision);
+        HandleDestroyObject();
+    }
+
+    void HandleDamage(Collider2D collision) => 
+        collision.GetComponentInParent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
+
+    void HandleDestroyObject() => Destroy(gameObject);
+    void HandleCameraShake() => CameraShakeManager.instance.CameraShakeA(_impulseSource);
 }

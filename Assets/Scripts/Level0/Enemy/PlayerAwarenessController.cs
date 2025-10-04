@@ -2,35 +2,24 @@ using UnityEngine;
 
 public class PlayerAwarenessController : MonoBehaviour
 {
-    public bool AwareOfPlayer { get; private set; }
-
-    public Vector2 DirectionToPlayer { get; private set; }
-
     [SerializeField]
     private EnemyAttribute _enemyAttribute;
 
-    private Transform _player;
+    private Transform _playerTransform;
 
     private void Awake()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        _player = playerObj.transform;
+        _playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (_playerTransform == null)
+        {
+            Debug.LogError("No game object with tag 'Player' found in the scene. Defaulting to self transform.");
+            _playerTransform = transform;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Vector2 enemyToPlayerVector = _player.position - transform.position;
-        DirectionToPlayer = enemyToPlayerVector.normalized;
-
-        if(enemyToPlayerVector.magnitude <= _enemyAttribute.PlayerAwarenessDistance)
-        {
-            AwareOfPlayer = true;
-        }
-        else
-        {
-            AwareOfPlayer = false;
-        }
-
-    }
+    Vector2 _vectorToPlayer => _playerTransform.position - transform.position;
+    public Vector2 DirectionToPlayer => _vectorToPlayer.normalized;
+    public bool AwareOfPlayer => _vectorToPlayer.magnitude <= _enemyAttribute.PlayerAwarenessDistance;
+    
 }
