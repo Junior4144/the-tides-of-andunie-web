@@ -6,6 +6,7 @@ public class HealthController : MonoBehaviour
 {
     public UnityEvent OnDied;
     public UnityEvent OnHealthChanged;
+    public UnityEvent OnDamaged;
 
     [SerializeField] private float _currentHealth = 100;
     [SerializeField] private float _maxHealth = 100;
@@ -21,7 +22,10 @@ public class HealthController : MonoBehaviour
 
         _currentHealth -= damageAmount;
 
+        OnDamaged.Invoke();
+
         OnHealthChanged.Invoke();
+
         healthBarShake.Shake();
 
         if (_currentHealth < 0)

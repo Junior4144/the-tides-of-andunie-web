@@ -1048,6 +1048,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 8ea54830c174d0a49906d99e23f9bfa1, type: 3}
     - target: {fileID: 643291119363548266, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643291119363548266, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643291119363548266, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643291119363548266, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643291119363548266, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
@@ -1104,6 +1120,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -1116,12 +1136,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1247806400}
     - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1247806415}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Flash
       objectReference: {fileID: 0}
     - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1136,7 +1172,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FlashOnDamage, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265695567105658404, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6557164427547001206, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
@@ -1165,13 +1209,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1247806392}
-    - targetCorrespondingSourceObject: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1247806400}
     - targetCorrespondingSourceObject: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1247806408}
+    - targetCorrespondingSourceObject: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1247806415}
   m_SourcePrefab: {fileID: 100100000, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
 --- !u!1001 &567182851
 PrefabInstance:
@@ -2033,6 +2077,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e65909524bd82a14ea944a6556254177, type: 3}
+--- !u!212 &887954221 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 643291119363548266, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
+  m_PrefabInstance: {fileID: 550761195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919197538
 GameObject:
   m_ObjectHideFlags: 0
@@ -2951,8 +3000,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0e156c3509f344ba3fb3fb1631d64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBarShake
-  duration: 0.3
-  magnitude: 10
+  _duration: 0.3
+  _magnitude: 10
 --- !u!4 &1232508712 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4598016525977070990, guid: e65909524bd82a14ea944a6556254177, type: 3}
@@ -2968,21 +3017,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7409650198408161721, guid: 7d70bea19ca0047889368e1f427b4502, type: 3}
   m_PrefabInstance: {fileID: 550761195}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1247806392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1247806384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 953a798a7106f864faad5086d16b554e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerExplosion
-  explosion: {fileID: 3985085195428137128, guid: 406dd628dc90e1a458d0259a73664b1d, type: 3}
-  duration: 0.25
-  magnitude: 0.3
 --- !u!114 &1247806400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3059,6 +3093,21 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &1247806415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247806384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db5eac837b3ca843ba93240f179d71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDamageFlash
+  spriteRenderer: {fileID: 887954221}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
 --- !u!1 &1256978255
 GameObject:
   m_ObjectHideFlags: 0
