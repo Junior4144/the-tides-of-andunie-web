@@ -41,11 +41,8 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private void LateUpdate() => _camera = Camera.main;
 
-    private void Awake()
-    {
+    private void Awake() =>
         player = GameObject.FindWithTag("Player");
-
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -94,15 +91,12 @@ public abstract class BuildingDestructable : MonoBehaviour
         SpawnExplosion();
         PlayExplosionSound(_explosionSound);
 
-
         ReplaceSprite();
-
 
         SpawnNewFire();
         SpawnFireSound();
 
         hasExploded = true;
-
     }
 
     protected void ReplaceSprite()
