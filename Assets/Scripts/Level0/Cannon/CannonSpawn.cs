@@ -3,30 +3,23 @@ using UnityEngine;
 public class CannonSpawn : MonoBehaviour
 {
     public GameObject cannon;
-    public AudioClip fireSound;
+    [SerializeField]
+    private GameObject cannonShotSound;
     private float timer;
-    private AudioSource audioSource;
 
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
     void Update()
     {
         timer += Time.deltaTime;
         if(timer > 1)
         {
             timer = 0;
-            spawnCannonBall();
+            SpawnCannonBall();
         }
     }
 
-    void spawnCannonBall()
+    void SpawnCannonBall()
     {
-        if (audioSource != null && fireSound != null)
-        {
-            audioSource.PlayOneShot(fireSound);
-        }
+        Instantiate(cannonShotSound, transform.position, Quaternion.identity);
         Instantiate(cannon, transform.position, Quaternion.identity);
     }
 }

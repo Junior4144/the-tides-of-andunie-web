@@ -15,6 +15,13 @@ public class ProximityVolume : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    void Update() =>
+    void Update()
+    {
         _audioSource.volume = Mathf.Clamp(1 - Vector3.Distance(_player.transform.position, transform.position) / range, 0f, maxVolume);
+        
+        if (!_audioSource.isPlaying)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
