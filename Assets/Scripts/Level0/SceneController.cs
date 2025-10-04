@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SceneController : MonoBehaviour
 {
@@ -9,20 +10,16 @@ public class SceneController : MonoBehaviour
 
     private SceneFade _sceneFade;
 
-    private void Awake()
-    {
+    private void Awake() =>
         _sceneFade = GetComponentInChildren<SceneFade>();
-    }
 
     private IEnumerator Start()
     {
         yield return _sceneFade.FadeInCoroutine(_sceneFadeDuration);
     }
 
-    public void LoadScene(string senseName)
-    {
+    public void LoadScene(string senseName) =>
         StartCoroutine(LoadSceneCoroutine(senseName));
-    }
 
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
