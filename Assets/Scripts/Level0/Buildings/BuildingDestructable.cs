@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BuildingDestructable : MonoBehaviour
@@ -8,6 +9,10 @@ public abstract class BuildingDestructable : MonoBehaviour
     public GameObject fireSound;
     public bool hasExploded = false;
     private Camera _camera;
+
+    private GameObject player;
+    [SerializeField]
+    private float explosionRadius = 15f;
 
     [SerializeField]
     private Sprite _spriteRenderer;
@@ -36,21 +41,39 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private void LateUpdate() => _camera = Camera.main;
 
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (
             !collision.gameObject.CompareTag("CannonBall") ||
             hasExploded ||
-            !CheckCameraBoundaries(GetScreenPosition())
+            !CheckCameraLeftBoundary(GetScreenPosition())
            ) return;
 
         HandleExplosion();
-        HandleBuildingCameraShake();
+
+        float distance = Vector2.Distance(player.transform.position, transform.position);
+
+        if (player != null && distance < explosionRadius)
+            HandleBuildingCameraShake();
+
     }
 
-    public bool CheckCameraBoundaries(Vector2 screenPosition, float padding = 500f) //like an inch lol
+    public bool CheckCameraLeftBoundary(Vector2 screenPosition, float padding = 500f) //like an inch 
     {
         return screenPosition.x > 0 - padding;
+    }
+    public bool CheckCameraAllBoundary(Vector2 screenPosition, float padding = 500f)
+    {
+        return screenPosition.x > -padding &&
+               screenPosition.x < Screen.width + padding &&
+               screenPosition.y > -padding &&
+               screenPosition.y < Screen.height + padding;
     }
     public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
 
