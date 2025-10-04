@@ -53,7 +53,7 @@ public abstract class BuildingDestructable : MonoBehaviour
             !collision.gameObject.CompareTag("CannonBall") ||
             hasExploded ||
             !CheckCameraLeftBoundary(GetScreenPosition())
-           ) return;
+        ) return;
 
         HandleExplosion();
 
