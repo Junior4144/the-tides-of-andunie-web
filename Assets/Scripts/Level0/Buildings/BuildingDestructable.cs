@@ -12,14 +12,21 @@ public abstract class BuildingDestructable : MonoBehaviour
     [SerializeField]
     private Sprite _spriteRenderer;
     [SerializeField]
-    private GameObject _fire_1;
-    [SerializeField]
-    private GameObject _fire_2;
-    [SerializeField]
-    private GameObject _fire_3;
+    private AudioClip _explosionSound;
 
     [SerializeField]
-    private GameObject fireSprite;
+    private GameObject _fire_position_1;
+    [SerializeField]
+    private GameObject _fire_position_2;
+    [SerializeField]
+    private GameObject _fire_position_3;
+
+    [SerializeField]
+    private GameObject fireSprite_1;
+    [SerializeField]
+    private GameObject fireSprite_2;
+    [SerializeField]
+    private GameObject fireSprite_3;
 
     private SpriteRenderer currentSprite;
     private CinemachineImpulseSource _impulseSource;
@@ -49,21 +56,29 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     public Vector2 GetScreenPosition() => _camera.WorldToScreenPoint(transform.position);
 
-    public void HandleBuildingCameraShake()
-    {
+    public void HandleBuildingCameraShake() =>
         CameraShakeManager.instance.CameraShake(_impulseSource);
-    }
 
-    protected void SpawnFire(Vector2[] offsets)
-    {
-        foreach (var offset in offsets)
-            Instantiate(fire, transform.position + (Vector3)offset, Quaternion.identity);
-    }
     protected void SpawnNewFire()
     {
-        Instantiate(fireSprite, _fire_1.transform.position, Quaternion.identity);
-        Instantiate(fireSprite, _fire_2.transform.position, Quaternion.identity);
-        Instantiate(fireSprite, _fire_3.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_1, _fire_position_1.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_2, _fire_position_2.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_3, _fire_position_3.transform.position, Quaternion.identity);
+    }
+    private void HandleExplosion()
+    {
+        SpawnExplosion();
+        PlayExplosionSound(_explosionSound);
+
+
+        ReplaceSprite();
+
+
+        SpawnNewFire();
+        SpawnFireSound();
+
+        hasExploded = true;
+
     }
 
     protected void ReplaceSprite()
@@ -86,6 +101,4 @@ public abstract class BuildingDestructable : MonoBehaviour
             Debug.LogError("ExplosionSound is Null. Playing no Sound");
     }
 
-
-    protected abstract void HandleExplosion();
 }
