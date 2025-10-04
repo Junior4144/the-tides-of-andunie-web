@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public abstract class BuildingDestructable : MonoBehaviour
@@ -21,6 +22,10 @@ public abstract class BuildingDestructable : MonoBehaviour
     private GameObject fireSprite;
 
     private SpriteRenderer currentSprite;
+    private CinemachineImpulseSource _impulseSource;
+
+    private void Start() =>
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
 
     private void LateUpdate() => _camera = Camera.main;
 
@@ -31,8 +36,9 @@ public abstract class BuildingDestructable : MonoBehaviour
             hasExploded ||
             !CheckCameraBoundaries(GetScreenPosition())
            ) return;
- 
+
         HandleExplosion();
+        HandleBuildingCameraShake();
     }
 
     public bool CheckCameraBoundaries(Vector2 screenPosition, float padding = 500f) //like an inch lol
@@ -42,6 +48,11 @@ public abstract class BuildingDestructable : MonoBehaviour
     public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
 
     public Vector2 GetScreenPosition() => _camera.WorldToScreenPoint(transform.position);
+
+    public void HandleBuildingCameraShake()
+    {
+        CameraShakeManager.instance.CameraShake(_impulseSource);
+    }
 
     protected void SpawnFire(Vector2[] offsets)
     {
@@ -74,6 +85,7 @@ public abstract class BuildingDestructable : MonoBehaviour
         else
             Debug.LogError("ExplosionSound is Null. Playing no Sound");
     }
+
 
     protected abstract void HandleExplosion();
 }

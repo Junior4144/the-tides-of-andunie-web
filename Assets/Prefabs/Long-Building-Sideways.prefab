@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8507688724103096417}
   - component: {fileID: 5004922246235458493}
   - component: {fileID: 6366573761948775401}
+  - component: {fileID: -1485735947715054891}
   m_Layer: 0
   m_Name: Long-Building-Sideways
   m_TagString: Building
@@ -154,9 +155,67 @@ MonoBehaviour:
   fire: {fileID: 8254015427989947637, guid: 64d00be1687a4114aa25102b41996ccc, type: 3}
   fireSound: {fileID: 4184515136674530310, guid: 94823e4846a0ebe46a5684790ae8864e, type: 3}
   hasExploded: 0
+  _spriteRenderer: {fileID: 0}
+  _fire_1: {fileID: 0}
+  _fire_2: {fileID: 0}
+  _fire_3: {fileID: 0}
+  fireSprite: {fileID: 0}
   fireOffsets:
   - {x: 0, y: 0}
   - {x: 3, y: 0}
   - {x: -3, y: 0}
   - {x: 0, y: 1}
   - {x: 0, y: -1}
+--- !u!114 &-1485735947715054891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374440302270286179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 4
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}

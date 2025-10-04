@@ -14,7 +14,7 @@ public class CameraShakeManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void CameraShakeA(CinemachineImpulseSource impulseSource) 
+    public void CameraShake(CinemachineImpulseSource impulseSource) 
     {
         impulseSource.GenerateImpulseWithForce(globalShakeForce);
         PlayImpactSound();
