@@ -85,6 +85,7 @@ MonoBehaviour:
   _impulseDuration: 0.4
   _layerName: Enemy
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
+<<<<<<< Updated upstream
 --- !u!1 &6122222779466501666
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
+=======
+  _impulseSound: {fileID: 2112944199135859477, guid: 1dd44d3d0c1681a4e9982ad35b3f167f, type: 3}
+>>>>>>> Stashed changes
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +182,6 @@ GameObject:
   - component: {fileID: 8045057174674881548}
   - component: {fileID: 6142025376332895416}
   - component: {fileID: 4265695567105658404}
-  - component: {fileID: 891014065511496078}
   - component: {fileID: 3785840057097831652}
   - component: {fileID: 5365342492064239941}
   - component: {fileID: 3790337936765633680}
@@ -334,20 +337,6 @@ MonoBehaviour:
   _currentHealth: 100
   _maxHealth: 100
   healthBarShake: {fileID: 0}
---- !u!114 &891014065511496078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650198408161721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 20
-  _layerName: Enemy
 --- !u!114 &3785840057097831652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,6 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5832726163560954680}
   - component: {fileID: 643291119363548266}
+  - component: {fileID: 6776897905862547183}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Player
@@ -532,6 +522,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6776897905862547183
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422549515451592420}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc244b92e7849ac4caf5ea81c3852ae1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8537735767216057658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -549,8 +561,20 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3947110552621518544, guid: 494382d53d6c23d4f9f31b82a78f7ba6, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 6776897905862547183}
+    - target: {fileID: 3947110552621518544, guid: 494382d53d6c23d4f9f31b82a78f7ba6, type: 3}
       propertyPath: _layerName
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947110552621518544, guid: 494382d53d6c23d4f9f31b82a78f7ba6, type: 3}
+      propertyPath: damageDelay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947110552621518544, guid: 494382d53d6c23d4f9f31b82a78f7ba6, type: 3}
+      propertyPath: _animDuration
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8574532178156051855, guid: 494382d53d6c23d4f9f31b82a78f7ba6, type: 3}
       propertyPath: m_LocalPosition.x
