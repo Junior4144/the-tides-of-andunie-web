@@ -17,6 +17,7 @@ public abstract class CannonBall : MonoBehaviour
         Shoot();
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
+
     private void Update()
     {
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
