@@ -12,7 +12,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private GameObject player;
     [SerializeField]
-    private float explosionRadius = 20f;
+    private float explosionRadius = 25f;
 
     [SerializeField]
     private Sprite _spriteRenderer;
