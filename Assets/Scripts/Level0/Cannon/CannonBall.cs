@@ -21,7 +21,9 @@ public abstract class CannonBall : MonoBehaviour
     {
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
 
-        if (viewportPos.x < 0 || viewportPos.y > 1 || viewportPos.y < 0)
+        float verticalMargin = .1f; // 0.1 = 10% increase
+
+        if (viewportPos.x < 0 || viewportPos.y > 1 + verticalMargin || viewportPos.y < 0 - verticalMargin)
             Destroy(gameObject);
     }
 

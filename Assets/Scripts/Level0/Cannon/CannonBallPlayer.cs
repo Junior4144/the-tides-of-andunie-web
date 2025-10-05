@@ -7,7 +7,11 @@ public class CannonBallPlayer : CannonBall
 
     protected override void Shoot()
     {
-        if (!player) return;
+        if (player == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         player = GameObject.FindGameObjectWithTag("Player");
         rb.linearVelocity = (player.transform.position - transform.position).normalized * force;
     }
