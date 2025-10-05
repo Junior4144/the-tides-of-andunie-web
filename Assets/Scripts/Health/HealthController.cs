@@ -26,7 +26,8 @@ public class HealthController : MonoBehaviour
 
         OnHealthChanged.Invoke();
 
-        healthBarShake.Shake();
+        if (this.CompareTag("Player"))
+            healthBarShake.Shake();
 
         if (_currentHealth < 0)
             _currentHealth = 0;
