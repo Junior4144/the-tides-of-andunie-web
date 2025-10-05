@@ -3,7 +3,7 @@ using UnityEngine;
 public class FollowCameraTarget : MonoBehaviour
 {
     [SerializeField] private CameraTarget target;
-    [SerializeField] private float followSpeed = 5f; // how fast it catches up
+    [SerializeField] private float followSpeed = 5f; 
 
     private Vector3 initialOffset;
 
@@ -17,14 +17,17 @@ public class FollowCameraTarget : MonoBehaviour
     {
         if (target == null) return;
 
-        // Desired position = target position + original offset
-        Vector3 desiredPos = target.transform.position + initialOffset;
+        Vector3 desiredPos = new Vector3(
+            target.transform.position.x + initialOffset.x,
+            transform.position.y,
+            transform.position.z
+        );
 
-        // Smoothly move toward that position
         transform.position = Vector3.Lerp(
             transform.position,
             desiredPos,
             followSpeed * Time.deltaTime
         );
     }
+
 }
