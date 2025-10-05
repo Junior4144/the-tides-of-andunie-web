@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 1033104769355789356}
   - component: {fileID: 8778069322479585633}
   - component: {fileID: 6365374517536948884}
+  - component: {fileID: 797772597010606583}
   m_Layer: 5
   m_Name: IventoryTab
   m_TagString: Untagged
@@ -492,6 +493,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &797772597010606583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032398446243699031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516392354206a0a4b9ad0192cb3f71f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryController
+  InventoryPanel: {fileID: 2266649784135045999}
+  slotPrefab: {fileID: 7322913947530685665, guid: 81604e1cf693f9b479134ed3b4c843c0, type: 3}
+  slotCount: 8
+  itemPrefabs:
+  - {fileID: 4147151146083323583, guid: 6b17cef61d4d4c640927f15b78fc3274, type: 3}
+  - {fileID: 8671697506666355653, guid: 246fc8d8d6f90694d942e1cfa028345f, type: 3}
 --- !u!1 &3284463316430426856
 GameObject:
   m_ObjectHideFlags: 0

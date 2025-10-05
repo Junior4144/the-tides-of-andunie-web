@@ -19,13 +19,40 @@ public class PlayerItemCollector : MonoBehaviour
             Item item = collison.GetComponent<Item>();
             if (item != null)
             {
-                //Add item inventory
-                bool itemAdded = inventoryController.AddItem(collison.gameObject);
-                if (itemAdded)
+                if (item.useImmediately)
                 {
+                    UseItem(item);
                     Destroy(collison.gameObject);
                 }
+                //Add item inventory
+                else
+                {
+                    bool itemAdded = inventoryController.AddItem(collison.gameObject);
+                    if (itemAdded)
+                    {
+                        Destroy(collison.gameObject);
+                    }
+                }
             }
+        }
+    }
+
+    private void UseItem(Item item)
+    {
+        string type = item.description[0];
+        switch (type)
+        {
+            case "health":
+                float amount = float.Parse(item.description[1]);
+                if (amount > 0)
+                {
+                    transform.parent.GetComponent<HealthController>().AddHealth(amount);
+                }
+                else
+                {
+                    transform.parent.GetComponent<HealthController>().TakeDamage(-amount);
+                }
+                break;
         }
     }
 

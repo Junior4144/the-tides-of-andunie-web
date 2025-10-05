@@ -17,7 +17,7 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        if (_currentHealth == 0)
+        if (_currentHealth == 0 || damageAmount == 0)
             return;
 
         _currentHealth -= damageAmount;
@@ -38,7 +38,7 @@ public class HealthController : MonoBehaviour
 
     public void AddHealth(float amount)
     {
-        if (_currentHealth == _maxHealth)
+        if (_currentHealth == _maxHealth || amount == 0)
             return;
 
         _currentHealth += amount;
