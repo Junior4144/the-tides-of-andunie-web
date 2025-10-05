@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 775321515913061211}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,7 +68,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.45
+  m_Radius: 0.5250422
 --- !u!114 &3378544854600277298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 10
+  _impulseForce: 15
   _impulseDuration: 0.3
   _layerName: Freindly
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_SortingLayerID: -1736753453
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3468676886420404900, guid: e6abf5f0542f3fd4da97272a930ea3dd, type: 3}
+  m_Sprite: {fileID: -5435926560693546519, guid: a62bd20938afa4d49b78658b53ea8d5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -276,8 +276,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.45
+  m_Offset: {x: -0.183, y: -0.139}
+  m_Radius: 0.5250422
 --- !u!114 &2189173565753242931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,7 +347,9 @@ MonoBehaviour:
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
   _currentHealth: 100
   _maxHealth: 100
-  _damageOverTime: 0
-  _damageInterval: 1
+  healthBarShake: {fileID: 0}

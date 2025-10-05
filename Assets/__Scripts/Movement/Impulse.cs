@@ -25,9 +25,7 @@ public class Impulse : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
         if (otherCollider.gameObject.name == "ImpulseCollider" && otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName))
-        {
             DoImpulse(otherCollider);
-        }
     }
 
     public void DoImpulse(Collider2D enemyCollider)
