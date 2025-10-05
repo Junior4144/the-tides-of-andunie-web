@@ -1,90 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &775321515913061211
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1007004349455845026}
-  - component: {fileID: 4700613940918989310}
-  - component: {fileID: 3378544854600277298}
-  m_Layer: 6
-  m_Name: ImpulseCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1007004349455845026
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775321515913061211}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7809032415379582068}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4700613940918989310
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775321515913061211}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5250422
---- !u!114 &3378544854600277298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775321515913061211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 15
-  _impulseDuration: 0.3
-  _layerName: Freindly
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
 --- !u!1 &5938135631140115468
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +106,7 @@ GameObject:
   - component: {fileID: 2319986614684013021}
   - component: {fileID: 8977027841711833750}
   - component: {fileID: 5265478554692111971}
+  - component: {fileID: 2645352281839934357}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -212,7 +128,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5087616119106119169}
-  - {fileID: 1007004349455845026}
+  - {fileID: 7490231264716998254}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &3543302567213916018
@@ -343,13 +259,146 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthController
   OnDied:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: AnimationPlayer, Assembly-CSharp
+        m_MethodName: PlayAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2319986614684013021}
+        m_TargetAssemblyTypeName: EnemyDestroyController, Assembly-CSharp
+        m_MethodName: DestroyEnemy
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
   OnDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2645352281839934357}
+        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _currentHealth: 100
   _maxHealth: 100
   healthBarShake: {fileID: 0}
+--- !u!114 &2645352281839934357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974104183215885149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db5eac837b3ca843ba93240f179d71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashOnDamage
+  spriteRenderer: {fileID: 4418587764321897403}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
+--- !u!1001 &5248776838613176956
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7809032415379582068}
+    m_Modifications:
+    - target: {fileID: 2898917389419020547, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_Radius
+      value: 0.5250422
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898917389419020547, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898917389419020547, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186880128317480646, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: _layerName
+      value: Freindly
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186880128317480646, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: _impulseForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.183
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.139
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3880876523009983039, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+      propertyPath: m_Name
+      value: ImpulseCollider (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+--- !u!4 &7490231264716998254 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3397336035056505874, guid: 0b68fad723bca5a4983acea47532bddd, type: 3}
+  m_PrefabInstance: {fileID: 5248776838613176956}
+  m_PrefabAsset: {fileID: 0}
