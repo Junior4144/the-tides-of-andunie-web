@@ -7,6 +7,8 @@ public class Impulse : MonoBehaviour
     [SerializeField] private string _layerName;
     public ParticleSystem _impulseParticlePrefab;
 
+    public AudioSource _impulseSound;
+
 
     private Rigidbody2D _playerRigidbody;
     private float _impulseTimer = 0f;
@@ -32,7 +34,13 @@ public class Impulse : MonoBehaviour
     {
         _playerRigidbody.AddForce(ImpulseDirection(enemyCollider) * _impulseForce, ForceMode2D.Impulse);
         _impulseTimer = _impulseDuration;
+
         SpawnImpulseParticles(enemyCollider);
+
+        if (_impulseSound)
+            PlayImpulseSound();
+        else
+            Debug.LogWarning("ImpulseSound is Null. Playing no sound.");
     }
 
     public bool IsInImpulse() => _impulseTimer > 0f;
@@ -50,4 +58,9 @@ public class Impulse : MonoBehaviour
     private Quaternion CalculateRotation(Vector2 impulseDir) => Quaternion.Euler(0f, 0f, VectorToAngle(impulseDir) - 90f);
 
     private float VectorToAngle(Vector2 vector) => Mathf.Atan2(-vector.y, -vector.x) * Mathf.Rad2Deg;
+
+    private void PlayImpulseSound()
+    {
+        Instantiate(_impulseSound, transform.position, Quaternion.identity);
+    }
 }
