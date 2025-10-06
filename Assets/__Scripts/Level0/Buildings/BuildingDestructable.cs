@@ -12,8 +12,9 @@ public abstract class BuildingDestructable : MonoBehaviour
     private Camera _camera;
 
     private GameObject player;
-    [SerializeField]
-    private float explosionRadius = 25f;
+
+
+    private float explosionRadius = 15f;
 
     [SerializeField]
     private Sprite _spriteRenderer;
@@ -62,10 +63,14 @@ public abstract class BuildingDestructable : MonoBehaviour
         if(!hasSpawnedVillager) HandleVillager();
 
         if(player == null) return;
-        float distance = Vector2.Distance(player.transform.position, transform.position);
+        float distance = Vector3.Distance(player.transform.position, transform.position);
 
-        if (player != null && distance < explosionRadius)
+        if (player != null && distance < explosionRadius) // 5 or more -> wont shake
+        {
+            Debug.Log(distance);
             HandleBuildingCameraShake();
+        }
+            
 
     }
 
