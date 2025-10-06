@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BuildingDestructable : MonoBehaviour
 {
+    
     public GameObject explosion;
     public GameObject fire;
     public GameObject fireSound;
@@ -13,13 +14,14 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private GameObject player;
 
-
     private float explosionRadius = 15f;
 
     [SerializeField]
     private Sprite _spriteRenderer;
     [SerializeField]
     private AudioClip _explosionSound;
+    [SerializeField]
+    private AudioClip _fireSound;
 
     [SerializeField]
     private GameObject _fire_position_1;
@@ -65,7 +67,7 @@ public abstract class BuildingDestructable : MonoBehaviour
         if(player == null) return;
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
-        if (player != null && distance < explosionRadius) // 5 or more -> wont shake
+        if (player != null && distance < explosionRadius)
         {
             HandleBuildingCameraShake();
         }
@@ -100,12 +102,14 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void HandleExplosion()
     {
         SpawnExplosion();
-        PlayExplosionSound(_explosionSound);
+        //PlayExplosionSound(_explosionSound);
+        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, 1f);
 
         ReplaceSprite();
 
         SpawnNewFire();
         SpawnFireSound();
+        //SoundFxManager.instance.PlayerSoundFxClip(_fireSound, transform, 1f);
 
         hasExploded = true;
     }

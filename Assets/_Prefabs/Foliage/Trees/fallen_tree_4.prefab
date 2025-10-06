@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 904463339732698919}
   - component: {fileID: 9115697896333796847}
   - component: {fileID: 5579292308818725385}
+  - component: {fileID: 902257128116124742}
   m_Layer: 0
   m_Name: fallen_tree_4
   m_TagString: Untagged
@@ -115,7 +116,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1158868627
-  m_SortingLayer: 2
+  m_SortingLayer: 7
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 378b3732d1ecdb447a1bdc2442d7e6ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -190,6 +191,22 @@ MonoBehaviour:
   fireSprite_4: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
   fireSprite_5: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
   fireSprite_6: {fileID: 0}
+--- !u!114 &902257128116124742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2541529853855242076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &5221391538340045054
 GameObject:
   m_ObjectHideFlags: 0

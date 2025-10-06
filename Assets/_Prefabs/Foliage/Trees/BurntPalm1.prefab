@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8984044091590244459}
   - component: {fileID: 3539302076051196016}
   - component: {fileID: 7831750009279266137}
+  - component: {fileID: 6701345811558398877}
   m_Layer: 0
   m_Name: BurntPalm1
   m_TagString: Untagged
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1158868627
-  m_SortingLayer: 3
+  m_SortingLayer: 7
   m_SortingOrder: 11
   m_Sprite: {fileID: -3158272505020911256, guid: c4368de4f1da227468e483324f232526, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,3 +128,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.100673676, y: 0}
   m_Radius: 0.50725555
+--- !u!114 &6701345811558398877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017912242007275416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
