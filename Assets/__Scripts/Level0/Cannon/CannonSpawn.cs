@@ -30,6 +30,7 @@ public class CannonSpawn : MonoBehaviour
         {
             SpawnCannonBall();
             timer = 0f;
+            if (cannonShotSound == null) return;
             SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
 
             //nextSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);

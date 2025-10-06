@@ -19,6 +19,7 @@ public class SoundFxManager : MonoBehaviour
 
     public void PlayerSoundFxClip(AudioClip audioClip, Transform spawnTransform, float volumeSpecifc)
     {
+        if (soundFXObject == null) return;
         AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity);
 
         audioSource.clip = audioClip;
