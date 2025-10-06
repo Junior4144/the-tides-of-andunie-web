@@ -17,6 +17,7 @@ public class VillagerMovement : MonoBehaviour
         agent.updateUpAxis = false;
         _targetDirection = transform.up;
         agent.SetDestination(target.transform.position);
+
     }
 
     private void Update()
@@ -39,4 +40,5 @@ public class VillagerMovement : MonoBehaviour
             Mathf.MoveTowardsAngle(_rigidbody.rotation, targetRotation.eulerAngles.z, _attributes.RotationSpeed * Time.deltaTime)
         );
     }
+
 }

@@ -60,14 +60,13 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         HandleExplosion();
 
-        if(!hasSpawnedVillager) HandleVillager();
+        //if(!hasSpawnedVillager) HandleVillager();
 
         if(player == null) return;
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
         if (player != null && distance < explosionRadius) // 5 or more -> wont shake
         {
-            Debug.Log(distance);
             HandleBuildingCameraShake();
         }
             
