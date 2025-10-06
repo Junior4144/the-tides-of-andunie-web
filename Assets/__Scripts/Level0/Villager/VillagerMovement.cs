@@ -40,11 +40,5 @@ public class VillagerMovement : MonoBehaviour
             Mathf.MoveTowardsAngle(_rigidbody.rotation, targetRotation.eulerAngles.z, _attributes.RotationSpeed * Time.deltaTime)
         );
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("ForestTrees"))
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-        }
-    }
+
 }

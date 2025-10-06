@@ -3,6 +3,7 @@ using UnityEngine;
 public class VillagerActivate : MonoBehaviour
 {
     public GameObject group;
+
     public Camera _camera;
 
     //get screenview 
@@ -17,7 +18,7 @@ public class VillagerActivate : MonoBehaviour
     private void Update()
     {
         //if within cam screen + margin -< setActive
-        if (CheckCameraAllBoundary(_camera.WorldToScreenPoint(group.transform.position), 100f))
+        if (CheckCameraAllBoundary(_camera.WorldToScreenPoint(group.transform.position), 175f))
             group.SetActive(true);
 
     }
