@@ -8,6 +8,7 @@ public abstract class BuildingDestructable : MonoBehaviour
     public GameObject fire;
     public GameObject fireSound;
     public bool hasExploded = false;
+    private bool hasSpawnedVillager = false;
     private Camera _camera;
 
     private GameObject player;
@@ -33,8 +34,12 @@ public abstract class BuildingDestructable : MonoBehaviour
     [SerializeField]
     private GameObject fireSprite_3;
 
+    [SerializeField] public GameObject _villagerSpawner;
+    [SerializeField] public GameObject _villager;
+
     private SpriteRenderer currentSprite;
     private CinemachineImpulseSource _impulseSource;
+    
 
     private void Start() =>
         _impulseSource = GetComponent<CinemachineImpulseSource>();
@@ -53,6 +58,8 @@ public abstract class BuildingDestructable : MonoBehaviour
         ) return;
 
         HandleExplosion();
+
+        if(!hasSpawnedVillager) HandleVillager();
 
         if(player == null) return;
         float distance = Vector2.Distance(player.transform.position, transform.position);
@@ -97,6 +104,11 @@ public abstract class BuildingDestructable : MonoBehaviour
         SpawnFireSound();
 
         hasExploded = true;
+    }
+    private void HandleVillager()
+    {
+        Instantiate(_villager, _villagerSpawner.transform.position, Quaternion.identity);
+        hasSpawnedVillager = true;
     }
 
     protected void ReplaceSprite()
