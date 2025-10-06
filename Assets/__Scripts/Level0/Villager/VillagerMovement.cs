@@ -1,11 +1,9 @@
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class VillagerMovement : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    [SerializeField] GameObject target;
     NavMeshAgent agent;
     private Vector2 _targetDirection;
     [SerializeField] VillagerAttributes _attributes;
@@ -18,11 +16,12 @@ public class VillagerMovement : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         _targetDirection = transform.up;
+        agent.SetDestination(target.transform.position);
     }
 
     private void Update()
     {
-        agent.SetDestination(target.position);
+
         _targetDirection = transform.up;
         RotateTowardsTarget();
     }
@@ -30,7 +29,7 @@ public class VillagerMovement : MonoBehaviour
     {
         if (target == null) return;
 
-        Vector2 direction = (target.position - transform.position).normalized;
+        Vector2 direction = (target.transform.position - transform.position).normalized;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
