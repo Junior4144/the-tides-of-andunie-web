@@ -4,18 +4,20 @@ using UnityEngine;
 public class PlayerItemCollector : MonoBehaviour
 {
     private InventoryController inventoryController;
+    private Collider2D itemCollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         inventoryController = FindFirstObjectByType<InventoryController>();
-
+        itemCollider = GetComponent<Collider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collison) {
 
-        if (collison.CompareTag("Item"))
+        if (collison.CompareTag("Item") && GetComponent<HealthController>())
         {
+            Debug.Log($"{this.name} collided with {collison.name}");
             Item item = collison.GetComponent<Item>();
             if (item != null)
             {
@@ -46,11 +48,11 @@ public class PlayerItemCollector : MonoBehaviour
                 float amount = float.Parse(item.description[1]);
                 if (amount > 0)
                 {
-                    transform.parent.GetComponent<HealthController>().AddHealth(amount);
+                    GetComponent<HealthController>().AddHealth(amount);
                 }
                 else
                 {
-                    transform.parent.GetComponent<HealthController>().TakeDamage(-amount);
+                    GetComponent<HealthController>().TakeDamage(-amount);
                 }
                 break;
         }
