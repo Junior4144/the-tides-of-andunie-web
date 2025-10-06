@@ -123,15 +123,13 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void HandleExplosion()
     {
         SpawnExplosion();
-        //PlayExplosionSound(_explosionSound);
-        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, 1f);
+        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, .3f);
 
         ReplaceSprite();
 
         if (hasFire) return;
         SpawnNewFire();
         SpawnFireSound();
-        //SoundFxManager.instance.PlayerSoundFxClip(_fireSound, transform, 1f);
 
         hasExploded = true;
     }

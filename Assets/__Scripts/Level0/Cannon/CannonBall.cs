@@ -3,8 +3,14 @@ using UnityEngine;
 
 public abstract class CannonBall : MonoBehaviour 
 {
+
+    public GameObject explosion;
+
+
     [SerializeField]
     private EnemyAttribute _enemyAttribute;
+    [SerializeField]
+    private AudioClip _explosionSound;
 
     protected Rigidbody2D rb;
 
@@ -42,7 +48,6 @@ public abstract class CannonBall : MonoBehaviour
             HandlePlayerCollision(collision);
             HandleCameraShake();
         }
-        
     }
 
     private bool IsValidBuildingCollision(Collider2D collision)
@@ -50,6 +55,12 @@ public abstract class CannonBall : MonoBehaviour
         if (!collision.CompareTag("Building")) return false;
 
         return collision.GetComponent<BuildingDestructable>().hasExploded == false;
+    }
+
+    public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
+    public void SpawnExplosionSound()
+    {
+        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, 1f);
     }
 
     void HandlePlayerCollision(Collider2D collision)
