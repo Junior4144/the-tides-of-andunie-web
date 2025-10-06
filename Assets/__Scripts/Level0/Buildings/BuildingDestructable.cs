@@ -9,6 +9,7 @@ public abstract class BuildingDestructable : MonoBehaviour
     public GameObject fire;
     public GameObject fireSound;
     public bool hasExploded = false;
+    public bool hasFire = false;
     private bool hasSpawnedVillager = false;
     private Camera _camera;
 
@@ -53,8 +54,16 @@ public abstract class BuildingDestructable : MonoBehaviour
     private CinemachineImpulseSource _impulseSource;
     
 
-    private void Start() =>
+    private void Start()
+    {
         _impulseSource = GetComponent<CinemachineImpulseSource>();
+        if (hasFire)
+        {
+            SpawnNewFire();
+            SpawnFireSound();
+        }
+    }
+        
 
     private void LateUpdate() => _camera = Camera.main;
 
@@ -119,6 +128,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         ReplaceSprite();
 
+        if (hasFire) return;
         SpawnNewFire();
         SpawnFireSound();
         //SoundFxManager.instance.PlayerSoundFxClip(_fireSound, transform, 1f);
@@ -150,5 +160,7 @@ public abstract class BuildingDestructable : MonoBehaviour
         else
             Debug.LogError("ExplosionSound is Null. Playing no Sound");
     }
+
+
 
 }
