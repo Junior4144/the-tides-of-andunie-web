@@ -29,6 +29,11 @@ public abstract class BuildingDestructable : MonoBehaviour
     private GameObject _fire_position_2;
     [SerializeField]
     private GameObject _fire_position_3;
+    [SerializeField]
+    private GameObject _fire_position_4;
+    [SerializeField]
+    private GameObject _fire_position_5;
+
 
     [SerializeField]
     private GameObject fireSprite_1;
@@ -36,6 +41,10 @@ public abstract class BuildingDestructable : MonoBehaviour
     private GameObject fireSprite_2;
     [SerializeField]
     private GameObject fireSprite_3;
+    [SerializeField]
+    private GameObject fireSprite_4;
+    [SerializeField]
+    private GameObject fireSprite_5;
 
     [SerializeField] public GameObject _villagerSpawner;
     [SerializeField] public GameObject _villager;
@@ -98,6 +107,9 @@ public abstract class BuildingDestructable : MonoBehaviour
         Instantiate(fireSprite_1, _fire_position_1.transform.position, Quaternion.identity);
         Instantiate(fireSprite_2, _fire_position_2.transform.position, Quaternion.identity);
         Instantiate(fireSprite_3, _fire_position_3.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_4, _fire_position_4.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_5, _fire_position_5.transform.position, Quaternion.identity);
+
     }
     private void HandleExplosion()
     {
