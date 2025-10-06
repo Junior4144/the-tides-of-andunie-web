@@ -14,15 +14,17 @@ public class SquadFollower : MonoBehaviour
     private Vector3 formationOffsetLocal;
     private float formationAngleLocal;
     private Vector3 targetPositionInFormation;
+    private Impulse impulseScript;
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        impulseScript = GetComponentInChildren<Impulse>();
         
         if (transform.parent != null && transform.parent.parent != null)
         {
             hero = transform.parent.parent;
-            
+
             Vector3 worldOffset = transform.position - hero.position;
             formationOffsetLocal = Quaternion.Inverse(hero.rotation) * worldOffset;
             formationAngleLocal = transform.eulerAngles.z - hero.eulerAngles.z;
@@ -45,7 +47,8 @@ public class SquadFollower : MonoBehaviour
     {
         if (hero == null) return;
         
-        MoveTowardsFormationPosition();
+        if (impulseScript != null && impulseScript.IsInImpulse()) return;
+            MoveTowardsFormationPosition();
         
         if (!faceMovementDirection)
             RotateTowardsFormationAngle();
@@ -58,20 +61,16 @@ public class SquadFollower : MonoBehaviour
         
         if (distanceToTarget > stoppingDistance)
         {
-            // Speed directly proportional to distance
             rb.linearVelocity = directionToTarget.normalized * moveSpeed * distanceToTarget;
             
-            // Face movement direction if enabled
             if (faceMovementDirection)
                 LookAtTarget(directionToTarget);
         }
         else
         {
-            // Snap to exact position and stop
             transform.position = targetPositionInFormation;
             rb.linearVelocity = Vector2.zero;
             
-            // Always match hero rotation when in position
             RotateTowardsFormationAngle();
         }
     }

@@ -33,12 +33,14 @@ public class MeleeController : MonoBehaviour
         }
     }
 
-    private bool IsEnemy(Collider2D otherCollider) => otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName);
+    private bool IsEnemy(Collider2D otherCollider) =>
+    otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName);
 
     private IEnumerator Attack(GameObject enemyObject)
-    {   
+    {
         yield return new WaitForSeconds(damageDelay);
         enemyObject.GetComponent<HealthController>().TakeDamage(_damage);
+        Debug.Log($"{transform.parent.name} made an attack");
     }
 
     private void PlayAttackAnimation()
