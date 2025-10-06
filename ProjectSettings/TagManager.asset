@@ -12,6 +12,7 @@ TagManager:
   - CannonTarget
   - Item
   - ForestTrees
+  - Bounds
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - Enemy
   - Freindly
-  - 
+  - IgnoreTileMap
   - 
   - 
   - 
@@ -57,6 +58,9 @@ TagManager:
     locked: 0
   - name: Collectable
     uniqueID: 2018676903
+    locked: 0
+  - name: Villager
+    uniqueID: 4172423771
     locked: 0
   - name: Enemy
     uniqueID: 2558213843

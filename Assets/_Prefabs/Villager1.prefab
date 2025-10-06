@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 3796266215608503342}
   - component: {fileID: 1773880646010611573}
   - component: {fileID: 5072130723702414720}
-  m_Layer: 0
+  - component: {fileID: -811688242088044661}
+  m_Layer: 8
   m_Name: Villager1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +94,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -143,8 +144,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1440140687
-  m_SortingLayer: 5
+  m_SortingLayerID: -122543525
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ca42190f5468b8247a497892b8d9cb86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a81273cedf07ed45a3dcad79b17a617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VillagerMovement
-  target: {fileID: 2807464511227693657, guid: 9557ed4a492feed489115842dd6ebeff, type: 3}
+  target: {fileID: 0}
   _attributes: {fileID: 11400000, guid: 13bd2c1aecbd6dc48a3d48a59e8a4389, type: 2}
 --- !u!195 &5072130723702414720
 NavMeshAgent:
@@ -193,3 +194,15 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-811688242088044661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852635458474957371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ee65a3e0f5f366449e64f64a6145616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerDestroy
