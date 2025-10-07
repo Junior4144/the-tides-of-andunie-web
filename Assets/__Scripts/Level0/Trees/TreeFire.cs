@@ -30,10 +30,9 @@ public abstract class TreeFire : MonoBehaviour
     [SerializeField]
     protected GameObject fireSprite_6;
 
-    private void Start()
+    private void Awake()
     {
         SpawnNewFire();
     }
-
     protected abstract void SpawnNewFire();
 }

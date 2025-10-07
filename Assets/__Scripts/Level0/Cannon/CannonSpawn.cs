@@ -7,6 +7,8 @@ public class CannonSpawn : MonoBehaviour
     private float timer;
     private float timerForSound;
 
+    public GameObject cannonSound;
+
     [SerializeField]
     private AudioClip cannonShotSound;
 
@@ -31,7 +33,8 @@ public class CannonSpawn : MonoBehaviour
             SpawnCannonBall();
             timer = 0f;
             if (cannonShotSound == null) return;
-            SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
+            Instantiate(cannonSound, transform.position, Quaternion.identity);
+            //SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
 
             //nextSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         }
