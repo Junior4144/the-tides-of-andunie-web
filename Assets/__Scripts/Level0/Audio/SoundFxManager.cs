@@ -9,7 +9,6 @@ public class SoundFxManager : MonoBehaviour
 
     [SerializeField] private AudioSource soundFXObject;
 
-    private float volume = 1f;
 
     private void Awake()
     {
@@ -24,7 +23,7 @@ public class SoundFxManager : MonoBehaviour
 
         audioSource.clip = audioClip;
 
-        audioSource.volume = volume;
+        audioSource.volume = volumeSpecifc;
         
         audioSource.Play();
 
@@ -32,7 +31,7 @@ public class SoundFxManager : MonoBehaviour
 
         Destroy(audioSource.gameObject, clipLength);
     }
-    public void PlayerRandomSoundFxClip(AudioClip[] audioClip, Transform spawnTransform, float volume)
+    public void PlayerRandomSoundFxClip(AudioClip[] audioClip, Transform spawnTransform, float volumeSpecifc)
     {
         int rand = Random.Range(0, audioClip.Length);
 
@@ -41,7 +40,7 @@ public class SoundFxManager : MonoBehaviour
 
         audioSource.clip = audioClip[rand];
 
-        audioSource.volume = volume;
+        audioSource.volume = volumeSpecifc;
 
         audioSource.Play();
 
