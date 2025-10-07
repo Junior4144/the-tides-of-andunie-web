@@ -78770,14 +78770,6 @@ Tilemap:
     m_Data: {fileID: 1568524871, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: -71585175, guid: 1c694da2cd589524aa8096d4433dc736, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 7547
     m_Data:
@@ -79767,6 +79759,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7328987736532328502, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 972147263853389966, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.42
@@ -79851,7 +79847,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7328987736532328502, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

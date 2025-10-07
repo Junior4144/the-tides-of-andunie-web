@@ -10,7 +10,7 @@ public class SceneFade : MonoBehaviour
 
     private void Awake()
     {
-        _sceneFadeImage =GetComponent<Image>();
+        _sceneFadeImage = GetComponent<Image>();
 
     }
 

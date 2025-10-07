@@ -27,6 +27,8 @@ public class PiratePatrol : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
+        player = GameObject.FindWithTag("Player").transform;
+
         if (patrolPoints.Length > 0)
         {
             agent.SetDestination(patrolPoints[0].position);
