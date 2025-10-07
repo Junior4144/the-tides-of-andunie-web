@@ -88,11 +88,13 @@ public abstract class BuildingDestructable : MonoBehaviour
                 !CheckCameraLeftBoundary(GetScreenPosition())
             ) return;
 
+        if (collision.gameObject.CompareTag("Enemy")) return;
+
         HandleExplosion();
 
         //if(!hasSpawnedVillager) HandleVillager();
 
-        if(player == null) return;
+        if (player == null) return;
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
         if (player != null && distance < explosionRadius)
