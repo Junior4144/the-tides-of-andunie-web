@@ -42,6 +42,6 @@ public class EndGame : MonoBehaviour
     void EndGameChangeStats()
     {
         _playerHeroMovement.enabled = false;
-        _playerHero.gameObject.layer = LayerMask.NameToLayer("IgnoreCannon"); // new layer
+        Destroy(_playerHero);
     }
 }
