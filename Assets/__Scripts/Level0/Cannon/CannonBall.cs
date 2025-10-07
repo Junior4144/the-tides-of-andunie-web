@@ -57,12 +57,6 @@ public abstract class CannonBall : MonoBehaviour
         return collision.GetComponent<BuildingDestructable>().hasExploded == false;
     }
 
-    public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
-    public void SpawnExplosionSound()
-    {
-        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, 1f);
-    }
-
     void HandlePlayerCollision(Collider2D collision)
     {
         HandleDamage(collision);
