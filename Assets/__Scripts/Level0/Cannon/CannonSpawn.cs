@@ -7,10 +7,9 @@ public class CannonSpawn : MonoBehaviour
     private float timer;
     private float timerForSound;
 
-    public GameObject cannonSound;
+    public GameObject CannonSingleSound;
 
-    [SerializeField]
-    private AudioClip cannonShotSound;
+    public GameObject CannonTrippleShot;
 
     // Range for random spawn intervals
     float minSpawnTime = 1f;
@@ -26,17 +25,19 @@ public class CannonSpawn : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        //timerForSound += Time.deltaTime;
 
         if (timer >= 1)
         {
             SpawnCannonBall();
             timer = 0f;
-            if (cannonShotSound == null) return;
-            Instantiate(cannonSound, transform.position, Quaternion.identity);
-            //SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
+            if (!CannonTrippleShot)
+            {
+                Instantiate(CannonSingleSound, transform.position, Quaternion.identity);
+                return;
 
-            //nextSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+            }
+
+            Instantiate(CannonTrippleShot, transform.position, Quaternion.identity);
         }
         if(timerForSound > 2)
         {
@@ -50,14 +51,6 @@ public class CannonSpawn : MonoBehaviour
         Instantiate(cannon, transform.position, Quaternion.identity);
     }
 
-    private IEnumerator SpawnCannonShotSound()
-    {
-        SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
-        yield return new WaitForSeconds(0.3f);
-        SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
-        yield return new WaitForSeconds(0.3f);
-        SoundFxManager.instance.PlayerSoundFxClip(cannonShotSound, transform, 1f);
 
-    }
 }
 //every 2 seconds -> 3 cannonshot sounds
