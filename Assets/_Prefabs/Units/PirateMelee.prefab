@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6966880486373787102}
   - component: {fileID: 6991497682046404269}
   - component: {fileID: 8090029848768852843}
-  - component: {fileID: 697491375341121923}
   - component: {fileID: 106075003018319368}
   - component: {fileID: 6654787149281966214}
   - component: {fileID: 2243774317277572576}
@@ -106,19 +105,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.183, y: -0.139}
   m_Radius: 0.5250422
---- !u!114 &697491375341121923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040669209115769438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5177b72802d4e43878746dc8d30543, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAwarenessController
-  _enemyAttribute: {fileID: 11400000, guid: a805b6d7ed5b15a43ba3925cb46699ad, type: 2}
 --- !u!114 &106075003018319368
 MonoBehaviour:
   m_ObjectHideFlags: 0
