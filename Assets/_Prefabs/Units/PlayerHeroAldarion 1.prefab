@@ -85,6 +85,9 @@ MonoBehaviour:
   _impulseDuration: 0.4
   _layerName: Enemy
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
+  OnImpulse:
+    m_PersistentCalls:
+      m_Calls: []
   _impulseSound: {fileID: 2112944199135859477, guid: 1dd44d3d0c1681a4e9982ad35b3f167f, type: 3}
 --- !u!1 &6549749987079265144
 GameObject:
@@ -210,7 +213,19 @@ MonoBehaviour:
         m_CallState: 2
   OnHealthChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBarUI, Assembly-CSharp
+        m_MethodName: UpdateHealthBar
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 7724536385169654259}
+          m_ObjectArgumentAssemblyTypeName: HealthController, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamaged:
     m_PersistentCalls:
       m_Calls:
@@ -582,7 +597,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1440140687
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8ea54830c174d0a49906d99e23f9bfa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
