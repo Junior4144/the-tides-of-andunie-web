@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5238259637228101385}
   - component: {fileID: 938390288860506384}
-  - component: {fileID: -5907811094382679604}
   m_Layer: 0
   m_Name: SoundFXObject
   m_TagString: Untagged
@@ -130,17 +129,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-5907811094382679604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5541385652436284458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03fce7f021e9aa7479dac6d9f7694beb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProximityVolume
-  range: 15
-  maxVolume: 1
