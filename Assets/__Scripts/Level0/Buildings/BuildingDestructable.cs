@@ -57,6 +57,15 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void Start()
     {
         _impulseSource = GetComponent<CinemachineImpulseSource>();
+
+    }
+        
+
+    private void LateUpdate() => _camera = Camera.main;
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
         if (hasFire)
         {
             SpawnNewFire();
@@ -64,11 +73,6 @@ public abstract class BuildingDestructable : MonoBehaviour
         }
     }
         
-
-    private void LateUpdate() => _camera = Camera.main;
-
-    private void Awake() =>
-        player = GameObject.FindWithTag("Player");
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
