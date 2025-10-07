@@ -82,12 +82,6 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
 
         // Unload the cutscene scene
         yield return SceneManager.UnloadSceneAsync(gameObject.scene);
-
-        // Optional: Fade in
-        if (fadeCanvas != null)
-        {
-            yield return StartCoroutine(FadeIn());
-        }
     }
 
     IEnumerator FadeOut()
@@ -100,18 +94,5 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
             yield return null;
         }
         fadeCanvas.alpha = 1f;
-    }
-
-    IEnumerator FadeIn()
-    {
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            fadeCanvas.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
-            yield return null;
-        }
-        fadeCanvas.alpha = 0f;
-        fadeCanvas.gameObject.SetActive(false);
     }
 }

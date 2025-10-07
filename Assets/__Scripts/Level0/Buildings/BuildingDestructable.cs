@@ -72,11 +72,17 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_camera)
+        {
+            HandleExplosion();
+            return;
+        }
+
         if (
-            !collision.gameObject.CompareTag("CannonBall") ||
-            hasExploded ||
-            !CheckCameraLeftBoundary(GetScreenPosition())
-        ) return;
+                !collision.gameObject.CompareTag("CannonBall") ||
+                hasExploded ||
+                !CheckCameraLeftBoundary(GetScreenPosition())
+            ) return;
 
         HandleExplosion();
 
