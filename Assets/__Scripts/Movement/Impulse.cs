@@ -1,12 +1,14 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Impulse : MonoBehaviour
 {
     [SerializeField] private float _impulseForce = 5f;
     [SerializeField] private float _impulseDuration = 0.3f;
     [SerializeField] private string _layerName;
-    public ParticleSystem _impulseParticlePrefab;
 
+    public ParticleSystem _impulseParticlePrefab;
+    public UnityEvent OnImpulse;
     public AudioSource _impulseSound;
 
 
@@ -28,10 +30,11 @@ public class Impulse : MonoBehaviour
     {
         if (otherCollider.gameObject.name == "ImpulseCollider" && otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName))
             DoImpulse(otherCollider);
+            OnImpulse.Invoke();
     }
 
     public void DoImpulse(Collider2D enemyCollider)
-    {
+    {      
         _playerRigidbody.AddForce(ImpulseDirection(enemyCollider) * _impulseForce, ForceMode2D.Impulse);
         _impulseTimer = _impulseDuration;
 

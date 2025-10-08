@@ -4,20 +4,25 @@ using UnityEngine;
 
 public abstract class BuildingDestructable : MonoBehaviour
 {
+    
     public GameObject explosion;
     public GameObject fire;
     public GameObject fireSound;
     public bool hasExploded = false;
+    public bool hasFire = false;
+    private bool hasSpawnedVillager = false;
     private Camera _camera;
 
     private GameObject player;
-    [SerializeField]
-    private float explosionRadius = 25f;
+
+    private float explosionRadius = 15f;
 
     [SerializeField]
     private Sprite _spriteRenderer;
     [SerializeField]
     private AudioClip _explosionSound;
+    [SerializeField]
+    private AudioClip _fireSound;
 
     [SerializeField]
     private GameObject _fire_position_1;
@@ -25,6 +30,11 @@ public abstract class BuildingDestructable : MonoBehaviour
     private GameObject _fire_position_2;
     [SerializeField]
     private GameObject _fire_position_3;
+    [SerializeField]
+    private GameObject _fire_position_4;
+    [SerializeField]
+    private GameObject _fire_position_5;
+
 
     [SerializeField]
     private GameObject fireSprite_1;
@@ -32,33 +42,66 @@ public abstract class BuildingDestructable : MonoBehaviour
     private GameObject fireSprite_2;
     [SerializeField]
     private GameObject fireSprite_3;
+    [SerializeField]
+    private GameObject fireSprite_4;
+    [SerializeField]
+    private GameObject fireSprite_5;
+
+    [SerializeField] public GameObject _villagerSpawner;
+    [SerializeField] public GameObject _villager;
 
     private SpriteRenderer currentSprite;
     private CinemachineImpulseSource _impulseSource;
+    
 
-    private void Start() =>
+    private void Start()
+    {
         _impulseSource = GetComponent<CinemachineImpulseSource>();
+
+    }
+        
 
     private void LateUpdate() => _camera = Camera.main;
 
-    private void Awake() =>
+    private void Awake()
+    {
         player = GameObject.FindWithTag("Player");
+        if (hasFire)
+        {
+            SpawnNewFire();
+            SpawnFireSound();
+        }
+    }
+        
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_camera)
+        {
+            HandleExplosion();
+            return;
+        }
+
         if (
-            !collision.gameObject.CompareTag("CannonBall") ||
-            hasExploded ||
-            !CheckCameraLeftBoundary(GetScreenPosition())
-        ) return;
+                !collision.gameObject.CompareTag("CannonBall") ||
+                hasExploded ||
+                !CheckCameraLeftBoundary(GetScreenPosition())
+            ) return;
+
+        if (collision.gameObject.CompareTag("Enemy")) return;
 
         HandleExplosion();
 
-        if(player == null) return;
-        float distance = Vector2.Distance(player.transform.position, transform.position);
+        //if(!hasSpawnedVillager) HandleVillager();
+
+        if (player == null) return;
+        float distance = Vector3.Distance(player.transform.position, transform.position);
 
         if (player != null && distance < explosionRadius)
+        {
             HandleBuildingCameraShake();
+        }
+            
 
     }
 
@@ -85,18 +128,27 @@ public abstract class BuildingDestructable : MonoBehaviour
         Instantiate(fireSprite_1, _fire_position_1.transform.position, Quaternion.identity);
         Instantiate(fireSprite_2, _fire_position_2.transform.position, Quaternion.identity);
         Instantiate(fireSprite_3, _fire_position_3.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_4, _fire_position_4.transform.position, Quaternion.identity);
+        Instantiate(fireSprite_5, _fire_position_5.transform.position, Quaternion.identity);
+
     }
     private void HandleExplosion()
     {
         SpawnExplosion();
-        PlayExplosionSound(_explosionSound);
+        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, .5f);
 
         ReplaceSprite();
 
+        if (hasFire) return;
         SpawnNewFire();
         SpawnFireSound();
 
         hasExploded = true;
+    }
+    private void HandleVillager()
+    {
+        Instantiate(_villager, _villagerSpawner.transform.position, Quaternion.identity);
+        hasSpawnedVillager = true;
     }
 
     protected void ReplaceSprite()
@@ -118,5 +170,7 @@ public abstract class BuildingDestructable : MonoBehaviour
         else
             Debug.LogError("ExplosionSound is Null. Playing no Sound");
     }
+
+
 
 }

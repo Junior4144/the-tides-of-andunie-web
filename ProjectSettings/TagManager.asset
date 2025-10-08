@@ -10,6 +10,11 @@ TagManager:
   - Fallen Tree
   - CannonSpawner
   - CannonTarget
+  - Item
+  - ForestTrees
+  - Bounds
+  - CannonStopper
+  - Spawner
   layers:
   - Default
   - TransparentFX
@@ -19,7 +24,7 @@ TagManager:
   - UI
   - Enemy
   - Freindly
-  - 
+  - IgnoreCannon
   - 
   - 
   - 
@@ -47,20 +52,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Path
+    uniqueID: 2373188287
+    locked: 0
   - name: Background
     uniqueID: 801640079
-    locked: 0
-  - name: Building
-    uniqueID: 3136098669
     locked: 0
   - name: Collectable
     uniqueID: 2018676903
     locked: 0
-  - name: Player
-    uniqueID: 2854826609
+  - name: Villager
+    uniqueID: 4172423771
     locked: 0
   - name: Enemy
     uniqueID: 2558213843
+    locked: 0
+  - name: Player
+    uniqueID: 2854826609
+    locked: 0
+  - name: Building
+    uniqueID: 3136098669
     locked: 0
   - name: Animations
     uniqueID: 1612012425

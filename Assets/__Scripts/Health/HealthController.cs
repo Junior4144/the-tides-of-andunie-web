@@ -17,7 +17,7 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        if (_currentHealth == 0)
+        if (_currentHealth == 0 || damageAmount == 0)
             return;
 
         _currentHealth -= damageAmount;
@@ -26,7 +26,7 @@ public class HealthController : MonoBehaviour
 
         OnHealthChanged.Invoke();
 
-        if (this.CompareTag("Player"))
+        if (this.CompareTag("Player") && healthBarShake)
             healthBarShake.Shake();
 
         if (_currentHealth < 0)
@@ -38,7 +38,7 @@ public class HealthController : MonoBehaviour
 
     public void AddHealth(float amount)
     {
-        if (_currentHealth == _maxHealth)
+        if (_currentHealth == _maxHealth || amount == 0)
             return;
 
         _currentHealth += amount;

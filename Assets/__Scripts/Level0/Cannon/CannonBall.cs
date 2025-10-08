@@ -3,8 +3,14 @@ using UnityEngine;
 
 public abstract class CannonBall : MonoBehaviour 
 {
+
+    public GameObject explosion;
+
+
     [SerializeField]
     private EnemyAttribute _enemyAttribute;
+    [SerializeField]
+    private AudioClip _explosionSound;
 
     protected Rigidbody2D rb;
 
@@ -20,9 +26,10 @@ public abstract class CannonBall : MonoBehaviour
 
     private void Update()
     {
+        if (!Camera.main) return;
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
 
-        float verticalMargin = 1f; // 0.1 = 10% increase
+        float verticalMargin = 1f;
 
         if (viewportPos.x < 0 || viewportPos.y > 1 + verticalMargin || viewportPos.y < 0 - verticalMargin)
             Destroy(gameObject);
@@ -42,7 +49,6 @@ public abstract class CannonBall : MonoBehaviour
             HandlePlayerCollision(collision);
             HandleCameraShake();
         }
-        
     }
 
     private bool IsValidBuildingCollision(Collider2D collision)
@@ -59,7 +65,7 @@ public abstract class CannonBall : MonoBehaviour
     }
 
     void HandleDamage(Collider2D collision) => 
-        collision.GetComponentInParent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
+        collision.GetComponent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
 
     void HandleDestroyObject() => Destroy(gameObject);
     void HandleCameraShake() => CameraShakeManager.instance.CameraShake(_impulseSource);

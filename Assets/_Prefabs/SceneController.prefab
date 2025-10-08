@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8820349586937979900}
   - component: {fileID: 5640705598813389722}
   - component: {fileID: 31191231628029936}
-  - component: {fileID: 8755719049202353196}
   m_Layer: 0
   m_Name: Scene Fade
   m_TagString: Untagged
@@ -76,18 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8755719049202353196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506974080408822650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 450de5f5c9afa184d906cab0107eb7ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneFade
 --- !u!1 &1988116731713616263
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3246729783402134021}
-  - component: {fileID: 8295995861853099179}
+  - component: {fileID: 3380117300767497778}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -223,7 +210,7 @@ Transform:
   - {fileID: 3816448267586620739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8295995861853099179
+--- !u!114 &3380117300767497778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,7 +219,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2840975205732332125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617968dadcca7b845867222b9f69f93c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fc03ec95a8582d42b10b31a2abdaecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneController
-  _sceneFadeDuration: 3
+  _sceneFadeDuration: 1
