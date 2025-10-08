@@ -3,7 +3,9 @@ using UnityEngine.AI;
 
 public class PiratePatrol : MonoBehaviour
 {
-    public Transform[] patrolPoints;
+    public GameObject PatrolPoints;
+
+    private Transform[] patrolPoints;
     public float waitTime = 2f;
     public float awarenessDistance = 10f; // gimzmo to check distance -> you can see as it yellow circle
 
@@ -26,6 +28,18 @@ public class PiratePatrol : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        //add prehab position into patrolPoints array
+        if (PatrolPoints != null)
+        {
+            int childCount = PatrolPoints.transform.childCount;
+            patrolPoints = new Transform[childCount];
+
+            for (int i = 0; i < childCount; i++)
+            {
+                patrolPoints[i] = PatrolPoints.transform.GetChild(i);
+            }
+        }
 
         player = GameObject.FindWithTag("Player").transform;
 
