@@ -11,13 +11,10 @@ public class PiratePatrol : MonoBehaviour
 
 
     public Transform player;
-
     private int currentPointIndex = 0;
     private NavMeshAgent agent;
     private float waitTimer;
-
     private Transform currentPatrolPoint;
-
     private Rigidbody2D _rigidbody;
 
     [SerializeField] PriateAttributes _attributes;
@@ -53,6 +50,8 @@ public class PiratePatrol : MonoBehaviour
 
     void Update()
     {
+        if (!agent.enabled) return;
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         RotateTowardsTarget(currentPatrolPoint);
 

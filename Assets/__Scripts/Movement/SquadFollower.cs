@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -8,19 +9,18 @@ public class SquadFollower : MonoBehaviour
     [SerializeField] private float stoppingDistance = 0.01f;
     [SerializeField] private float rotationSpeed = 360f;
 
-
     private Transform squad;
     private Rigidbody2D rb;
 
     private Vector3 formationOffsetLocal;
     private float formationAngleLocal;
     private Vector3 targetPositionInFormation;
-    private Impulse impulseScript;
+    private SquadImpulseController _squadImpulseController;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        impulseScript = GetComponentInChildren<Impulse>();
+        _squadImpulseController = GetComponentInParent<SquadImpulseController>();
 
         if (transform.parent != null)
         {
@@ -38,17 +38,25 @@ public class SquadFollower : MonoBehaviour
 
     void Update()
     {
-        if (squad == null) return;
-        if (impulseScript != null && impulseScript.IsInImpulse()) return;
+        if (squad == null)
+        {
+            Debug.LogError($"Squad not found for unit: {rb}");
+            return;
+        }
+
+        if (_squadImpulseController.IsInImpulse()) return;
 
         MoveTowardsFormationPosition();
     }
-    
+
     void LateUpdate()
     {
-        if (squad == null) return;
+        if (squad == null)
+        {
+            Debug.LogError($"Squad not found for unit: {rb}");
+            return;
+        }
 
-        // Calculate the target world position based on the squad's current position and rotation
         Vector3 unitOffsetFromSquadCenter = squad.rotation * formationOffsetLocal;
         targetPositionInFormation = squad.position + unitOffsetFromSquadCenter;
     }
@@ -67,8 +75,6 @@ public class SquadFollower : MonoBehaviour
         else
         {
             SetVelocity(Vector2.zero);
-            // Optional: You could snap the position here, but letting the velocity stop is often smoother.
-            // MatchFormationPosition(); 
         }
     }
 
@@ -82,15 +88,16 @@ public class SquadFollower : MonoBehaviour
     private void MatchFormationAngle() =>
         SetRotation(targetAngle: squad.eulerAngles.z + formationAngleLocal);
 
-    private void MatchFormationPosition() =>
-         transform.position = targetPositionInFormation;
-
     private void SetRotation(float targetAngle)
     {
         float currentAngle = rb.rotation;
         float newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
         rb.SetRotation(newAngle);
     }
-        
-    private void SetVelocity(Vector2 velocity) => rb.linearVelocity = velocity;
+
+    private void SetVelocity(Vector2 velocity)
+    {   
+        rb.linearVelocity = velocity;
+    }
+    
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985660472443309083}
   - component: {fileID: 2058354708085463306}
-  - component: {fileID: 1770383207220676303}
+  - component: {fileID: 4605714001870732482}
   m_Layer: 6
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -69,7 +69,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
---- !u!114 &1770383207220676303
+--- !u!114 &4605714001870732482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,17 +78,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 103613650425616950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 15
-  _impulseDuration: 0.3
-  _layerName: Freindly
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
-  OnImpulse:
-    m_PersistentCalls:
-      m_Calls: []
-  _impulseSound: {fileID: 2112944199135859477, guid: 1dd44d3d0c1681a4e9982ad35b3f167f, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
 --- !u!1 &1030460488196840384
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +98,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1480022634217095628
 Transform:
   m_ObjectHideFlags: 0
@@ -186,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 859043071233374640}
   - component: {fileID: 933698683110386849}
-  - component: {fileID: 645209466854191972}
+  - component: {fileID: 4280254317378497483}
   m_Layer: 6
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -245,7 +237,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
---- !u!114 &645209466854191972
+--- !u!114 &4280254317378497483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,17 +246,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1231040303472095133}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 15
-  _impulseDuration: 0.3
-  _layerName: Freindly
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
-  OnImpulse:
-    m_PersistentCalls:
-      m_Calls: []
-  _impulseSound: {fileID: 2112944199135859477, guid: 1dd44d3d0c1681a4e9982ad35b3f167f, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
 --- !u!1 &1261609768288179936
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 827612140679348429}
   - component: {fileID: 892418359370782172}
-  - component: {fileID: 604490959497873945}
+  - component: {fileID: 8487176979567544071}
   m_Layer: 6
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -334,7 +318,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
---- !u!114 &604490959497873945
+--- !u!114 &8487176979567544071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,17 +327,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261609768288179936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed780d4d08be58449fad55f70384830, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Impulse
-  _impulseForce: 15
-  _impulseDuration: 0.3
-  _layerName: Freindly
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
-  OnImpulse:
-    m_PersistentCalls:
-      m_Calls: []
-  _impulseSound: {fileID: 2112944199135859477, guid: 1dd44d3d0c1681a4e9982ad35b3f167f, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
 --- !u!1 &2173403433798266475
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &355656880349574247
 Transform:
   m_ObjectHideFlags: 0
@@ -458,7 +434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &322051113378811162
 Transform:
   m_ObjectHideFlags: 0
@@ -654,6 +630,7 @@ GameObject:
   - component: {fileID: 11370930626348172}
   - component: {fileID: 6151838870736354520}
   - component: {fileID: 7530432455162420017}
+  - component: {fileID: 7216437227580297460}
   m_Layer: 0
   m_Name: PirateSquad
   m_TagString: Untagged
@@ -757,6 +734,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyController
+--- !u!114 &7216437227580297460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686743910601948230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113d429657bb1a84094bc6d9ce983e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadImpulseManager
+  _squadImpulseForce: 20
+  _impulseDuration: 0.5
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
+  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!1 &4332027779937895850
 GameObject:
   m_ObjectHideFlags: 0
