@@ -12,8 +12,6 @@ public class EndCurrentScene : MonoBehaviour
 
     public string nextScene;
 
-    public string sceneToBeUnloaded;
-
     void Start()
     {
         _player = PlayerManager.Instance.gameObject;
