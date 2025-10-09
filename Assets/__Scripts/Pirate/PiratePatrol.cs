@@ -20,7 +20,7 @@ public class PiratePatrol : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
-    [SerializeField] PriateAttributes _attributes;
+    [SerializeField] PirateAttributes _attributes;
 
     void Awake()
     {

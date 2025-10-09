@@ -7,7 +7,7 @@ public class PirateMovement : MonoBehaviour
 
     NavMeshAgent agent;
 
-    [SerializeField] PriateAttributes _attributes;
+    [SerializeField] PirateAttributes _attributes;
     private Rigidbody2D _rigidbody;
 
     public float awarenessDistance = 10f;

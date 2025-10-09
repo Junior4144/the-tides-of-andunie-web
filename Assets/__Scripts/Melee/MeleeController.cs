@@ -7,6 +7,9 @@ public class MeleeController : MonoBehaviour
     private float _damage = 20;
 
     [SerializeField]
+    private PirateAttributes pirateAttributes;
+
+    [SerializeField]
     private float damageDelay = 0;
 
     [SerializeField]
@@ -39,7 +42,7 @@ public class MeleeController : MonoBehaviour
     private IEnumerator Attack(GameObject enemyObject)
     {
         yield return new WaitForSeconds(damageDelay);
-        enemyObject.GetComponent<HealthController>().TakeDamage(_damage);
+        enemyObject.GetComponent<HealthController>().TakeDamage(pirateAttributes.DamageAmount);
         Debug.Log($"{transform.parent.name} made an attack");
     }
 

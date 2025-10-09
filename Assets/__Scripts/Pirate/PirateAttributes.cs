@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Pirate Attributes", menuName = "Scriptable Objects/Pirate Attributes")]
-public class PriateAttributes : ScriptableObject
+public class PirateAttributes : ScriptableObject
 {
     [field: SerializeField]
     public float RotationSpeed { get; private set; }
