@@ -54,7 +54,7 @@ public abstract class CannonBall : MonoBehaviour
     private bool IsValidBuildingCollision(Collider2D collision)
     {
         if (!collision.CompareTag("Building")) return false;
-
+        Debug.Log($"cannonball collision:{collision.gameObject.name}");
         return collision.GetComponent<BuildingDestructable>().hasExploded == false;
     }
 
