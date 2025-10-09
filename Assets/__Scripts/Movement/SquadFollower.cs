@@ -69,13 +69,9 @@ public class SquadFollower : MonoBehaviour
         MatchFormationAngle();
 
         if (distanceToTarget > stoppingDistance)
-        {
             SetVelocity(directionToTarget.normalized * moveSpeed * distanceToTarget);
-        }
         else
-        {
             SetVelocity(Vector2.zero);
-        }
     }
 
     // THIS METHOD WAS THE PROBLEM AND HAS BEEN REMOVED
