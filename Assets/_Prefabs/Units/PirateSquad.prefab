@@ -653,7 +653,6 @@ GameObject:
   - component: {fileID: 556549224556314479}
   - component: {fileID: 11370930626348172}
   - component: {fileID: 6151838870736354520}
-  - component: {fileID: 3380842869007188056}
   - component: {fileID: 7530432455162420017}
   m_Layer: 0
   m_Name: PirateSquad
@@ -741,27 +740,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PatrolPoints: {fileID: 0}
   waitTime: 2
   awarenessDistance: 10
   player: {fileID: 0}
-  currentPatrolPoint: {fileID: 0}
   _attributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
---- !u!114 &3380842869007188056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686743910601948230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32673b1173cf4b947a90098138972d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovementSquad
 --- !u!114 &7530432455162420017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,6 +1465,7 @@ GameObject:
   - component: {fileID: 5910075184537309447}
   - component: {fileID: 5177346036295762788}
   - component: {fileID: 7844122038088020376}
+  - component: {fileID: 4527313570801621345}
   m_Layer: 6
   m_Name: PirateHero
   m_TagString: Enemy
@@ -1695,3 +1679,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
   _isLeader: 1
+--- !u!114 &4527313570801621345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6175282733416206386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985675b5f0ec66649b5bdb96bc265519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadFollower
+  moveSpeed: 10
+  stoppingDistance: 0.01
+  rotationSpeed: 360
