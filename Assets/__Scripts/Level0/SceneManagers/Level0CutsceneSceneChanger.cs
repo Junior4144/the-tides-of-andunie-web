@@ -47,13 +47,11 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
 
     IEnumerator LoadSceneAsync()
     {
-        // Load the next scene additively in the background
+        // Start preloading the next scene (additive)
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        
-        // Prevent the scene from activating immediately
         asyncLoad.allowSceneActivation = false;
 
-        // Wait while the scene loads (stops at 0.9 progress)
+        // Wait until the scene is mostly loaded (stops at 0.9f progress)
         while (asyncLoad.progress < 0.9f)
         {
             yield return null;
@@ -65,24 +63,27 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
             yield return null;
         }
 
-        // Optional: Fade out
+        // Optional: Fade out before transition
         if (fadeCanvas != null)
         {
             yield return StartCoroutine(FadeOut());
         }
 
-        // Activate the loaded scene
         asyncLoad.allowSceneActivation = true;
 
-        // Wait for scene to fully activate
-        while (!asyncLoad.isDone)
+        // Wait until both are loaded
+        while(!asyncLoad.isDone)
         {
             yield return null;
         }
+        
+        Scene nextScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(nextScene);
 
-        // Unload the cutscene scene
+        // Unload the current cutscene scene
         yield return SceneManager.UnloadSceneAsync(gameObject.scene);
     }
+
 
     IEnumerator FadeOut()
     {

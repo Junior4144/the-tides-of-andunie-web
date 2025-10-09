@@ -3,9 +3,9 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = PlayerManager.Instance.gameObject;
 
         player.transform.position = transform.position;
     }

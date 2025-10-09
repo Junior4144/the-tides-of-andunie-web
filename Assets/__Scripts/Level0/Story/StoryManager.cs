@@ -22,37 +22,12 @@ public class StoryManager : MonoBehaviour
         
     IEnumerator RunEvents()
     {
-        PlayerHeroMovement movement = playerHero.GetComponent<PlayerHeroMovement>();
-
-        // DisablePlayerMovement(movement);
-
-        // yield return new WaitForSeconds(3f);
-
-        // MovingCameraTowardsShip();
-        // yield return new WaitForSeconds(3f);
-        // EnablePlayerMovement(movement);
-
         ActivateAllSpawners();
 
         StartSlideScroll();
         yield return null;
     }
 
-    void DisablePlayerMovement(PlayerHeroMovement movement) => movement.enabled = false;
-    void EnablePlayerMovement(PlayerHeroMovement movement) => movement.enabled = true;
-
-    void MovingCameraTowardsShip()
-    {
-        cutsceneCam.Priority = 20;
-        StartCoroutine(ReturnToPlayer());
-    }
-    IEnumerator ReturnToPlayer()
-    {
-        yield return new WaitForSeconds(cutsceneDuration);
-
-        cutsceneCam.Priority = 0;
-        playerCam.Priority = 20;
-    }
 
     void ActivateAllSpawners() =>
         ActivateAllChildren(spawnerParent);

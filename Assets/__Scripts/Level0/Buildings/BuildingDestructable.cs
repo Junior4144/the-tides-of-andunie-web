@@ -10,7 +10,6 @@ public abstract class BuildingDestructable : MonoBehaviour
     public GameObject fireSound;
     public bool hasExploded = false;
     public bool hasFire = false;
-    private bool hasSpawnedVillager = false;
     private Camera _camera;
 
     private GameObject player;
@@ -82,25 +81,22 @@ public abstract class BuildingDestructable : MonoBehaviour
             return;
         }
 
-        if (
-                !collision.gameObject.CompareTag("CannonBall") ||
-                hasExploded ||
-                !CheckCameraLeftBoundary(GetScreenPosition())
-            ) return;
+        if (   
+            !collision.gameObject.CompareTag("CannonBall") ||
+            hasExploded ||
+            !CheckCameraLeftBoundary(GetScreenPosition())
+        ) return;
 
         if (collision.gameObject.CompareTag("Enemy")) return;
 
         HandleExplosion();
 
-        //if(!hasSpawnedVillager) HandleVillager();
-
         if (player == null) return;
+
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
         if (player != null && distance < explosionRadius)
-        {
             HandleBuildingCameraShake();
-        }
             
 
     }
@@ -148,7 +144,6 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void HandleVillager()
     {
         Instantiate(_villager, _villagerSpawner.transform.position, Quaternion.identity);
-        hasSpawnedVillager = true;
     }
 
     protected void ReplaceSprite()

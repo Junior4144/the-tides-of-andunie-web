@@ -4,10 +4,10 @@ using UnityEngine;
 public class CameraTargetFinder : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         var cam = GetComponent<CinemachineCamera>();
 
-        cam.Follow = GameObject.FindWithTag("Player").transform;
+        cam.Follow = PlayerManager.Instance.gameObject.transform;
     }
 }

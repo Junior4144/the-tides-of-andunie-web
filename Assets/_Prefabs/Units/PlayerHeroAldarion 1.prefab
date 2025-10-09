@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 3790337936765633680}
   - component: {fileID: 2142873931109906679}
   - component: {fileID: 3935276486163312945}
-  - component: {fileID: -7328987736532328502}
+  - component: {fileID: 4294235500975626157}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
---- !u!114 &-7328987736532328502
+--- !u!114 &4294235500975626157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -442,10 +442,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7409650198408161721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3546ebd54876ff46a47b98c50b58eea, type: 3}
+  m_Script: {fileID: 11500000, guid: d805c7b7749077c4d92a275f5dbe8e4e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
-  objectIndex: 0
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManagerOLD
+  playerPrefab: {fileID: 0}
+  playerInstance: {fileID: 0}
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,11 @@ public class PlayerFallsBehind : MonoBehaviour
         _playerHealth = GetComponent<HealthController>();
     void Update()
     {
+
+        if (!Camera.main) return;
         _camera = Camera.main;
+        
+
         float rightEdge = DetermineCameraRightBorder();
 
         if (transform.position.x > rightEdge)

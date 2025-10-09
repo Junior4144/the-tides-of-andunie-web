@@ -41,7 +41,7 @@ public class PiratePatrol : MonoBehaviour
             }
         }
 
-        player = GameObject.FindWithTag("Player").transform;
+         
 
         if (patrolPoints.Length > 0)
         {
@@ -53,6 +53,8 @@ public class PiratePatrol : MonoBehaviour
 
     void Update()
     {
+        player = PlayerManager.Instance.gameObject.transform;
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         RotateTowardsTarget(currentPatrolPoint);
 
