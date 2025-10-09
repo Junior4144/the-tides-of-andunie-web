@@ -7,6 +7,9 @@ public class MeleeController : MonoBehaviour
     private float _damage = 20;
 
     [SerializeField]
+    private PirateAttributes pirateAttributes;
+
+    [SerializeField]
     private float damageDelay = 0;
 
     [SerializeField]
@@ -15,18 +18,18 @@ public class MeleeController : MonoBehaviour
     [SerializeField]
     private float _animDuration;
 
+    private bool _isAttacking = false;
+
     public Animator animator;
 
-    void Start()
-    {}
-
-
-    void Update()
-    {}
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (IsEnemy(otherCollider) && otherCollider.GetComponent<HealthController>())
+        if (
+            IsEnemy(otherCollider) &&
+            otherCollider.GetComponent<HealthController>() &&
+            !_isAttacking
+        )
         {
             StartCoroutine(Attack(otherCollider.gameObject));
             PlayAttackAnimation();
@@ -40,13 +43,13 @@ public class MeleeController : MonoBehaviour
     {
         yield return new WaitForSeconds(damageDelay);
         enemyObject.GetComponent<HealthController>().TakeDamage(_damage);
-        Debug.Log($"{transform.parent.name} made an attack");
     }
 
     private void PlayAttackAnimation()
     {
         if (animator)
-        {
+        {   
+            _isAttacking = true;
             animator.SetBool("IsAttacking", true);
             StartCoroutine(ResetAttackAnimation());
         }
@@ -59,6 +62,7 @@ public class MeleeController : MonoBehaviour
     private IEnumerator ResetAttackAnimation()
     {
         yield return new WaitForSeconds(_animDuration);
+        _isAttacking = false;
         animator.SetBool("IsAttacking", false);
     }
 }
