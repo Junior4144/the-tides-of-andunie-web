@@ -7,6 +7,9 @@ public class MeleeController : MonoBehaviour
     private float _damage = 20;
 
     [SerializeField]
+    private PirateAttributes pirateAttributes;
+
+    [SerializeField]
     private float damageDelay = 0;
 
     [SerializeField]
