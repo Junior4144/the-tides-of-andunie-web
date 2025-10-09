@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2112944199135859477}
   - component: {fileID: 107892480533226762}
   m_Layer: 0
-  m_Name: FireSound
+  m_Name: Eating
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,11 +44,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: d928533c9aa98854aa900b663af40fe1, type: 3}
+  m_Resource: {fileID: 8300000, guid: 42125f0f6d5f40240abdde6518cd3484, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -142,5 +142,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fce7f021e9aa7479dac6d9f7694beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProximityVolume
-  range: 10
-  maxVolume: 0.5
+  range: 25
+  maxVolume: 1

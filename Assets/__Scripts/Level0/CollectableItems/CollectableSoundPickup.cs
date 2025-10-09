@@ -1,0 +1,18 @@
+using UnityEngine;
+
+public class CollectableSoundPickup : MonoBehaviour
+{
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public GameObject _Sound;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+        {
+            Debug.Log("eating noise");
+            Instantiate(_Sound, transform.position, Quaternion.identity);
+        }
+            
+    }
+}
