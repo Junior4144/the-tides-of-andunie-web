@@ -17,6 +17,8 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
+
         if (_currentHealth == 0 || damageAmount == 0)
             return;
 

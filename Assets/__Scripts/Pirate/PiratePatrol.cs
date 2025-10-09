@@ -9,7 +9,6 @@ public class PiratePatrol : MonoBehaviour
     public float waitTime = 2f;
     public float awarenessDistance = 10f; // gimzmo to check distance -> you can see as it yellow circle
 
-
     public Transform player;
     private int currentPointIndex = 0;
     private NavMeshAgent agent;
@@ -51,6 +50,7 @@ public class PiratePatrol : MonoBehaviour
     void Update()
     {
         if (!agent.enabled) return;
+        player = PlayerManager.Instance.transform;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         RotateTowardsTarget(currentPatrolPoint);
