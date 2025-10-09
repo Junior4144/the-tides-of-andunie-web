@@ -16,7 +16,7 @@ public class PiratePatrol : MonoBehaviour
     private NavMeshAgent agent;
     private float waitTimer;
 
-    public Transform currentPatrolPoint;
+    private Transform currentPatrolPoint;
 
     private Rigidbody2D _rigidbody;
 
