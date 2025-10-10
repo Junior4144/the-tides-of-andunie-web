@@ -213,6 +213,24 @@ Transform:
   - {fileID: 938796206}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &219135320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6135214589362448719, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+  m_PrefabInstance: {fileID: 1739324910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &219135330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219135320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49331425754d18b4d8e599527a901243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
+  _isLeader: 0
 --- !u!1001 &274076435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1458,18 +1476,18 @@ GameObject:
   - component: {fileID: 1264127736}
   - component: {fileID: 1264127735}
   - component: {fileID: 1264127734}
-  - component: {fileID: 1264127733}
   - component: {fileID: 1264127732}
   - component: {fileID: 1264127731}
   - component: {fileID: 1264127730}
   - component: {fileID: 1264127729}
+  - component: {fileID: 1264127738}
   m_Layer: 6
   m_Name: PirateMelee (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1264127729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1573,19 +1591,6 @@ MonoBehaviour:
   _currentHealth: 50
   _maxHealth: 50
   healthBarShake: {fileID: 0}
---- !u!114 &1264127733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1264127728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe09171f3cf2f2240a0233be332e4d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
-  enemies: []
 --- !u!114 &1264127734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1614,7 +1619,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1679,6 +1684,19 @@ Transform:
   - {fileID: 1738005766}
   m_Father: {fileID: 89924771}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1264127738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264127728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49331425754d18b4d8e599527a901243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
+  _isLeader: 0
 --- !u!1001 &1329568432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1953,6 +1971,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
+--- !u!1 &1696048367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4990337598445231332, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+  m_PrefabInstance: {fileID: 1739324910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1696048377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696048367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49331425754d18b4d8e599527a901243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
+  _isLeader: 0
 --- !u!1 &1697206911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,7 +2017,7 @@ Transform:
   m_GameObject: {fileID: 1697206911}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.07, y: -0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32124,6 +32160,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3103003511631814778, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 3686743910601948230, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
       propertyPath: m_Name
       value: PirateSquad
@@ -32131,6 +32171,10 @@ PrefabInstance:
     - target: {fileID: 3686743910601948230, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284473497108747729, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6151838870736354520, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
       propertyPath: player
@@ -32142,15 +32186,35 @@ PrefabInstance:
       objectReference: {fileID: 1205616367}
     - target: {fileID: 7216437227580297460, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
       propertyPath: _squadImpulseForce
-      value: 12
+      value: 20
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7216437227580297460, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      propertyPath: _maxFallOffDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216437227580297460, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      propertyPath: _centralImpactMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216437227580297460, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      propertyPath: _squadParentForceMultiplier
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1687305173302222396, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+    - {fileID: 508651324804377495, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 717348311035313770, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1264127737}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4990337598445231332, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1696048377}
+    - targetCorrespondingSourceObject: {fileID: 6135214589362448719, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 219135330}
   m_SourcePrefab: {fileID: 100100000, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
 --- !u!1001 &1760577741
 PrefabInstance:
