@@ -12,16 +12,11 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            HideAll();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        if (Instance != null) return;
+
+        Instance = this;
+        HideAll();
     }
 
     public void ShowUI(UIActivation.UIType type)
