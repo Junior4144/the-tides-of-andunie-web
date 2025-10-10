@@ -12,6 +12,7 @@ public class HealthController : MonoBehaviour
     [SerializeField] private float _maxHealth = 100;
     [SerializeField] private HealthBarShake healthBarShake;
 
+
     public float GetPercentHealth() =>
          _currentHealth / _maxHealth;
 
@@ -31,7 +32,7 @@ public class HealthController : MonoBehaviour
 
         OnHealthChanged.Invoke();
 
-        if (this.CompareTag("Player") && healthBarShake)
+        if (gameObject.CompareTag("Player") && healthBarShake)
             healthBarShake.Shake();
 
         if (_currentHealth < 0)

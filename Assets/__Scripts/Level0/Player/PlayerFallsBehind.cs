@@ -8,7 +8,7 @@ public class PlayerFallsBehind : MonoBehaviour
     private HealthController _playerHealth;
 
     private void Start() =>
-        _playerHealth = GetComponent<HealthController>();
+        _playerHealth = PlayerManager.Instance.GetComponentInChildren<HealthController>();
     void Update()
     {
         if (!Camera.main) return;

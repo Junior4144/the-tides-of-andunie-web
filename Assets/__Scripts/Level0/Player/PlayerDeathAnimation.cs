@@ -6,6 +6,5 @@ public class PlayerDeathAnimation : MonoBehaviour
     
     public void DeathAnimation(){
         Instantiate(deathAnimation, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }
