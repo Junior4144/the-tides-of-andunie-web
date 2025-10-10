@@ -4,11 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField]
-    private SceneController _sceneController;
+
     public void play()
     {
-        _sceneController.LoadNextStage("PersistentGameplay", "Main Menu", "Level0Cutscene");
+        Debug.Log("Clicked Play");
+        SceneControllerManager.Instance.LoadNextStage("Main Menu", "Level0Cutscene");
 
     }
         

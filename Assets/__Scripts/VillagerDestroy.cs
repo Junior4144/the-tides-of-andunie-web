@@ -18,8 +18,7 @@ public class VillagerDestroy : MonoBehaviour
         if (collision.gameObject.CompareTag("Bounds")) return;
 
         if (collision.gameObject.CompareTag("ForestTrees"))
-        {
             Destroy(gameObject);
-        }
+
     }
 }

@@ -37,23 +37,25 @@ public class SceneController : MonoBehaviour
         StartCoroutine(LoadNextStageCoroutine(persistentScene, sceneToBeUnloaded, additiveScene));
     }
 
-
-
-
     private IEnumerator LoadNextStageCoroutine(string persistentScene, string sceneToBeUnloaded, string additiveScene)
     {
         // Fade out first
         yield return StartCoroutine(_sceneFade.FadeOutCoroutine(_sceneFadeDuration));
 
 
-
+        //To be removed if possible
         // Ensure PersistentGameplay is loaded once
-        Scene persistent = SceneManager.GetSceneByName(persistentScene);
-        if (!persistent.isLoaded)
-        {
-            Debug.Log("Loading Persistent Scene...");
-            yield return SceneManager.LoadSceneAsync(persistentScene, LoadSceneMode.Additive);
-        }
+        //Scene persistent = SceneManager.GetSceneByName(persistentScene);
+        //if (!persistent.isLoaded)
+        //{
+        //    Debug.Log("Loading Persistent Scene...");
+        //    yield return SceneManager.LoadSceneAsync(persistentScene, LoadSceneMode.Additive);
+        //}
+
+        Debug.Log("Next Scene Change Starting");
+        Debug.Log($"UnloadSceneAsync: {sceneToBeUnloaded}");
+        yield return SceneManager.UnloadSceneAsync(sceneToBeUnloaded);
+
 
         Debug.Log($"Loading next additive scene: {additiveScene}");
         yield return SceneManager.LoadSceneAsync(additiveScene, LoadSceneMode.Additive);
@@ -64,11 +66,8 @@ public class SceneController : MonoBehaviour
         SceneManager.SetActiveScene(nextScene);
         Debug.Log($"nextScene.SetActiveScene: {nextScene}");
 
-        Debug.Log($"UnloadSceneAsync: {sceneToBeUnloaded}");
-        yield return SceneManager.UnloadSceneAsync(sceneToBeUnloaded);
-        // Fade in after the scene is ready
 
-        //Currently Doesn't run any of this
+        // Fade in after the scene is ready
         yield return StartCoroutine(_sceneFade.FadeInCoroutine(_sceneFadeDuration));
 
         Debug.Log("Am i still running");

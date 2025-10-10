@@ -29,10 +29,9 @@ public class GameManager : MonoBehaviour
     {
         CurrentState = newState;
         Debug.Log($"Game state changed to: {newState}");
-        //OnGameStateChanged?.Invoke(newState);
+        OnGameStateChanged?.Invoke(newState);
     }
 
-    // Optional event for managers to react to state changes
     public delegate void GameStateChanged(GameState newState);
     public static event GameStateChanged OnGameStateChanged;
 }

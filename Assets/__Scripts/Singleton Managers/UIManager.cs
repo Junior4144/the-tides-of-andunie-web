@@ -12,27 +12,41 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-
         if (Instance != null) return;
 
         Instance = this;
         HideAll();
     }
+    private void OnEnable() =>
+        // Subscribe to GameManager event
+        GameManager.OnGameStateChanged += HandleGameStateChanged;
 
-    public void ShowUI(UIActivation.UIType type)
+    private void OnDisable() =>
+        // Unsubscribe to prevent memory leaks
+        GameManager.OnGameStateChanged -= HandleGameStateChanged;
+
+    private void Start() =>
+        HandleGameStateChanged(GameManager.Instance.CurrentState);
+
+    private void HandleGameStateChanged(GameState newState)
     {
         HideAll();
-        Debug.Log($"Current Scene Type: {type} ");
-        switch (type)
+        Debug.Log($"UIManager responding to new state: {newState}");
+
+        switch (newState)
         {
-            case UIActivation.UIType.Gameplay:
+            case GameState.Gameplay:
                 gameplayUI.SetActive(true);
                 break;
-            case UIActivation.UIType.None:
+
+            case GameState.Menu:
+            case GameState.Paused:
+            case GameState.Cutscene:
             default:
                 break;
         }
     }
+
     private void HideAll()
     {
         gameplayUI.SetActive(false);

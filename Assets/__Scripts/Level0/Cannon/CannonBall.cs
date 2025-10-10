@@ -59,8 +59,8 @@ public abstract class CannonBall : MonoBehaviour
         //due to scene change
         if (!collision.CompareTag("Building")) return false;
 
-        Debug.Log($"cannonball collision:{collision.gameObject.name}");
-        Debug.Log(collision.GetComponent<BuildingDestructable>().hasExploded);
+        //Debug.Log($"cannonball collision:{collision.gameObject.name}");
+        //Debug.Log(collision.GetComponent<BuildingDestructable>().hasExploded);
 
         return collision.GetComponent<BuildingDestructable>().hasExploded == false;
     }
