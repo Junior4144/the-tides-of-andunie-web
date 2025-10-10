@@ -5,23 +5,20 @@ public class PlayerFallsBehind : MonoBehaviour
 {
     Camera _camera;
     [SerializeField]
-    private EnemyAttribute _enemyAttribute;
     private HealthController _playerHealth;
 
     private void Start() =>
         _playerHealth = GetComponent<HealthController>();
     void Update()
     {
-
         if (!Camera.main) return;
-        _camera = Camera.main;
         
+        _camera = Camera.main;
 
         float rightEdge = DetermineCameraRightBorder();
 
-        if (transform.position.x > rightEdge)
-            if (_playerHealth != null)
-                _playerHealth.TakeDamage(_enemyAttribute.DamageAmount);
+        if (_playerHealth != null && transform.position.x > rightEdge)
+            _playerHealth.TakeDamage(10f);
     }
 
     public float DetermineCameraRightBorder() =>
