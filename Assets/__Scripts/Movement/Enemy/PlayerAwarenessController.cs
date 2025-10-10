@@ -1,15 +1,15 @@
 using UnityEngine;
 
 public class PlayerAwarenessController : MonoBehaviour
-{
-    [SerializeField]
-    private EnemyAttribute _enemyAttribute;
+{   
+    // FIX TO INTERFACE
+    [SerializeField] private PirateAttributes _pirateAttributes;
 
     private Transform _playerTransform;
 
-    private void Awake()
+    private void Start()
     {
-        _playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+        _playerTransform = PlayerManager.Instance.gameObject.transform;
 
         if (_playerTransform == null)
         {
@@ -20,6 +20,6 @@ public class PlayerAwarenessController : MonoBehaviour
 
     Vector2 _vectorToPlayer => _playerTransform.position - transform.position;
     public Vector2 DirectionToPlayer => _vectorToPlayer.normalized;
-    public bool AwareOfPlayer => _vectorToPlayer.magnitude <= _enemyAttribute.PlayerAwarenessDistance;
+    public bool AwareOfPlayer => _vectorToPlayer.magnitude <= _pirateAttributes.PlayerAwarenessDistance;
     
 }

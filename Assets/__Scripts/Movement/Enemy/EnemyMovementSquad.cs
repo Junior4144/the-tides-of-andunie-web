@@ -9,7 +9,7 @@ public class EnemyMovementSquad : MonoBehaviour
     private Vector2 _targetDirection;
 
     [SerializeField]
-    private EnemyAttribute _enemyAttribute;
+    private PirateAttributes _pirateAttributes;
 
     private void Awake()
     {
@@ -48,11 +48,9 @@ public class EnemyMovementSquad : MonoBehaviour
 
     private void SyncSquadParentToLeader()
     {
-        // Move parent to match leader's world position
         transform.position = _leaderTransform.position;
         transform.rotation = _leaderTransform.rotation;
         
-        // Reset leader to local (0,0,0) so it stays centered on parent
         _leaderTransform.localPosition = Vector3.zero;
         _leaderTransform.localRotation = Quaternion.identity;
     }
@@ -68,13 +66,13 @@ public class EnemyMovementSquad : MonoBehaviour
         if (_targetDirection == Vector2.zero) return;
 
         Quaternion targetRotation = Quaternion.LookRotation(_leaderTransform.forward, _targetDirection);
-        Quaternion rotation = Quaternion.RotateTowards(_leaderTransform.rotation, targetRotation, _enemyAttribute.RotationSpeed * Time.deltaTime);
+        Quaternion rotation = Quaternion.RotateTowards(_leaderTransform.rotation, targetRotation, _pirateAttributes.RotationSpeed * Time.deltaTime);
 
         _leaderRigidbody.SetRotation(rotation);
     }
 
     private void SetVelocity()
     {
-        _leaderRigidbody.linearVelocity = _leaderTransform.up * _enemyAttribute.Speed;
+        _leaderRigidbody.linearVelocity = _leaderTransform.up * _pirateAttributes.Speed;
     }
 }

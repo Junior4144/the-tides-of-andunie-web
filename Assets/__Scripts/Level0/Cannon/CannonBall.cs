@@ -8,7 +8,7 @@ public abstract class CannonBall : MonoBehaviour
 
 
     [SerializeField]
-    private EnemyAttribute _enemyAttribute;
+    private CannonBallAttributes _cannonBallAttributes;
     [SerializeField]
     private AudioClip _explosionSound;
 
@@ -65,7 +65,7 @@ public abstract class CannonBall : MonoBehaviour
     }
 
     void HandleDamage(Collider2D collision) => 
-        collision.GetComponent<HealthController>()?.TakeDamage(_enemyAttribute.DamageAmount);
+        collision.GetComponent<HealthController>()?.TakeDamage(_cannonBallAttributes.DamageAmount);
 
     void HandleDestroyObject() => Destroy(gameObject);
     void HandleCameraShake() => CameraShakeManager.instance.CameraShake(_impulseSource);
