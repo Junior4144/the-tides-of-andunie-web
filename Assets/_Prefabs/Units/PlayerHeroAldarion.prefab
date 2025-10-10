@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
-  _enemyAttribute: {fileID: 11400000, guid: a805b6d7ed5b15a43ba3925cb46699ad, type: 2}
+  _playerHealth: {fileID: 0}
 --- !u!1 &6361290850751860921
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
   _damage: 20
+  pirateAttributes: {fileID: 0}
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6
@@ -282,7 +283,6 @@ GameObject:
   - component: {fileID: 1957057191840703189}
   - component: {fileID: 7778158333035391464}
   - component: {fileID: 4813678204360917780}
-  - component: {fileID: 5684000304223047412}
   m_Layer: 7
   m_Name: PlayerHeroAldarion
   m_TagString: Player
@@ -443,19 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
---- !u!114 &5684000304223047412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6913548688578118101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3546ebd54876ff46a47b98c50b58eea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
-  objectIndex: 0
 --- !u!1 &7475892870822486408
 GameObject:
   m_ObjectHideFlags: 0

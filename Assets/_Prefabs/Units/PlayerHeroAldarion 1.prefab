@@ -211,6 +211,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RestartLevel, Assembly-CSharp
+        m_MethodName: RestartCurrentLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls:
@@ -241,6 +253,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBarShake, Assembly-CSharp
+        m_MethodName: Shake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _currentHealth: 350
   _maxHealth: 350
   healthBarShake: {fileID: 0}
@@ -256,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
-  _enemyAttribute: {fileID: 11400000, guid: a805b6d7ed5b15a43ba3925cb46699ad, type: 2}
+  _playerHealth: {fileID: 0}
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d805c7b7749077c4d92a275f5dbe8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManagerOLD
-  playerPrefab: {fileID: 0}
   playerInstance: {fileID: 0}
 --- !u!1 &8228389641742845611
 GameObject:
@@ -530,6 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
   _damage: 20
+  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6

@@ -61,7 +61,8 @@ public abstract class CannonBall : MonoBehaviour
 
         //Debug.Log($"cannonball collision:{collision.gameObject.name}");
         //Debug.Log(collision.GetComponent<BuildingDestructable>().hasExploded);
-
+        if (collision == null)
+            return false;
         return collision.GetComponent<BuildingDestructable>().hasExploded == false;
     }
 
