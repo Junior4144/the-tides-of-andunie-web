@@ -78306,6 +78306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1172666166}
   - component: {fileID: 1172666167}
+  - component: {fileID: 1172666168}
   m_Layer: 0
   m_Name: 'CutsceneStateSetter '
   m_TagString: Untagged
@@ -78337,9 +78338,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1172666165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 748cb7b20bf196b43a0baad08a9fe582, type: 3}
+  m_Script: {fileID: 11500000, guid: dc792a83e6d5a6c469bf1d298579c65c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CutsceneStateSetter
+  m_EditorClassIdentifier: Assembly-CSharp::UIActivation
+  sceneUIType: 0
+--- !u!114 &1172666168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172666165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd306a302d33034ea581779b902e78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateSetter
+  stateToSet: 1
 --- !u!1 &1179929376
 GameObject:
   m_ObjectHideFlags: 0

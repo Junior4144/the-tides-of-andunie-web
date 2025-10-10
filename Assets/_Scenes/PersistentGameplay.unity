@@ -661,6 +661,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   gameplayCanvas: {fileID: 1329781675}
+  gameplayUI: {fileID: 1329781675}
+  mainMenuUI: {fileID: 0}
+  cutsceneUI: {fileID: 0}
 --- !u!1 &1196949929
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +747,7 @@ GameObject:
   - component: {fileID: 1329781679}
   - component: {fileID: 1329781678}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Health Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

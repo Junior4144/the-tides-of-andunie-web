@@ -21,7 +21,7 @@ public class ImpulseListener : MonoBehaviour
         if (otherCollider.gameObject.name != "ImpulseCollider") return;
 
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
-        Vector2 impulseDirection = (closestPoint - (Vector2)otherCollider.transform.position).normalized;
+        Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
         _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection);
     }  
