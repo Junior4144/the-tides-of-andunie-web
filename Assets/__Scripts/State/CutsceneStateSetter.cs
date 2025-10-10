@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CutsceneStateSetter : MonoBehaviour
 {
+    public enum UIType { None, Gameplay, Cutscene, MainMenu }
     void Start()
     {
         if (GameManager.Instance != null)

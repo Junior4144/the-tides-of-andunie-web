@@ -4,7 +4,6 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-
     [HideInInspector]
     public GameObject playerInstance;
 
@@ -18,7 +17,5 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
-
-
     }
 }
