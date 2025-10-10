@@ -67,9 +67,11 @@ public class SceneController : MonoBehaviour
         Debug.Log($"UnloadSceneAsync: {sceneToBeUnloaded}");
         yield return SceneManager.UnloadSceneAsync(sceneToBeUnloaded);
         // Fade in after the scene is ready
+
+        //Currently Doesn't run any of this
         yield return StartCoroutine(_sceneFade.FadeInCoroutine(_sceneFadeDuration));
 
-
+        Debug.Log("Am i still running");
     }
 
 
