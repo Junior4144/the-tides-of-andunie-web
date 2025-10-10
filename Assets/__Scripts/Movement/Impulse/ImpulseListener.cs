@@ -1,3 +1,4 @@
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -15,8 +16,13 @@ public class ImpulseListener : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (otherCollider.gameObject.name == "ImpulseCollider")
-            _squadManager.InitiateSquadImpulse(otherCollider);
-    }
-        
+        if (_squadManager.IsInImpulse()) return;
+
+        if (otherCollider.gameObject.name != "ImpulseCollider") return;
+
+        Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
+        Vector2 impulseDirection = (closestPoint - (Vector2)otherCollider.transform.position).normalized;
+
+        _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection);
+    }  
 }

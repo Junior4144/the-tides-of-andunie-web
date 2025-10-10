@@ -2,24 +2,33 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.AI;
+using System;
 
 public class SquadImpulseController : MonoBehaviour
 {
     [Header("Impulse Settings")]
     [SerializeField] private float _squadImpulseForce = 10f;
+    [SerializeField] private float _squadParentForceMultiplier = 0.1f;
     [SerializeField] private float _impulseDuration = 0.3f;
-    private float _impulseTimer = 0f;
-    private NavMeshAgent agent;
+    [SerializeField] [Range(0f, 1f)] private float _squadDirectionWeight = 0.7f;
+    [SerializeField] [Range(0f, 1f)] private float _individualDirectionWeight = 0.3f;
+    [SerializeField] private float _centralImpactMultiplier = 1.3f;
+    [SerializeField] private float _centralImpactRadius = 3f;
+    [SerializeField] private float _minFallOffMultiplier = 0.2f;
+    [SerializeField] private float _maxFallOffDistance = 5f;
+    
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem _impulseParticlePrefab;
     [SerializeField] private AudioClip _impulseSound;
 
+    private float _impulseTimer = 0f;
+    private NavMeshAgent agent;
+
     private List<Rigidbody2D> _squadMemberRigidbodies = new List<Rigidbody2D>();
 
     void Awake()
     {
-
         agent = GetComponent<NavMeshAgent>();
 
         _squadMemberRigidbodies.AddRange(
@@ -38,31 +47,45 @@ public class SquadImpulseController : MonoBehaviour
 
     public bool IsInImpulse() => _impulseTimer > 0;
 
-    public void InitiateSquadImpulse(Collider2D enemyUnitCollider)
+    public void InitiateSquadImpulse(Vector2 contactPoint, Vector2 impulseDirection)
     {
-        agent.enabled = false;
 
-        Vector2 contactPoint = enemyUnitCollider.ClosestPoint(transform.position);
-        Vector2 impulseDirection = (transform.position - enemyUnitCollider.transform.position).normalized;
-
-        ApplyImpulseToSquad(impulseDirection, contactPoint);
+        ApplyImpulseToUnits(impulseDirection, contactPoint);
+        ApplyImpulseToSquad(impulseDirection);
         SpawnParticles(contactPoint, impulseDirection);
         PlaySound(contactPoint);
 
         _impulseTimer = _impulseDuration;
     }
 
-    private void ApplyImpulseToSquad(Vector2 direction, Vector2 contactPoint)
+    private void ApplyImpulseToUnits(Vector2 squadDirection, Vector2 contactPoint)
     {
+        float contactDistanceFromCenter = Vector2.Distance(contactPoint, transform.position);
+
+        float centralBonusMultiplier = contactDistanceFromCenter <= _centralImpactRadius ? _centralImpactMultiplier : 1f;
+
         _squadMemberRigidbodies.Where(rb => rb).ToList().ForEach(rb =>
         {
-            float distance = Vector2.Distance(rb.position, contactPoint);
-            float falloff = 1f / Mathf.Max(distance, 0.5f);
+            Vector2 individualDirection = CalculateDirection(rb.position, contactPoint);
+
+            Vector2 blendedDirection = (
+                squadDirection * _squadDirectionWeight +
+                individualDirection * _individualDirectionWeight
+            ).normalized;
+
+            float falloff = CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint));
+            float finalForce = falloff * _squadImpulseForce * _centralImpactMultiplier;
 
             rb.linearVelocity = Vector2.zero;
-            rb.AddForce(_squadImpulseForce * falloff * CalculateDirection(rb.position, contactPoint), ForceMode2D.Impulse);
+            rb.AddForce(blendedDirection * finalForce, ForceMode2D.Impulse);
         });
     }
+
+    private float CalcualteFallOffMultiplier(float distance) =>
+        Mathf.Lerp(1f, _minFallOffMultiplier, Mathf.Clamp01(distance / _maxFallOffDistance));
+    
+    private void ApplyImpulseToSquad(Vector2 impulseDirection) =>
+        transform.position = (Vector2)transform.position + (impulseDirection * _squadImpulseForce * _squadParentForceMultiplier);
 
     private Vector2 CalculateDirection(Vector3 a, Vector3 b) => (a - b).normalized;
 
