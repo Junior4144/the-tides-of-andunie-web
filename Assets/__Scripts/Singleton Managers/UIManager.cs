@@ -2,23 +2,44 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     [Tooltip("The root gameplay canvas (health bar, etc.)")]
     public GameObject gameplayCanvas;
 
-    void OnEnable()
+    [Header("UI Groups")]
+    [SerializeField] private GameObject gameplayUI;
+
+    private void Awake()
     {
-        GameManager.OnGameStateChanged += HandleGameStateChanged;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            HideAll();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void OnDisable()
+    public void ShowUI(UIActivation.UIType type)
     {
-        GameManager.OnGameStateChanged -= HandleGameStateChanged;
+        HideAll();
+        Debug.Log($"Current Scene Type: {type} ");
+        switch (type)
+        {
+            case UIActivation.UIType.Gameplay:
+                gameplayUI.SetActive(true);
+                break;
+            case UIActivation.UIType.None:
+            default:
+                break;
+        }
     }
-
-    private void HandleGameStateChanged(GameState newState)
+    private void HideAll()
     {
-        if (gameplayCanvas == null) return;
-
-        gameplayCanvas.SetActive(newState == GameState.Gameplay);
+        gameplayUI.SetActive(false);
     }
 }

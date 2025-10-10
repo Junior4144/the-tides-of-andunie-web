@@ -21,7 +21,7 @@ public class HealthController : MonoBehaviour
 
         if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
         // to prevent cutscene from damaging player
-
+        Debug.Log($"GameState: {GameState.Gameplay}");
 
         if (_currentHealth == 0 || damageAmount == 0)
             return;
