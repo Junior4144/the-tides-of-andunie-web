@@ -21,10 +21,6 @@ public class UIManager : MonoBehaviour
         // Subscribe to GameManager event
         GameManager.OnGameStateChanged += HandleGameStateChanged;
 
-    private void OnDisable() =>
-        // Unsubscribe to prevent memory leaks
-        GameManager.OnGameStateChanged -= HandleGameStateChanged;
-
     private void Start() =>
         HandleGameStateChanged(GameManager.Instance.CurrentState);
 

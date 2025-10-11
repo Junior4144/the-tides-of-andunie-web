@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GameState CurrentState { get; private set; } = GameState.Cutscene;
+    public GameState CurrentState { get; private set; } = GameState.Menu;
 
     void Awake()
     {
@@ -34,4 +34,5 @@ public class GameManager : MonoBehaviour
 
     public delegate void GameStateChanged(GameState newState);
     public static event GameStateChanged OnGameStateChanged;
+
 }
