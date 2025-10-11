@@ -1,17 +1,14 @@
 using TMPro;
 using UnityEngine;
-using System.Collections;
-using System;
-using System.Collections.Generic;
 
 public class RaidController : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI raidAlertText;
+    private TextMeshProUGUI preRaidText;
     [SerializeField]
     private TextMeshProUGUI timerText;
 
-    private TextController _raidAlertTextController;
+    private TextController _preRaidTextController;
     private TextController _timerTextController;
 
     private const float _waveDurationInSeconds = 30;
@@ -22,7 +19,7 @@ public class RaidController : MonoBehaviour
 
     void Awake()
     {
-        _raidAlertTextController = new TextController(raidAlertText);
+        _preRaidTextController = new TextController(preRaidText);
         _timerTextController = new TextController(timerText);
     }
 
@@ -45,44 +42,33 @@ public class RaidController : MonoBehaviour
             _timeBeforeNextWaveInSeconds--;
             if (_timeBeforeNextWaveInSeconds >= 0)
             {
-                _timerTextController.SetText(FormatTime(_timeBeforeNextWaveInSeconds));
+                _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
             }
         }
     }
-
-
 
     void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.CompareTag("Player"))
         {
-            _timeBeforeNextWaveInSeconds = _waveDurationInSeconds;
-            _timerTextController.SetText(FormatTime(_timeBeforeNextWaveInSeconds));
-            _timerTextController.SetTextVisible();
-            StartCoroutine(ExecuteAfterDelay(_timeBeforeNextWaveInSeconds + 1, _timerTextController.SetTextInvisible));
-            _raidAlertTextController.SetTextVisible();
-            StartCoroutine(ExecuteAfterDelay(2f, _raidAlertTextController.FadeOut(1f)));
+            StartAndShowTimer();
+            DisplayRaidAlertText();
+            
         }
     }
-    
-    private string FormatTime(float totalSeconds) =>
-        $"{(int)totalSeconds / 60:00}:{(int)totalSeconds % 60:00}";
 
-
-    public IEnumerator ExecuteAfterDelay(float delay, IEnumerator coroutineToExecute)
+    private void StartAndShowTimer()
     {
-        yield return new WaitForSeconds(delay);
-        StartCoroutine(coroutineToExecute); 
+        _timeBeforeNextWaveInSeconds = _waveDurationInSeconds;
+        _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
+        _timerTextController.SetTextVisible();
+        StartCoroutine(Utils.ExecuteCoroutineAfterDelay(_timeBeforeNextWaveInSeconds + 1, _timerTextController.SetTextInvisible));
     }
 
-    public IEnumerator ExecuteAfterDelay(float delay, Action functionToExecute)
+    private void DisplayRaidAlertText()
     {
-        yield return new WaitForSeconds(delay);
-        functionToExecute?.Invoke();
+        _preRaidTextController.SetTextVisible();
+        StartCoroutine(Utils.ExecuteFunctionAfterDelay(2f, _preRaidTextController.FadeOut(1f), this));
     }
-
-
-
-    
 }
