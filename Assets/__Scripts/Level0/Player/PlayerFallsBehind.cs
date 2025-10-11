@@ -1,27 +1,47 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerFallsBehind : MonoBehaviour
 {
     Camera _camera;
-    [SerializeField]
-    private EnemyAttribute _enemyAttribute;
-    private HealthController _playerHealth;
 
-    private void Start() =>
-        _playerHealth = GetComponent<HealthController>();
+    [SerializeField]
+    private IHealthController _playerHealth;
+    [SerializeField] private float deathDelay = 2f;
+
+    private float _timer;
+
+    private void Start()
+    {
+        _playerHealth = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
+        _timer = deathDelay;
+        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Level 0"))
+            enabled = false;
+    }
+
+
     void Update()
     {
-
         if (!Camera.main) return;
-        _camera = Camera.main;
         
+        _camera = Camera.main;
+
+        if (_timer > 0)
+        {
+            _timer -= Time.deltaTime;
+            return; 
+        }
+
 
         float rightEdge = DetermineCameraRightBorder();
 
-        if (transform.position.x > rightEdge)
-            if (_playerHealth != null)
-                _playerHealth.TakeDamage(_enemyAttribute.DamageAmount);
+        if (_playerHealth != null && transform.position.x > rightEdge)
+        {
+            _playerHealth.TakeDamage(1000f);
+            enabled = false;
+        }
+            
     }
 
     public float DetermineCameraRightBorder() =>

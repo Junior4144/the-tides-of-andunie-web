@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraTarget : MonoBehaviour
 {
+    public static CameraTarget Instance { get; private set; }
 
     [SerializeField] private float scrollSpeed;
     [SerializeField] private float yInfluence;
