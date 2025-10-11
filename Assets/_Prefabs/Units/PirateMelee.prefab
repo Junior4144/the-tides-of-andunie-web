@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6966880486373787102}
   - component: {fileID: 6991497682046404269}
   - component: {fileID: 8090029848768852843}
+  - component: {fileID: 6025682838888220255}
   - component: {fileID: 106075003018319368}
-  - component: {fileID: 6654787149281966214}
-  - component: {fileID: 2243774317277572576}
   - component: {fileID: 704531716799921003}
   - component: {fileID: 2025371913836554504}
   - component: {fileID: 7512509999563629514}
@@ -105,7 +104,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.183, y: -0.139}
   m_Radius: 0.5250422
---- !u!114 &106075003018319368
+--- !u!114 &6025682838888220255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,34 +113,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1040669209115769438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a5ef65276046fd4a91a2cb7a5c377e1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
---- !u!114 &6654787149281966214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040669209115769438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe09171f3cf2f2240a0233be332e4d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
-  enemies: []
---- !u!114 &2243774317277572576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040669209115769438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a590227d2b547614cb10d4317c73fb97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthController
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthController
+  _currentHealth: 50
+  _maxHealth: 50
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -153,25 +129,22 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 1
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 106075003018319368}
-        m_TargetAssemblyTypeName: EnemyDestroyController, Assembly-CSharp
-        m_MethodName: DestroyEnemy
+        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
+        m_MethodName: Destroy
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 1
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
   OnDamaged:
     m_PersistentCalls:
       m_Calls:
@@ -187,9 +160,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _currentHealth: 50
-  _maxHealth: 50
-  healthBarShake: {fileID: 0}
+--- !u!114 &106075003018319368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040669209115769438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
 --- !u!114 &704531716799921003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SquadFollower
   moveSpeed: 10
   stoppingDistance: 0.01
-  faceMovementDirection: 1
+  rotationSpeed: 360
 --- !u!1 &5007124140161695098
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
   _damage: 5
+  pirateAttributes: {fileID: 0}
   damageDelay: 0.4
   _layerName: Freindly
   _animDuration: 0.5

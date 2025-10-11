@@ -11,9 +11,9 @@ public class HealthBarUI : MonoBehaviour
 
     private Coroutine _damageRoutine;
 
-    public void UpdateHealthBar(HealthController healthController)
+    public void UpdateHealthBar(float _currentHealt, float _maxHealth)
     {
-        float targetFill = healthController.GetPercentHealth();
+        float targetFill = (_currentHealt / _maxHealth);
         _healthBarForegroundImage.fillAmount = targetFill; // Handles Red Bar
 
         if (_damageRoutine != null)

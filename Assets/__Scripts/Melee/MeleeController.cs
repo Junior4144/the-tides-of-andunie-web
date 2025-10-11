@@ -25,9 +25,10 @@ public class MeleeController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
+        var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
         if (
             IsEnemy(otherCollider) &&
-            otherCollider.GetComponent<HealthController>() &&
+            health != null &&
             !_isAttacking
         )
         {
@@ -42,7 +43,7 @@ public class MeleeController : MonoBehaviour
     private IEnumerator Attack(GameObject enemyObject)
     {
         yield return new WaitForSeconds(damageDelay);
-        enemyObject.GetComponent<HealthController>().TakeDamage(_damage);
+        enemyObject.GetComponent<IHealthController>().TakeDamage(_damage);
     }
 
     private void PlayAttackAnimation()

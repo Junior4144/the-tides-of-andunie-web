@@ -7,14 +7,14 @@ public class PlayerFallsBehind : MonoBehaviour
     Camera _camera;
 
     [SerializeField]
-    private HealthController _playerHealth;
+    private IHealthController _playerHealth;
     [SerializeField] private float deathDelay = 2f;
 
     private float _timer;
 
     private void Start()
     {
-        _playerHealth = PlayerManager.Instance.GetComponentInChildren<HealthController>();
+        _playerHealth = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
         _timer = deathDelay;
         if(SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Level 0"))
             enabled = false;
