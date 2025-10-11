@@ -1,4 +1,4 @@
-using UnityEditor.Rendering.Universal;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]

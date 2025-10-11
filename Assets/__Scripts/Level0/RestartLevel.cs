@@ -8,8 +8,6 @@ public class RestartLevel : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
-
-        _sceneController.LoadNextStage("PersistentGameplay", SceneManager.GetActiveScene().name, SceneManager.GetActiveScene().name);
-
+        _sceneController.LoadNextStage(SceneManager.GetActiveScene().name);
     }
 }

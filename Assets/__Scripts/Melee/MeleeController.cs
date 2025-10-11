@@ -65,4 +65,12 @@ public class MeleeController : MonoBehaviour
         _isAttacking = false;
         animator.SetBool("IsAttacking", false);
     }
+    public float GetDamageAmount()
+    {
+        return pirateAttributes.DamageAmount;
+    }
+    public void SetDamageAmount(float currentDamage)
+    {
+        _damage = currentDamage;
+    }
 }

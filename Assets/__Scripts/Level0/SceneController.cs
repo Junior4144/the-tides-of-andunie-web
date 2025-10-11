@@ -31,7 +31,7 @@ public class SceneController : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(sceneName);
     }
 
-    // 🧩 New method that checks if PersistentGameplay is already loaded
+    //New method that checks if PersistentGameplay is already loaded
     public void LoadNextStage(string persistentScene, string sceneToBeUnloaded, string additiveScene)
     {
         StartCoroutine(LoadNextStageCoroutine(persistentScene, sceneToBeUnloaded, additiveScene));
