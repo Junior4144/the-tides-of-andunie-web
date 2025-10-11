@@ -13,9 +13,11 @@ public class PlayerItemCollector : MonoBehaviour
         itemCollider = GetComponent<Collider2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collison) {
+    private void OnTriggerEnter2D(Collider2D collison) 
+    {
+        var health = collison.GetComponent(typeof(IHealthController)) as IHealthController;
 
-        if (collison.CompareTag("Item") && GetComponent<HealthController>())
+        if (collison.CompareTag("Item") && health != null) // IHealthController was removed -> causing error 
         {
             Debug.Log($"{this.name} collided with {collison.name}");
             Item item = collison.GetComponent<Item>();
@@ -48,11 +50,11 @@ public class PlayerItemCollector : MonoBehaviour
                 float amount = float.Parse(item.description[1]);
                 if (amount > 0)
                 {
-                    GetComponent<HealthController>().AddHealth(amount);
+                    GetComponent<IHealthController>().Heal(amount);
                 }
                 else
                 {
-                    GetComponent<HealthController>().TakeDamage(-amount);
+                    GetComponent<IHealthController>().TakeDamage(-amount);
                 }
                 break;
         }

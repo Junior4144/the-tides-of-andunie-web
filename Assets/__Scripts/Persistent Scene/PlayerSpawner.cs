@@ -26,8 +26,8 @@ public class PlayerSpawner : MonoBehaviour
         //update healthbar
         SaveManager.Instance.RestorePlayerStats();
 
-        var healthController = PlayerManager.Instance.GetComponentInChildren<HealthController>();
+        var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
 
-        _healthBarUI.UpdateHealthBar(healthController);
+        _healthBarUI.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
     }
 }

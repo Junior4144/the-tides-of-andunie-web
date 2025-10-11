@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
-        HealthController.OnHealthChanged += HandleHealthChanged;
+        PlayerHealthController.OnHealthChanged += HandleHealthChanged;
     }
 
 
@@ -49,10 +49,10 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
-    private void HandleHealthChanged(HealthController healthInstance)
+    private void HandleHealthChanged(float _currentHealth, float _maxhealth)
     {
         _healthBarShake.Shake();
-        _healthBarUI.UpdateHealthBar(healthInstance);
+        _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
 
     }
 

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6966880486373787102}
   - component: {fileID: 6991497682046404269}
   - component: {fileID: 8090029848768852843}
+  - component: {fileID: 1482488959325694838}
   - component: {fileID: 106075003018319368}
-  - component: {fileID: 2243774317277572576}
   - component: {fileID: 704531716799921003}
   - component: {fileID: 2025371913836554504}
   - component: {fileID: 7512509999563629514}
@@ -106,7 +106,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.183, y: -0.139}
   m_Radius: 0.5250422
---- !u!114 &106075003018319368
+--- !u!114 &1482488959325694838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,21 +115,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1040669209115769438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a5ef65276046fd4a91a2cb7a5c377e1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
---- !u!114 &2243774317277572576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040669209115769438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a590227d2b547614cb10d4317c73fb97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthController
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthController
+  _currentHealth: 50
+  _maxHealth: 50
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -141,7 +131,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 1
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -157,9 +147,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
   OnDamaged:
     m_PersistentCalls:
       m_Calls:
@@ -175,9 +162,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _currentHealth: 50
-  _maxHealth: 50
-  healthBarShake: {fileID: 0}
+--- !u!114 &106075003018319368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040669209115769438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
 --- !u!114 &704531716799921003
 MonoBehaviour:
   m_ObjectHideFlags: 0
