@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Groups")]
     [SerializeField] private GameObject gameplayUI;
+    [SerializeField] private HealthBarUI _healthBarUI;
+    [SerializeField] private HealthBarShake _healthBarShake;
+
 
     private void Awake()
     {
@@ -17,9 +20,12 @@ public class UIManager : MonoBehaviour
         Instance = this;
         HideAll();
     }
-    private void OnEnable() =>
-        // Subscribe to GameManager event
+    private void OnEnable()
+    {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
+        HealthController.OnHealthChanged += HandleHealthChanged;
+    }
+
 
     private void Start() =>
         HandleGameStateChanged(GameManager.Instance.CurrentState);
@@ -32,6 +38,7 @@ public class UIManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Gameplay:
+
                 gameplayUI.SetActive(true);
                 break;
 
@@ -41,6 +48,12 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+    private void HandleHealthChanged(HealthController healthInstance)
+    {
+        _healthBarShake.Shake();
+        _healthBarUI.UpdateHealthBar(healthInstance);
+
     }
 
     private void HideAll()

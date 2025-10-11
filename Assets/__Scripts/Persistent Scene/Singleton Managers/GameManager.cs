@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
 
+
+
     void Awake()
     {
         if (Instance != null && Instance != this)

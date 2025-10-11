@@ -1,17 +1,19 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class HealthController : MonoBehaviour
 {
+    
     public UnityEvent OnDied;
-    public UnityEvent OnHealthChanged;
     public UnityEvent OnDamaged;
 
     [SerializeField] private float _currentHealth = 100;
     [SerializeField] private float _maxHealth = 100;
     [SerializeField] private HealthBarShake healthBarShake;
 
+    public static event Action<HealthController> OnHealthChanged;
 
     public float GetPercentHealth() =>
          _currentHealth / _maxHealth;
@@ -28,7 +30,7 @@ public class HealthController : MonoBehaviour
 
         OnDamaged.Invoke();
 
-        OnHealthChanged.Invoke();
+        OnHealthChanged?.Invoke(this);
 
         if (gameObject.CompareTag("Player") && healthBarShake)
             healthBarShake.Shake();
@@ -47,10 +49,18 @@ public class HealthController : MonoBehaviour
 
         _currentHealth += amount;
 
-        OnHealthChanged.Invoke();
+        OnHealthChanged?.Invoke(this);
 
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
 
+    }
+    public float GetCurrentHealth()
+    {
+        return _currentHealth;
+    }
+    public void SetCurrentHealth(float currentHealth)
+    {
+        _currentHealth = currentHealth;
     }
 }
