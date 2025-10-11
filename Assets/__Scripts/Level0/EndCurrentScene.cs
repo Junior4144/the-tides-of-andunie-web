@@ -21,7 +21,6 @@ public class EndCurrentScene : MonoBehaviour
             movement.enabled = false;
         }
 
-
         var health = _player.GetComponentInChildren<PlayerHealthController>();
         if (health != null)
         {
