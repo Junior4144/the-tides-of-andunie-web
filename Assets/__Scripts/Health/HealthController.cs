@@ -6,6 +6,7 @@ public class HealthController : MonoBehaviour
 {
     public UnityEvent OnDied;
     public UnityEvent OnHealthChanged;
+    public UnityEvent OnHealthGained;
     public UnityEvent OnDamaged;
 
     [SerializeField] private float _currentHealth = 100;
@@ -46,6 +47,8 @@ public class HealthController : MonoBehaviour
             return;
 
         _currentHealth += amount;
+
+        OnHealthGained.Invoke();
 
         OnHealthChanged.Invoke();
 

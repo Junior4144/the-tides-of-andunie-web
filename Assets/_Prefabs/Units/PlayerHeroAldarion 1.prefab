@@ -226,6 +226,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnHealthGained:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8413716934614492708}
+        m_TargetAssemblyTypeName: DialogueBubbleController, Assembly-CSharp
+        m_MethodName: DialogueBubbleEventWrapper
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Tasty!
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamaged:
     m_PersistentCalls:
       m_Calls:
@@ -256,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
-  _enemyAttribute: {fileID: 11400000, guid: a805b6d7ed5b15a43ba3925cb46699ad, type: 2}
+  _playerHealth: {fileID: 0}
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +288,7 @@ GameObject:
   - component: {fileID: 2142873931109906679}
   - component: {fileID: 3935276486163312945}
   - component: {fileID: 4294235500975626157}
+  - component: {fileID: 8413716934614492708}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -445,8 +461,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d805c7b7749077c4d92a275f5dbe8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManagerOLD
-  playerPrefab: {fileID: 0}
   playerInstance: {fileID: 0}
+--- !u!114 &8413716934614492708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef03c20dcaba58142b9068dc23ed7118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
+  _bubblePrefab: {fileID: 5518043545632780055, guid: 01f18796305dd76488e1f450aa0bce87, type: 3}
+  _offsetX: 0
+  _offsetY: 2.5
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
   _damage: 20
+  pirateAttributes: {fileID: 0}
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6
