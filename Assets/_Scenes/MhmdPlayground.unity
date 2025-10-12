@@ -265,7 +265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -315, y: 222}
+  m_AnchoredPosition: {x: 0, y: 234.52}
   m_SizeDelta: {x: 142.9526, y: 40.9644}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &257002872
@@ -324,8 +324,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 1.8333435}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 493974579}
   - component: {fileID: 493974578}
   m_Layer: 5
-  m_Name: RaidAlertText
+  m_Name: AlertText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enemy raid is on the way!!!
+  m_text: Alert Text Sample Here!!!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -921,8 +921,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2503,8 +2503,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 122d4a318d453c940a7086108216076a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  raidAlertText: {fileID: 493974578}
+  alertText: {fileID: 493974578}
   timerText: {fileID: 257002872}
+  raidConfig: {fileID: 11400000, guid: 8c6e184a7d4352c4d8e3381e9eca3c7c, type: 2}
+  spawnPoints:
+  - {fileID: 1720844310}
 --- !u!4 &1605763547
 Transform:
   m_ObjectHideFlags: 0
@@ -32544,6 +32547,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5679b93e25ee4e42ae3335e7f01e36b, type: 3}
+--- !u!1 &1720844309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1720844310}
+  m_Layer: 0
+  m_Name: SpawnPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1720844310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720844309}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.8546284, w: 0.5192401}
+  m_LocalPosition: {x: -33.48, y: 13.14, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -117.437}
 --- !u!1 &1738005765
 GameObject:
   m_ObjectHideFlags: 0
@@ -35983,3 +36017,4 @@ SceneRoots:
   - {fileID: 1605763547}
   - {fileID: 851317423}
   - {fileID: 1012062241}
+  - {fileID: 1720844310}
