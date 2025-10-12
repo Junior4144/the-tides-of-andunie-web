@@ -62,6 +62,8 @@ public class PlayerHeroMovement : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         _canDash = true;
     }
-    
+
     public bool CanDash() => _canDash && !_isDashing;
+
+    public bool IsInDash() => _isDashing;
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine.AI;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class SquadImpulseController : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class SquadImpulseController : MonoBehaviour
     [SerializeField] private float _centralImpactMultiplier = 4f;
     [SerializeField] private float _minFallOffMultiplier = 0.2f;
     [SerializeField] private float _maxFallOffDistance = 5f;
+    [SerializeField] private float _dashMultiplier = 3f;
     
 
     [Header("Effects")]
@@ -44,17 +44,15 @@ public class SquadImpulseController : MonoBehaviour
 
     void Update()
     {
-        if (_impulseTimer > 0)
-            _impulseTimer -= Time.deltaTime;
-        else
-            agent.enabled = true;
+        if (_impulseTimer > 0) _impulseTimer -= Time.deltaTime;
+        else agent.enabled = true;
     }
 
     public bool IsInImpulse() => _impulseTimer > 0;
 
-    public void InitiateSquadImpulse(Vector2 contactPoint, Vector2 impulseDirection)
+    public void InitiateSquadImpulse(Vector2 contactPoint, Vector2 impulseDirection, bool isDashing)
     {
-        ApplyImpulseToUnits(impulseDirection, contactPoint);
+        ApplyImpulseToUnits(impulseDirection, contactPoint, isDashing);
         StartCoroutine(AdjustSquadPosition());
         SpawnParticles(contactPoint, impulseDirection);
         PlaySound(contactPoint);
@@ -62,28 +60,33 @@ public class SquadImpulseController : MonoBehaviour
         _impulseTimer = _impulseDuration;
     }
 
-    private void ApplyImpulseToUnits(Vector2 impulseDirection, Vector2 contactPoint)
+    private void ApplyImpulseToUnits(Vector2 impulseDirection, Vector2 contactPoint, bool isDashing)
     {
         float contactDistanceFromCenter = Vector2.Distance(contactPoint, transform.position);
 
         _squadMemberRigidbodies.Where(rb => rb).ToList().ForEach(rb =>
         {
-            Vector2 individualDirection = (rb.position -contactPoint).normalized;
+            Vector2 individualDirection = (rb.position - contactPoint).normalized;
 
-            Vector2 blendedDirection = (
-                impulseDirection * _squadDirectionWeight +
-                individualDirection * _individualDirectionWeight
+            Vector2 blendedDirection = BlendVectors(
+                impulseDirection, individualDirection,
+                _squadDirectionWeight, _individualDirectionWeight
             ).normalized;
+
+            float dashBonusMultiplier = isDashing ? _dashMultiplier : 1f;
 
             float finalForce =
                 CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint)) *
                 CalculateBehindnessBonusMultiplier(rb.position, contactPoint, impulseDirection) *
-                _squadImpulseForce;
+                _squadImpulseForce *
+                dashBonusMultiplier;
 
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(blendedDirection * finalForce, ForceMode2D.Impulse);
         });
     }
+
+    private Vector2 BlendVectors(Vector2 v1, Vector2 v2, float a1, float a2) => a1 * v1 + a2 * v2;
 
     private float CalculateBehindnessBonusMultiplier(Vector2 unitPosition, Vector2 contactPoint, Vector2 impulseDirection)
     {
