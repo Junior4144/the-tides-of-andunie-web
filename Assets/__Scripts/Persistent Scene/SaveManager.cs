@@ -19,8 +19,6 @@ public class SaveManager : MonoBehaviour
 
     public void InitializeDefaultSave()
     {
-        Debug.Log(SceneManager.GetActiveScene().name);
-
         if (!PlayerManager.Instance)
         {
             AssignDefaultValues();
@@ -52,7 +50,7 @@ public class SaveManager : MonoBehaviour
     {
         CurrentSave = new PlayerSaveData()
         {
-            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+            sceneName = SceneManager.GetActiveScene().name,
             health = PlayerManager.Instance.GetHealth(),
             damageAmount = PlayerManager.Instance.GetDamageAmount()
 

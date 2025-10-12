@@ -13,8 +13,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HealthBarShake _healthBarShake;
     [SerializeField] private GameObject _InventoryUI;
 
-
-
     private void Awake()
     {
         if (Instance != null) return;
@@ -26,9 +24,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         PlayerHealthController.OnHealthChanged += HandleHealthChanged;
-
     }
-
 
     private void Start() =>
         HandleGameStateChanged(GameManager.Instance.CurrentState);
@@ -72,8 +68,5 @@ public class UIManager : MonoBehaviour
         _InventoryUI.SetActive(false);
         gameplayUI.SetActive(false);
     }
-    public bool Check_HealthBar_UI_IsActive()
-    {
-        return _healthBarUI.gameObject.activeInHierarchy;
-    }
+    public bool Check_HealthBar_UI_IsActive() => _healthBarUI.gameObject.activeInHierarchy;
 }

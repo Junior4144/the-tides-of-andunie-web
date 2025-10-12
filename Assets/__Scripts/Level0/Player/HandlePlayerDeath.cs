@@ -9,5 +9,4 @@ public class HandlePlayerDeath : MonoBehaviour
 
     void LoadNextStage() =>
         RestartLevelSceneController.Instance.LoadNextStage(SceneManager.GetActiveScene().name);
-
 }
