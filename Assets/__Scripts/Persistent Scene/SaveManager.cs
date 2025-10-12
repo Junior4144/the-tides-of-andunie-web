@@ -21,6 +21,7 @@ public class SaveManager : MonoBehaviour
 
     public void InitializeDefaultSave()
     {
+
         CurrentSave = new PlayerSaveData()
         {
             sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,

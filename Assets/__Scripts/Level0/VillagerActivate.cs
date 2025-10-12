@@ -4,7 +4,7 @@ public class VillagerActivate : MonoBehaviour
 {
     public GameObject group;
 
-    public Camera _camera;
+    private Camera _camera;
 
     //get screenview 
     private void Start()
@@ -13,10 +13,12 @@ public class VillagerActivate : MonoBehaviour
     }
     private void LateUpdate()
     {
-        _camera = Camera.main;
+        _camera = CameraManager.Instance.GetComponent<Camera>();
     }
     private void Update()
     {
+        if (!_camera) return;
+
         //if within cam screen + margin -< setActive
         if (CheckCameraAllBoundary(_camera.WorldToScreenPoint(group.transform.position), 175f))
             group.SetActive(true);

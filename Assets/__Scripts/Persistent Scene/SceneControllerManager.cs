@@ -32,9 +32,6 @@ public class SceneControllerManager : MonoBehaviour
         Debug.Log("Next Scene Change Starting");
         yield return StartCoroutine(_sceneFade.FadeOutCoroutine(_sceneFadeDuration));
 
-        GameObject _player = PlayerManager.Instance.gameObject;
-        if (_player != null)
-            SaveManager.Instance.SavePlayerStats();
 
         Debug.Log($"UnloadSceneAsync: {sceneToBeUnloaded}");
         yield return SceneManager.UnloadSceneAsync(sceneToBeUnloaded); // might be making persistent scene active
