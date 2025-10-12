@@ -28,7 +28,6 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
 
     void Update()
     {
-        // --- Skip detection (for example, "Space" or "Escape") ---
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SkipCutscene();
@@ -48,10 +47,10 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
 
     public void SkipCutscene()
     {
-        if (timerStop) return; // already ended
+        if (timerStop) return;
 
-        timerStop = true;      // stop the countdown
-        StopAllCoroutines();   // cancel preloading or fades
+        timerStop = true;
+        StopAllCoroutines();
         Debug.Log("Cutscene skipped.");
         NextStage();
     }

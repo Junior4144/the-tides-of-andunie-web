@@ -13,6 +13,7 @@ public class HealthBarUI : MonoBehaviour
 
     public void UpdateHealthBar(float _currentHealt, float _maxHealth)
     {
+        if (!gameObject.activeSelf) return;
         float targetFill = (_currentHealt / _maxHealth);
         _healthBarForegroundImage.fillAmount = targetFill; // Handles Red Bar
 

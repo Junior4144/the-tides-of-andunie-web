@@ -51,17 +51,25 @@ public class UIManager : MonoBehaviour
     }
     private void HandleHealthChanged(float _currentHealth, float _maxhealth)
     {
+        if (!_healthBarShake.gameObject.activeSelf) return;
+
         _healthBarShake.Shake();
         _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
 
     }
     public void UpdateHealtBar(float _currentHealth, float _maxhealth)
     {
+        if (!_healthBarUI.gameObject.activeSelf) return;
+
         _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
     }
 
     private void HideAll()
     {
         gameplayUI.SetActive(false);
+    }
+    public bool Check_HealthBar_UI_IsActive()
+    {
+        return _healthBarUI.gameObject.activeInHierarchy;
     }
 }

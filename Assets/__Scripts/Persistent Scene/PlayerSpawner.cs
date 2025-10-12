@@ -20,12 +20,15 @@ public class PlayerSpawner : MonoBehaviour
         currentPlayer.transform.rotation = transform.rotation;
         Debug.Log("New Player created");
 
-        
-        SaveManager.Instance.RestorePlayerStats();
+        if (SaveManager.Instance && UIManager.Instance.Check_HealthBar_UI_IsActive())
+        {
+            SaveManager.Instance.RestorePlayerStats(); // causes a unNoticed error
+            //update healthbar
+            var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
 
-        //update healthbar
-        var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
+            UIManager.Instance.UpdateHealtBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+        }
 
-        UIManager.Instance.UpdateHealtBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+
     }
 }
