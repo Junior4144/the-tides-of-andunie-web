@@ -175,7 +175,7 @@ public class RaidController : MonoBehaviour
             Transform chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
             GameObject newEnemy = Instantiate(chosenEnemyData.prefab, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
-            Debug.Log($"Spawned the enemy of index {_activeEnemies.Count}");
+
             _activeEnemies.Add(newEnemy);
 
             chosenEnemyData.count--;
