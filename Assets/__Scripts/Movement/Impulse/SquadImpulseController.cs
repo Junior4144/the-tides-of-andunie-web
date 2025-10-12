@@ -24,6 +24,7 @@ public class SquadImpulseController : MonoBehaviour
     [SerializeField] private AudioClip _impulseSound;
 
     private float _impulseTimer = 0f;
+    private Rigidbody2D _heroRigidBody;
     private NavMeshAgent agent;
 
     private List<Rigidbody2D> _squadMemberRigidbodies = new List<Rigidbody2D>();
@@ -36,6 +37,10 @@ public class SquadImpulseController : MonoBehaviour
             GetComponentsInChildren<Rigidbody2D>()
                 .Where(rb => rb.transform != transform)
         );
+
+        _heroRigidBody = GetComponentsInChildren<UnitIdentifier>()
+            .First(unit => unit.IsLeader)
+            .GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -95,21 +100,8 @@ public class SquadImpulseController : MonoBehaviour
     {
         yield return new WaitForSeconds(_impulseDuration);
         
-        transform.position = CalculateAverageUnitPosition();
+        transform.position = _heroRigidBody.transform.position;
     }
-    
-    private Vector2 CalculateAverageUnitPosition()
-    {
-        var validRigidbodies = _squadMemberRigidbodies.Where(rb => rb).ToList();
-        
-        return validRigidbodies.Count > 0
-            ? new Vector2(
-                validRigidbodies.Average(rb => rb.position.x),
-                validRigidbodies.Average(rb => rb.position.y)
-            )
-            : (Vector2)transform.position;
-    }
-        
 
     private void SpawnParticles(Vector2 position, Vector2 direction)
     {
