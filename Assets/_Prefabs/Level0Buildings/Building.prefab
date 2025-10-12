@@ -130,9 +130,9 @@ Transform:
   - {fileID: 8445161435262557702}
   - {fileID: 2582138131348321697}
   - {fileID: 694424222308521806}
-  - {fileID: 6181258589178816658}
   - {fileID: 7540059603701502986}
   - {fileID: 7470854100623048707}
+  - {fileID: 6181258589178816658}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2378200877576856799
@@ -255,9 +255,17 @@ MonoBehaviour:
   fire: {fileID: 8254015427989947637, guid: 64d00be1687a4114aa25102b41996ccc, type: 3}
   fireSound: {fileID: 4184515136674530310, guid: 94823e4846a0ebe46a5684790ae8864e, type: 3}
   hasExploded: 0
+  hasFire: 0
   _spriteRenderer: {fileID: 21300000, guid: 4c22288cdc0cca447bf9adda371e1b74, type: 3}
-  _explosionSound: {fileID: 8300000, guid: b46f9310267236c408da69d18a6a71f5, type: 3}
-  _fireSound: {fileID: 8300000, guid: 18d22101e937efe4fb2cf94a70fee4a7, type: 3}
+  _explosionSoundPrehab: {fileID: 4184515136674530310, guid: 86a9054da676ac14b92c9b10b7cc5d61, type: 3}
+  _fire_Positions:
+  - {fileID: 1591122137174903632}
+  - {fileID: 822612409622905622}
+  - {fileID: 9167384357273212162}
+  - {fileID: 2732945132797536524}
+  - {fileID: 8699890460226331029}
+  _fire_Sprites:
+  - {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
   _fire_position_1: {fileID: 1591122137174903632}
   _fire_position_2: {fileID: 822612409622905622}
   _fire_position_3: {fileID: 9167384357273212162}

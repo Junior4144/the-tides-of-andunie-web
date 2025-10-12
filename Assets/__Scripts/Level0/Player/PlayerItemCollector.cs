@@ -6,16 +6,18 @@ public class PlayerItemCollector : MonoBehaviour
     private InventoryController inventoryController;
     private Collider2D itemCollider;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private PlayerHealthController healthController;
     void Start()
     {
         inventoryController = FindFirstObjectByType<InventoryController>();
         itemCollider = GetComponent<Collider2D>();
+        healthController = GetComponent<PlayerHealthController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collison) {
+    private void OnTriggerEnter2D(Collider2D collison) 
+    {
 
-        if (collison.CompareTag("Item") && GetComponent<HealthController>())
+        if (collison.CompareTag("Item") && healthController != null)
         {
             Debug.Log($"{this.name} collided with {collison.name}");
             Item item = collison.GetComponent<Item>();
@@ -47,13 +49,9 @@ public class PlayerItemCollector : MonoBehaviour
             case "health":
                 float amount = float.Parse(item.description[1]);
                 if (amount > 0)
-                {
-                    GetComponent<HealthController>().AddHealth(amount);
-                }
+                    healthController.AddHealth(amount);
                 else
-                {
-                    GetComponent<HealthController>().TakeDamage(-amount);
-                }
+                    healthController.TakeDamage(-amount);
                 break;
         }
     }

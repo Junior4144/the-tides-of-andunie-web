@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class CameraTarget : MonoBehaviour
 {
-    [SerializeField] private Transform player;
-    [SerializeField] private Rigidbody2D playerRb;
+    public static CameraTarget Instance { get; private set; }
+
     [SerializeField] private float scrollSpeed;
     [SerializeField] private float yInfluence;
 
+    private Transform player;
+
+    private Rigidbody2D playerRb;
+
     private float currentX;
 
-    void Start() =>
+    void Start()
+    {
+        player = PlayerManager.Instance.gameObject.transform;
+        playerRb = player.GetComponent<Rigidbody2D>();
         currentX = transform.position.x;
-
+    }
+        
     void Update()
     {
         if (player == null || playerRb == null) return;
