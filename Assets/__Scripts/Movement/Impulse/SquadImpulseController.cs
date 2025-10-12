@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.AI;
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class SquadImpulseController : MonoBehaviour
 {
     [Header("Impulse Settings")]
     [SerializeField] private float _squadImpulseForce = 10f;
-    [SerializeField] private float _squadParentForceMultiplier = 0.1f;
     [SerializeField] private float _impulseDuration = 0.3f;
     [SerializeField] [Range(0f, 1f)] private float _squadDirectionWeight = 0.7f;
     [SerializeField] [Range(0f, 1f)] private float _individualDirectionWeight = 0.3f;
-    [SerializeField] private float _centralImpactMultiplier = 1.3f;
-    [SerializeField] private float _centralImpactRadius = 3f;
+    [SerializeField] private float _centralImpactMultiplier = 4f;
     [SerializeField] private float _minFallOffMultiplier = 0.2f;
     [SerializeField] private float _maxFallOffDistance = 5f;
     
@@ -23,6 +23,7 @@ public class SquadImpulseController : MonoBehaviour
     [SerializeField] private AudioClip _impulseSound;
 
     private float _impulseTimer = 0f;
+    private Rigidbody2D _heroRigidBody;
     private NavMeshAgent agent;
 
     private List<Rigidbody2D> _squadMemberRigidbodies = new List<Rigidbody2D>();
@@ -35,6 +36,10 @@ public class SquadImpulseController : MonoBehaviour
             GetComponentsInChildren<Rigidbody2D>()
                 .Where(rb => rb.transform != transform)
         );
+
+        _heroRigidBody = GetComponentsInChildren<UnitIdentifier>()
+            .First(unit => unit.IsLeader)
+            .GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -49,45 +54,56 @@ public class SquadImpulseController : MonoBehaviour
 
     public void InitiateSquadImpulse(Vector2 contactPoint, Vector2 impulseDirection)
     {
-
         ApplyImpulseToUnits(impulseDirection, contactPoint);
-        ApplyImpulseToSquad(impulseDirection);
+        StartCoroutine(AdjustSquadPosition());
         SpawnParticles(contactPoint, impulseDirection);
         PlaySound(contactPoint);
 
         _impulseTimer = _impulseDuration;
     }
 
-    private void ApplyImpulseToUnits(Vector2 squadDirection, Vector2 contactPoint)
+    private void ApplyImpulseToUnits(Vector2 impulseDirection, Vector2 contactPoint)
     {
         float contactDistanceFromCenter = Vector2.Distance(contactPoint, transform.position);
 
-        float centralBonusMultiplier = contactDistanceFromCenter <= _centralImpactRadius ? _centralImpactMultiplier : 1f;
-
         _squadMemberRigidbodies.Where(rb => rb).ToList().ForEach(rb =>
         {
-            Vector2 individualDirection = CalculateDirection(rb.position, contactPoint);
+            Vector2 individualDirection = (rb.position -contactPoint).normalized;
 
             Vector2 blendedDirection = (
-                squadDirection * _squadDirectionWeight +
+                impulseDirection * _squadDirectionWeight +
                 individualDirection * _individualDirectionWeight
             ).normalized;
 
-            float falloff = CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint));
-            float finalForce = falloff * _squadImpulseForce * _centralImpactMultiplier;
+            float finalForce =
+                CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint)) *
+                CalculateBehindnessBonusMultiplier(rb.position, contactPoint, impulseDirection) *
+                _squadImpulseForce;
 
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(blendedDirection * finalForce, ForceMode2D.Impulse);
         });
     }
 
+    private float CalculateBehindnessBonusMultiplier(Vector2 unitPosition, Vector2 contactPoint, Vector2 impulseDirection)
+    {
+        Vector2 contactToUnit = (contactPoint - unitPosition).normalized;
+
+        // transforms Dot() range [-1, 1] -> [0, 1] 
+        float behindnessFactor = (Vector2.Dot(contactToUnit, impulseDirection) + 1f) / 2f;
+
+        return Mathf.Lerp(1f, _centralImpactMultiplier, behindnessFactor);
+    }
+
     private float CalcualteFallOffMultiplier(float distance) =>
         Mathf.Lerp(1f, _minFallOffMultiplier, Mathf.Clamp01(distance / _maxFallOffDistance));
-    
-    private void ApplyImpulseToSquad(Vector2 impulseDirection) =>
-        transform.position = (Vector2)transform.position + (impulseDirection * _squadImpulseForce * _squadParentForceMultiplier);
 
-    private Vector2 CalculateDirection(Vector3 a, Vector3 b) => (a - b).normalized;
+    private IEnumerator AdjustSquadPosition()
+    {
+        yield return new WaitForSeconds(_impulseDuration);
+        
+        transform.position = _heroRigidBody.transform.position;
+    }
 
     private void SpawnParticles(Vector2 position, Vector2 direction)
     {

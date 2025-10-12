@@ -32,15 +32,17 @@ public class SquadFollower : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"{gameObject.name}: Could not find parent object: Squad");
+            Debug.LogWarning($"{gameObject.name}: Could not find squad parent object.");
         }
+
+        transform.SetParent(null);
     }
 
     void Update()
     {
         if (squad == null)
         {
-            Debug.LogError($"Squad not found for unit: {rb}");
+            Destroy(gameObject);
             return;
         }
 
