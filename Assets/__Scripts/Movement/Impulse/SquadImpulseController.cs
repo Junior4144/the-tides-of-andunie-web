@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.AI;
 using System;
+using System.Collections;
 
 public class SquadImpulseController : MonoBehaviour
 {
@@ -40,9 +41,13 @@ public class SquadImpulseController : MonoBehaviour
     void Update()
     {
         if (_impulseTimer > 0)
+        {
             _impulseTimer -= Time.deltaTime;
+        }
         else
+        {
             agent.enabled = true;
+        }
     }
 
     public bool IsInImpulse() => _impulseTimer > 0;
@@ -51,7 +56,7 @@ public class SquadImpulseController : MonoBehaviour
     {
 
         ApplyImpulseToUnits(impulseDirection, contactPoint);
-        ApplyImpulseToSquad(impulseDirection);
+        StartCoroutine(AdjustSquadPosition());
         SpawnParticles(contactPoint, impulseDirection);
         PlaySound(contactPoint);
 
@@ -81,13 +86,30 @@ public class SquadImpulseController : MonoBehaviour
         });
     }
 
+    private Vector2 CalculateDirection(Vector3 a, Vector3 b) => (a - b).normalized;
+
     private float CalcualteFallOffMultiplier(float distance) =>
         Mathf.Lerp(1f, _minFallOffMultiplier, Mathf.Clamp01(distance / _maxFallOffDistance));
-    
-    private void ApplyImpulseToSquad(Vector2 impulseDirection) =>
-        transform.position = (Vector2)transform.position + (impulseDirection * _squadImpulseForce * _squadParentForceMultiplier);
 
-    private Vector2 CalculateDirection(Vector3 a, Vector3 b) => (a - b).normalized;
+    private IEnumerator AdjustSquadPosition()
+    {
+        yield return new WaitForSeconds(_impulseDuration);
+        
+        transform.position = CalculateAverageUnitPosition();
+    }
+    
+    private Vector2 CalculateAverageUnitPosition()
+    {
+        var validRigidbodies = _squadMemberRigidbodies.Where(rb => rb).ToList();
+        
+        return validRigidbodies.Count > 0
+            ? new Vector2(
+                validRigidbodies.Average(rb => rb.position.x),
+                validRigidbodies.Average(rb => rb.position.y)
+            )
+            : (Vector2)transform.position;
+    }
+        
 
     private void SpawnParticles(Vector2 position, Vector2 direction)
     {
