@@ -174,7 +174,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthController
   _currentHealth: 350
   _maxHealth: 350
-  healthBarShake: {fileID: 0}
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -199,37 +198,6 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3603910217672744378}
-        m_TargetAssemblyTypeName: HandlePlayerDeath, Assembly-CSharp
-        m_MethodName: NextStage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHealthGained:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8413716934614492708}
-        m_TargetAssemblyTypeName: DialogueBubbleController, Assembly-CSharp
-        m_MethodName: DialogueBubbleEventWrapper
-        m_Mode: 5
-      - m_Target: {fileID: 5346776916651260}
-        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
-        m_MethodName: Destroy
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -476,12 +444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03c20dcaba58142b9068dc23ed7118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
-  _bubblePrefab: {fileID: 5518043545632780055, guid: 01f18796305dd76488e1f450aa0bce87, type: 3}
+  _bubblePrefab: {fileID: 8188844361341347319, guid: cccf834827b08624aafeaccda0d5e5d2, type: 3}
   _offsetX: 0
   _offsetY: 2.5
-  m_Script: {fileID: 11500000, guid: da2c8e2ac644dc9448c580349bdca2c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandlePlayerDeath
 --- !u!114 &5346776916651260
 MonoBehaviour:
   m_ObjectHideFlags: 0

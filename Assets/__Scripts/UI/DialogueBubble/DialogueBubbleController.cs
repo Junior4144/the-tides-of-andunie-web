@@ -6,19 +6,25 @@ public class DialogueBubbleController : MonoBehaviour
 {
     const int numBubbleParameters = 3;
     const float defaultDuration = 3f;
-    [SerializeField] 
-    private Canvas _bubblePrefab;
+    [SerializeField]
+    private GameObject _bubblePrefab;
     [SerializeField]
     private float _offsetX = 0f;
     [SerializeField]
     private float _offsetY = 3f;
-    private Canvas _currentBubble = null;
-     
+    private GameObject _currentBubble = null;
+
+    public static event Action<Canvas> OnCreateDialogueBubble;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        PlayerHealthController.OnHealthGained += MakeDialogueBubble;
+    }
+
+    void OnEnabled()
+    {
+
     }
 
     // Update is called once per frame
@@ -116,6 +122,10 @@ public class DialogueBubbleController : MonoBehaviour
         }
 
         _currentBubble = Instantiate(_bubblePrefab, GetNewBubblePosition(), Quaternion.identity);
+        if (_currentBubble)
+        {
+            OnCreateDialogueBubble?.Invoke(_currentBubble.GetComponentInChildren<Canvas>());
+        }
         SetBubbleText(text, fontSize);
 
         Destroy(_currentBubble.gameObject, duration);

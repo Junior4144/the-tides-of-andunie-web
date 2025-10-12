@@ -11,6 +11,7 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
     public UnityEvent OnDamaged;
 
     public static event Action<float, float> OnHealthChanged;
+    public static event Action<string, float, float> OnHealthGained;
 
     public void TakeDamage(float damageAmount)
     {
@@ -20,8 +21,8 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
 
         _currentHealth -= damageAmount;
 
-        OnDamaged.Invoke(); // Within Scene
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth); // for Persistent Scene
+        OnDamaged.Invoke(); 
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
         if (_currentHealth < 0)
             _currentHealth = 0;
@@ -36,6 +37,10 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
             return;
 
         _currentHealth += amount;
+
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+
+        OnHealthGained?.Invoke("Tasty!", 3f, 0f);
 
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
