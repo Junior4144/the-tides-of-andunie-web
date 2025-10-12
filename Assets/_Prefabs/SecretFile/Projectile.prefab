@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7509861029038005602}
   - component: {fileID: 5490640663420488260}
+  - component: {fileID: 1436843342260757221}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -46,7 +47,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78a04f08e35dd54e920d3ad9311b200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  projectileVisual: {fileID: 0}
+  projectileVisual: {fileID: 1436843342260757221}
+--- !u!114 &1436843342260757221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335584360329011621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31d380173fc83c4684c7c3de880ce0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileVisual
+  projectileVisual: {fileID: 8442416296675092744}
+  projectileShadow: {fileID: 2874622555382159602}
+  projectile: {fileID: 5490640663420488260}
 --- !u!1 &7469776962868350648
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,11 +139,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1736753453
+  m_SortingLayer: 5
+  m_SortingOrder: -1
   m_Sprite: {fileID: -2340802621787483764, guid: 49d964823861ce340996020b989a1d94, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -213,8 +229,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1736753453
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -2340802621787483764, guid: 49d964823861ce340996020b989a1d94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

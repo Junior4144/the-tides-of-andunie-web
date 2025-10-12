@@ -18,9 +18,11 @@ public class ShooterFinal : MonoBehaviour
     private float shootTimer;
 
     private void Update() {
+        Debug.Log($"timer:{shootTimer}");
         shootTimer -= Time.deltaTime;
 
         if(shootTimer <= 0 ) {
+            Debug.Log("shooting");
             shootTimer = shootRate;
             Projectile projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
 
