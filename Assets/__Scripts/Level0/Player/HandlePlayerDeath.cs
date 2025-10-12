@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class HandlePlayerDeath : MonoBehaviour
 {
-
     public void NextStage() =>
         LoadNextStage();
 

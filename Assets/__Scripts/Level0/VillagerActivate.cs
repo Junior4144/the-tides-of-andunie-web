@@ -6,20 +6,15 @@ public class VillagerActivate : MonoBehaviour
 
     private Camera _camera;
 
-    //get screenview 
-    private void Start()
-    {
-        //group.SetActive(true);
-    }
-    private void LateUpdate()
-    {
+
+    private void LateUpdate() =>
+
         _camera = CameraManager.Instance.GetComponent<Camera>();
-    }
+
     private void Update()
     {
         if (!_camera) return;
 
-        //if within cam screen + margin -< setActive
         if (CheckCameraAllBoundary(_camera.WorldToScreenPoint(group.transform.position), 175f))
             group.SetActive(true);
 
