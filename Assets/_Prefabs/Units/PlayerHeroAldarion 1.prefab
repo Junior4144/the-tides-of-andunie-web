@@ -99,9 +99,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2653729124395941360}
   - component: {fileID: 7834476114726568240}
+  - component: {fileID: 792821208638009140}
   - component: {fileID: 4639632876952418692}
-  - component: {fileID: 7724536385169654259}
-  - component: {fileID: 3286461679359969351}
   m_Layer: 7
   m_Name: GenericCollider
   m_TagString: Player
@@ -160,7 +159,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.55
---- !u!114 &4639632876952418692
+--- !u!114 &792821208638009140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,21 +168,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6549749987079265144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 28e0c9599914dc641be43f6ccbe38877, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
---- !u!114 &7724536385169654259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549749987079265144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a590227d2b547614cb10d4317c73fb97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthController
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthController
+  _currentHealth: 350
+  _maxHealth: 350
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -211,9 +200,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: RestartLevel, Assembly-CSharp
-        m_MethodName: RestartCurrentLevel
+      - m_Target: {fileID: 42533560477664706}
+        m_TargetAssemblyTypeName: HandlePlayerDeath, Assembly-CSharp
+        m_MethodName: NextStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -223,16 +212,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBarUI, Assembly-CSharp
-        m_MethodName: UpdateHealthBar
-        m_Mode: 2
+      - m_Target: {fileID: 5346776916651260}
+        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
+        m_MethodName: Destroy
+        m_Mode: 4
         m_Arguments:
-          m_ObjectArgument: {fileID: 7724536385169654259}
-          m_ObjectArgumentAssemblyTypeName: HealthController, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -253,22 +239,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBarShake, Assembly-CSharp
-        m_MethodName: Shake
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _currentHealth: 350
-  _maxHealth: 350
-  healthBarShake: {fileID: 0}
---- !u!114 &3286461679359969351
+--- !u!114 &4639632876952418692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,10 +248,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6549749987079265144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
+  m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
-  _playerHealth: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +267,10 @@ GameObject:
   - component: {fileID: 2142873931109906679}
   - component: {fileID: 3935276486163312945}
   - component: {fileID: 4294235500975626157}
+  - component: {fileID: 3603910217672744378}
+  - component: {fileID: 5346776916651260}
+  - component: {fileID: 2501858800479070700}
+  - component: {fileID: 42533560477664706}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -364,6 +338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveSpeed: 5
   rotationSpeed: 200
+  dashForce: 30
+  dashDuration: 0.2
+  dashCooldown: 0.7
 --- !u!114 &5365342492064239941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +447,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManagerOLD
   playerInstance: {fileID: 0}
+--- !u!114 &3603910217672744378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef03c20dcaba58142b9068dc23ed7118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
+  _bubblePrefab: {fileID: 8188844361341347319, guid: cccf834827b08624aafeaccda0d5e5d2, type: 3}
+  _offsetX: 0
+  _offsetY: 2.5
+--- !u!114 &5346776916651260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyController
+--- !u!114 &2501858800479070700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
+  deathDelay: 2
+--- !u!114 &42533560477664706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2c8e2ac644dc9448c580349bdca2c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandlePlayerDeath
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0

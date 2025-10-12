@@ -32,6 +32,10 @@ public class SceneControllerManager : MonoBehaviour
         Debug.Log("Next Scene Change Starting");
         yield return StartCoroutine(_sceneFade.FadeOutCoroutine(_sceneFadeDuration));
 
+
+        Debug.Log($"UnloadSceneAsync: {sceneToBeUnloaded}");
+        yield return SceneManager.UnloadSceneAsync(sceneToBeUnloaded); // might be making persistent scene active
+
         Debug.Log($"Loading next additive scene: {additiveScene}");
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(additiveScene, LoadSceneMode.Additive);
 
@@ -45,12 +49,10 @@ public class SceneControllerManager : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
+        
         Scene nextScene = SceneManager.GetSceneByName(additiveScene);
         SceneManager.SetActiveScene(nextScene);
-
-        Debug.Log($"UnloadSceneAsync: {sceneToBeUnloaded}");
-        yield return SceneManager.UnloadSceneAsync(sceneToBeUnloaded);
-
+        Debug.Log($"Sets {additiveScene} as Active Scene");
 
         yield return StartCoroutine(_sceneFade.FadeInCoroutine(_sceneFadeDuration));
 

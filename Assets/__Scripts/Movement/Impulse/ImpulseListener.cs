@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -23,6 +22,8 @@ public class ImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
-        _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection);
+        bool isDashing = otherCollider.GetComponentInParent<PlayerHeroMovement>().IsInDash();
+
+        _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection, isDashing);
     }  
 }

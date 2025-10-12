@@ -50,6 +50,9 @@ public class PiratePatrol : MonoBehaviour
     void Update()
     {
         if (!agent.enabled) return;
+
+        if (!PlayerManager.Instance) return;
+        
         player = PlayerManager.Instance.transform;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
