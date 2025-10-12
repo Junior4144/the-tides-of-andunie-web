@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,12 +13,8 @@ public class EndCurrentScene : MonoBehaviour
         if (!collision.CompareTag("Player")) return;
 
         Debug.Log("[EndCurrentScene] Next Scene is starting");
-
-
-
         GameObject _player = PlayerManager.Instance.gameObject;
         Debug.Log($"Player: {_player.name} and saving data");
-
 
         SaveManager.Instance.SavePlayerStats();
 
@@ -35,13 +32,18 @@ public class EndCurrentScene : MonoBehaviour
             health.enabled = false;
         }
 
+        var impulseSource = _player.GetComponent<CinemachineImpulseSource>();
+        if (impulseSource != null)
+        {
+            Debug.Log("Disabing player's impulseSource");
+            impulseSource.enabled = false;
+        }
+
         LoadNextStage();
     }
-
     public void NextStage() =>
         LoadNextStage();
 
     void LoadNextStage() =>
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
-
 }
