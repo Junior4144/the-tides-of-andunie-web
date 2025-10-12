@@ -1,5 +1,6 @@
 using System;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,28 +17,11 @@ public class EndCurrentScene : MonoBehaviour
         GameObject _player = PlayerManager.Instance.gameObject;
         Debug.Log($"Player: {_player.name} and saving data");
 
+        AudioManager.Instance.FadeAudio();
+
         SaveManager.Instance.SavePlayerStats();
 
-        var movement = _player.GetComponent<PlayerHeroMovement>();
-        if (movement != null)
-        {
-            Debug.Log("Disabing player's movement");
-            movement.enabled = false;
-        }
-
-        var health = _player.GetComponentInChildren<PlayerHealthController>();
-        if (health != null)
-        {
-            Debug.Log("Disabing player's health");
-            health.enabled = false;
-        }
-
-        var impulseSource = _player.GetComponent<CinemachineImpulseSource>();
-        if (impulseSource != null)
-        {
-            Debug.Log("Disabing player's impulseSource");
-            impulseSource.enabled = false;
-        }
+        PlayerManager.Instance.HandleDestroy();
 
         LoadNextStage();
     }

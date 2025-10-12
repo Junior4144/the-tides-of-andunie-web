@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2112944199135859477}
   - component: {fileID: 107892480533226762}
   m_Layer: 0
-  m_Name: Impulse
+  m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
+  m_Resource: {fileID: 8300000, guid: b46f9310267236c408da69d18a6a71f5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -142,5 +142,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fce7f021e9aa7479dac6d9f7694beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProximityVolume
-  range: 25
-  maxVolume: 0.5
+  range: 50
+  maxVolume: 1

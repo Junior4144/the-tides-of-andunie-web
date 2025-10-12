@@ -19,9 +19,7 @@ public abstract class BuildingDestructable : MonoBehaviour
     [SerializeField]
     private Sprite _spriteRenderer;
     [SerializeField]
-    private AudioClip _explosionSound;
-    [SerializeField]
-    private AudioClip _fireSound;
+    private GameObject _explosionSoundPrehab;
 
     [SerializeField]
     private GameObject _fire_position_1;
@@ -76,7 +74,7 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!_camera)
-        {
+        { 
             HandleExplosion();
             return;
         }
@@ -84,10 +82,9 @@ public abstract class BuildingDestructable : MonoBehaviour
         if (   
             !collision.gameObject.CompareTag("CannonBall") ||
             hasExploded ||
-            !CheckCameraLeftBoundary(GetScreenPosition())
+            !CheckCameraLeftBoundary(GetScreenPosition()) ||
+            collision.gameObject.CompareTag("Enemy")
         ) return;
-
-        if (collision.gameObject.CompareTag("Enemy")) return;
 
         HandleExplosion();
 
@@ -131,7 +128,9 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void HandleExplosion()
     {
         SpawnExplosion();
-        SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, transform, .5f);
+
+        if (explosion != null)
+            Instantiate(_explosionSoundPrehab, transform.position, Quaternion.identity, transform);
 
         ReplaceSprite();
 
