@@ -42,7 +42,7 @@ public class SquadFollower : MonoBehaviour
     {
         if (squad == null)
         {
-            Debug.LogError($"Squad not found for unit: {rb}");
+            Destroy(gameObject);
             return;
         }
 
