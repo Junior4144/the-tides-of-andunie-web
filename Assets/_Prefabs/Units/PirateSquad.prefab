@@ -874,8 +874,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 10
+  m_AngularDamping: 10
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -951,13 +951,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113d429657bb1a84094bc6d9ce983e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SquadImpulseManager
-  _squadImpulseForce: 12
-  _squadParentForceMultiplier: 0.1
+  _squadImpulseForce: 16
   _impulseDuration: 0.5
   _squadDirectionWeight: 0.7
   _individualDirectionWeight: 0.3
-  _centralImpactMultiplier: 2
-  _centralImpactRadius: 3
+  _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
@@ -1221,7 +1219,7 @@ Transform:
   m_GameObject: {fileID: 4990337598445231332}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.14, y: 1.06, z: 0}
+  m_LocalPosition: {x: 1.68, y: 0.82, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1435,7 +1433,7 @@ GameObject:
   - component: {fileID: 3680661364847243483}
   - component: {fileID: 5794497621526452766}
   m_Layer: 6
-  m_Name: PirateMelee (1)
+  m_Name: PirateMelee
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1450,7 +1448,7 @@ Transform:
   m_GameObject: {fileID: 6135214589362448719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.19, y: 1.09, z: 0}
+  m_LocalPosition: {x: -1.54, y: 0.82, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1664,7 +1662,7 @@ GameObject:
   - component: {fileID: 3795880501764054347}
   - component: {fileID: 5793737724039617749}
   m_Layer: 6
-  m_Name: PirateMelee (1)
+  m_Name: PirateMelee
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2010,6 +2008,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6537796655496625252}
+        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
+        m_MethodName: Destroy
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7530432455162420017}
         m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
         m_MethodName: Destroy
         m_Mode: 4
