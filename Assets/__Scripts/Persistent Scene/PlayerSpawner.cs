@@ -12,6 +12,8 @@ public class PlayerSpawner : MonoBehaviour
 
     private void OnSceneLoaded()
     {
+        if (PlayerManager.Instance != null) return;
+
         currentPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
         currentPlayer.transform.rotation = transform.rotation;
 
