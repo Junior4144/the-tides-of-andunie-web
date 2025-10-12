@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HealthBarUI _healthBarUI;
     [SerializeField] private HealthBarShake _healthBarShake;
 
-
     private void Awake()
     {
         if (Instance != null) return;
@@ -24,6 +23,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         PlayerHealthController.OnHealthChanged += HandleHealthChanged;
+
     }
 
 
@@ -54,6 +54,10 @@ public class UIManager : MonoBehaviour
         _healthBarShake.Shake();
         _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
 
+    }
+    public void UpdateHealtBar(float _currentHealth, float _maxhealth)
+    {
+        _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
     }
 
     private void HideAll()

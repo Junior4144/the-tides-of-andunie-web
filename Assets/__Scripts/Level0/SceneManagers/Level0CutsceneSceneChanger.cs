@@ -18,8 +18,12 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
     [Tooltip("Fade duration in seconds")]
     public float fadeDuration = 1f;
 
-    private bool hasStartedLoading = false;
+    //private bool hasStartedLoading = false;
     private float timer;
+
+    public string nextScene;
+
+    public bool timerStop = false;
 
     void Start()
     {
@@ -35,27 +39,35 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
 
     void Update()
     {
+        if (timerStop) return;
         timer -= Time.deltaTime;
 
         // Start preloading the scene before the cutscene ends
-        if (!hasStartedLoading && timer <= preloadTime)
+        //if (!hasStartedLoading && timer <= preloadTime)
+        //{
+        //    hasStartedLoading = true;
+        //    StartCoroutine(LoadSceneAsync());
+        //}
+
+        if(timer < 0f)
         {
-            hasStartedLoading = true;
-            StartCoroutine(LoadSceneAsync());
+            timerStop = true;
+            NextStage();
         }
+
+
     }
+    public void NextStage() =>
+        LoadNextStage();
+
+    void LoadNextStage() =>
+        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
+
 
     IEnumerator LoadSceneAsync()
     {
         // Start preloading the next scene (additive)
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        asyncLoad.allowSceneActivation = false;
 
-        // Wait until the scene is mostly loaded (stops at 0.9f progress)
-        while (asyncLoad.progress < 0.9f)
-        {
-            yield return null;
-        }
 
         // Wait for the cutscene timer to finish
         while (timer > 0)
@@ -67,6 +79,15 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
         if (fadeCanvas != null)
         {
             yield return StartCoroutine(FadeOut());
+        }
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        asyncLoad.allowSceneActivation = false;
+
+        // Wait until the scene is mostly loaded (stops at 0.9f progress)
+        while (asyncLoad.progress < 0.9f)
+        {
+            yield return null;
         }
 
         asyncLoad.allowSceneActivation = true;

@@ -31,12 +31,13 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
             OnDied.Invoke();
     }
 
-    public void Heal(float amount)
+    public void AddHealth(float amount)
     {
         if (_currentHealth == _maxHealth || amount == 0)
             return;
 
         _currentHealth += amount;
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
         OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 

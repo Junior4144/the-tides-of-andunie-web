@@ -11,8 +11,15 @@ public class EndCurrentScene : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
+        Debug.Log("[EndCurrentScene] Next Scene is starting");
+
+
+
         GameObject _player = PlayerManager.Instance.gameObject;
-        Debug.Log($"Player: {_player.name}");
+        Debug.Log($"Player: {_player.name} and saving data");
+
+
+        SaveManager.Instance.SavePlayerStats();
 
         var movement = _player.GetComponent<PlayerHeroMovement>();
         if (movement != null)
@@ -20,7 +27,6 @@ public class EndCurrentScene : MonoBehaviour
             Debug.Log("Disabing player's movement");
             movement.enabled = false;
         }
-
 
         var health = _player.GetComponentInChildren<PlayerHealthController>();
         if (health != null)

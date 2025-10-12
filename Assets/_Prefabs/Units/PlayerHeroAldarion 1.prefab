@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: 7834476114726568240}
   - component: {fileID: 792821208638009140}
   - component: {fileID: 4639632876952418692}
-  - component: {fileID: 3286461679359969351}
   m_Layer: 7
   m_Name: GenericCollider
   m_TagString: Player
@@ -228,19 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
---- !u!114 &3286461679359969351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549749987079265144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
-  deathDelay: 2
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +245,7 @@ GameObject:
   - component: {fileID: 4294235500975626157}
   - component: {fileID: 3603910217672744378}
   - component: {fileID: 5346776916651260}
+  - component: {fileID: 2501858800479070700}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -459,6 +446,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyController
+--- !u!114 &2501858800479070700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
+  deathDelay: 2
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0

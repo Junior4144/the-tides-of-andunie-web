@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour
@@ -6,28 +7,25 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     private GameObject currentPlayer;
 
-    [SerializeField] private HealthBarUI _healthBarUI;
-
+    //[SerializeField] private HealthBarUI _healthBarUI;
 
     private void Awake()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        OnSceneLoaded();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded()
     {
-        if (scene.name == "PersistentScene") return; // skip
-
-        Vector3 spawnPosition = Vector3.zero;
-
-        currentPlayer = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-
+        currentPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
+        currentPlayer.transform.rotation = transform.rotation;
         Debug.Log("New Player created");
-        //update healthbar
+
+        
         SaveManager.Instance.RestorePlayerStats();
 
+        //update healthbar
         var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
 
-        _healthBarUI.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+        UIManager.Instance.UpdateHealtBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
     }
 }
