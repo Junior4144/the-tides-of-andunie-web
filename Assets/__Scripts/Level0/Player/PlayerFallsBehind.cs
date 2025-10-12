@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,11 +13,15 @@ public class PlayerFallsBehind : MonoBehaviour
 
     private float _timer;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
+
         _playerHealth = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
         _timer = deathDelay;
-        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Level 0"))
+
+        Debug.Log($"[PlayerFallsBehind] Current Scene: {SceneManager.GetActiveScene().name}");
+        if(SceneManager.GetActiveScene().name != "Level 0")
             enabled = false;
     }
 
@@ -24,8 +29,8 @@ public class PlayerFallsBehind : MonoBehaviour
     void Update()
     {
         if (!Camera.main) return;
-        
-        _camera = Camera.main;
+
+        _camera = CameraManager.Instance.GetComponent<Camera>();
 
         if (_timer > 0)
         {
