@@ -6,16 +6,18 @@ public class PlayerItemCollector : MonoBehaviour
     private InventoryController inventoryController;
     private Collider2D itemCollider;
 
+    private PlayerHealthController healthController;
     void Start()
     {
         inventoryController = FindFirstObjectByType<InventoryController>();
         itemCollider = GetComponent<Collider2D>();
+        healthController = GetComponent<PlayerHealthController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collison) 
     {
 
-        if (collison.CompareTag("Item") && GetComponent<PlayerHealthController>()) // IHealthController was removed -> causing error 
+        if (collison.CompareTag("Item") && healthController != null)
         {
             Debug.Log($"{this.name} collided with {collison.name}");
             Item item = collison.GetComponent<Item>();
@@ -47,13 +49,9 @@ public class PlayerItemCollector : MonoBehaviour
             case "health":
                 float amount = float.Parse(item.description[1]);
                 if (amount > 0)
-                {
-                    GetComponent<PlayerHealthController>().AddHealth(amount);
-                }
+                    healthController.AddHealth(amount);
                 else
-                {
-                    GetComponent<IHealthController>().TakeDamage(-amount);
-                }
+                    healthController.TakeDamage(-amount);
                 break;
         }
     }

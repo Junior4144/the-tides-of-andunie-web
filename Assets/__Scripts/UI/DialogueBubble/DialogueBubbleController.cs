@@ -16,18 +16,11 @@ public class DialogueBubbleController : MonoBehaviour
 
     public static event Action<Canvas> OnCreateDialogueBubble;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         PlayerHealthController.OnHealthGained += MakeDialogueBubble;
     }
 
-    void OnEnabled()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (_currentBubble != null)
@@ -51,9 +44,6 @@ public class DialogueBubbleController : MonoBehaviour
         MakeDialogueBubble(text, 5f, 25f);
     }
 
-    // etc
-
-    // Or
     public void DialogueBubbleEventWrapperParsing(string textDurationFontSize)
     {
         string[] info = "".Split(' ');
