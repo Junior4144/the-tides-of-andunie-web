@@ -20,4 +20,11 @@ public class WaveConfig
 
     [Tooltip("The time in seconds between each enemy spawn.")]
     public float spawnInterval = 0.5f;
+
+    [Tooltip("The text that appears when the countdown starts.")]
+    public string countDownText = "Enemies observed in the distance! Prepare to defend!!!";
+
+    [Tooltip("The text that appears when the enemies start spawning.")]
+
+    public string waveStartText = "Enemies are here! Attack!!!";
 }

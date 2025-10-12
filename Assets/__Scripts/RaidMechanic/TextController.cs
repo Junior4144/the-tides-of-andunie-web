@@ -6,6 +6,12 @@ public class TextController
 {
     private readonly TextMeshProUGUI _textComponent;
 
+    public string Text
+    {
+        get => _textComponent.text;
+        set => _textComponent.text = value;
+    }
+
     public TextController(TextMeshProUGUI textComponent)
     {
         _textComponent = textComponent;

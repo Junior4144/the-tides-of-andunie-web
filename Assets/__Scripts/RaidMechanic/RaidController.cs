@@ -12,8 +12,12 @@ public class RaidController : MonoBehaviour
     private TextMeshProUGUI alertText;
     [SerializeField]
     private TextMeshProUGUI timerText;
+
+    [SerializeField]
+    private TextMeshProUGUI postRaidText;
     private TextController _alertTextController;
     private TextController _timerTextController;
+    private TextController _postRaidTextController;
 
     // ------- TIMERS -------
     private float _timeBeforeNextWaveInSeconds = 0;
@@ -35,6 +39,7 @@ public class RaidController : MonoBehaviour
     {
         _alertTextController = new TextController(alertText);
         _timerTextController = new TextController(timerText);
+        _postRaidTextController = new TextController(postRaidText);
         TransitionToState(RaidState.PreRaid);
     }
 
@@ -74,7 +79,7 @@ public class RaidController : MonoBehaviour
             }
         }
     }
-    
+
     private void TransitionToState(RaidState newState)
     {
         _currentState = newState;
@@ -87,24 +92,25 @@ public class RaidController : MonoBehaviour
 
             case RaidState.PreWave:
                 StartNextWave();
-                _alertTextController.SetText("Enemy raid observed in the distance! Prepare to fight!");
-                DisplayAlertText();
+                _alertTextController.SetText(currentWave.countDownText);
+                DisplayTextThenFade(_alertTextController);
                 break;
 
             case RaidState.WaveInProgress:
-                _alertTextController.SetText("The enemies are here! Attack!!!");
-                DisplayAlertText();
+                _alertTextController.SetText(currentWave.waveStartText);
+                DisplayTextThenFade(_alertTextController);
                 StartCoroutine(SpawnWaveEnemiesOverIntervals());
                 break;
 
             case RaidState.RaidComplete:
-                _alertTextController.SetText("Raid defended successfully!");
-                break;  
+                DisplayTextThenFade(_postRaidTextController);
+                break;
         }
     }
-    
+
+    private WaveConfig currentWave => raidConfig.waves[_currentWaveIndex];
     private bool allActiveEnemiesAreDead => !_activeEnemies.Any(enemy => enemy != null);
-    private bool allCurrentWaveEnemiesSpawned => _activeEnemies.Count == raidConfig.waves[_currentWaveIndex].enemies.Sum(enemyData => enemyData.count);
+    private bool allCurrentWaveEnemiesSpawned => _activeEnemies.Count == currentWave.enemies.Sum(enemyData => enemyData.count);
     
 
     void OnTriggerEnter2D(Collider2D other)
@@ -120,21 +126,25 @@ public class RaidController : MonoBehaviour
     {
         _currentWaveIndex += 1;
         StartTimer();
-        DisplayAlertText();
+        DisplayTextThenFade(_alertTextController);
     }
 
     private void StartTimer()
     {
-        _timeBeforeNextWaveInSeconds = raidConfig.waves[_currentWaveIndex].countdown;
+        _timeBeforeNextWaveInSeconds = currentWave.countdown;
         _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
         _timerTextController.SetTextVisible();
         StartCoroutine(Utils.ExecuteCoroutineAfterDelay(_timeBeforeNextWaveInSeconds + 1, _timerTextController.SetTextInvisible));
     }
 
-    private void DisplayAlertText()
+    private void DisplayTextThenFade(TextController controller)
     {
-        _alertTextController.SetTextVisible();
-        StartCoroutine(Utils.ExecuteFunctionAfterDelay(2f, _alertTextController.FadeOut(1f), this));
+        controller.SetTextVisible();
+        const float baseTime = 1.5f;
+        const float wordsPerSecond = 4.0f;
+        int wordCount = controller.Text.Split(' ').Length;
+        float duration = baseTime + (wordCount / wordsPerSecond);
+        StartCoroutine(Utils.ExecuteFunctionAfterDelay(duration, controller.FadeOut(1f), this));
     }
 
     private IEnumerator SpawnWaveEnemiesOverIntervals()
@@ -146,7 +156,6 @@ public class RaidController : MonoBehaviour
 
         List<EnemyData> enemiesToSpawn = new List<EnemyData>();
 
-        var currentWave = raidConfig.waves[_currentWaveIndex];
         foreach (var enemyData in currentWave.enemies)
         {
             enemiesToSpawn.Add(new EnemyData { prefab = enemyData.prefab, count = enemyData.count, });
