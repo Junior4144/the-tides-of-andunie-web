@@ -1,4 +1,6 @@
 using System;
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,36 +14,20 @@ public class EndCurrentScene : MonoBehaviour
         if (!collision.CompareTag("Player")) return;
 
         Debug.Log("[EndCurrentScene] Next Scene is starting");
-
-
-
         GameObject _player = PlayerManager.Instance.gameObject;
         Debug.Log($"Player: {_player.name} and saving data");
 
+        AudioManager.Instance.FadeAudio();
 
         SaveManager.Instance.SavePlayerStats();
 
-        var movement = _player.GetComponent<PlayerHeroMovement>();
-        if (movement != null)
-        {
-            Debug.Log("Disabing player's movement");
-            movement.enabled = false;
-        }
-
-        var health = _player.GetComponentInChildren<PlayerHealthController>();
-        if (health != null)
-        {
-            Debug.Log("Disabing player's health");
-            health.enabled = false;
-        }
+        PlayerManager.Instance.HandleDestroy();
 
         LoadNextStage();
     }
-
     public void NextStage() =>
         LoadNextStage();
 
     void LoadNextStage() =>
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
-
 }

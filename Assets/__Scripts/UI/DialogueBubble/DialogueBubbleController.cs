@@ -16,24 +16,24 @@ public class DialogueBubbleController : MonoBehaviour
 
     public static event Action<Canvas> OnCreateDialogueBubble;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
-        PlayerHealthController.OnHealthGained += MakeDialogueBubble;
+    {   
+        //subscribe to events
+        //example:
+        //PlayerHealthController.OnHealthGained += MakeDialogueBubble;
     }
 
-    void OnEnabled()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (_currentBubble != null)
-        {
             FollowUnit();
-        }
+    }
+
+    void OnDestroy()
+    {
+        //unsubscribe to events 
+        //example:
+        //PlayerHealthController.OnHealthGained -= MakeDialogueBubble;
     }
 
     public void DialogueBubbleEventWrapper(string text)
@@ -51,15 +51,9 @@ public class DialogueBubbleController : MonoBehaviour
         MakeDialogueBubble(text, 5f, 25f);
     }
 
-    // etc
-
-    // Or
-    public void DialogueBubbleEventWrapperParsing(string textDurationFontSize)
+    public void DialogueBubbleEventWrapperParsing()
     {
         string[] info = "".Split(' ');
-
-        // Parsing
-        // info = parsed values
 
         if (info.Length != numBubbleParameters)
         {
@@ -69,16 +63,11 @@ public class DialogueBubbleController : MonoBehaviour
 
         FormatInput(info);
 
-        string text = info[0];
-        float duration = float.Parse(info[1]);
-        float fontSize = float.Parse(info[2]);
-        MakeDialogueBubble(text, duration, fontSize);
+        MakeDialogueBubble(text: info[0], duration: float.Parse(info[1]), fontSize: float.Parse(info[2]));
     }
 
-    private void FollowUnit()
-    {
+    private void FollowUnit() =>
         _currentBubble.transform.position = GetNewBubblePosition();
-    }
 
     private void FormatInput(string[] info)
     {
@@ -117,15 +106,12 @@ public class DialogueBubbleController : MonoBehaviour
     private void MakeDialogueBubble(string text, float duration = 3f, float fontSize = 0f)
     {
         if (_currentBubble != null)
-        {
             Destroy(_currentBubble.gameObject);
-        }
 
         _currentBubble = Instantiate(_bubblePrefab, GetNewBubblePosition(), Quaternion.identity);
         if (_currentBubble)
-        {
             OnCreateDialogueBubble?.Invoke(_currentBubble.GetComponentInChildren<Canvas>());
-        }
+
         SetBubbleText(text, fontSize);
 
         Destroy(_currentBubble.gameObject, duration);
@@ -134,10 +120,10 @@ public class DialogueBubbleController : MonoBehaviour
     private void SetBubbleText(string text, float fontSize)
     {
         TextMeshProUGUI textMesh = _currentBubble.GetComponentInChildren<TextMeshProUGUI>();
+
         if (textMesh == null)
-        {
             Debug.Log($"TextMesh with intended text: '{text}' is null");
-        }
+
         if (fontSize > 0f)
         {
             textMesh.enableAutoSizing = false;
