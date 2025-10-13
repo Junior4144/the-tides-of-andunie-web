@@ -9,7 +9,7 @@ public class PlayerFallsBehind : MonoBehaviour
 
     [SerializeField]
     private IHealthController _playerHealth;
-    [SerializeField] private float deathDelay = 2f;
+    [SerializeField] private float InactiveStateDelay = 2f;
 
     private float _timer;
 
@@ -18,7 +18,7 @@ public class PlayerFallsBehind : MonoBehaviour
         yield return null;
 
         _playerHealth = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
-        _timer = deathDelay;
+        _timer = InactiveStateDelay;
 
         Debug.Log($"[PlayerFallsBehind] Current Scene: {SceneManager.GetActiveScene().name}");
         if(SceneManager.GetActiveScene().name != "Level 0")

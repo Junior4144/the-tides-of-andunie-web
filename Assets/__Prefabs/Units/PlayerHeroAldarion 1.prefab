@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e0c9599914dc641be43f6ccbe38877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthController
-  _currentHealth: 350
-  _maxHealth: 350
+  _currentHealth: 100
+  _maxHealth: 100
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -446,7 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d805c7b7749077c4d92a275f5dbe8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManagerOLD
-  playerInstance: {fileID: 0}
 --- !u!114 &3603910217672744378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,7 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
-  deathDelay: 2
+  InactiveStateDelay: 2
 --- !u!114 &42533560477664706
 MonoBehaviour:
   m_ObjectHideFlags: 0

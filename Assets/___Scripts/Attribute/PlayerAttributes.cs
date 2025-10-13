@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerAttributes : ScriptableObject
 {
     [field: SerializeField]
+    public float MovementSpeed { get; private set; }
+
+    [field: SerializeField]
     public float RotationSpeed { get; private set; }
     
     [field: SerializeField]

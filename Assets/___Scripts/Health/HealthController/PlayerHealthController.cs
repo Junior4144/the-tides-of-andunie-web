@@ -4,8 +4,8 @@ using UnityEngine.Events;
 
 public class PlayerHealthController : MonoBehaviour, IHealthController
 {
-    [SerializeField] private float _currentHealth = 100;
-    [SerializeField] private float _maxHealth = 100;
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private float _maxHealth;
 
     public UnityEvent OnDied;
     public UnityEvent OnDamaged;
