@@ -39,7 +39,7 @@ public class SaveManager : MonoBehaviour
         CurrentSave = new PlayerSaveData()
         {
             sceneName = SceneManager.GetActiveScene().name,
-            health = 350f,
+            health = 100f,
             damageAmount = 20f
 
         };
@@ -68,6 +68,13 @@ public class SaveManager : MonoBehaviour
         PlayerManager.Instance.SetHealth(CurrentSave.health);
         PlayerManager.Instance.SetDamageAmount(CurrentSave.damageAmount);
         Debug.Log($"[SaveManager] Restored player  health at {CurrentSave.health}");
+    }
+
+    public void ResetSaveData()
+    {
+        AssignDefaultValues();
+        UIManager.Instance.UpdateHealtBar(CurrentSave.health, CurrentSave.health);
+        Debug.Log("[SaveManager] Save data reset to default values.");
     }
 
 }
