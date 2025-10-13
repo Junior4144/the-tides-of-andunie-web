@@ -76,7 +76,7 @@ public class SquadFollower : MonoBehaviour
             SetVelocity(Vector2.zero);
     }
 
-    // THIS METHOD WAS THE PROBLEM AND HAS BEEN REMOVED
+    // THIS METHOD WAS THE PROBLEM AND HAS BEEN REMOVED (hoarding this for now)
     // private void RotateTowardsFormationPosition(Vector3 direction)
     // {
     //     if (direction != Vector3.zero)
