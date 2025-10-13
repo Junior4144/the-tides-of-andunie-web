@@ -12,12 +12,15 @@ public class RaidController : MonoBehaviour
     private TextMeshProUGUI alertText;
     [SerializeField]
     private TextMeshProUGUI timerText;
+    [SerializeField]
+    private TextMeshProUGUI enemiesRemainingText;
 
     [SerializeField]
     private TextMeshProUGUI postRaidText;
     private TextController _alertTextController;
     private TextController _timerTextController;
     private TextController _postRaidTextController;
+    private TextController _enemiesRemainingTextController;
 
     // ------- TIMERS -------
     private float _timeBeforeNextWaveInSeconds = 0;
@@ -34,12 +37,17 @@ public class RaidController : MonoBehaviour
     public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete }
     private RaidState _currentState;
 
+    // ------- MUSIC -------
+    [SerializeField]
+    private RaidMusicController _musicController;
+
 
     void Awake()
     {
         _alertTextController = new TextController(alertText);
         _timerTextController = new TextController(timerText);
         _postRaidTextController = new TextController(postRaidText);
+        _enemiesRemainingTextController = new TextController(enemiesRemainingText);
         TransitionToState(RaidState.PreRaid);
     }
 
@@ -62,6 +70,11 @@ public class RaidController : MonoBehaviour
                 else
                     TransitionToState(RaidState.RaidComplete);
                 _activeEnemies.Clear();
+                RemoveEnemiesCountText();
+            }
+            else
+            {
+                UpdateEnemiesCountText();
             }
         }
     }
@@ -88,22 +101,27 @@ public class RaidController : MonoBehaviour
             case RaidState.PreRaid:
                 _currentState = RaidState.PreRaid;
                 _currentWaveIndex = -1;
+                _musicController?.Stop();
                 break;
 
             case RaidState.PreWave:
                 StartNextWave();
                 _alertTextController.SetText(currentWave.countDownText);
                 DisplayTextThenFade(_alertTextController);
+                _musicController?.PlayPreWave();
                 break;
 
             case RaidState.WaveInProgress:
                 _alertTextController.SetText(currentWave.waveStartText);
                 DisplayTextThenFade(_alertTextController);
                 StartCoroutine(SpawnWaveEnemiesOverIntervals());
+                ShowEnemiesCount();
+                _musicController?.PlayInProgress();
                 break;
 
             case RaidState.RaidComplete:
                 DisplayTextThenFade(_postRaidTextController);
+                _musicController?.PlayPostRaid();
                 break;
         }
     }
@@ -134,7 +152,7 @@ public class RaidController : MonoBehaviour
         _timeBeforeNextWaveInSeconds = currentWave.countdown;
         _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
         _timerTextController.SetTextVisible();
-        StartCoroutine(Utils.ExecuteCoroutineAfterDelay(_timeBeforeNextWaveInSeconds + 1, _timerTextController.SetTextInvisible));
+        StartCoroutine(Utils.ExecuteFunctionAfterDelay(_timeBeforeNextWaveInSeconds + 0.5f, _timerTextController.SetTextInvisible));
     }
 
     private void DisplayTextThenFade(TextController controller)
@@ -144,9 +162,18 @@ public class RaidController : MonoBehaviour
         const float wordsPerSecond = 4.0f;
         int wordCount = controller.Text.Split(' ').Length;
         float duration = baseTime + (wordCount / wordsPerSecond);
-        StartCoroutine(Utils.ExecuteFunctionAfterDelay(duration, controller.FadeOut(1f), this));
+        StartCoroutine(Utils.ExecuteCoroutineAfterDelay(duration, controller.FadeOut(1f), this));
     }
 
+    private void ShowEnemiesCount()
+    {
+        UpdateEnemiesCountText();
+        _enemiesRemainingTextController.SetTextVisible();
+    }
+
+    private void UpdateEnemiesCountText() => _enemiesRemainingTextController.SetText($"Enemies Remaining: {_activeEnemies.Count(e => e != null)}");
+
+    private void RemoveEnemiesCountText() => StartCoroutine(_enemiesRemainingTextController.FadeOut(1f));
     private IEnumerator SpawnWaveEnemiesOverIntervals()
     {
         if (spawnPoints.Count == 0)
