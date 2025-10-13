@@ -1,41 +1,31 @@
 using UnityEngine;
-// Add the correct namespace for Item, for example:
 
 public class PlayerItemCollector : MonoBehaviour
 {
     private InventoryController inventoryController;
-    private Collider2D itemCollider;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private PlayerHealthController healthController;
     void Start()
     {
         inventoryController = FindFirstObjectByType<InventoryController>();
-        itemCollider = GetComponent<Collider2D>();
+        healthController = GetComponent<PlayerHealthController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collison) 
+    private void OnTriggerEnter2D(Collider2D collison)
     {
+        if (!collison.CompareTag("Item") || !healthController) return;
 
-        if (collison.CompareTag("Item") && GetComponent<PlayerHealthController>()) // IHealthController was removed -> causing error 
+        if (collison.TryGetComponent<Item>(out var item))
         {
-            Debug.Log($"{this.name} collided with {collison.name}");
-            Item item = collison.GetComponent<Item>();
-            if (item != null)
+            if (item.useImmediately)
             {
-                if (item.useImmediately)
-                {
-                    UseItem(item);
+                UseItem(item);
+                Destroy(collison.gameObject);
+            }
+            else
+            {
+                if (inventoryController.AddItem(collison.gameObject))
                     Destroy(collison.gameObject);
-                }
-                //Add item inventory
-                else
-                {
-                    bool itemAdded = inventoryController.AddItem(collison.gameObject);
-                    if (itemAdded)
-                    {
-                        Destroy(collison.gameObject);
-                    }
-                }
             }
         }
     }
@@ -48,13 +38,9 @@ public class PlayerItemCollector : MonoBehaviour
             case "health":
                 float amount = float.Parse(item.description[1]);
                 if (amount > 0)
-                {
-                    GetComponent<PlayerHealthController>().AddHealth(amount);
-                }
+                    healthController.AddHealth(amount);
                 else
-                {
-                    GetComponent<IHealthController>().TakeDamage(-amount);
-                }
+                    healthController.TakeDamage(-amount);
                 break;
         }
     }

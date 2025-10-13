@@ -25,7 +25,6 @@ public class PlayerFallsBehind : MonoBehaviour
             enabled = false;
     }
 
-
     void Update()
     {
         if (!Camera.main) return;
@@ -46,7 +45,6 @@ public class PlayerFallsBehind : MonoBehaviour
             _playerHealth.TakeDamage(1000f);
             enabled = false;
         }
-            
     }
 
     public float DetermineCameraRightBorder() =>

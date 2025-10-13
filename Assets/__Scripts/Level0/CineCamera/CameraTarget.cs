@@ -20,7 +20,6 @@ public class CameraTarget : MonoBehaviour
         currentX = transform.position.x;
     }
         
-
     void Update()
     {
         if (player == null || playerRb == null) return;

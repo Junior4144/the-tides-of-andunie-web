@@ -33,19 +33,15 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
 
     public void AddHealth(float amount)
     {
-        if (_currentHealth == _maxHealth || amount == 0)
+        if (amount == 0)
             return;
 
         _currentHealth += amount;
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
         OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-
-        OnHealthGained?.Invoke("Tasty!", 3f, 0f);
 
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
-
     }
 
     public float GetPercentHealth() => _currentHealth / _maxHealth;

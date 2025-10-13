@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -13,30 +14,43 @@ public class SaveManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-    private void Start()
-    {
         InitializeDefaultSave();
     }
 
     public void InitializeDefaultSave()
     {
-
+        if (!PlayerManager.Instance)
+        {
+            AssignDefaultValues();
+            return;
+        }
+            
         CurrentSave = new PlayerSaveData()
         {
-            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+            sceneName = SceneManager.GetActiveScene().name,
             health = PlayerManager.Instance.GetHealth(),
             damageAmount = PlayerManager.Instance.GetDamageAmount()
 
         };
         Debug.Log($"[SaveManager] OnStart saves player health at {CurrentSave.health}");
     }
-    //When player beats level
+    private void AssignDefaultValues()
+    {
+        CurrentSave = new PlayerSaveData()
+        {
+            sceneName = SceneManager.GetActiveScene().name,
+            health = 350f,
+            damageAmount = 20f
+
+        };
+        Debug.Log($"[SaveManager] No Player Instance -> Default values -> Health:{CurrentSave.health}, Damage:{CurrentSave.damageAmount},");
+    }
+
     public void SavePlayerStats()
     {
         CurrentSave = new PlayerSaveData()
         {
-            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+            sceneName = SceneManager.GetActiveScene().name,
             health = PlayerManager.Instance.GetHealth(),
             damageAmount = PlayerManager.Instance.GetDamageAmount()
 
@@ -54,8 +68,6 @@ public class SaveManager : MonoBehaviour
         PlayerManager.Instance.SetHealth(CurrentSave.health);
         PlayerManager.Instance.SetDamageAmount(CurrentSave.damageAmount);
         Debug.Log($"[SaveManager] Restored player  health at {CurrentSave.health}");
-
-       
     }
 
 }
