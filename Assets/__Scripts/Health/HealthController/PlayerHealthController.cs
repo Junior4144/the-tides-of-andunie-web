@@ -11,7 +11,7 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
     public UnityEvent OnDamaged;
 
     public static event Action<float, float> OnHealthChanged;
-    public static event Action<string, float, float> OnHealthGained;
+    //public static event Action<string, float, float> OnHealthGained;
 
     public void TakeDamage(float damageAmount)
     {
