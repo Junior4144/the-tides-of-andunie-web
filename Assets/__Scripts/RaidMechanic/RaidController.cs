@@ -34,6 +34,10 @@ public class RaidController : MonoBehaviour
     public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete }
     private RaidState _currentState;
 
+    // ------- MUSIC -------
+    [SerializeField]
+    private RaidMusicController _musicController;
+
 
     void Awake()
     {
@@ -88,22 +92,27 @@ public class RaidController : MonoBehaviour
             case RaidState.PreRaid:
                 _currentState = RaidState.PreRaid;
                 _currentWaveIndex = -1;
+                _musicController.Stop();
                 break;
 
             case RaidState.PreWave:
                 StartNextWave();
                 _alertTextController.SetText(currentWave.countDownText);
                 DisplayTextThenFade(_alertTextController);
+                _musicController?.PlayPreWave();
                 break;
 
             case RaidState.WaveInProgress:
                 _alertTextController.SetText(currentWave.waveStartText);
                 DisplayTextThenFade(_alertTextController);
                 StartCoroutine(SpawnWaveEnemiesOverIntervals());
+                _musicController?.PlayInProgress();
                 break;
 
             case RaidState.RaidComplete:
                 DisplayTextThenFade(_postRaidTextController);
+                _musicController?.PlayPostRaid();
+                _currentWaveIndex = -1;
                 break;
         }
     }
@@ -116,7 +125,7 @@ public class RaidController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
+        if (other.CompareTag("Player") && _currentState == RaidState.PreRaid || _currentState == RaidState.RaidComplete)
         {
             TransitionToState(RaidState.PreWave);
         }
