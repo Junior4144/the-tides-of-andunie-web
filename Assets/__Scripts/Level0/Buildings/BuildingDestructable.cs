@@ -1,131 +1,132 @@
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BuildingDestructable : MonoBehaviour
 {
-    public GameObject explosion;
-    public GameObject fire;
-    public GameObject fireSound;
-    public bool hasExploded = false;
-    public bool hasFire = false;
+    [Header("Explosion Settings")]
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private GameObject explosionSoundPrefab;
+    [SerializeField] private float explosionRadius = 15f;
 
-    [SerializeField]
-    private Sprite _spriteRenderer;
+    [Header("Fire Settings")]
+    [SerializeField] private bool hasFire;
+    [SerializeField] private GameObject fireSoundPrefab;
+    [SerializeField] private GameObject[] firePositions;
+    [SerializeField] private GameObject[] fireSprites;
 
-    [SerializeField]
-    private GameObject _explosionSoundPrehab;
+    [Header("Sprite Settings")]
+    [SerializeField] private Sprite destroyedSprite;
 
-    [SerializeField]
-    public GameObject[] _fire_Positions;
-    [SerializeField]
-    public GameObject[] _fire_Sprites;
+    [Header("Villager Settings")]
+    [SerializeField] private GameObject villagerSpawner;
+    [SerializeField] private GameObject villagerPrefab;
 
-    [SerializeField] public GameObject _villagerSpawner;
-    [SerializeField] public GameObject _villager;
-
-    private Camera _camera;
+    public bool hasExploded;
     private GameObject player;
-    private float explosionRadius = 15f;
-    private SpriteRenderer currentSprite;
-    private CinemachineImpulseSource _impulseSource;
-
-
-    private void Start() =>
-        _impulseSource = GetComponent<CinemachineImpulseSource>();
-
-    private void LateUpdate() => _camera = Camera.main;
+    private Camera mainCamera;
+    private CinemachineImpulseSource impulseSource;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+
+        int fireCount = Mathf.Min(transform.childCount, 5);
+        firePositions = new GameObject[fireCount];
+        for (int i = 0; i < fireCount; i++)
+            firePositions[i] = transform.GetChild(i).gameObject;
+
+
         if (hasFire)
         {
-            SpawnNewFire();
+            SpawnFire();
             SpawnFireSound();
         }
-    }  
+
+    }
+
+    private void Start()
+    {
+        player = PlayerManager.Instance.gameObject;
+        mainCamera = Camera.main;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!_camera)
-        { 
-            HandleExplosion();
-            return;
-        }
+        if (!collision.gameObject.CompareTag("CannonBall")) return;
+        if (hasExploded) return;
+        if (collision.gameObject.CompareTag("Enemy")) return;
 
-        if (   
-            !collision.gameObject.CompareTag("CannonBall") ||
-            hasExploded ||
-            !CheckCameraLeftBoundary(GetScreenPosition()) ||
-            collision.gameObject.CompareTag("Enemy")
-        ) return;
+        if (mainCamera == null) mainCamera = Camera.main;
+
+        if (!IsVisibleOnCameraLeft()) return;
 
         HandleExplosion();
 
-        if (player == null) return;
-
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        if (player != null && distance < explosionRadius)
-            HandleBuildingCameraShake();
+        HandleCameraShake();
     }
-
-    public bool CheckCameraLeftBoundary(Vector2 screenPosition, float padding = 500f) => //like an inch
-        screenPosition.x > 0 - padding;
-
-    public bool CheckCameraAllBoundary(Vector2 screenPosition, float padding = 0f)
-    {
-        return screenPosition.x > -padding &&
-               screenPosition.x < Screen.width + padding &&
-               screenPosition.y > -padding &&
-               screenPosition.y < Screen.height + padding;
-    }
-
-    public void SpawnExplosion() => Instantiate(explosion, transform.position, Quaternion.identity);
-
-    public Vector2 GetScreenPosition() => _camera.WorldToScreenPoint(transform.position);
-
-    public void HandleBuildingCameraShake() =>
-        CameraShakeManager.instance.CameraShake(_impulseSource);
 
     private void HandleExplosion()
     {
-        SpawnExplosion();
+        if (explosionPrefab != null)
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        if (explosion != null)
-            Instantiate(_explosionSoundPrehab, transform.position, Quaternion.identity, transform);
+        if (explosionSoundPrefab != null)
+            Instantiate(explosionSoundPrefab, transform.position, Quaternion.identity, transform);
 
         ReplaceSprite();
 
-        if (hasFire) return;
-
-        SpawnNewFire();
-        SpawnFireSound();
+        if (!hasFire)
+        {
+            SpawnFire();
+            SpawnFireSound();
+        }
 
         hasExploded = true;
     }
 
-    protected void SpawnNewFire()
+    private void ReplaceSprite()
     {
-        for(int i = 0; i < _fire_Positions.Length; i++)
-            Instantiate(_fire_Sprites[0], _fire_Positions[i].transform.position, Quaternion.identity);
+        if (spriteRenderer != null && destroyedSprite != null)
+            spriteRenderer.sprite = destroyedSprite;
     }
 
-    private void HandleVillager()
+    private void SpawnFire()
     {
-        Instantiate(_villager, _villagerSpawner.transform.position, Quaternion.identity);
+        foreach (var position in firePositions)
+        {
+            Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
+        }
     }
 
-    protected void ReplaceSprite()
+    private void SpawnFireSound()
     {
-        currentSprite = GetComponent<SpriteRenderer>();
-        currentSprite.sprite = _spriteRenderer;
+        if (fireSoundPrefab != null)
+            Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
     }
 
-    protected void SpawnFireSound()
+    private void SpawnVillager()
     {
-        if (fireSound != null)
-            Instantiate(fireSound, transform.position, Quaternion.identity, transform);
+        if (villagerSpawner != null && villagerPrefab != null)
+            Instantiate(villagerPrefab, villagerSpawner.transform.position, Quaternion.identity);
+    }
+
+    private void HandleCameraShake()
+    {
+        if (player == null || impulseSource == null) return;
+
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        if (distance < explosionRadius)
+            CameraShakeManager.instance.CameraShake(impulseSource);
+    }
+
+    private bool IsVisibleOnCameraLeft(float padding = 500f)
+    {
+        if (mainCamera == null) return false;
+
+        Vector2 screenPos = mainCamera.WorldToScreenPoint(transform.position);
+        return screenPos.x > -padding;
     }
 }

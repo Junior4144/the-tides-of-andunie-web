@@ -53,14 +53,9 @@ public abstract class CannonBall : MonoBehaviour
 
     private bool IsValidBuildingCollision(Collider2D collision)
     {
-        //There is a bug here, to be looked into
-        //collision.GetComponent<BuildingDestructable>().hasExploded is nullreference whenever scene changes
-        //probably between scene changes, there is a period where cannonballs hit building and there is no building 
-        //due to scene change
+
         if (!collision.CompareTag("Building")) return false;
 
-        //Debug.Log($"cannonball collision:{collision.gameObject.name}");
-        //Debug.Log(collision.GetComponent<BuildingDestructable>().hasExploded);
         if (collision == null)
             return false;
         return collision.GetComponent<BuildingDestructable>().hasExploded == false;

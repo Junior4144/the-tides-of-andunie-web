@@ -344,33 +344,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7942db86ec57744832bbafc9b25698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingDestructionRectangle
-  explosion: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
-  fire: {fileID: 8254015427989947637, guid: 64d00be1687a4114aa25102b41996ccc, type: 3}
-  fireSound: {fileID: 4184515136674530310, guid: 94823e4846a0ebe46a5684790ae8864e, type: 3}
-  hasExploded: 0
+  explosionPrefab: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
+  explosionSoundPrefab: {fileID: 4184515136674530310, guid: 86a9054da676ac14b92c9b10b7cc5d61, type: 3}
+  explosionRadius: 15
   hasFire: 0
-  _spriteRenderer: {fileID: 21300000, guid: b5869fea63d7d814c820c33a6aefba49, type: 3}
-  _explosionSoundPrehab: {fileID: 4184515136674530310, guid: 86a9054da676ac14b92c9b10b7cc5d61, type: 3}
-  _fire_Positions:
-  - {fileID: 6506454745059841436}
-  - {fileID: 1181676798939251180}
-  - {fileID: 4690299236660704417}
-  - {fileID: 6808822546675763731}
-  - {fileID: 1911088345137475738}
-  _fire_Sprites:
+  fireSoundPrefab: {fileID: 4184515136674530310, guid: 94823e4846a0ebe46a5684790ae8864e, type: 3}
+  firePositions: []
+  fireSprites:
   - {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
-  _fire_position_1: {fileID: 6506454745059841436}
-  _fire_position_2: {fileID: 1181676798939251180}
-  _fire_position_3: {fileID: 4690299236660704417}
-  _fire_position_4: {fileID: 6808822546675763731}
-  _fire_position_5: {fileID: 1911088345137475738}
-  fireSprite_1: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
-  fireSprite_2: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
-  fireSprite_3: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
-  fireSprite_4: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
-  fireSprite_5: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
-  _villagerSpawner: {fileID: 2701562799040343534}
-  _villager: {fileID: 2852635458474957371, guid: 41f9fc2cf81e31843bca495172d9b21d, type: 3}
+  destroyedSprite: {fileID: 21300000, guid: b5869fea63d7d814c820c33a6aefba49, type: 3}
+  villagerSpawner: {fileID: 0}
+  villagerPrefab: {fileID: 0}
+  hasExploded: 0
 --- !u!114 &1820078337281237162
 MonoBehaviour:
   m_ObjectHideFlags: 0
