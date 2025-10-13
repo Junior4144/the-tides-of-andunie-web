@@ -14,9 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaidConfig
   waves:
   - enemies:
-    - prefab: {fileID: 3686743910601948230, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
+    - prefab: {fileID: 1040669209115769438, guid: fcbd6da086cb7f442ad90f76c81138cc, type: 3}
       count: 1
-    countdown: 5
+    countdown: 3
     spawnInterval: 1
     countDownText: Enemies observed in the distance! Prepare to fight!!!
+    waveStartText: Enemies are here! Attack!!!
+  - enemies:
+    - prefab: {fileID: 1040669209115769438, guid: fcbd6da086cb7f442ad90f76c81138cc, type: 3}
+      count: 1
+    countdown: 3
+    spawnInterval: 1
+    countDownText: Another wave of enemies Coming up! Prepare to fight!!!
     waveStartText: Enemies are here! Attack!!!
