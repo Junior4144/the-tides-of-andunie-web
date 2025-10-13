@@ -136,7 +136,8 @@ public class DialogueBubbleController : MonoBehaviour
         TextMeshProUGUI textMesh = _currentBubble.GetComponentInChildren<TextMeshProUGUI>();
         if (textMesh == null)
         {
-            Debug.Log($"TextMesh with intended text: '{text}' is null");
+            Debug.LogWarning($"TextMesh with intended text: '{text}' is null");
+            return;
         }
         if (fontSize > 0f)
         {
