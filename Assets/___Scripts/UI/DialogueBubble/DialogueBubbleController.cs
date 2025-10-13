@@ -122,15 +122,10 @@ public class DialogueBubbleController : MonoBehaviour
         TextMeshProUGUI textMesh = _currentBubble.GetComponentInChildren<TextMeshProUGUI>();
 
         if (textMesh == null)
-<<<<<<< HEAD:Assets/__Scripts/UI/DialogueBubble/DialogueBubbleController.cs
         {
             Debug.LogWarning($"TextMesh with intended text: '{text}' is null");
             return;
         }
-=======
-            Debug.Log($"TextMesh with intended text: '{text}' is null");
-
->>>>>>> 0b8a27dd6f55fb4d62f5153fd9c98281f56f1e4a:Assets/___Scripts/UI/DialogueBubble/DialogueBubbleController.cs
         if (fontSize > 0f)
         {
             textMesh.enableAutoSizing = false;
