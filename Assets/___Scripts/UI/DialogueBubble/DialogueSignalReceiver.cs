@@ -22,16 +22,16 @@ public class DialogueSignalReceiver : MonoBehaviour
     
     public void ShowDialogue(string text)
     {
-        _dialogueController.DialogueBubbleEventWrapper(text);
+        _dialogueController.ShowBubble(text, 2f);
     }
     
     public void ShowDialogueLong(string text)
     {
-        _dialogueController.DialogueBubbleEventWrapperLong(text);
+        _dialogueController.ShowBubble(text, 4f);
     }
     
     public void ShowDialogueCustom(string text)
     {
-        _dialogueController.DialogueBubbleEventWrapperCustom(text);
+        _dialogueController.ShowBubble(text, 2f);
     }
 }
