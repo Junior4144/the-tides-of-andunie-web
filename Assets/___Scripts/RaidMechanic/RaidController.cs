@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class RaidController : MonoBehaviour
 {
@@ -42,6 +43,10 @@ public class RaidController : MonoBehaviour
     private RaidMusicController _musicController;
 
 
+    // ------- CUTSCENE -------
+    [SerializeField] private RaidCutsceneController _cutsceneController;
+
+
     void Awake()
     {
         _alertTextController = new TextController(alertText);
@@ -49,6 +54,16 @@ public class RaidController : MonoBehaviour
         _postRaidTextController = new TextController(postRaidText);
         _enemiesRemainingTextController = new TextController(enemiesRemainingText);
         TransitionToState(RaidState.PreRaid);
+    }
+
+    void Start()
+    {
+        _cutsceneController.OnIntroCutsceneFinished += TransitionToPreWaveState;
+    }
+
+    void OnDestroy()
+    {
+        _cutsceneController.OnIntroCutsceneFinished -= TransitionToPreWaveState;
     }
 
     void Update()
@@ -99,31 +114,55 @@ public class RaidController : MonoBehaviour
         switch (newState)
         {
             case RaidState.PreRaid:
-                _currentState = RaidState.PreRaid;
-                _currentWaveIndex = -1;
-                _musicController?.Stop();
+                TransitionToPreRaidState();
                 break;
 
             case RaidState.PreWave:
-                StartNextWave();
-                _alertTextController.SetText(currentWave.countDownText);
-                DisplayTextThenFade(_alertTextController);
-                _musicController?.PlayPreWave();
+                TransitionToPreWaveState();
                 break;
 
             case RaidState.WaveInProgress:
-                _alertTextController.SetText(currentWave.waveStartText);
-                DisplayTextThenFade(_alertTextController);
-                StartCoroutine(SpawnWaveEnemiesOverIntervals());
-                ShowEnemiesCount();
-                _musicController?.PlayInProgress();
+                TransitionToWaveInProgress();
                 break;
 
             case RaidState.RaidComplete:
-                DisplayTextThenFade(_postRaidTextController);
-                _musicController?.PlayPostRaid();
+                TransitionToRaidComplete();
                 break;
         }
+    }
+
+    private void TransitionToPreRaidState()
+    {
+        _currentState = RaidState.PreRaid;
+        _currentWaveIndex = -1;
+        _musicController?.Stop();
+    }
+
+    private void TransitionToPreWaveState()
+    {
+        _currentState = RaidState.PreWave;
+        StartNextWave();
+        _alertTextController.SetText(currentWave.countDownText);
+        DisplayTextThenFade(_alertTextController);
+        _musicController?.PlayPreWave();
+    }
+
+    private void TransitionToWaveInProgress()
+    {
+        _currentState = RaidState.WaveInProgress;
+        _alertTextController.SetText(currentWave.waveStartText);
+        DisplayTextThenFade(_alertTextController);
+        StartCoroutine(SpawnWaveEnemiesOverIntervals());
+        ShowEnemiesCount();
+        _musicController?.PlayInProgress();
+    }
+
+    private void TransitionToRaidComplete()
+    {
+        _currentState = RaidState.RaidComplete;
+        DisplayTextThenFade(_postRaidTextController);
+        _musicController?.PlayPostRaid();
+        _cutsceneController.PlayOutroCutscene();
     }
 
     private WaveConfig currentWave => raidConfig.waves[_currentWaveIndex];
@@ -136,7 +175,8 @@ public class RaidController : MonoBehaviour
 
         if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
         {
-            TransitionToState(RaidState.PreWave);
+            _cutsceneController.PlayIntroCutscene();
+            
         }
     }
 

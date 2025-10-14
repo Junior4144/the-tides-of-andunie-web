@@ -14,7 +14,6 @@ public class CameraManager : MonoBehaviour
         Instance = this;
     }
     private void OnEnable() =>
-        // Subscribe to GameManager event
         GameManager.OnGameStateChanged += HandleGameStateChanged;
 
     private void Start() =>
@@ -24,11 +23,9 @@ public class CameraManager : MonoBehaviour
     {
         Debug.Log($"CameraManager responding to new state: {newState}");
 
-        if (newState == GameState.Cutscene)
+        if (newState == GameState.BeginningCutsceneChangeThisLater)
             _camera.gameObject.SetActive(false);
         else
             _camera.gameObject.SetActive(true);
-
-
     }
 }
