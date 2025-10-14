@@ -267,10 +267,10 @@ GameObject:
   - component: {fileID: 2142873931109906679}
   - component: {fileID: 3935276486163312945}
   - component: {fileID: 4294235500975626157}
-  - component: {fileID: 3603910217672744378}
   - component: {fileID: 5346776916651260}
   - component: {fileID: 2501858800479070700}
   - component: {fileID: 42533560477664706}
+  - component: {fileID: 3603910217672744378}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -446,21 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d805c7b7749077c4d92a275f5dbe8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManagerOLD
---- !u!114 &3603910217672744378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650198408161721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef03c20dcaba58142b9068dc23ed7118, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
-  _bubblePrefab: {fileID: 8188844361341347319, guid: cccf834827b08624aafeaccda0d5e5d2, type: 3}
-  _offsetX: 0
-  _offsetY: 2.5
 --- !u!114 &5346776916651260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +483,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2c8e2ac644dc9448c580349bdca2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandlePlayerDeath
+--- !u!114 &3603910217672744378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef03c20dcaba58142b9068dc23ed7118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
+  _bubblePrefab: {fileID: 8188844361341347319, guid: 8527841c2ddaeea44b43f264e353577c, type: 3}
+  _offsetX: 0
+  _offsetY: 2.5
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0
