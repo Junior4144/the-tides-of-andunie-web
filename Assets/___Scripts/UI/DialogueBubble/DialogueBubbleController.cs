@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using NUnit.Framework.Internal;
+using UnityEngine.UI;
 
 public class DialogueBubbleController : MonoBehaviour
 {
@@ -35,6 +37,11 @@ public class DialogueBubbleController : MonoBehaviour
     private Vector3 GetNewBubblePosition() =>
         new Vector3(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
 
+
+    public void ShowBubbleFromSignal(string text)
+    {
+        ShowBubble(text);
+    }
 
     public void ShowBubble(string text, float duration = defaultDuration, float fontSize = 0f)
     {
