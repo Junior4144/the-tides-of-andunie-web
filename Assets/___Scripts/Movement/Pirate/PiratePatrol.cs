@@ -56,18 +56,19 @@ public class PiratePatrol : MonoBehaviour
         player = PlayerManager.Instance.transform;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        RotateTowardsTarget(currentPatrolPoint);
+        
 
 
         //Player Detection
         if (distanceToPlayer <= awarenessDistance)
         {
             currentPatrolPoint = player.transform;
-            RotateTowardsTarget(currentPatrolPoint);
+            RotateTowardsMovementDirection();
             agent.SetDestination(player.position);
             return;
         }
 
+        RotateTowardsMovementDirection();
         //Patrol
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -92,18 +93,24 @@ public class PiratePatrol : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, awarenessDistance);
     }
-    private void RotateTowardsTarget(Transform currentPatrolPoint)
+    private void RotateTowardsMovementDirection()
     {
-        if (currentPatrolPoint == null) return;
+        Vector3 velocity = agent.velocity;
 
-        Vector2 direction = (currentPatrolPoint.transform.position - transform.position).normalized;
+        // If agent is stationary, don’t rotate
+        if (velocity.sqrMagnitude < 0.01f) return;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Calculate facing angle from movement direction
+        float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
 
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90f);
 
         _rigidbody.SetRotation(
-            Mathf.MoveTowardsAngle(_rigidbody.rotation, targetRotation.eulerAngles.z, _attributes.RotationSpeed * Time.deltaTime)
+            Mathf.MoveTowardsAngle(
+                _rigidbody.rotation,
+                targetRotation.eulerAngles.z,
+                _attributes.RotationSpeed * Time.deltaTime
+            )
         );
     }
 }

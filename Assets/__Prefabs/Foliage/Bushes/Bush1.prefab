@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7952400626662690122}
   - component: {fileID: 4853358985051193705}
   - component: {fileID: 6190969281861882536}
+  - component: {fileID: -9005311666280652691}
   m_Layer: 0
   m_Name: Bush1
   m_TagString: Untagged
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1158868627
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a24c7c513ddf91345ab66f49d2ebfb95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,3 +128,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.022691727, y: 0}
   m_Radius: 0.5731182
+--- !u!114 &-9005311666280652691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4233628386896538144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
