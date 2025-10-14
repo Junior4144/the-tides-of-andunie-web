@@ -251,7 +251,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -732,11 +732,11 @@ PrefabInstance:
       objectReference: {fileID: 4184515136674530310, guid: 6a59ba1cf1ab4334885fa4f15a7a1218, type: 3}
     - target: {fileID: 4598016525977070990, guid: e65909524bd82a14ea944a6556254177, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46
+      value: 45.85
       objectReference: {fileID: 0}
     - target: {fileID: 4598016525977070990, guid: e65909524bd82a14ea944a6556254177, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -21.64
+      value: -21.55
       objectReference: {fileID: 0}
     - target: {fileID: 4598016525977070990, guid: e65909524bd82a14ea944a6556254177, type: 3}
       propertyPath: m_LocalPosition.z
@@ -78294,7 +78294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd306a302d33034ea581779b902e78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StateSetter
-  stateToSet: 1
+  stateToSet: 4
 --- !u!1 &1179929376
 GameObject:
   m_ObjectHideFlags: 0
@@ -91033,6 +91033,7 @@ MonoBehaviour:
   fadeCanvas: {fileID: 2033019191}
   fadeDuration: 1
   nextScene: Level 0
+  timerStop: 0
 --- !u!4 &1411752260
 Transform:
   m_ObjectHideFlags: 0
@@ -91208,7 +91209,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
