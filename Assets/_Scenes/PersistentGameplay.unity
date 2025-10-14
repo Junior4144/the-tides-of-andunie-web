@@ -404,6 +404,10 @@ PrefabInstance:
       propertyPath: _sceneFadeDuration
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8503392292891309090, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3380117300767497778, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
     m_RemovedGameObjects: []
@@ -641,7 +645,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.703277, y: 1.431244, z: -10}
+  m_LocalPosition: {x: -105, y: 115, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -762,9 +766,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 2.5
   orthographic: 1
   orthographic size: 10
   m_Depth: -1
@@ -1107,7 +1111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff0dbf7079729940ad6b1045c0e5106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleManager
-  _camera: {fileID: 796557384}
 --- !u!1 &1172666165
 GameObject:
   m_ObjectHideFlags: 0
