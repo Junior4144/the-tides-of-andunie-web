@@ -29,13 +29,11 @@ public class RaidController : MonoBehaviour
     private float _tickTimer = 0f;
 
     // ------- CONFIG & STATE DATA -------
-    [SerializeField]
-    private RaidConfig raidConfig;
-    [SerializeField]
-    private List<Transform> spawnPoints;
+    [SerializeField] private RaidConfig raidConfig;
+    [SerializeField] private List<Transform> spawnPoints;
     private int _currentWaveIndex;
     private List<GameObject> _activeEnemies = new List<GameObject>();
-    public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete }
+    public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete, RaidFailed}
     private RaidState _currentState;
 
     // ------- MUSIC -------
@@ -68,16 +66,22 @@ public class RaidController : MonoBehaviour
 
     void Update()
     {
-
         if (_currentState == RaidState.PreWave)
         {
             UpdateTimer();
             if (_timeBeforeNextWaveInSeconds <= 0)
                 TransitionToState(RaidState.WaveInProgress);
-
         }
         else if (_currentState == RaidState.WaveInProgress)
         {
+            if (PlayerManager.Instance.GetPercentHealth() < 0.15)
+            {
+                TransitionToRaidFailed();
+                _activeEnemies.Clear();
+                RemoveEnemiesCountText();
+                return;
+            }
+
             if (allCurrentWaveEnemiesSpawned && allActiveEnemiesAreDead)
             {
                 if (_currentWaveIndex + 1 < raidConfig.waves.Count)
@@ -165,6 +169,14 @@ public class RaidController : MonoBehaviour
         _cutsceneController.PlayOutroCutscene();
     }
 
+    private void TransitionToRaidFailed()
+    {
+        _currentState = RaidState.RaidFailed;
+        _musicController?.PlayPostRaid();
+        _cutsceneController.PlayOutroCutscene();
+    }
+
+
     private WaveConfig currentWave => raidConfig.waves[_currentWaveIndex];
     private bool allActiveEnemiesAreDead => !_activeEnemies.Any(enemy => enemy != null);
     private bool allCurrentWaveEnemiesSpawned => _activeEnemies.Count == currentWave.enemies.Sum(enemyData => enemyData.count);
@@ -172,12 +184,8 @@ public class RaidController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
-        {
             _cutsceneController.PlayIntroCutscene();
-            
-        }
     }
 
     private void StartNextWave()

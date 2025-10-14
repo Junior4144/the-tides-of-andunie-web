@@ -55,14 +55,48 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("CannonBall")) return;
-        if (hasExploded) return;
-        if (collision.gameObject.CompareTag("Enemy")) return;
+        Debug.Log($"[{gameObject.name}] Trigger entered by: {collision.gameObject.name}");
+        
+        if (!collision.gameObject.CompareTag("CannonBall"))
+        {
+            Debug.Log($"[{gameObject.name}] Not a cannonball, ignoring");
+            return;
+        }
+        
+        Debug.Log($"[{gameObject.name}] Cannonball detected!");
+        
+        if (hasExploded)
+        {
+            Debug.Log($"[{gameObject.name}] Already exploded");
+            return;
+        }
+        
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log($"[{gameObject.name}] Enemy tag detected, ignoring");
+            return;
+        }
 
         if (mainCamera == null) mainCamera = Camera.main;
+        Debug.Log($"[{gameObject.name}] Camera check: {(mainCamera != null ? "Found" : "NULL")}");
 
-        if (!IsVisibleOnCameraLeft()) return;
-
+        if (GameManager.Instance.CurrentState == GameState.BeginningCutsceneChangeThisLater)
+        {
+            Debug.Log($"[{gameObject.name}] In cutscene - SKIPPING visibility check");
+        }
+        else
+        {
+            bool isVisible = IsVisibleOnCameraLeft();
+            Debug.Log($"[{gameObject.name}] IsVisibleOnCameraLeft: {isVisible}");
+            
+            if (!isVisible)
+            {
+                Debug.Log($"[{gameObject.name}] Not visible, skipping explosion");
+                return;
+            }
+        }
+        
+        Debug.Log($"[{gameObject.name}] EXPLODING!");
         HandleExplosion();
 
         HandleCameraShake();
@@ -70,11 +104,17 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private void HandleExplosion()
     {
+        Debug.Log("Handling Explosion");
+
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        else
+            Debug.LogError("ExplosionPrefab is null");
 
         if (explosionSoundPrefab != null)
             Instantiate(explosionSoundPrefab, transform.position, Quaternion.identity, transform);
+        else
+            Debug.LogError("ExplosionSoundPrefab is null");
 
         ReplaceSprite();
 
@@ -119,7 +159,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance < explosionRadius)
-            CameraShakeManager.instance.CameraShake(impulseSource);
+            CameraShakeManager.instance?.CameraShake(impulseSource);
     }
 
     private bool IsVisibleOnCameraLeft(float padding = 500f)

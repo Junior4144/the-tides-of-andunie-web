@@ -10,6 +10,11 @@ public class EndWholeGame : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
+        NextStage();
+    }
+    
+    public void NextStage()
+    {
         Debug.Log("[EndWholeGame] Reseting Whole Game");
 
         SaveManager.Instance.ResetSaveData();
@@ -20,8 +25,6 @@ public class EndWholeGame : MonoBehaviour
 
         LoadNextStage();
     }
-    public void NextStage() =>
-        LoadNextStage();
 
     void LoadNextStage() =>
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
