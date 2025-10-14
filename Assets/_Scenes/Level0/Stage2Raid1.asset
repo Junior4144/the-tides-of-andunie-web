@@ -14,9 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaidConfig
   waves:
   - enemies:
+    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
+      count: 2
+    countdown: 7
+    spawnInterval: 5
+    countDownText: Pirate Wave Starting. Get Ready!
+    waveStartText: Enemies incoming!
+  - enemies:
+    - prefab: {fileID: 1529340756946598978, guid: 21bfb3c241f8ffb41b0015edb7174b16, type: 3}
+      count: 1
+    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
+      count: 1
+    countdown: 7
+    spawnInterval: 5
+    countDownText: Pirate Wave Starting. Get Ready!
+    waveStartText: Enemies incoming!
+  - enemies:
     - prefab: {fileID: 3686743910601948230, guid: f838051b28e878b49af0a56913ff9d0b, type: 3}
       count: 1
-    countdown: 3
-    spawnInterval: 1
-    countDownText: A raid has been initiated.
+    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
+      count: 1
+    countdown: 7
+    spawnInterval: 5
+    countDownText: Pirate Wave Starting. Get Ready!
     waveStartText: Enemies incoming!

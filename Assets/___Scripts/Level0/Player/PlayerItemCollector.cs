@@ -15,6 +15,8 @@ public class PlayerItemCollector : MonoBehaviour
     {
         if (!collison.CompareTag("Item") || !healthController) return;
 
+        if (healthController.GetPercentHealth() >= .98) return;
+
         if (collison.TryGetComponent<Item>(out var item))
         {
             if (item.useImmediately)
