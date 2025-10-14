@@ -8,7 +8,8 @@ public class RaidCutsceneController : MonoBehaviour
     [SerializeField] private PlayableDirector _introCutscene;
     [SerializeField] private PlayableDirector _outroCutscene;
 
-    [SerializeField] private CinemachineCamera _cutsceneCamera;
+    [SerializeField] private CinemachineCamera _introCutsceneCamera;
+    [SerializeField] private CinemachineCamera _outroCutsceneCamera;
     
     public event Action OnIntroCutsceneFinished;
     public event Action OnOutroCutsceneFinished;
@@ -28,32 +29,32 @@ public class RaidCutsceneController : MonoBehaviour
     public void PlayIntroCutscene()
     {
         GameManager.Instance.SetState(GameState.Cutscene);
-        PrioritizeCamera();
+        PrioritizeCamera(_introCutsceneCamera);
         _introCutscene.Play();
     }
     
     public void PlayOutroCutscene()
     {
         GameManager.Instance.SetState(GameState.Cutscene);
-        PrioritizeCamera();
+        PrioritizeCamera(_outroCutsceneCamera);
         _outroCutscene.Play();
     }
     
     private void OnIntroStopped(PlayableDirector director)
     {
         GameManager.Instance.SetState(GameState.Gameplay);
-        DePrioritizeCamera();
+        DePrioritizeCamera(_introCutsceneCamera);
         OnIntroCutsceneFinished?.Invoke();  
     }
 
     private void OnOutroStopped(PlayableDirector director)
     {
         GameManager.Instance.SetState(GameState.Gameplay);
-        DePrioritizeCamera();
+        DePrioritizeCamera(_outroCutsceneCamera);
         OnOutroCutsceneFinished?.Invoke();
     }
 
-    private void PrioritizeCamera() => _cutsceneCamera.Priority = 20;
+    private void PrioritizeCamera(CinemachineCamera camera) => camera.Priority = 20;
 
-    private void DePrioritizeCamera() => _cutsceneCamera.Priority = 0;
+    private void DePrioritizeCamera(CinemachineCamera camera) => camera.Priority = 0;
 }
