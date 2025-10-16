@@ -43,7 +43,9 @@ public class MeleeController : MonoBehaviour
     private IEnumerator Attack(GameObject enemyObject)
     {
         yield return new WaitForSeconds(damageDelay);
-        enemyObject.GetComponent<IHealthController>().TakeDamage(_damage);
+
+        if (enemyObject)
+            enemyObject.GetComponent<IHealthController>().TakeDamage(_damage);
     }
 
     private void PlayAttackAnimation()

@@ -73,7 +73,7 @@ public class SaveManager : MonoBehaviour
     public void ResetSaveData()
     {
         AssignDefaultValues();
-        UIManager.Instance.UpdateHealtBar(CurrentSave.health, CurrentSave.health);
+        UIManager.Instance.UpdateHealthBar(CurrentSave.health, CurrentSave.health);
         Debug.Log("[SaveManager] Save data reset to default values.");
     }
 

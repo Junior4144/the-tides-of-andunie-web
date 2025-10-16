@@ -56,7 +56,8 @@ public class UIManager : MonoBehaviour
         _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
 
     }
-    public void UpdateHealtBar(float _currentHealth, float _maxhealth)
+    
+    public void UpdateHealthBar(float _currentHealth, float _maxhealth)
     {
         if (!_healthBarUI.gameObject.activeSelf) return;
 

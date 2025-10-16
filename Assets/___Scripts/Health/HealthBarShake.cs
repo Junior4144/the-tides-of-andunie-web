@@ -17,6 +17,8 @@ public class HealthBarShake : MonoBehaviour
 
     public void Shake()
     {
+        if (!isActiveAndEnabled) return;
+        
         StopAllCoroutines();
         StartCoroutine(DoShake());
     }
