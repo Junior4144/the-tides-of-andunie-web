@@ -11,16 +11,17 @@ public class HealthBarUI : MonoBehaviour
 
     private Coroutine _damageRoutine;
 
-    public void UpdateHealthBar(float _currentHealt, float _maxHealth)
+    public void UpdateHealthBar(float _currentHealth, float _maxHealth)
     {
         if (!gameObject.activeSelf) return;
-        float targetFill = (_currentHealt / _maxHealth);
+        float targetFill = (_currentHealth / _maxHealth);
         _healthBarForegroundImage.fillAmount = targetFill; // Handles Red Bar
 
         if (_damageRoutine != null)
             StopCoroutine(_damageRoutine);
-
-        _damageRoutine = StartCoroutine(AnimateDamageBar(targetFill)); // Handle White Transparent Bar
+        
+        if(isActiveAndEnabled)
+            _damageRoutine = StartCoroutine(AnimateDamageBar(targetFill)); // Handle White Transparent Bar
     }
 
     private IEnumerator AnimateDamageBar(float targetFill)

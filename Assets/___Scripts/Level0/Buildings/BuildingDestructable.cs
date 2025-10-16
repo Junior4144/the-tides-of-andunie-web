@@ -54,49 +54,20 @@ public abstract class BuildingDestructable : MonoBehaviour
 
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log($"[{gameObject.name}] Trigger entered by: {collision.gameObject.name}");
+    {        
+        if (!collision.gameObject.CompareTag("CannonBall")) return;
         
-        if (!collision.gameObject.CompareTag("CannonBall"))
-        {
-            Debug.Log($"[{gameObject.name}] Not a cannonball, ignoring");
-            return;
-        }
+        if (hasExploded) return;
         
-        Debug.Log($"[{gameObject.name}] Cannonball detected!");
-        
-        if (hasExploded)
-        {
-            Debug.Log($"[{gameObject.name}] Already exploded");
-            return;
-        }
-        
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log($"[{gameObject.name}] Enemy tag detected, ignoring");
-            return;
-        }
+        if (collision.gameObject.CompareTag("Enemy")) return;
 
         if (mainCamera == null) mainCamera = Camera.main;
-        Debug.Log($"[{gameObject.name}] Camera check: {(mainCamera != null ? "Found" : "NULL")}");
 
         if (GameManager.Instance.CurrentState == GameState.BeginningCutsceneChangeThisLater)
-        {
             Debug.Log($"[{gameObject.name}] In cutscene - SKIPPING visibility check");
-        }
         else
-        {
-            bool isVisible = IsVisibleOnCameraLeft();
-            Debug.Log($"[{gameObject.name}] IsVisibleOnCameraLeft: {isVisible}");
-            
-            if (!isVisible)
-            {
-                Debug.Log($"[{gameObject.name}] Not visible, skipping explosion");
-                return;
-            }
-        }
+            if (!IsVisibleOnCameraLeft()) return;
         
-        Debug.Log($"[{gameObject.name}] EXPLODING!");
         HandleExplosion();
 
         HandleCameraShake();
@@ -104,17 +75,11 @@ public abstract class BuildingDestructable : MonoBehaviour
 
     private void HandleExplosion()
     {
-        Debug.Log("Handling Explosion");
-
         if (explosionPrefab != null)
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        else
-            Debug.LogError("ExplosionPrefab is null");
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);;
 
         if (explosionSoundPrefab != null)
             Instantiate(explosionSoundPrefab, transform.position, Quaternion.identity, transform);
-        else
-            Debug.LogError("ExplosionSoundPrefab is null");
 
         ReplaceSprite();
 
