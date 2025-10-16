@@ -1,73 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5128748602131472664
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2321188476861364897}
-  - component: {fileID: 4344936831274728631}
-  m_Layer: 6
-  m_Name: ImpulseCollider
-  m_TagString: CannonBall
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2321188476861364897
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128748602131472664}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8891809592475458237}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4344936831274728631
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128748602131472664}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.0999999, y: -0.001681507}
-  m_Radius: 0.4402797
 --- !u!1 &6115477345102268318
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,12 +11,12 @@ GameObject:
   - component: {fileID: 8891809592475458237}
   - component: {fileID: 704526114195109269}
   - component: {fileID: 7518011826396239017}
-  - component: {fileID: 1085436698065105948}
-  - component: {fileID: 3570399792742845880}
-  - component: {fileID: 3683938537504632573}
-  - component: {fileID: -7649584077356028435}
+  - component: {fileID: -7858449677030758399}
+  - component: {fileID: 3469320414576094554}
+  - component: {fileID: -1283296297595134679}
+  - component: {fileID: -5918252245889317009}
   m_Layer: 6
-  m_Name: "St_Ca\xF1on_Animation_Large"
+  m_Name: R_Canon_Animation_Large 1
   m_TagString: CannonBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2321188476861364897}
+  - {fileID: 2978445155208571297}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &704526114195109269
@@ -186,7 +118,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1085436698065105948
+--- !u!114 &-7858449677030758399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,14 +127,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6115477345102268318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c8ecc909188aa41a23d1e99bf30969, type: 3}
+  m_Script: {fileID: 11500000, guid: eef8a6027817dd94cab2ac958437f6b7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CannonBallStraight
+  m_EditorClassIdentifier: Assembly-CSharp::CannonBallRandom
   explosion: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
   _cannonBallAttributes: {fileID: 11400000, guid: 909c723e486350347883e7697d4dc040, type: 2}
   _explosionSound: {fileID: 8300000, guid: b46f9310267236c408da69d18a6a71f5, type: 3}
   force: 12
---- !u!50 &3570399792742845880
+  minY: -8
+  maxY: 8
+  minXOffset: -15
+  maxXOffset: -5
+--- !u!50 &3469320414576094554
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -229,7 +165,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &3683938537504632573
+--- !u!58 &-1283296297595134679
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,9 +199,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.099999845, y: 0.014993429}
-  m_Radius: 0.4349059
---- !u!114 &-7649584077356028435
+  m_Offset: {x: -0.099999964, y: -0.005044639}
+  m_Radius: 0.43355364
+--- !u!114 &-5918252245889317009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,3 +254,71 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!1 &9093640348601350042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2978445155208571297}
+  - component: {fileID: 8478277885483609049}
+  m_Layer: 6
+  m_Name: ImpulseCollider
+  m_TagString: CannonBall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2978445155208571297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093640348601350042}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8891809592475458237}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8478277885483609049
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093640348601350042}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0999999, y: -0.001681507}
+  m_Radius: 0.4402797
