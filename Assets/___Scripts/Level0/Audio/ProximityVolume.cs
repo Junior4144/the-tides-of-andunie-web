@@ -5,6 +5,9 @@ public class ProximityVolume : MonoBehaviour
     public float range;
     public float maxVolume;
 
+    public float minPitch = 0.9f;
+    public float maxPitch = 1.1f;
+
     private AudioSource _audioSource;
     private GameObject _player;
 
@@ -12,6 +15,8 @@ public class ProximityVolume : MonoBehaviour
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _audioSource = GetComponent<AudioSource>();
+
+        _audioSource.pitch = Random.Range(minPitch, maxPitch);
 
         if (!_audioSource.loop)
             Destroy(gameObject, _audioSource.clip.length);
