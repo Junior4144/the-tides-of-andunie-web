@@ -63,10 +63,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         if (mainCamera == null) mainCamera = Camera.main;
 
-        if (GameManager.Instance.CurrentState == GameState.BeginningCutsceneChangeThisLater)
-            Debug.Log($"[{gameObject.name}] In cutscene - SKIPPING visibility check");
-        else
-            if (!IsVisibleOnCameraLeft()) return;
+        if (!IsVisibleOnCameraLeft()) return;
         
         HandleExplosion();
 

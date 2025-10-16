@@ -21,7 +21,7 @@ public class PlayerFallsBehind : MonoBehaviour
         _timer = InactiveStateDelay;
 
         Debug.Log($"[PlayerFallsBehind] Current Scene: {SceneManager.GetActiveScene().name}");
-        if(SceneManager.GetActiveScene().name != "Level 0")
+        if(SceneManager.GetActiveScene().name != "Level0Stage1")
             enabled = false;
     }
 
