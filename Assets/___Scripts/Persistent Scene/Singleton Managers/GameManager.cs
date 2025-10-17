@@ -5,7 +5,8 @@ public enum GameState
     Gameplay,
     Cutscene,
     Paused,
-    Menu
+    Menu,
+    LevelSelector
 }
 
 public class GameManager : MonoBehaviour
