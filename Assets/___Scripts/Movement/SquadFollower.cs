@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -6,8 +5,10 @@ public class SquadFollower : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float maxMoveSpeed = 20f;
     [SerializeField] private float stoppingDistance = 0.01f;
     [SerializeField] private float rotationSpeed = 360f;
+    
 
     private Transform squad;
     private Rigidbody2D rb;
@@ -71,7 +72,7 @@ public class SquadFollower : MonoBehaviour
         MatchFormationAngle();
 
         if (distanceToTarget > stoppingDistance)
-            SetVelocity(directionToTarget.normalized * moveSpeed * distanceToTarget);
+            SetVelocity(directionToTarget.normalized * Mathf.Min(moveSpeed * distanceToTarget, maxMoveSpeed));
         else
             SetVelocity(Vector2.zero);
     }
