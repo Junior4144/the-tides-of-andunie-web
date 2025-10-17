@@ -8,7 +8,7 @@ public class SceneStateManager : MonoBehaviour
 
     [SerializeField] private string persistentSceneName = "PersistentGameplay";
 
-    public static event Action OnNonPersistentSceneActivated;  // fires only for gameplay scenes
+    public static event Action OnNonPersistentSceneActivated;
 
     private void Awake()
     {

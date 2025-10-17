@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class ShowSelectionBox : MonoBehaviour
 {
     [SerializeField] private GameObject _BoxPrefab;
-    [SerializeField] private float _offsetX = 0f;
-    [SerializeField] private float _offsetY = 3f;
+    [SerializeField] private float _offsetX;
+    [SerializeField] private float _offsetY;
     [SerializeField] private Camera _camera;
 
     private GameObject _boxInstance;
@@ -64,10 +64,9 @@ public class ShowSelectionBox : MonoBehaviour
         _boxInstance.SetActive(false);
         Debug.Log("Hiding box above player.");
     }
-    public void DestroyBox()
-    {
+    public void DestroyBox() =>
         Destroy(_boxInstance);
-    }
+
 
     private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }
