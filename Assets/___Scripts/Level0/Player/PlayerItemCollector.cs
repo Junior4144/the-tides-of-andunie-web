@@ -19,6 +19,7 @@ public class PlayerItemCollector : MonoBehaviour
         {
             if (item.useImmediately)
             {
+                if (healthController.GetPercentHealth() >= .98) return;
                 UseItem(item);
                 Destroy(collison.gameObject);
             }

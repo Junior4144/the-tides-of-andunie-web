@@ -23,9 +23,6 @@ public class CameraManager : MonoBehaviour
     {
         Debug.Log($"CameraManager responding to new state: {newState}");
 
-        if (newState == GameState.BeginningCutsceneChangeThisLater)
-            _camera.gameObject.SetActive(false);
-        else
-            _camera.gameObject.SetActive(true);
+        _camera.gameObject.SetActive(true);
     }
 }

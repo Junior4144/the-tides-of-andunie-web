@@ -54,15 +54,17 @@ public abstract class BuildingDestructable : MonoBehaviour
 
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
+    {        
         if (!collision.gameObject.CompareTag("CannonBall")) return;
+        
         if (hasExploded) return;
+        
         if (collision.gameObject.CompareTag("Enemy")) return;
 
         if (mainCamera == null) mainCamera = Camera.main;
 
         if (!IsVisibleOnCameraLeft()) return;
-
+        
         HandleExplosion();
 
         HandleCameraShake();
@@ -71,7 +73,7 @@ public abstract class BuildingDestructable : MonoBehaviour
     private void HandleExplosion()
     {
         if (explosionPrefab != null)
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);;
 
         if (explosionSoundPrefab != null)
             Instantiate(explosionSoundPrefab, transform.position, Quaternion.identity, transform);
@@ -119,7 +121,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance < explosionRadius)
-            CameraShakeManager.instance.CameraShake(impulseSource);
+            CameraShakeManager.instance?.CameraShake(impulseSource);
     }
 
     private bool IsVisibleOnCameraLeft(float padding = 500f)

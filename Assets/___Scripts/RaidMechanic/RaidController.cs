@@ -25,17 +25,16 @@ public class RaidController : MonoBehaviour
 
     // ------- TIMERS -------
     private float _timeBeforeNextWaveInSeconds = 0;
-
     private float _tickTimer = 0f;
 
     // ------- CONFIG & STATE DATA -------
-    [SerializeField]
-    private RaidConfig raidConfig;
-    [SerializeField]
-    private List<Transform> spawnPoints;
+    [SerializeField] private RaidConfig raidConfig;
+    [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private float _losingHealthPercentage = 0.15f;
+
     private int _currentWaveIndex;
     private List<GameObject> _activeEnemies = new List<GameObject>();
-    public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete }
+    public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete, RaidFailed}
     private RaidState _currentState;
 
     // ------- MUSIC -------
@@ -53,7 +52,7 @@ public class RaidController : MonoBehaviour
         _timerTextController = new TextController(timerText);
         _postRaidTextController = new TextController(postRaidText);
         _enemiesRemainingTextController = new TextController(enemiesRemainingText);
-        TransitionToState(RaidState.PreRaid);
+        TransitionToPreRaidState();
     }
 
     void Start()
@@ -68,29 +67,34 @@ public class RaidController : MonoBehaviour
 
     void Update()
     {
-
         if (_currentState == RaidState.PreWave)
         {
             UpdateTimer();
-            if (_timeBeforeNextWaveInSeconds <= 0)
-                TransitionToState(RaidState.WaveInProgress);
 
+            if (_timeBeforeNextWaveInSeconds <= 0)
+                TransitionToWaveInProgressState();
         }
         else if (_currentState == RaidState.WaveInProgress)
         {
+            if (PlayerManager.Instance.GetPercentHealth() < _losingHealthPercentage)
+            {
+                TransitionToRaidFailedState();
+                _activeEnemies.Clear();
+                RemoveEnemiesCountText();
+                return;
+            }
+
             if (allCurrentWaveEnemiesSpawned && allActiveEnemiesAreDead)
             {
                 if (_currentWaveIndex + 1 < raidConfig.waves.Count)
-                    TransitionToState(RaidState.PreWave);
+                    TransitionToPreWaveState();
                 else
-                    TransitionToState(RaidState.RaidComplete);
+                    TransitionToRaidCompleteState();
                 _activeEnemies.Clear();
                 RemoveEnemiesCountText();
             }
             else
-            {
                 UpdateEnemiesCountText();
-            }
         }
     }
     
@@ -105,29 +109,6 @@ public class RaidController : MonoBehaviour
             {
                 _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
             }
-        }
-    }
-
-    private void TransitionToState(RaidState newState)
-    {
-        _currentState = newState;
-        switch (newState)
-        {
-            case RaidState.PreRaid:
-                TransitionToPreRaidState();
-                break;
-
-            case RaidState.PreWave:
-                TransitionToPreWaveState();
-                break;
-
-            case RaidState.WaveInProgress:
-                TransitionToWaveInProgress();
-                break;
-
-            case RaidState.RaidComplete:
-                TransitionToRaidComplete();
-                break;
         }
     }
 
@@ -147,7 +128,7 @@ public class RaidController : MonoBehaviour
         _musicController?.PlayPreWave();
     }
 
-    private void TransitionToWaveInProgress()
+    private void TransitionToWaveInProgressState()
     {
         _currentState = RaidState.WaveInProgress;
         _alertTextController.SetText(currentWave.waveStartText);
@@ -157,13 +138,21 @@ public class RaidController : MonoBehaviour
         _musicController?.PlayInProgress();
     }
 
-    private void TransitionToRaidComplete()
+    private void TransitionToRaidCompleteState()
     {
         _currentState = RaidState.RaidComplete;
         DisplayTextThenFade(_postRaidTextController);
         _musicController?.PlayPostRaid();
         _cutsceneController.PlayOutroCutscene();
     }
+
+    private void TransitionToRaidFailedState()
+    {
+        _currentState = RaidState.RaidFailed;
+        _musicController?.PlayPostRaid();
+        _cutsceneController.PlayOutroCutscene();
+    }
+
 
     private WaveConfig currentWave => raidConfig.waves[_currentWaveIndex];
     private bool allActiveEnemiesAreDead => !_activeEnemies.Any(enemy => enemy != null);
@@ -172,12 +161,8 @@ public class RaidController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
-        {
             _cutsceneController.PlayIntroCutscene();
-            
-        }
     }
 
     private void StartNextWave()
@@ -217,25 +202,18 @@ public class RaidController : MonoBehaviour
     private IEnumerator SpawnWaveEnemiesOverIntervals()
     {
         if (spawnPoints.Count == 0)
-        {
             Debug.LogError("No spawn points assigned for raid wave.");
-        }
 
         List<EnemyData> enemiesToSpawn = new List<EnemyData>();
 
         foreach (var enemyData in currentWave.enemies)
-        {
             enemiesToSpawn.Add(new EnemyData { prefab = enemyData.prefab, count = enemyData.count, });
-        }
-
 
         do
         {
             List<EnemyData> availableEnemies = enemiesToSpawn.FindAll(enemy => enemy.count > 0);
             if (availableEnemies.Count == 0)
-            {
                 break;
-            }
 
             EnemyData chosenEnemyData = availableEnemies[Random.Range(0, availableEnemies.Count)];
 
@@ -249,8 +227,5 @@ public class RaidController : MonoBehaviour
 
             yield return new WaitForSeconds(currentWave.spawnInterval);
         } while (true);
-
     }
-
-
 }
