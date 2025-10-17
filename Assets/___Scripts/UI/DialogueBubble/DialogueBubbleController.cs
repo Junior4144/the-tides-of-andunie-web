@@ -26,6 +26,8 @@ public class DialogueBubbleController : MonoBehaviour
         Canvas canvas = _bubbleInstance.GetComponentInChildren<Canvas>();
         if (canvas != null && _camera != null)
             canvas.worldCamera = _camera;
+        else
+            Debug.LogWarning("Camera was not attached to dialogue bubble");
 
         _textMesh = _bubbleInstance.GetComponentInChildren<TextMeshProUGUI>();
 
