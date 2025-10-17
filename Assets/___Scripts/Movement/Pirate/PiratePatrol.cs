@@ -37,14 +37,14 @@ public class PiratePatrol : MonoBehaviour
             }
         }
 
-         
-
-        if (patrolPoints.Length > 0)
+        if (patrolPoints != null && patrolPoints.Length > 0)
         {
             agent.SetDestination(patrolPoints[0].position);
             currentPatrolPoint = patrolPoints[0];
+        } else
+        {
+            agent.SetDestination(PlayerManager.Instance.transform.position);
         }
-
     }
 
     void Update()
@@ -52,14 +52,17 @@ public class PiratePatrol : MonoBehaviour
         if (!agent.enabled) return;
 
         if (!PlayerManager.Instance) return;
-        
+
         player = PlayerManager.Instance.transform;
 
+        agent.SetDestination(player.position);
+
+        RotateTowardsMovementDirection();
+
+        if (patrolPoints == null) return;
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        
 
-
-        //Player Detection
         if (distanceToPlayer <= awarenessDistance)
         {
             currentPatrolPoint = player.transform;
@@ -68,8 +71,6 @@ public class PiratePatrol : MonoBehaviour
             return;
         }
 
-        RotateTowardsMovementDirection();
-        //Patrol
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             waitTimer += Time.deltaTime;
