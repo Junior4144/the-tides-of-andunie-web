@@ -19,7 +19,6 @@ public class SceneStateManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         SceneManager.activeSceneChanged += HandleActiveSceneChanged;
     }
