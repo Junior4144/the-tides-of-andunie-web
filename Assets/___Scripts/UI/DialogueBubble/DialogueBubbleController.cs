@@ -1,7 +1,8 @@
-using UnityEngine;
-using TMPro;
 using System.Collections;
 using NUnit.Framework.Internal;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueBubbleController : MonoBehaviour
@@ -16,6 +17,7 @@ public class DialogueBubbleController : MonoBehaviour
     private TextMeshProUGUI _textMesh;
     private Coroutine _hideCoroutine;
 
+
     private void Start()
     {
         _bubbleInstance = Instantiate(_bubblePrefab, GetNewBubblePosition(), Quaternion.identity);
@@ -26,6 +28,8 @@ public class DialogueBubbleController : MonoBehaviour
             canvas.worldCamera = _camera;
 
         _textMesh = _bubbleInstance.GetComponentInChildren<TextMeshProUGUI>();
+
+        SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
     }
 
     private void Update()
@@ -64,4 +68,10 @@ public class DialogueBubbleController : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         _bubbleInstance.SetActive(false);
     }
+
+    private void OnDestroy()
+    {
+        SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
+    }
+    private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_bubbleInstance, SceneManager.GetActiveScene());
 }

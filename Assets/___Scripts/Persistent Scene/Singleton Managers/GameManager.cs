@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
 
+    public Camera MainCamera;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Game state changed to: {newState}");
         OnGameStateChanged?.Invoke(newState);
     }
+
 
     public delegate void GameStateChanged(GameState newState);
     public static event GameStateChanged OnGameStateChanged;
