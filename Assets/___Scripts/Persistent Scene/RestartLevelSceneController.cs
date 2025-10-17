@@ -30,6 +30,7 @@ public class RestartLevelSceneController : MonoBehaviour
 
     public void LoadNextStage(string sceneToBeUnloaded)
     {
+        StopAllCoroutines();
         StartCoroutine(LoadNextStageCoroutine(sceneToBeUnloaded));
     }
 
