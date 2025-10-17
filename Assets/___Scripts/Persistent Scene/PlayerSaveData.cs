@@ -7,5 +7,6 @@ public class PlayerSaveData
     public Vector3 playerPosition;
     public float health;
     public float damageAmount;
+    public string lastLocation;
 }
 

@@ -23,8 +23,8 @@ public class PlayerManager : MonoBehaviour
         meleeController = GetComponentInChildren<MeleeController>();
         _playerMovement = GetComponent<PlayerHeroMovement>();
     }
-    private void Start() =>
-        SaveManager.Instance.InitializeDefaultSave();
+    //private void Start() =>
+    //    SaveManager.Instance.InitializeDefaultSave();
 
 
     private void OnEnable() =>

@@ -15,6 +15,8 @@ public class LevelSelection : MonoBehaviour
     public static event Action OnPlayerExitSelectionZone;
     public static event Action OnPlayerLeavingLevelSelectionZone;
 
+    public string location = "DefaultSpawn";
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
@@ -44,6 +46,7 @@ public class LevelSelection : MonoBehaviour
 
     private void ProceedToNextStage()
     {
+        SaveManager.Instance.SaveLastLocation(location);
         OnPlayerLeavingLevelSelectionZone?.Invoke();
         Debug.Log("[EndCurrentScene] Next Scene is starting");
 
