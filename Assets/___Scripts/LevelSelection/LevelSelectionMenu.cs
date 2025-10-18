@@ -24,6 +24,13 @@ public class LevelSelectionMenu : MonoBehaviour
         NextScene = nextScene;
         Location = location;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            menuCanvas.SetActive(false);
+        }
+    }
 
     public void ButtonClicked() =>
         ProceedToNextStage();
