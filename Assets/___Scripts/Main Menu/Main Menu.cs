@@ -20,12 +20,14 @@ public class MainMenu : MonoBehaviour
     public void OpenOptions()
     {
         optionsPanel.SetActive(true);
+        MainPanel.SetActive(false);
 
     }
 
     public void CloseOptions()
     {
         optionsPanel.SetActive(false);
+        MainPanel.SetActive(true);
     }
 
     public void Exit() =>
