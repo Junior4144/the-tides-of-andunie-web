@@ -92,8 +92,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RewardPageController
   rewardOptionPrefab: {fileID: 6823367141541553205, guid: 7006614aa816cb04f91d7db2a981fd40, type: 3}
   rewardContainer: {fileID: 4193929613431338852}
-  inventoryController: {fileID: 0}
   rewardManager: {fileID: 838277568486491675}
+  claimOverlay: {fileID: 0}
+  inventoryController: {fileID: 0}
 --- !u!1 &4491187222214359228
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,8 +384,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 350, y: 0}
-  m_SizeDelta: {x: -700, y: 440}
+  m_AnchoredPosition: {x: 250, y: 0}
+  m_SizeDelta: {x: -500, y: 440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5713986349814962793
 MonoBehaviour:
@@ -406,7 +407,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 100, y: 100}
+  m_CellSize: {x: 300, y: 300}
+  m_Spacing: {x: 200, y: 200}
   m_Constraint: 0
   m_ConstraintCount: 2
