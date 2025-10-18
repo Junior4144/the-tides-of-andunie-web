@@ -29,10 +29,11 @@ public class SaveManager : MonoBehaviour
         {
             sceneName = SceneManager.GetActiveScene().name,
             health = PlayerManager.Instance.GetHealth(),
-            damageAmount = PlayerManager.Instance.GetDamageAmount()
+            damageAmount = PlayerManager.Instance.GetDamageAmount(),
+            lastLocation = "DefaultSpawn"
 
         };
-        Debug.Log($"[SaveManager] OnStart saves player health at {CurrentSave.health}");
+        Debug.Log($"[SaveManager] OnInitalStart saves player health at {CurrentSave.health}");
     }
     private void AssignDefaultValues()
     {
@@ -40,22 +41,21 @@ public class SaveManager : MonoBehaviour
         {
             sceneName = SceneManager.GetActiveScene().name,
             health = 100f,
-            damageAmount = 20f
+            damageAmount = 20f,
+            lastLocation = "DefaultSpawn"
 
         };
         Debug.Log($"[SaveManager] No Player Instance -> Default values -> Health:{CurrentSave.health}, Damage:{CurrentSave.damageAmount},");
+        Debug.Log($"[SaveManager] No Player Instance -> Default values -> LastLocation:{CurrentSave.lastLocation}");
     }
 
     public void SavePlayerStats()
     {
-        CurrentSave = new PlayerSaveData()
-        {
-            sceneName = SceneManager.GetActiveScene().name,
-            health = PlayerManager.Instance.GetHealth(),
-            damageAmount = PlayerManager.Instance.GetDamageAmount()
-
-        };
+        CurrentSave.sceneName = SceneManager.GetActiveScene().name;
+        CurrentSave.health = PlayerManager.Instance.GetHealth();
+        CurrentSave.damageAmount = PlayerManager.Instance.GetDamageAmount();
         Debug.Log($"[SaveManager] Saves player health at {CurrentSave.health}");
+        Debug.Log($"[SaveManager] Saves player health at {CurrentSave.lastLocation}");
     }
 
     public void RestorePlayerStats()
@@ -75,6 +75,11 @@ public class SaveManager : MonoBehaviour
         AssignDefaultValues();
         UIManager.Instance.UpdateHealthBar(CurrentSave.health, CurrentSave.health);
         Debug.Log("[SaveManager] Save data reset to default values.");
+    }
+    public void SaveLastLocation(string id)
+    {
+        CurrentSave.lastLocation = id;
+        Debug.Log($"[SaveManager] Saved lastLocation in LevelSelector = {id}");
     }
 
 }

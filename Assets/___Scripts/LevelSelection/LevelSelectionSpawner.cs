@@ -1,0 +1,47 @@
+using System.Linq;
+using UnityEngine;
+
+public class LevelSelectionSpawner : MonoBehaviour
+{
+    [SerializeField] private GameObject playerPrefab;
+    private GameObject currentPlayer;
+
+    [SerializeField] private GameObject[] spawnPoints;
+
+    private void Awake() => //consider doing on start -> might fix some issues -> it will delay spawning for a couple frames
+        OnSceneLoaded();
+
+    private void OnSceneLoaded()
+    {
+        if (PlayerManager.Instance != null) return;
+        GameObject spawnPoint;
+        string last;
+
+        if (SaveManager.Instance)
+        {
+            last = SaveManager.Instance.CurrentSave.lastLocation;
+            Debug.Log($"[LevelSelectionSpawner] last Location = {last}");
+            spawnPoint = spawnPoints.FirstOrDefault(sp => sp.name == last);
+        }
+        else {
+            last = "DefaultSpawn";
+            Debug.Log($"[LevelSelectionSpawner] last Location = {last}");
+            spawnPoint = spawnPoints.FirstOrDefault(sp => sp.name == last);
+        }
+
+
+            currentPlayer = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity);
+        currentPlayer.transform.rotation = spawnPoint.transform.rotation;
+
+        Debug.Log("New Player created");
+
+        if (SaveManager.Instance && UIManager.Instance.Check_HealthBar_UI_IsActive())
+        {
+            SaveManager.Instance.RestorePlayerStats();
+
+            var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
+            UIManager.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+        }
+    }
+
+}
