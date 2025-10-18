@@ -9,7 +9,6 @@ public class RestartLevelSceneController : MonoBehaviour
     [SerializeField] private float _sceneFadeDuration = 1f;
     private SceneFade _sceneFade;
 
-    public float timer = 0f;
 
     private void Awake()
     {
@@ -30,6 +29,7 @@ public class RestartLevelSceneController : MonoBehaviour
 
     public void LoadNextStage(string sceneToBeUnloaded)
     {
+        StopAllCoroutines();
         StartCoroutine(LoadNextStageCoroutine(sceneToBeUnloaded));
     }
 

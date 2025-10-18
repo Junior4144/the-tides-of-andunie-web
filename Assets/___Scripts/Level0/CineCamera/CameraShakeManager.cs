@@ -6,17 +6,14 @@ public class CameraShakeManager : MonoBehaviour
     [SerializeField]
     private AudioClip shakeImpactSound;
 
-
-    [SerializeField] private float globalShakeForce = 1f;
-
     private void Start()
     {
         if (instance == null) instance = this;
     }
 
-    public void CameraShake(CinemachineImpulseSource impulseSource)
+    public void CameraShake(CinemachineImpulseSource impulseSource, float shakeForce)
     {
-        impulseSource.GenerateImpulseWithForce(globalShakeForce);
+        impulseSource.GenerateImpulseWithForce(shakeForce);
         PlayImpactSound();
     }
     private void PlayImpactSound()

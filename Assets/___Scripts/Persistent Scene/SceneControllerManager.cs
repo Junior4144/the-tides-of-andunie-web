@@ -24,10 +24,14 @@ public class SceneControllerManager : MonoBehaviour
 
     public void LoadNextStage(string sceneToBeUnloaded, string additiveScene)
     {
+        StopAllCoroutines();
         StartCoroutine(LoadNextStageCoroutine(sceneToBeUnloaded, additiveScene));
     }
     private IEnumerator LoadNextStageCoroutine(string sceneToBeUnloaded, string additiveScene)
     {
+
+
+        
         Debug.Log("Next Scene Change Starting");
         yield return StartCoroutine(_sceneFade.FadeOutCoroutine(_sceneFadeDuration));
 

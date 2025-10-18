@@ -14,7 +14,7 @@ public class ShowSelectionBox : MonoBehaviour
     {
         LevelSelection.OnPlayerEnterSelectionZone += ShowBox;
         LevelSelection.OnPlayerExitSelectionZone += HideBox;
-        LevelSelection.OnPlayerLeavingLevelSelectionZone += DestroyBox;
+        LevelSelectionMenu.OnPlayerLeavingLevelSelectionZone += DestroyBox;
         SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
     }
 
@@ -22,7 +22,7 @@ public class ShowSelectionBox : MonoBehaviour
     {
         LevelSelection.OnPlayerEnterSelectionZone -= ShowBox;
         LevelSelection.OnPlayerExitSelectionZone -= HideBox;
-        LevelSelection.OnPlayerLeavingLevelSelectionZone -= DestroyBox;
+        LevelSelectionMenu.OnPlayerLeavingLevelSelectionZone -= DestroyBox;
         SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
     }
 
@@ -38,12 +38,10 @@ public class ShowSelectionBox : MonoBehaviour
         Canvas canvas = _boxInstance.GetComponentInChildren<Canvas>();
         if (canvas != null && _camera != null)
             canvas.worldCamera = _camera;
-
     }
 
 
-    private Vector3 GetNewBubblePosition() =>
-    new Vector3(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
+    private Vector3 GetNewBubblePosition() => new Vector3(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
 
     private void Update()
     {
@@ -64,9 +62,7 @@ public class ShowSelectionBox : MonoBehaviour
         _boxInstance.SetActive(false);
         Debug.Log("Hiding box above player.");
     }
-    public void DestroyBox() =>
-        Destroy(_boxInstance);
-
+    public void DestroyBox() => Destroy(_boxInstance);
 
     private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }
