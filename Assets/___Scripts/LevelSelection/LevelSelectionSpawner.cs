@@ -8,8 +8,7 @@ public class LevelSelectionSpawner : MonoBehaviour
 
     [SerializeField] private GameObject[] spawnPoints;
 
-    private void Awake() => //consider doing on start -> might fix some issues -> it will delay spawning for a couple frames
-        OnSceneLoaded();
+    private void Awake() => OnSceneLoaded();
 
     private void OnSceneLoaded()
     {
@@ -29,8 +28,7 @@ public class LevelSelectionSpawner : MonoBehaviour
             spawnPoint = spawnPoints.FirstOrDefault(sp => sp.name == last);
         }
 
-
-            currentPlayer = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity);
+        currentPlayer = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity);
         currentPlayer.transform.rotation = spawnPoint.transform.rotation;
 
         Debug.Log("New Player created");
@@ -43,5 +41,4 @@ public class LevelSelectionSpawner : MonoBehaviour
             UIManager.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
         }
     }
-
 }

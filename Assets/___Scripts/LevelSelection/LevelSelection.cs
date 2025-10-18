@@ -13,7 +13,7 @@ public class LevelSelection : MonoBehaviour
 
     public static event Action OnPlayerEnterSelectionZone;
     public static event Action OnPlayerExitSelectionZone;
-    public static event Action OnPlayerLeavingLevelSelectionZone;
+    public static event Action<string, string> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
 
@@ -46,18 +46,8 @@ public class LevelSelection : MonoBehaviour
 
     private void ProceedToNextStage()
     {
-        SaveManager.Instance.SaveLastLocation(location);
-        OnPlayerLeavingLevelSelectionZone?.Invoke();
-        Debug.Log("[EndCurrentScene] Next Scene is starting");
-
-        GameObject _player = PlayerManager.Instance.gameObject;
-        Debug.Log($"Player: {_player.name} and saving data");
-
-        AudioManager.Instance.FadeAudio();
-        SaveManager.Instance.SavePlayerStats();
-        PlayerManager.Instance.HandleDestroy();
-
-        LoadNextStage();
+        PlayerActivatedMenu?.Invoke(nextScene, location);
+        PlayerManager.Instance.gameObject.GetComponent<PlayerHeroMovement>().enabled = false;
     }
 
     public void NextStage() => LoadNextStage();
