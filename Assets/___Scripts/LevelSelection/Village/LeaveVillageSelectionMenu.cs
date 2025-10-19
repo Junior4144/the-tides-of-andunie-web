@@ -7,6 +7,7 @@ public class LeaveVillageSelectionMenu : MonoBehaviour
     public GameObject menuCanvas;
 
     private string NextScene;
+    private string Location;
 
     public static event Action OnPlayerLeavingLevelSelectionZone;
     private void OnEnable() => VillageToLevelSelection.PlayerActivatedLeaveVillageMenu += HandleMenu;
@@ -16,10 +17,11 @@ public class LeaveVillageSelectionMenu : MonoBehaviour
     void Start() => menuCanvas.SetActive(false);
 
 
-    private void HandleMenu(string nextScene)
+    private void HandleMenu(string nextScene, string location)
     {
         menuCanvas.SetActive(!menuCanvas.activeSelf);
         NextScene = nextScene;
+        Location = location;
     }
     private void Update()
     {
@@ -35,7 +37,8 @@ public class LeaveVillageSelectionMenu : MonoBehaviour
     private void ProceedToNextStage()
     {
         OnPlayerLeavingLevelSelectionZone?.Invoke();
-        Debug.Log($"[LeaveVillageSelectionMenu] Next Scene: {NextScene} ");
+        SaveManager.Instance.SaveLastLocation(Location);
+        Debug.Log($"[LeaveVillageSelectionMenu] Next Scene: {NextScene} and Last Location: {Location}");
 
         GameObject _player = PlayerManager.Instance.gameObject;
         Debug.Log($"Player: {_player.name} and saving data");

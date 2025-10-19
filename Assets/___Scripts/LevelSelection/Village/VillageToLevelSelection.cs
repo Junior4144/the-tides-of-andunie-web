@@ -12,8 +12,9 @@ public class VillageToLevelSelection : MonoBehaviour
 
     public static event Action OnPlayerEnterVillageLeave;
     public static event Action OnPlayerExitVillageLeave;
-    public static event Action<string> PlayerActivatedLeaveVillageMenu;
+    public static event Action<string, string> PlayerActivatedLeaveVillageMenu;
 
+    public string location = "DefaultSpawn";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,7 +45,7 @@ public class VillageToLevelSelection : MonoBehaviour
 
     private void ProceedToNextStage()
     {
-        PlayerActivatedLeaveVillageMenu?.Invoke(nextScene);
+        PlayerActivatedLeaveVillageMenu?.Invoke(nextScene, location);
         PlayerManager.Instance.gameObject.GetComponent<PlayerHeroMovement>().enabled = false;
     }
 
