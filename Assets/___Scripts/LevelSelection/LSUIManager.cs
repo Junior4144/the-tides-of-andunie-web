@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class LevelSelectionUIManager : MonoBehaviour
+public class LSUIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject PreInvasionUI;
-    [SerializeField]
-    private GameObject PostInvasionUI;
+    private GameObject LevelSelectionEnterUI;
+
+    [SerializeField] private TMP_Text LevelSelectionEnterHeader;
 
     private string VillageId;
     private string Location;
@@ -14,7 +15,7 @@ public class LevelSelectionUIManager : MonoBehaviour
 
     private GameObject CurrentCanvas;
 
-    public static LevelSelectionUIManager Instance;
+    public static LSUIManager Instance;
 
 
     private void Awake()
@@ -26,37 +27,33 @@ public class LevelSelectionUIManager : MonoBehaviour
         }
         Instance = this;
     }
-    //public static event Action OnPlayerLeavingLevelSelectionZone;
+
     private void OnEnable() => LevelSelection.PlayerActivatedMenu += HandleMenu;
 
     private void OnDisable() => LevelSelection.PlayerActivatedMenu -= HandleMenu;
 
-    void Start()
-    {
-        PreInvasionUI.SetActive(false); 
-        PostInvasionUI.SetActive(false);
-    }
-
+    void Start() => LevelSelectionEnterUI.SetActive(false);
 
     private void HandleMenu(string id, string location)
     {
-
         VillageState currentVillageState = LSManager.Instance.GetVillageState(id);
         Debug.Log($"[LS UI MANAGER] ID: {id} and Village State = {currentVillageState}");
+
+        LevelSelectionEnterUI.SetActive(!LevelSelectionEnterUI.activeSelf);
+
         if (currentVillageState == VillageState.PreInvasion)
         {
-            PreInvasionUI.SetActive(!PreInvasionUI.activeSelf);
-            CurrentCanvas = PreInvasionUI;
+            LevelSelectionEnterHeader.text = "Vist Village";
         }
         if (currentVillageState == VillageState.Invaded)
         {
-            PostInvasionUI.SetActive(!PreInvasionUI.activeSelf);
-            CurrentCanvas = PostInvasionUI;
+            LevelSelectionEnterHeader.text = "Liberate Village";
         }
 
         VillageId = id;
         Location = location;
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

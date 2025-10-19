@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelSelectionMenu : MonoBehaviour
+public class LSEnterMenu : MonoBehaviour
 {
     private bool Clicked = false;
 
@@ -11,6 +11,6 @@ public class LevelSelectionMenu : MonoBehaviour
         Clicked = true;
         Debug.Log("[LevelSelectionMenu] Button Clicked");
 
-        LevelSelectionUIManager.Instance.ButtonClicked();
+        LSUIManager.Instance.ButtonClicked();
     }
 }

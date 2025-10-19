@@ -52,7 +52,7 @@ public class LSManager : MonoBehaviour
             if (villages[i].id == villageId)
             {
                 if (villages[i].state == newState)
-                    return; // no change
+                    return;
 
                 villages[i].state = newState;
                 OnVillageStateChanged?.Invoke(villageId, newState);
@@ -81,8 +81,7 @@ public class LSManager : MonoBehaviour
         Debug.Log("Global Invasion Starting");
         for (int i = 0; i < villages.Count; i++)
         {
-            // DON'T invade Village7? up to you:
-            //if (villages[i].id == "Village7") continue;
+            if (villages[i].id == "Village7") continue;
 
             villages[i].state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);

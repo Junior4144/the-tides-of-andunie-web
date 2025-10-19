@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class LevelSelectionSpawner : MonoBehaviour
+public class LSPlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     private GameObject currentPlayer;
