@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +14,10 @@ public enum VillageState
 public class VillageData
 {
     public string id;          // "Village1", "Village2", etc.
-    public VillageState state;
+    public VillageState state = VillageState.PreInvasion;
+    public string preSceneName;
+    public string postSceneName;
+
 }
 
 public class LSManager : MonoBehaviour
@@ -23,74 +26,86 @@ public class LSManager : MonoBehaviour
 
     [SerializeField] private List<VillageData> villages = new List<VillageData>();
 
-    public bool invasionStarted = false;
+    private bool invasionStarted = false;
+    public bool startGlobalInvasion = false;
 
-    // GLOBAL EVENTS
-    public event Action OnGlobalInvasionStarted;
-
-    // PER-VILLAGE EVENT
     public event Action<string, VillageState> OnVillageStateChanged;
+    public event Action OnGlobalInvasionStarted; // for level 1 leave to be triggered
 
     void Awake()
     {
-        // --- persistent singleton boilerplate ---
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) {Destroy(gameObject); return;}
         Instance = this;
+
     }
-
-
-    // =============================
-    // READ METHODS
-    // =============================
-
-    public VillageState GetVillageState(string villageId)
+    private void Start()
     {
-        var v = villages.Find(v => v.id == villageId);
-        if (v == null)
-        {
-            Debug.LogError($"Village ID not found: {villageId}");
-            return VillageState.PreInvasion; // fallback
-        }
-        return v.state;
-    }
-
-    public bool IsVillageLiberated(string villageId)
-    {
-        var state = GetVillageState(villageId);
-        return state == VillageState.Liberated_FirstTime
-            || state == VillageState.Liberated_Done;
-    }
-
-
-    // =============================
-    // WRITE METHODS
-    // =============================
-
-    public void StartGlobalInvasion()
-    {
-        if (invasionStarted) return;
-
-        invasionStarted = true;
-        OnGlobalInvasionStarted?.Invoke();
+        if (startGlobalInvasion)
+            TriggerGlobalInvasion();
     }
 
     public void SetVillageState(string villageId, VillageState newState)
     {
-        var village = villages.Find(v => v.id == villageId);
-        if (village == null)
+        for (int i = 0; i < villages.Count; i++)
         {
-            Debug.LogError($"Village ID not found: {villageId}");
-            return;
+            if (villages[i].id == villageId)
+            {
+                if (villages[i].state == newState)
+                    return; // no change
+
+                villages[i].state = newState;
+                OnVillageStateChanged?.Invoke(villageId, newState);
+                return;
+            }
+        }
+        Debug.LogError($"Village ID not found: {villageId}");
+    }
+
+    public VillageState GetVillageState(string villageId)
+    {
+        for (int i = 0; i < villages.Count; i++)
+        {
+            Debug.Log($"LSMANAGER ->villages[i].id = {villages[i].id} vs VillageID: {villageId}");
+            if (villages[i].id == villageId)
+                return villages[i].state;
+        }
+        Debug.LogError($"Village ID not found: {villageId}");
+        return VillageState.PreInvasion;
+    }
+
+    public void TriggerGlobalInvasion()
+    {
+        if (invasionStarted) return;
+        invasionStarted = true;
+        Debug.Log("Global Invasion Starting");
+        for (int i = 0; i < villages.Count; i++)
+        {
+            // DON'T invade Village7? up to you:
+            //if (villages[i].id == "Village7") continue;
+
+            villages[i].state = VillageState.Invaded;
+            OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);
         }
 
-        if (village.state == newState)
-            return; // no change
-
-        village.state = newState;
-        OnVillageStateChanged?.Invoke(villageId, newState);
+        OnGlobalInvasionStarted?.Invoke();
     }
-}
+
+    public string DetermineNextScene(string villageId)
+    {
+        for (int i = 0; i < villages.Count; i++)
+        {
+            if (villages[i].id == villageId)
+            {
+                var data = villages[i];
+
+                if (data.state == VillageState.PreInvasion)
+                    return data.preSceneName;
+
+                return data.postSceneName;
+            }
+
+        }
+        Debug.LogError($"Village not found: {villageId}");
+        return null;
+    }
+ }

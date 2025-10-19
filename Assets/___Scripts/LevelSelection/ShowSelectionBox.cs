@@ -16,14 +16,13 @@ public class ShowSelectionBox : MonoBehaviour
     {
         LevelSelection.OnPlayerEnterSelectionZone += ShowBox;
         LevelSelection.OnPlayerExitSelectionZone += HideBox;
-        SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
+
     }
 
     private void OnDisable()
     {
         LevelSelection.OnPlayerEnterSelectionZone -= ShowBox;
         LevelSelection.OnPlayerExitSelectionZone -= HideBox;
-        SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
     }
 
     private void Start()
@@ -63,5 +62,4 @@ public class ShowSelectionBox : MonoBehaviour
         Debug.Log("Hiding box above player.");
     }
 
-    private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }

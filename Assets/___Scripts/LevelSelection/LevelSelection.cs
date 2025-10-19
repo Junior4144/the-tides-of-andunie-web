@@ -4,8 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelection : MonoBehaviour
 {
-    [SerializeField]
-    private string nextScene;
+    [SerializeField] private string villageId;
 
     private bool isPlayerInside = false;
 
@@ -47,12 +46,8 @@ public class LevelSelection : MonoBehaviour
 
     private void ProceedToNextStage()
     {
-        PlayerActivatedMenu?.Invoke(nextScene, location);
+        PlayerActivatedMenu?.Invoke(villageId, location); // change to ID
         PlayerManager.Instance.gameObject.GetComponent<PlayerHeroMovement>().enabled = false;
     }
 
-    public void NextStage() => LoadNextStage();
-
-    private void LoadNextStage() =>
-        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
 }
