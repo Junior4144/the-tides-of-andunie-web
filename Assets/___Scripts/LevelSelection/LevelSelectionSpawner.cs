@@ -30,7 +30,7 @@ public class LevelSelectionSpawner : MonoBehaviour
 
         currentPlayer = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity);
         currentPlayer.transform.rotation = spawnPoint.transform.rotation;
-
+        currentPlayer.transform.localScale = Vector3.one * 0.3f;
         Debug.Log("New Player created");
 
         if (SaveManager.Instance && UIManager.Instance.Check_HealthBar_UI_IsActive())
