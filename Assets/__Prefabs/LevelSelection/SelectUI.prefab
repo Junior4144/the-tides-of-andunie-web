@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7738658561548076210}
   - component: {fileID: 4376717873608731728}
   m_Layer: 0
-  m_Name: Enter
+  m_Name: Enter Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -52.8}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: -95}
+  m_SizeDelta: {x: 250, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2962889692526224628
 CanvasRenderer:
@@ -67,8 +67,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 724edba46ae410f4387b6198cb974a88, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7738658561548076210}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7505236948261331136}
+        m_TargetAssemblyTypeName: LevelSelectionMenu, Assembly-CSharp
+        m_MethodName: ButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1001776049629025451
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +144,7 @@ GameObject:
   - component: {fileID: 5235239477084804804}
   - component: {fileID: 1467913888354507083}
   - component: {fileID: 475836316250963834}
+  - component: {fileID: 2900972887694251176}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -157,7 +170,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1200, y: -600}
+  m_SizeDelta: {x: -1100, y: -500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1467913888354507083
 CanvasRenderer:
@@ -197,6 +210,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2900972887694251176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001776049629025451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed2ee5fbea349e4d8d6e7e019b4a1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleOnEnable
 --- !u!1 &2698374834566183353
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,8 +258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 720, y: 480}
+  m_AnchoredPosition: {x: 4.4584, y: 0}
+  m_SizeDelta: {x: 811.0833, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6072834317802899427
 CanvasRenderer:
@@ -264,7 +289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b4c2cf0e74897924ba2c7dac7655f746, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a62684ca470294843a5e97d93b5712e1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -308,8 +333,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0000076293945, y: -87}
-  m_SizeDelta: {x: 420.3644, y: 120.0698}
+  m_AnchoredPosition: {x: -0.0000038146973, y: -137}
+  m_SizeDelta: {x: 547.729, y: 120.0698}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8857784215274262432
 CanvasRenderer:
@@ -366,8 +391,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -444,7 +469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 7.2}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8558043559049656241
@@ -558,13 +583,14 @@ GameObject:
   - component: {fileID: 4915879336637572109}
   - component: {fileID: 2323406131018526435}
   - component: {fileID: 8492240069177309859}
+  - component: {fileID: 7505236948261331136}
   m_Layer: 0
   m_Name: SelectUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6160045760684900307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -648,3 +674,16 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7505236948261331136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9100616544991374127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02aaa81194721244cbecdac25242092f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSelectionMenu
+  menuCanvas: {fileID: 1001776049629025451}
