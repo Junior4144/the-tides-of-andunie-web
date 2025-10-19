@@ -60,6 +60,7 @@ public class LSBuildingsInvasion : MonoBehaviour
             return;
 
         ReplaceSprite();
+
         if (bigBuilding) HandleFireBigBuilding();
         else if (smallBuilding) HandleFireSmallBuilding();
     }
