@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class LSBuildingsInvasion : MonoBehaviour
@@ -11,8 +12,17 @@ public class LSBuildingsInvasion : MonoBehaviour
     [SerializeField] private GameObject[] firePositions;
     [SerializeField] private GameObject[] fireSprites;
 
+    [Header("Sprite Settings")]
+    [SerializeField] private Sprite destroyedSprite;
+
+    [Header("Village Settings")]
+    [SerializeField] private string villageId;
+
+    private SpriteRenderer spriteRenderer;
+
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         int fireCount = Mathf.Min(transform.childCount, 5);
         firePositions = new GameObject[fireCount];
         for (int i = 0; i < fireCount; i++)
@@ -22,21 +32,36 @@ public class LSBuildingsInvasion : MonoBehaviour
     private void OnEnable()
     {
         LSManager.OnGlobalInvasionStarted += HandleInvasion;
+
     }
     private void OnDisable()
     {
         LSManager.OnGlobalInvasionStarted -= HandleInvasion;
     }
+    private void Start()
+    {
+        StartCoroutine(ApplyCurrentState());
+    }
+    private IEnumerator ApplyCurrentState()
+    {
+        yield return null;
+        if (LSManager.Instance.HasInvasionStarted)
+            HandleInvasion();
+    }
     private void HandleInvasion()
     {
-        if (bigBuilding)
-        {
-            HandleFireBigBuilding();
-        }
-        else if(smallBuilding)
-        {
-            HandleFireSmallBuilding();
-        }
+        if (!gameObject.scene.name.Contains("LevelSelector"))
+            return;
+
+        if (string.IsNullOrEmpty(villageId))
+            return;
+
+        if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
+            return;
+
+        ReplaceSprite();
+        if (bigBuilding) HandleFireBigBuilding();
+        else if (smallBuilding) HandleFireSmallBuilding();
     }
     private void HandleFireBigBuilding()
     {
@@ -62,5 +87,9 @@ public class LSBuildingsInvasion : MonoBehaviour
         if (fireSoundPrefab != null)
             Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
     }
-
+    private void ReplaceSprite()
+    {
+        if (spriteRenderer != null && destroyedSprite != null)
+            spriteRenderer.sprite = destroyedSprite;
+    }
 }

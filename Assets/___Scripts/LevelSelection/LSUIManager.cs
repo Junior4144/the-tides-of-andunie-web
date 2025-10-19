@@ -60,7 +60,8 @@ public class LSUIManager : MonoBehaviour
                 break;
 
             case VillageState.Invaded:
-                LevelSelectionEnterHeader.text = "Liberate Village";
+                if (id == "Village7") LevelSelectionEnterHeader.text = "Visit Village";
+                else LevelSelectionEnterHeader.text = "Liberate Village";
                 break;
 
             case VillageState.Liberated_FirstTime:

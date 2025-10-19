@@ -32,6 +32,9 @@ public class LSManager : MonoBehaviour
     public event Action<string, VillageState> OnVillageStateChanged;
     public static event Action OnGlobalInvasionStarted; // for level 1 leave to be triggered
 
+    public bool HasInvasionStarted => invasionStarted;
+
+
     void Awake()
     {
         if (Instance != null && Instance != this) {Destroy(gameObject); return;}
@@ -40,7 +43,6 @@ public class LSManager : MonoBehaviour
     }
     private void Start()
     {
-
         if (startGlobalInvasion)
             TriggerGlobalInvasion();
     }
@@ -81,7 +83,7 @@ public class LSManager : MonoBehaviour
         Debug.Log("Global Invasion Starting");
         for (int i = 0; i < villages.Count; i++)
         {
-            if (villages[i].id == "Village7") continue;
+            //if (villages[i].id == "Village7") continue;
 
             villages[i].state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);
