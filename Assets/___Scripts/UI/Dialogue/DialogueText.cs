@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogueText", menuName = "Dialogue/New Dialogue Container")]
+[CreateAssetMenu(fileName = "DialogueBoxText", menuName = "Scriptable Objects/Dialogue/DialogueBox Attributes")]
 public class DialogueText : ScriptableObject
 {
     public string speakerName;

@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 42533560477664706}
   - component: {fileID: 3603910217672744378}
   - component: {fileID: 892602265369879799}
+  - component: {fileID: 6585815476499022404}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -566,6 +567,19 @@ MonoBehaviour:
   _offsetX: -0.25
   _offsetY: 1.5
   _camera: {fileID: 0}
+--- !u!114 &6585815476499022404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625379354be47624fa2749538faa258f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AldarionDialogueTest
+  _dialogueBubbleInfo: {fileID: 11400000, guid: c29d49fa75620e34995f40858757a6a2, type: 2}
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0
