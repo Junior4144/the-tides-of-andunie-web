@@ -15,8 +15,6 @@ public class VillageLeaveSelectionBox : MonoBehaviour
         LevelSelection.EnterLeaveVillageZone += ShowBox;
         LevelSelection.ExitLeaveVillageZone += HideBox;
 
-        VillageToLevelSelection.OnPlayerEnterVillageLeave += ShowBox;
-        VillageToLevelSelection.OnPlayerExitVillageLeave += HideBox;
         SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
     }
 
@@ -25,8 +23,6 @@ public class VillageLeaveSelectionBox : MonoBehaviour
         LevelSelection.EnterLeaveVillageZone -= ShowBox;
         LevelSelection.ExitLeaveVillageZone -= HideBox;
 
-        VillageToLevelSelection.OnPlayerEnterVillageLeave -= ShowBox;
-        VillageToLevelSelection.OnPlayerExitVillageLeave -= HideBox;
         SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
     }
 
