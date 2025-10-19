@@ -36,18 +36,37 @@ public class LSUIManager : MonoBehaviour
 
     private void HandleMenu(string id, string location)
     {
+        if (id == "EXIT")
+        {
+            LevelSelectionEnterUI.SetActive(true);
+            CurrentCanvas = LevelSelectionEnterUI;
+            LevelSelectionEnterHeader.text = "Leave Village";
+
+            VillageId = id;
+            Location = location;
+            return;
+        }
+
         VillageState currentVillageState = LSManager.Instance.GetVillageState(id);
         Debug.Log($"[LS UI MANAGER] ID: {id} and Village State = {currentVillageState}");
 
-        LevelSelectionEnterUI.SetActive(!LevelSelectionEnterUI.activeSelf);
+        LevelSelectionEnterUI.SetActive(true);
+        CurrentCanvas = LevelSelectionEnterUI;
 
-        if (currentVillageState == VillageState.PreInvasion)
+        switch (currentVillageState)
         {
-            LevelSelectionEnterHeader.text = "Vist Village";
-        }
-        if (currentVillageState == VillageState.Invaded)
-        {
-            LevelSelectionEnterHeader.text = "Liberate Village";
+            case VillageState.PreInvasion:
+                LevelSelectionEnterHeader.text = "Visit Village";
+                break;
+
+            case VillageState.Invaded:
+                LevelSelectionEnterHeader.text = "Liberate Village";
+                break;
+
+            case VillageState.Liberated_FirstTime:
+            case VillageState.Liberated_Done:
+                LevelSelectionEnterHeader.text = "Visit Village";
+                break;
         }
 
         VillageId = id;
@@ -56,9 +75,10 @@ public class LSUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && CurrentCanvas != null)
         {
             CurrentCanvas.SetActive(false);
+            CurrentCanvas = null;
         }
     }
 
@@ -68,7 +88,7 @@ public class LSUIManager : MonoBehaviour
     private void ProceedToNextStage()
     {
         NextScene = LSManager.Instance.DetermineNextScene(VillageId);
-        Debug.Log($"[LS UI MANAGER Next scene : {NextScene}");
+        Debug.Log($"[LS UI MANAGER] Next scene : {NextScene}");
 
         SaveManager.Instance.SaveLastLocation(Location);
 

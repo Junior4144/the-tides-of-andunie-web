@@ -92,6 +92,13 @@ public class LSManager : MonoBehaviour
 
     public string DetermineNextScene(string villageId)
     {
+        if (villageId == "EXIT")
+        {
+            // return LevelSelector scene (or however you name it)
+            return "LevelSelector";
+            // OR if you stored LS scene name in Location earlier then return that
+        }
+
         for (int i = 0; i < villages.Count; i++)
         {
             if (villages[i].id == villageId)
