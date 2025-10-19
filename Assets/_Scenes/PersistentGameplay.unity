@@ -176,7 +176,7 @@ MonoBehaviour:
     state: 0
     preSceneName: Pre_Level1
     postSceneName: Post_Level1
-  startGlobalInvasion: 1
+  startGlobalInvasion: 0
 --- !u!1 &177276957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,7 +1354,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1477,9 +1477,9 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 3
+  field of view: 40
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

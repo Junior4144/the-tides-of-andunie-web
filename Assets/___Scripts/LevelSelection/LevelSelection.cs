@@ -47,7 +47,6 @@ public class LevelSelection : MonoBehaviour
     private void ProceedToNextStage()
     {
         PlayerActivatedMenu?.Invoke(villageId, location); // change to ID
-        PlayerManager.Instance.gameObject.GetComponent<PlayerHeroMovement>().enabled = false;
     }
 
 }
