@@ -10,6 +10,8 @@ public class ShowSelectionBox : MonoBehaviour
 
     private GameObject _boxInstance;
 
+    public static ShowSelectionBox Instance;
+
     private void OnEnable()
     {
         LevelSelection.OnPlayerEnterSelectionZone += ShowBox;

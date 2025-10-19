@@ -39,6 +39,7 @@ public class LevelSelection : MonoBehaviour
     {
         if (isPlayerInside && Input.GetKeyDown(KeyCode.Return))
         {
+            
             Debug.Log("[Level Selection] Enter key pressed inside zone");
             ProceedToNextStage();
         }
