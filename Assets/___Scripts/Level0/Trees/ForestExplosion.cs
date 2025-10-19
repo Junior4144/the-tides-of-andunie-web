@@ -53,7 +53,7 @@ public class ForestExplosion : MonoBehaviour
         SoundFxManager.instance.PlayerSoundFxClip(_explosionSound, locationCannonBall, 1f);
     }
     public void HandleTreeCameraShake() =>
-        CameraShakeManager.instance.CameraShake(_impulseSource);
+        CameraShakeManager.instance.CameraShake(_impulseSource, 0.5f);
 
 
     public bool CheckCameraAllBoundary(Vector2 screenPosition, float padding = 0f)

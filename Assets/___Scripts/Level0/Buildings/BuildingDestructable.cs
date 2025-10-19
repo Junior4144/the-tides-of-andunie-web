@@ -121,7 +121,7 @@ public abstract class BuildingDestructable : MonoBehaviour
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance < explosionRadius)
-            CameraShakeManager.instance?.CameraShake(impulseSource);
+            CameraShakeManager.instance.CameraShake(impulseSource, 0.5f); // use to have null ?
     }
 
     private bool IsVisibleOnCameraLeft(float padding = 500f)

@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 2501858800479070700}
   - component: {fileID: 42533560477664706}
   - component: {fileID: 3603910217672744378}
+  - component: {fileID: 892602265369879799}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -548,6 +549,22 @@ MonoBehaviour:
   _bubblePrefab: {fileID: 8188844361341347319, guid: 8527841c2ddaeea44b43f264e353577c, type: 3}
   _offsetX: 0
   _offsetY: 2.5
+  _camera: {fileID: 0}
+--- !u!114 &892602265369879799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccaa3819899c704f934258228c74c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowSelectionBox
+  _BoxPrefab: {fileID: 7335170551427077478, guid: f4b744984dc887f4f8da070ff1e8285e, type: 3}
+  _offsetX: -0.25
+  _offsetY: 1.5
   _camera: {fileID: 0}
 --- !u!1 &8228389641742845611
 GameObject:
