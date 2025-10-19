@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 2783075824078825137}
   - component: {fileID: -4685839950608736226}
   - component: {fileID: -1000575048893322163}
+  - component: {fileID: 1323461671659278139}
   m_Layer: 0
   m_Name: Building
   m_TagString: Building
@@ -332,6 +333,24 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &1323461671659278139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3542448525678554138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18adbcc009271b04c826b339f0211bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LSBuildingsInvasion
+  bigBuilding: 0
+  smallBuilding: 0
+  fireSoundPrefab: {fileID: 4184515136674530310, guid: 46765eba59e26634db32ba680e70fbca, type: 3}
+  firePositions: []
+  fireSprites:
+  - {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
 --- !u!1 &5055969674309473258
 GameObject:
   m_ObjectHideFlags: 0

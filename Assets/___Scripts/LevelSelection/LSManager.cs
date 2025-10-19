@@ -30,7 +30,7 @@ public class LSManager : MonoBehaviour
     public bool startGlobalInvasion = false;
 
     public event Action<string, VillageState> OnVillageStateChanged;
-    public event Action OnGlobalInvasionStarted; // for level 1 leave to be triggered
+    public static event Action OnGlobalInvasionStarted; // for level 1 leave to be triggered
 
     void Awake()
     {
@@ -40,6 +40,7 @@ public class LSManager : MonoBehaviour
     }
     private void Start()
     {
+
         if (startGlobalInvasion)
             TriggerGlobalInvasion();
     }

@@ -36,6 +36,7 @@ public class LeaveVillageSelectionMenu : MonoBehaviour
 
     private void ProceedToNextStage()
     {
+
         OnPlayerLeavingLevelSelectionZone?.Invoke();
         SaveManager.Instance.SaveLastLocation(Location);
         Debug.Log($"[LeaveVillageSelectionMenu] Next Scene: {NextScene} and Last Location: {Location}");

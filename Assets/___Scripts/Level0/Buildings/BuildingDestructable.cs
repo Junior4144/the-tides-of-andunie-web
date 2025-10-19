@@ -45,6 +45,14 @@ public abstract class BuildingDestructable : MonoBehaviour
         }
 
     }
+    private void OnEnable()
+    {
+        LSManager.OnGlobalInvasionStarted += HandleInvasion;
+    }
+    private void OnDisable()
+    {
+        LSManager.OnGlobalInvasionStarted -= HandleInvasion;
+    }
 
     private void Start()
     {
@@ -85,6 +93,13 @@ public abstract class BuildingDestructable : MonoBehaviour
             SpawnFire();
             SpawnFireSound();
         }
+
+        hasExploded = true;
+    }
+    private void HandleInvasion()
+    {
+
+        ReplaceSprite();
 
         hasExploded = true;
     }
