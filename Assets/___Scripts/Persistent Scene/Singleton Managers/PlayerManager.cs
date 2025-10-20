@@ -23,9 +23,6 @@ public class PlayerManager : MonoBehaviour
         meleeController = GetComponentInChildren<MeleeController>();
         _playerMovement = GetComponent<PlayerHeroMovement>();
     }
-    //private void Start() =>
-    //    SaveManager.Instance.InitializeDefaultSave();
-
 
     private void OnEnable() =>
         GameManager.OnGameStateChanged += HandleGameStateChanged;
@@ -57,6 +54,8 @@ public class PlayerManager : MonoBehaviour
     public float GetHealth() => healthController.GetCurrentHealth();
     public float GetPercentHealth() => healthController.GetPercentHealth();
     public float GetDamageAmount() => meleeController.GetDamageAmount();
+
+    public Transform GetPlayerTransform() => gameObject.transform;
 
     public void SetHealth(float value) => healthController.SetCurrentHealth(value);
     public void SetDamageAmount(float value) => meleeController.SetDamageAmount(value);

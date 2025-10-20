@@ -45,14 +45,11 @@ public abstract class BuildingDestructable : MonoBehaviour
         }
 
     }
-
     private void Start()
     {
         player = PlayerManager.Instance.gameObject;
         mainCamera = Camera.main;
     }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {        
         if (!collision.gameObject.CompareTag("CannonBall")) return;

@@ -10,20 +10,19 @@ public class ShowSelectionBox : MonoBehaviour
 
     private GameObject _boxInstance;
 
+    public static ShowSelectionBox Instance;
+
     private void OnEnable()
     {
         LevelSelection.OnPlayerEnterSelectionZone += ShowBox;
         LevelSelection.OnPlayerExitSelectionZone += HideBox;
-        LevelSelectionMenu.OnPlayerLeavingLevelSelectionZone += DestroyBox;
-        SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
+
     }
 
     private void OnDisable()
     {
         LevelSelection.OnPlayerEnterSelectionZone -= ShowBox;
         LevelSelection.OnPlayerExitSelectionZone -= HideBox;
-        LevelSelectionMenu.OnPlayerLeavingLevelSelectionZone -= DestroyBox;
-        SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
     }
 
     private void Start()
@@ -41,7 +40,7 @@ public class ShowSelectionBox : MonoBehaviour
     }
 
 
-    private Vector3 GetNewBubblePosition() => new Vector3(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
+    private Vector3 GetNewBubblePosition() => new Vector3(PlayerManager.Instance.GetPlayerTransform().position.x + _offsetX, PlayerManager.Instance.GetPlayerTransform().position.y + _offsetY, 0f);
 
     private void Update()
     {
@@ -62,7 +61,5 @@ public class ShowSelectionBox : MonoBehaviour
         _boxInstance.SetActive(false);
         Debug.Log("Hiding box above player.");
     }
-    public void DestroyBox() => Destroy(_boxInstance);
 
-    private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }
