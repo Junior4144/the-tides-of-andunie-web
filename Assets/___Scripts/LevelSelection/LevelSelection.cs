@@ -24,7 +24,7 @@ public class LevelSelection : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (isExit)
+        if (isExit) // Different Invoke because box are different sizes -> map are different scales
             EnterLeaveVillageZone?.Invoke();
         else OnPlayerEnterSelectionZone?.Invoke();
 
@@ -48,7 +48,6 @@ public class LevelSelection : MonoBehaviour
     {
         if (isPlayerInside && Input.GetKeyDown(KeyCode.Return))
         {
-
             Debug.Log("[Level Selection] Enter key pressed inside zone");
             ProceedToNextStage();
         }
@@ -57,13 +56,9 @@ public class LevelSelection : MonoBehaviour
     private void ProceedToNextStage()
     {
         if (isExit)
-        {
             PlayerActivatedMenu?.Invoke("EXIT", location);
-        }
         else
-        {
             PlayerActivatedMenu?.Invoke(villageId, location);
-        }
     }
 
 }
