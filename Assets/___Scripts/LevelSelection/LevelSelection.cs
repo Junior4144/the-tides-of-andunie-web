@@ -4,15 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelection : MonoBehaviour
 {
-    [SerializeField]
-    private string nextScene;
+    [SerializeField] private string villageId;
+    [SerializeField] bool isExit;
 
     private bool isPlayerInside = false;
 
-    public static LevelSelection instance;
-
     public static event Action OnPlayerEnterSelectionZone;
     public static event Action OnPlayerExitSelectionZone;
+
+
+    public static event Action EnterLeaveVillageZone;
+    public static event Action ExitLeaveVillageZone;
+
     public static event Action<string, string> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
@@ -21,7 +24,10 @@ public class LevelSelection : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        OnPlayerEnterSelectionZone?.Invoke();
+        if (isExit) // Different Invoke because box are different sizes -> map are different scales
+            EnterLeaveVillageZone?.Invoke();
+        else OnPlayerEnterSelectionZone?.Invoke();
+
         Debug.Log("[Level Selection] Player entered level zone");
         isPlayerInside = true;
     }
@@ -30,7 +36,10 @@ public class LevelSelection : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        OnPlayerExitSelectionZone?.Invoke();
+        if (isExit)
+            ExitLeaveVillageZone?.Invoke();
+        else OnPlayerExitSelectionZone?.Invoke();
+
         Debug.Log("[Level Selection] Player left level zone");
         isPlayerInside = false;
     }
@@ -46,12 +55,10 @@ public class LevelSelection : MonoBehaviour
 
     private void ProceedToNextStage()
     {
-        PlayerActivatedMenu?.Invoke(nextScene, location);
-        PlayerManager.Instance.gameObject.GetComponent<PlayerHeroMovement>().enabled = false;
+        if (isExit)
+            PlayerActivatedMenu?.Invoke("EXIT", location);
+        else
+            PlayerActivatedMenu?.Invoke(villageId, location);
     }
 
-    public void NextStage() => LoadNextStage();
-
-    private void LoadNextStage() =>
-        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
 }

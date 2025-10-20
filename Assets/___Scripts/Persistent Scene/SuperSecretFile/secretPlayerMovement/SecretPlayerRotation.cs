@@ -6,8 +6,8 @@ public class SecretPlayerRotation : MonoBehaviour
 {
     public float rotationSpeed = 360f;
 
-    //void Update() =>
-    //    HandleRotation();
+    void Update() =>
+        HandleRotation();
 
     void HandleRotation()
     {

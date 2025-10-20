@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class DialogueBubbleController : MonoBehaviour
 {
     const float defaultDuration = 3f;
+    const float typeSpeed = 30f;
+    const string htmlAlpha = "<color=#00000000>";
     [SerializeField] private GameObject _bubblePrefab;
     [SerializeField] private float _offsetX = 0f;
     [SerializeField] private float _offsetY = 3f;
@@ -15,7 +17,8 @@ public class DialogueBubbleController : MonoBehaviour
 
     private GameObject _bubbleInstance;
     private TextMeshProUGUI _textMesh;
-    private Coroutine _hideCoroutine;
+    private Coroutine _typeDialogueCoroutine;
+    private bool _isShowingBubble = false;
 
 
     private void Start()
@@ -53,22 +56,43 @@ public class DialogueBubbleController : MonoBehaviour
     {
         if (_textMesh == null) return;
 
-        _textMesh.text = text;
+        if (_isShowingBubble)
+        {
+            StopCoroutine(_typeDialogueCoroutine);
+            _bubbleInstance.SetActive(false);
+            _isShowingBubble = false;
+        }
         _textMesh.enableAutoSizing = fontSize <= 0f;
         if (fontSize > 0f)
             _textMesh.fontSize = fontSize;
 
-        if (_hideCoroutine != null)
-            StopCoroutine(_hideCoroutine);
+        /*if (_hideCoroutine != null)
+            StopCoroutine(_hideCoroutine);*/
 
-        _bubbleInstance.SetActive(true);
-        _hideCoroutine = StartCoroutine(HideAfterSeconds(duration));
+        _typeDialogueCoroutine = StartCoroutine(TypeDialogueText(text, duration));
     }
 
-    private IEnumerator HideAfterSeconds(float seconds)
+    private IEnumerator TypeDialogueText(string text, float secondsAfterTyping)
     {
-        yield return new WaitForSeconds(seconds);
+        _isShowingBubble = true;
+        _bubbleInstance.SetActive(true);
+        _textMesh.text = "";
+
+        string originalText = text;
+        string displayedText = "";
+
+        for (int alphaIndex = 0; alphaIndex <= text.ToCharArray().Length; alphaIndex++)
+        {
+            _textMesh.text = originalText;
+            displayedText = _textMesh.text.Insert(alphaIndex, htmlAlpha);
+            _textMesh.text = displayedText;
+
+            yield return new WaitForSeconds(1 / typeSpeed);
+        }
+
+        yield return new WaitForSeconds(secondsAfterTyping);
         _bubbleInstance.SetActive(false);
+        _isShowingBubble = false;
     }
 
     private void OnDestroy()
