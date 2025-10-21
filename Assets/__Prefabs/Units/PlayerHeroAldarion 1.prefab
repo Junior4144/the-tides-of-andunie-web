@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 2653729124395941360}
   - component: {fileID: 7834476114726568240}
   - component: {fileID: 792821208638009140}
-  - component: {fileID: 4639632876952418692}
   m_Layer: 7
   m_Name: GenericCollider
   m_TagString: Player
@@ -288,18 +287,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4639632876952418692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549749987079265144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +301,6 @@ GameObject:
   - component: {fileID: 5365342492064239941}
   - component: {fileID: 3790337936765633680}
   - component: {fileID: 2142873931109906679}
-  - component: {fileID: 3935276486163312945}
   - component: {fileID: 4294235500975626157}
   - component: {fileID: 5346776916651260}
   - component: {fileID: 2501858800479070700}
@@ -474,18 +460,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 643291119363548266}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
---- !u!114 &3935276486163312945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650198408161721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
 --- !u!114 &4294235500975626157
 MonoBehaviour:
   m_ObjectHideFlags: 0

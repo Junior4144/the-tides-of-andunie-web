@@ -15,9 +15,9 @@ public class ShopItemUI : MonoBehaviour
     public void SetData(ShopListing listing)
     {
         this.listing = listing;
-        //nameText.text = listing.ItemName;
+        nameText.text = listing.inventoryItem.ItemName;
         priceText.text = listing.price.ToString();
-        //icon.sprite = listing.inventoryItem.InventoryIconPrefab.GetComponent<Image>().sprite;
+        icon.sprite = listing.inventoryItem.InventoryIconPrefab.GetComponent<Image>().sprite;
 
         buyButton.onClick.AddListener(OnBuyClicked);
     }

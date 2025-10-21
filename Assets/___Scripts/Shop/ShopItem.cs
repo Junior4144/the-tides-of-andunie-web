@@ -14,6 +14,6 @@ public class ShopItem : ScriptableObject, IInventoryItem
     public int MaxStackSize => maxStackSize;
 
     [SerializeField]
-    private Sprite inventoryIconPrefab;
-    public Sprite InventoryIconPrefab => inventoryIconPrefab;
+    private GameObject inventoryIconPrefab;
+    public GameObject InventoryIconPrefab => inventoryIconPrefab;
 }

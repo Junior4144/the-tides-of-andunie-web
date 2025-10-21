@@ -9,6 +9,6 @@ public class BlueBottleItem : MonoBehaviour, IInventoryItem
     public int MaxStackSize => 16;
 
     [SerializeField]
-    private Sprite inventoryIconPrefab;
-    public Sprite InventoryIconPrefab => inventoryIconPrefab;
+    private GameObject inventoryIconPrefab;
+    public GameObject InventoryIconPrefab => inventoryIconPrefab;
 }
