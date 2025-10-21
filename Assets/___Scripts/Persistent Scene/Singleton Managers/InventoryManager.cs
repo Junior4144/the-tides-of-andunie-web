@@ -10,6 +10,8 @@ public class InventoryManager : MonoBehaviour
 
     public static event Action OnInventoryChanged;
 
+    public ShopListing[] itemPrefabs;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -18,6 +20,12 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+
+    private void Start()
+    {
+        foreach (var Listing in itemPrefabs) { AddItem(Listing.Item, Listing.quantity); }
     }
 
     public bool AddItem(IInventoryItem item, int quantity = 1)

@@ -11,7 +11,13 @@ public class Grub : MonoBehaviour, ICollectable
         HandlePickUp();
     }
 
-    public void HandlePickUp() =>
+    public void HandlePickUp()
+    {
+        if (PlayerManager.Instance.GetPercentHealth() > .98) return;
+
         PlayerManager.Instance.AddHealth(AmountOfHealth);
+        Destroy(gameObject);
+    }
+
 
 }

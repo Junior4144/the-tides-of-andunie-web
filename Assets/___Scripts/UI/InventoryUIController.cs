@@ -35,7 +35,6 @@ public class InventoryUIController : MonoBehaviour
         InventoryManager.OnInventoryChanged -= RefreshUI;
     }
 
-
     private void InitializeSlots()
     {
         // Prevent double-creation if already filled
