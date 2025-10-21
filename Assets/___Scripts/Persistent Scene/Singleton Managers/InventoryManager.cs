@@ -1,11 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
 
     private readonly Dictionary<string, InventorySlot> _inventory = new();
+
+    public static event Action OnInventoryChanged;
+
+    public ShopListing[] itemPrefabs;
 
     void Awake()
     {
@@ -15,6 +20,11 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    private void Start()
+    {
+        foreach (var Listing in itemPrefabs) { AddItem(Listing.Item, Listing.quantity); }
     }
 
     public bool AddItem(IInventoryItem item, int quantity = 1)
@@ -32,6 +42,8 @@ public class InventoryManager : MonoBehaviour
             return false;
 
         _inventory[item.ItemId] = new InventorySlot(item, quantity);
+        OnInventoryChanged?.Invoke();
+
         return true;
     }
 
@@ -48,6 +60,7 @@ public class InventoryManager : MonoBehaviour
         if (slot.IsEmpty())
             _inventory.Remove(itemId);
 
+        OnInventoryChanged?.Invoke();
         return true;
     }
 

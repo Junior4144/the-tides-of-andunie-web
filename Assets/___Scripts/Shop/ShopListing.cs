@@ -1,9 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Shop/Listing")]
-public class ShopListing : ScriptableObject
+[System.Serializable]
+public class ShopListing
 {
-    public ShopItem inventoryItem;
+    public MonoBehaviour inventoryItem; // must assign a prefab with IInventoryItem
+    public int quantity;
     public int price;
-    public int quantity = 1;
+
+    public IInventoryItem Item => (IInventoryItem)inventoryItem;
 }

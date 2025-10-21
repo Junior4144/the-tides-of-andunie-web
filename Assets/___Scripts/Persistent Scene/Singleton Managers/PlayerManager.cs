@@ -39,6 +39,7 @@ public class PlayerManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Gameplay:
+                if (!_playerMovement) return;
                 _playerMovement.enabled = true;
                 break;
             case GameState.Menu:
