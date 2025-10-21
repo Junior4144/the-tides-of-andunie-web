@@ -16,13 +16,14 @@ public class ShowSelectionBox : MonoBehaviour
     {
         LevelSelection.OnPlayerEnterSelectionZone += ShowBox;
         LevelSelection.OnPlayerExitSelectionZone += HideBox;
-
+        SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
     }
 
     private void OnDisable()
     {
         LevelSelection.OnPlayerEnterSelectionZone -= ShowBox;
         LevelSelection.OnPlayerExitSelectionZone -= HideBox;
+        SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
     }
 
     private void Start()
@@ -33,7 +34,7 @@ public class ShowSelectionBox : MonoBehaviour
         _boxInstance = Instantiate(_BoxPrefab, GetNewBubblePosition(), Quaternion.identity);
         _boxInstance.SetActive(false);
 
-
+        Debug.Log("STARTING SHOW SELECTION BOX");
         Canvas canvas = _boxInstance.GetComponentInChildren<Canvas>();
         if (canvas != null && _camera != null)
             canvas.worldCamera = _camera;
@@ -62,4 +63,5 @@ public class ShowSelectionBox : MonoBehaviour
         Debug.Log("Hiding box above player.");
     }
 
+    private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }

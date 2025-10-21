@@ -1,6 +1,7 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ShopItemUI : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class ShopItemUI : MonoBehaviour
         this.listing = listing;
         nameText.text = listing.inventoryItem.ItemName;
         priceText.text = listing.price.ToString();
-        icon.sprite = listing.inventoryItem.InventoryIconPrefab.GetComponent<Image>().sprite;
+        icon.sprite = listing.inventoryItem.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
 
         buyButton.onClick.AddListener(OnBuyClicked);
     }
