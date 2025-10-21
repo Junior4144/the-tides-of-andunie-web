@@ -22,6 +22,24 @@ public class InventoryDebugger : MonoBehaviour
         {
             PrintInventory();
         }
+        if (Input.GetKeyDown(KeyCode.K)) // PRINT ONLY
+        {
+            PrintInventory();
+        }
+        if (Input.GetKeyDown(KeyCode.R)) // PRINT ONLY
+        {
+            Debug.Log($"Amount of Coins: {CurrencyManager.Instance.Coins}");
+        }
+        if (Input.GetKeyDown(KeyCode.B)) // PRINT ONLY
+        {
+            CurrencyManager.Instance.AddCoins(1);
+            Debug.Log($"Adds 1 Coin: ");
+        }
+        if (Input.GetKeyDown(KeyCode.N)) // PRINT ONLY
+        {
+            CurrencyManager.Instance.RemoveCoins(1);
+            Debug.Log($"Remove 1 Coin:");
+        }
     }
 
     // ----------------- CORE LOGIC -----------------
@@ -60,12 +78,6 @@ public class InventoryDebugger : MonoBehaviour
 
     IInventoryItem ExtractItemData(GameObject go)
     {
-        // 1) Try Collectable -> get its data
-        var collectable = go.GetComponent<Collectable>();
-        if (collectable != null)
-        {
-            return collectable.Data; // assuming you expose `public CollectableData Data;`
-        }
 
         // 2) Try any component implementing IInventoryItem
         var invItem = go.GetComponent<IInventoryItem>();

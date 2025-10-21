@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7620155082467235677}
   - component: {fileID: 5050437152253112195}
   - component: {fileID: 866447026466156568}
-  - component: {fileID: 3268788745450911572}
+  - component: {fileID: 1385372055623046037}
   m_Layer: 0
   m_Name: Grub
   m_TagString: Untagged
@@ -128,7 +128,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3268788745450911572
+--- !u!114 &1385372055623046037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6269243679089924460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d55946eea282b91499da89acbcece7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d2d9d1ea05d15f42b6b3cf59b2388e2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Collectable
-  data: {fileID: 11400000, guid: 4abc7cf0bae0def449b43ae0ca8a7525, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::Grub
+  AmountOfHealth: 40
