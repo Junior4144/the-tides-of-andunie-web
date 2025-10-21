@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 776205361151086012}
   - component: {fileID: 1325838727044066304}
-  - component: {fileID: 1521601079036508396}
+  - component: {fileID: 9184017253964941833}
   m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -70,7 +70,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.11906401, y: -0.5496069}
   m_Size: {x: 0.7428142, y: 2.0707498}
   m_Direction: 0
---- !u!114 &1521601079036508396
+--- !u!114 &9184017253964941833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,14 +79,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3539674507975629073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 5
-  pirateAttributes: {fileID: 0}
-  damageDelay: 0.4
-  _layerName: Freindly
-  _animDuration: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
+  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  damageDelay: 0.3
+  _animDuration: 0.6
   animator: {fileID: 6488161631470838750}
 --- !u!1 &4399634385626846564
 GameObject:

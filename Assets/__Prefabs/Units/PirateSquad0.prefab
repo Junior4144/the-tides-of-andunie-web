@@ -457,6 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SquadFollower
   moveSpeed: 10
+  maxMoveSpeed: 20
   stoppingDistance: 0.01
   rotationSpeed: 360
 --- !u!1 &6286216083689824971
@@ -582,7 +583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5438596065628449150}
   - component: {fileID: 8039263011816277547}
-  - component: {fileID: 1076899846635071245}
+  - component: {fileID: 3866197940755614501}
   m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -642,7 +643,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.11906401, y: -0.5496069}
   m_Size: {x: 0.7428142, y: 2.0707498}
   m_Direction: 0
---- !u!114 &1076899846635071245
+--- !u!114 &3866197940755614501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -651,12 +652,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8228845434758480566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 5
-  pirateAttributes: {fileID: 0}
-  damageDelay: 0.4
-  _layerName: Freindly
-  _animDuration: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
+  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  damageDelay: 0.3
+  _animDuration: 0.6
   animator: {fileID: 6499090925954198109}

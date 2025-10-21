@@ -504,7 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6056801678835794393}
   - component: {fileID: 82334735127405764}
-  - component: {fileID: 8931504950239130432}
+  - component: {fileID: 1476582758765970082}
   m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -564,7 +564,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.11906401, y: -0.5496069}
   m_Size: {x: 0.7428142, y: 2.0707498}
   m_Direction: 0
---- !u!114 &8931504950239130432
+--- !u!114 &1476582758765970082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -573,14 +573,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7833455375065777165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 5
-  pirateAttributes: {fileID: 0}
-  damageDelay: 0.4
-  _layerName: Freindly
-  _animDuration: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
+  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  damageDelay: 0.3
+  _animDuration: 0.6
   animator: {fileID: 7324676756689587815}
 --- !u!1 &8772114179692417897
 GameObject:
@@ -777,62 +775,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PirateMelee (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 2417991183458184244, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 8116110494249459755}
-    - target: {fileID: 2461086790368233002, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 315718883016047355, guid: af50e8cc11a59ab4cb4910f6b61948a8, type: 3}
-    - target: {fileID: 5133874418692873721, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5133874418692873721, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5133874418692873721, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.4
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4878468846955399307, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2948648031804661030, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8116110494249459755}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
---- !u!1 &1691142939989251038 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2948648031804661030, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
-  m_PrefabInstance: {fileID: 4581170482436837112}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8116110494249459755
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1691142939989251038}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ee34001da8dc38f45877a38a68f81b51, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &4421711647420272052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 202245375541003084, guid: 1d7de32833d70e64db6c46a2c959ca52, type: 3}
