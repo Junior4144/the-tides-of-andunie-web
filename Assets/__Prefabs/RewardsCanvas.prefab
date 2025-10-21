@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8310819352097971359}
   - component: {fileID: 1409355990704186219}
   - component: {fileID: 3406312937801408450}
-  - component: {fileID: 2329203348083353536}
+  - component: {fileID: 7432791300941713142}
   m_Layer: 5
   m_Name: RewardsPage
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2329203348083353536
+--- !u!114 &7432791300941713142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,13 +87,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4365316153879796414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff829bf5d39cc78448a7451cd5c8c437, type: 3}
+  m_Script: {fileID: 11500000, guid: ad841c19dee5e4245a18a5dd74a8c8aa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  rewardOptionPrefab: {fileID: 1135468029427708906, guid: 821e36530a0d59c41b48e0eecc00f593, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::RewardPageController
+  rewardOptionPrefab: {fileID: 6823367141541553205, guid: 7006614aa816cb04f91d7db2a981fd40, type: 3}
   rewardContainer: {fileID: 4193929613431338852}
+  rewardManager: {fileID: 838277568486491675}
+  claimOverlay: {fileID: 0}
   inventoryController: {fileID: 0}
-  rewardManager: {fileID: 0}
 --- !u!1 &4491187222214359228
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +129,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: 241}
+  m_AnchoredPosition: {x: -11, y: 352}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6369029872029568132
@@ -242,7 +243,7 @@ GameObject:
   - component: {fileID: 6678521077565549325}
   - component: {fileID: 7779580724868264467}
   - component: {fileID: 3298719507060488668}
-  - component: {fileID: 5814132100147346811}
+  - component: {fileID: 838277568486491675}
   m_Layer: 5
   m_Name: RewardsCanvas
   m_TagString: Untagged
@@ -333,7 +334,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5814132100147346811
+--- !u!114 &838277568486491675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,14 +343,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5181162485143990313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cfecd827b38e3345aeb8bc2083135d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cd683fa80544a8409fca85857580313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RewardManager
   rewardsCanvas: {fileID: 4365316153879796414}
-  rewardPageController: {fileID: 0}
+  rewardPageController: {fileID: 7432791300941713142}
   rewardsList:
-  - {fileID: 8011787775171742706, guid: 1562f5d2e1dca9c41b082f3502f83072, type: 3}
-  - {fileID: 8383705977540753638, guid: cc96e00bc8e96ff4d80a9cd7be151777, type: 3}
+  - {fileID: 1272473150757673945, guid: 99b7eb916eacc1f4aac6d158157a7045, type: 3}
+  - {fileID: 8928683661167556603, guid: 45024f40ae66a1340937c261073c0a68, type: 3}
 --- !u!1 &5249582576216620729
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,8 +384,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 350, y: 0}
-  m_SizeDelta: {x: -700, y: 440}
+  m_AnchoredPosition: {x: 250, y: 0}
+  m_SizeDelta: {x: -500, y: 440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5713986349814962793
 MonoBehaviour:
@@ -406,7 +407,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 100, y: 100}
+  m_CellSize: {x: 300, y: 300}
+  m_Spacing: {x: 200, y: 200}
   m_Constraint: 0
   m_ConstraintCount: 2

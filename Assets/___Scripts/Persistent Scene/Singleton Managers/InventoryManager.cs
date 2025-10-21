@@ -73,4 +73,17 @@ public class InventoryManager : MonoBehaviour
     {
         _inventory.Clear();
     }
+
+    //Collectables
+    public void AddCoins(CollectableData item) 
+    { 
+        Debug.Log("Coin in InventoryManager");
+        AddItem(item, (int)item.amount);
+
+    }
+    public void RemoveCoins(int amount) { RemoveItem("Coin", amount); }
+    public void AddPerk(string perkId) { }
+
+
+
 }

@@ -22,6 +22,7 @@ public class RewardManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             rewardsCanvas.SetActive(!rewardsCanvas.activeSelf);
+            Debug.Log("key pressed");
 
         }
     }

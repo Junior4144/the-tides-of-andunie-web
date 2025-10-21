@@ -27,6 +27,10 @@ public class InventoryDebugger : MonoBehaviour
             
             PrintInventory();
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            PrintInventory();
+        }
     }
 
     void PrintInventory()
