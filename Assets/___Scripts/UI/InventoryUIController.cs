@@ -1,15 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI; // 👈 make sure this line is at the top
 
-public class InventoryController : MonoBehaviour
+public class InventoryUIController : MonoBehaviour
 {
     public GameObject InventoryPanel;
     public GameObject slotPrefab;
     public int slotCount;
     public GameObject[] itemPrefabs;
 
+    public static InventoryUIController Instance;
+
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         InitializeSlots();
     }
 

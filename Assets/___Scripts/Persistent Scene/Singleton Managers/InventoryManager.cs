@@ -73,4 +73,6 @@ public class InventoryManager : MonoBehaviour
     {
         _inventory.Clear();
     }
+
+    public void AddPerk(string perkId) { }
 }

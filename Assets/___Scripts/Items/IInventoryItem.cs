@@ -3,7 +3,7 @@ public interface IInventoryItem
 {
     string ItemId { get; }
     string ItemName { get; }
-    //Sprite ItemIcon { get; }
+    GameObject InventoryIconPrefab { get; }
     bool IsStackable { get; }
     int MaxStackSize { get; }
 }

@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 2653729124395941360}
   - component: {fileID: 7834476114726568240}
   - component: {fileID: 792821208638009140}
-  - component: {fileID: 4639632876952418692}
   m_Layer: 7
   m_Name: GenericCollider
   m_TagString: Player
@@ -288,18 +287,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4639632876952418692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549749987079265144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
 --- !u!1 &7409650198408161721
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,13 +301,11 @@ GameObject:
   - component: {fileID: 5365342492064239941}
   - component: {fileID: 3790337936765633680}
   - component: {fileID: 2142873931109906679}
-  - component: {fileID: 3935276486163312945}
   - component: {fileID: 4294235500975626157}
   - component: {fileID: 5346776916651260}
   - component: {fileID: 2501858800479070700}
   - component: {fileID: 42533560477664706}
   - component: {fileID: 3603910217672744378}
-  - component: {fileID: 892602265369879799}
   - component: {fileID: 6585815476499022404}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
@@ -474,18 +459,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 643291119363548266}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
---- !u!114 &3935276486163312945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650198408161721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2e88e895dda7948967bd57f980c4e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemCollector
 --- !u!114 &4294235500975626157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,22 +523,6 @@ MonoBehaviour:
   _bubblePrefab: {fileID: 8188844361341347319, guid: 8527841c2ddaeea44b43f264e353577c, type: 3}
   _offsetX: 0
   _offsetY: 2.5
-  _camera: {fileID: 0}
---- !u!114 &892602265369879799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650198408161721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dccaa3819899c704f934258228c74c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShowSelectionBox
-  _BoxPrefab: {fileID: 7335170551427077478, guid: f4b744984dc887f4f8da070ff1e8285e, type: 3}
-  _offsetX: -0.25
-  _offsetY: 1.5
   _camera: {fileID: 0}
 --- !u!114 &6585815476499022404
 MonoBehaviour:
@@ -667,7 +624,7 @@ MonoBehaviour:
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6
-  animator: {fileID: 6776897905862547183}
+  _animator: {fileID: 3536749357788324775}
 --- !u!1 &8422549515451592420
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +636,7 @@ GameObject:
   - component: {fileID: 5832726163560954680}
   - component: {fileID: 643291119363548266}
   - component: {fileID: 6776897905862547183}
+  - component: {fileID: 3536749357788324775}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Player
@@ -781,6 +739,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3536749357788324775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422549515451592420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf234553bb8648e4eaf208ad27f8cd8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  _attackAnimDuration: 0.6
+  _minIdleInterval: 5
+  _maxIdleInterval: 15
+  _specialIdleChance: 0.3
+  _idleAngryDuration: 1
+  _idleAxeDuration: 1
+  _idleWineDuration: 1
 --- !u!1001 &1721321287126870574
 PrefabInstance:
   m_ObjectHideFlags: 0

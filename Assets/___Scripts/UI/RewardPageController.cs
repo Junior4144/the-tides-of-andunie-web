@@ -13,7 +13,7 @@ public class RewardPageController : MonoBehaviour
     [Header("Game References")]
     public RewardManager rewardManager;
     public ClaimOverlayController claimOverlay;
-    public InventoryController inventoryController; // assign in inspector or found dynamically
+    public InventoryUIController inventoryController; // assign in inspector or found dynamically
 
     public void DisplayRewards(List<GameObject> rewardPrefabs)
     {
@@ -56,7 +56,7 @@ public class RewardPageController : MonoBehaviour
 
         // Find or temporarily activate the inventory controller
         if (inventoryController == null)
-            inventoryController = FindFirstObjectByType<InventoryController>();
+            inventoryController = FindFirstObjectByType<InventoryUIController>();
 
         if (inventoryController != null)
         {

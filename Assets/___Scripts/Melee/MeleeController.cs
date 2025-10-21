@@ -7,9 +7,6 @@ public class MeleeController : MonoBehaviour
     private float _damage = 20;
 
     [SerializeField]
-    private PirateAttributes pirateAttributes;
-
-    [SerializeField]
     private float damageDelay = 0;
 
     [SerializeField]
@@ -20,12 +17,14 @@ public class MeleeController : MonoBehaviour
 
     private bool _isAttacking = false;
 
-    public Animator animator;
+    [SerializeField]
+    private PlayerAnimator _animator;
 
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
         var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
+        
         if (
             IsEnemy(otherCollider) &&
             health != null &&
@@ -50,10 +49,10 @@ public class MeleeController : MonoBehaviour
 
     private void PlayAttackAnimation()
     {
-        if (animator)
-        {   
+        if (_animator)
+        {
             _isAttacking = true;
-            animator.SetBool("IsAttacking", true);
+            _animator.TriggerAttack();
             StartCoroutine(ResetAttackAnimation());
         }
         else
@@ -66,14 +65,7 @@ public class MeleeController : MonoBehaviour
     {
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
-        animator.SetBool("IsAttacking", false);
     }
-    public float GetDamageAmount()
-    {
-        return pirateAttributes.DamageAmount;
-    }
-    public void SetDamageAmount(float currentDamage)
-    {
-        _damage = currentDamage;
-    }
+    public float GetDamageAmount() => _damage;
+    public void SetDamageAmount(float currentDamage) => _damage = currentDamage;
 }

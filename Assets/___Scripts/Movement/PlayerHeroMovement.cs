@@ -36,17 +36,16 @@ public class PlayerHeroMovement : MonoBehaviour
             return;
         }
 
-        if (!_isDashing)
-        {
-            float yInput = Input.GetAxis("Vertical");
-            float xInput = Input.GetAxis("Horizontal");
+        if (_isDashing) return;
 
-            if (Math.Abs(yInput) > 0)
-                body.linearVelocity = transform.up * yInput * moveSpeed;
+        float yInput = Input.GetAxis("Vertical");
+        float xInput = Input.GetAxis("Horizontal");
 
-            if (Math.Abs(xInput) > 0)
-                body.angularVelocity = -xInput * rotationSpeed;
-        }
+        if (Math.Abs(yInput) > 0)
+            body.linearVelocity = transform.up * yInput * moveSpeed;
+
+        if (Math.Abs(xInput) > 0)
+            body.angularVelocity = -xInput * rotationSpeed;
     }
 
     private IEnumerator DashCoroutine()
