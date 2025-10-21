@@ -45,7 +45,7 @@ public class ShopManager : MonoBehaviour
         }
 
         // Deduct coins if added successfully
-        CurrencyManager.Instance.RemoveCoins(listing.price);
+        CurrencyManager.Instance.TrySpendCoins(listing.price);
 
         Debug.Log($"Bought {listing.Item.ItemName} x{listing.quantity} for {listing.price} coins");
         return true;

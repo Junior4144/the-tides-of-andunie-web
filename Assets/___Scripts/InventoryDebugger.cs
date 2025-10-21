@@ -44,7 +44,7 @@ public class InventoryDebugger : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.N)) // PRINT ONLY
         {
-            CurrencyManager.Instance.RemoveCoins(1);
+            CurrencyManager.Instance.TrySpendCoins(1);
             Debug.Log($"Remove 1 Coin:");
         }
     }
