@@ -8,6 +8,7 @@ public class LSUIManager : MonoBehaviour
     private GameObject LevelSelectionEnterUI;
 
     [SerializeField] private TMP_Text LevelSelectionEnterHeader;
+    [SerializeField] private TMP_Text LSButtonText;
 
     private string VillageId;
     private string Location;
@@ -41,6 +42,7 @@ public class LSUIManager : MonoBehaviour
             LevelSelectionEnterUI.SetActive(true);
             CurrentCanvas = LevelSelectionEnterUI;
             LevelSelectionEnterHeader.text = "Leave Village";
+            LSButtonText.text = "Leave";
 
             VillageId = id;
             Location = location;
