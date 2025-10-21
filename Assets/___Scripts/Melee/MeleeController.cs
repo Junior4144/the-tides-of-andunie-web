@@ -7,9 +7,6 @@ public class MeleeController : MonoBehaviour
     private float _damage = 20;
 
     [SerializeField]
-    private PirateAttributes pirateAttributes;
-
-    [SerializeField]
     private float damageDelay = 0;
 
     [SerializeField]
@@ -69,12 +66,6 @@ public class MeleeController : MonoBehaviour
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
     }
-    public float GetDamageAmount()
-    {
-        return pirateAttributes.DamageAmount;
-    }
-    public void SetDamageAmount(float currentDamage)
-    {
-        _damage = currentDamage;
-    }
+    public float GetDamageAmount() => _damage;
+    public void SetDamageAmount(float currentDamage) => _damage = currentDamage;
 }
