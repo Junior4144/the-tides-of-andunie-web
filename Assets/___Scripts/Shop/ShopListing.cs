@@ -1,9 +1,11 @@
 using UnityEngine;
 
-
-public class ShopListing : MonoBehaviour
+[System.Serializable]
+public class ShopListing
 {
-    public IInventoryItem inventoryItem;
+    public MonoBehaviour inventoryItem; // must assign a prefab with IInventoryItem
+    public int quantity;
     public int price;
-    public int quantity = 1;
+
+    public IInventoryItem Item => (IInventoryItem)inventoryItem;
 }

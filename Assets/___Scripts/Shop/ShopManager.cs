@@ -31,12 +31,12 @@ public class ShopManager : MonoBehaviour
         Debug.Log($"Listing Price: {listing.price}");
         if (CurrencyManager.Instance.Coins < listing.price)
         {
-            Debug.Log("Not enough coins to buy " + listing.inventoryItem.ItemName);
+            Debug.Log("Not enough coins to buy " + listing.Item.ItemName);
             return false;
         }
 
         // Attempt to add to inventory
-        bool added = InventoryManager.Instance.AddItem(listing.inventoryItem, listing.quantity);
+        bool added = InventoryManager.Instance.AddItem(listing.Item, listing.quantity);
 
         if (!added)
         {
@@ -47,7 +47,7 @@ public class ShopManager : MonoBehaviour
         // Deduct coins if added successfully
         CurrencyManager.Instance.RemoveCoins(listing.price);
 
-        Debug.Log($"Bought {listing.inventoryItem.ItemName} x{listing.quantity} for {listing.price} coins");
+        Debug.Log($"Bought {listing.Item.ItemName} x{listing.quantity} for {listing.price} coins");
         return true;
     }
 }
