@@ -81,7 +81,7 @@ public class InventoryManager : MonoBehaviour
         AddItem(item, (int)item.amount);
 
     }
-    public void RemoveCoins(int amount) { }
+    public void RemoveCoins(int amount) { RemoveItem("Coin", amount); }
     public void AddPerk(string perkId) { }
 
 

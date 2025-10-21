@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class ShopItem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    //Will require a Whole Shop Item script that takes in IInventory Interface
+    [SerializeField]
+    private GameObject canvas;
 
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            canvas.SetActive(!canvas.activeInHierarchy);
+        }
     }
-    private void OnClick()
+    public void OnClick()
     {
-        De
+        Debug.Log("[ShopItem] is being clicked");
+        InventoryManager.Instance.RemoveCoins(1);
     }
 }
