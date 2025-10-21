@@ -1,9 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Shop/Listing")]
-public class ShopListing : ScriptableObject
+
+public class ShopListing : MonoBehaviour
 {
-    public ShopItem inventoryItem;
+    public IInventoryItem inventoryItem;
     public int price;
     public int quantity = 1;
 }

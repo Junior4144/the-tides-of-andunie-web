@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Shop/Item")]
-public class ShopItem : IInventoryItem
+public class BannerOfTurin : MonoBehaviour, IInventoryItem
 {
     [SerializeField] string itemId;
     [SerializeField] string itemName;
@@ -16,5 +15,4 @@ public class ShopItem : IInventoryItem
     [SerializeField]
     private GameObject inventoryIconPrefab;
     public GameObject InventoryIconPrefab => inventoryIconPrefab;
-
 }

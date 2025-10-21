@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
 
     private readonly Dictionary<string, InventorySlot> _inventory = new();
+
+    public static event Action OnInventoryChanged;
 
     void Awake()
     {
@@ -32,6 +35,9 @@ public class InventoryManager : MonoBehaviour
             return false;
 
         _inventory[item.ItemId] = new InventorySlot(item, quantity);
+        Debug.Log("REFRESHING UI");
+        OnInventoryChanged?.Invoke();
+        Debug.Log("REFRESHING UI v2");
         return true;
     }
 
@@ -48,6 +54,7 @@ public class InventoryManager : MonoBehaviour
         if (slot.IsEmpty())
             _inventory.Remove(itemId);
 
+        OnInventoryChanged?.Invoke();
         return true;
     }
 
