@@ -113,7 +113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311024737355814348}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.2903237, y: 1.6601484, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
@@ -295,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SquadFollower
   moveSpeed: 10
+  maxMoveSpeed: 20
   stoppingDistance: 0.01
   rotationSpeed: 360
 --- !u!114 &8805459138077997689
@@ -320,7 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133874418692873721}
   - component: {fileID: 2461086790368233002}
-  - component: {fileID: 4878468846955399307}
+  - component: {fileID: 2984692729071610019}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -338,7 +339,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.32, y: 0.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 202245375541003084}
@@ -390,7 +391,7 @@ SpriteRenderer:
   m_SortingLayerID: -1736753453
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: -5435926560693546519, guid: a62bd20938afa4d49b78658b53ea8d5f, type: 3}
+  m_Sprite: {fileID: 315718883016047355, guid: af50e8cc11a59ab4cb4910f6b61948a8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -401,7 +402,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4878468846955399307
+--- !u!95 &2984692729071610019
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -411,7 +412,7 @@ Animator:
   m_GameObject: {fileID: 2948648031804661030}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8700a4a6fe75c8f4ea3a8814dbd1f6bf, type: 2}
+  m_Controller: {fileID: 9100000, guid: ee34001da8dc38f45877a38a68f81b51, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -433,7 +434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6959295744173468754}
   - component: {fileID: 7543031558581340243}
-  - component: {fileID: 2417991183458184244}
+  - component: {fileID: 4734374986535252078}
   m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -493,7 +494,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.11906401, y: -0.5496069}
   m_Size: {x: 0.7428142, y: 2.0707498}
   m_Direction: 0
---- !u!114 &2417991183458184244
+--- !u!114 &4734374986535252078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -502,12 +503,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3487141385244966893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 5
-  pirateAttributes: {fileID: 0}
-  damageDelay: 0.4
-  _layerName: Freindly
-  _animDuration: 0.5
-  animator: {fileID: 4878468846955399307}
+  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
+  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  damageDelay: 0.3
+  _animDuration: 0.6
+  animator: {fileID: 2984692729071610019}

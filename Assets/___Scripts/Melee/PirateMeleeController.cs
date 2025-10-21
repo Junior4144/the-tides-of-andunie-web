@@ -1,11 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class MeleeController : MonoBehaviour
+public class PirateMeleeController : MonoBehaviour
 {
-    [SerializeField]
-    private float _damage = 20;
-
     [SerializeField]
     private PirateAttributes pirateAttributes;
 
@@ -13,21 +10,16 @@ public class MeleeController : MonoBehaviour
     private float damageDelay = 0;
 
     [SerializeField]
-    private string _layerName;
-
-    [SerializeField]
     private float _animDuration;
 
     private bool _isAttacking = false;
 
-    [SerializeField]
-    private PlayerAnimator _animator;
+    public Animator animator;
 
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
         var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
-        
         if (
             IsEnemy(otherCollider) &&
             health != null &&
@@ -40,22 +32,22 @@ public class MeleeController : MonoBehaviour
     }
 
     private bool IsEnemy(Collider2D otherCollider) =>
-    otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName);
+        otherCollider.CompareTag("Player");
 
     private IEnumerator Attack(GameObject enemyObject)
     {
         yield return new WaitForSeconds(damageDelay);
 
         if (enemyObject)
-            enemyObject.GetComponent<IHealthController>().TakeDamage(_damage);
+            enemyObject.GetComponent<IHealthController>().TakeDamage(pirateAttributes.DamageAmount);
     }
 
     private void PlayAttackAnimation()
     {
-        if (_animator)
-        {
+        if (animator)
+        {   
             _isAttacking = true;
-            _animator.TriggerAttack();
+            animator.SetBool("IsAttacking", true);
             StartCoroutine(ResetAttackAnimation());
         }
         else
@@ -68,13 +60,6 @@ public class MeleeController : MonoBehaviour
     {
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
-    }
-    public float GetDamageAmount()
-    {
-        return pirateAttributes.DamageAmount;
-    }
-    public void SetDamageAmount(float currentDamage)
-    {
-        _damage = currentDamage;
+        animator.SetBool("IsAttacking", false);
     }
 }

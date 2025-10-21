@@ -641,7 +641,7 @@ MonoBehaviour:
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6
-  animator: {fileID: 6776897905862547183}
+  _animator: {fileID: 3536749357788324775}
 --- !u!1 &8422549515451592420
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +653,7 @@ GameObject:
   - component: {fileID: 5832726163560954680}
   - component: {fileID: 643291119363548266}
   - component: {fileID: 6776897905862547183}
+  - component: {fileID: 3536749357788324775}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Player
@@ -755,6 +756,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3536749357788324775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422549515451592420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf234553bb8648e4eaf208ad27f8cd8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  _attackAnimDuration: 0.6
 --- !u!1001 &1721321287126870574
 PrefabInstance:
   m_ObjectHideFlags: 0
