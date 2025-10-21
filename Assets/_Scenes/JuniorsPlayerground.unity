@@ -3939,11 +3939,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1077580271 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
-  m_PrefabInstance: {fileID: 1537594026}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1129794576
 GameObject:
   m_ObjectHideFlags: 0
@@ -3989,6 +3984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9625c12d2af1849a46105c7a2a3160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
+  canvas: {fileID: 1063440049}
 --- !u!4 &1135763753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
@@ -11985,9 +11981,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8624960192997306231, guid: 6de3c3ff1506d674dbbbf93e090f8a42, type: 3}
+      propertyPath: testObject
+      value: 
+      objectReference: {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
+    - target: {fileID: -8624960192997306231, guid: 6de3c3ff1506d674dbbbf93e090f8a42, type: 3}
       propertyPath: testItemObject
       value: 
-      objectReference: {fileID: 1077580271}
+      objectReference: {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
     - target: {fileID: 1400533033138570079, guid: 6de3c3ff1506d674dbbbf93e090f8a42, type: 3}
       propertyPath: m_Name
       value: Debug

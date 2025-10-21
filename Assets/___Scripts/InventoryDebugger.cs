@@ -1,37 +1,83 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InventoryDebugger : MonoBehaviour
 {
-    [SerializeField] private GameObject testItemObject;
+    [SerializeField] private GameObject testObject;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.O)) // ADD
         {
-            IInventoryItem item = testItemObject.GetComponent<IInventoryItem>();
-            if (item != null && InventoryManager.Instance.AddItem(item, 1))
-                Debug.Log($"Added {item.ItemName}");
-            else
-                Debug.Log($"Failed to add item");
-            
+            TryAddFrom(testObject);
             PrintInventory();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P)) // REMOVE
         {
-            IInventoryItem item = testItemObject.GetComponent<IInventoryItem>();
-            if (item != null && InventoryManager.Instance.RemoveItem(item.ItemId, 1))
-                Debug.Log($"Removed {item.ItemName}");
-            else
-                Debug.Log($"Failed to remove item");
-            
+            TryRemoveFrom(testObject);
             PrintInventory();
         }
-        if (Input.GetKeyDown(KeyCode.K))
+
+        if (Input.GetKeyDown(KeyCode.K)) // PRINT ONLY
         {
             PrintInventory();
         }
     }
+
+    // ----------------- CORE LOGIC -----------------
+
+    void TryAddFrom(GameObject go)
+    {
+        var data = ExtractItemData(go);
+        if (data == null)
+        {
+            Debug.LogWarning("No IInventoryItem or CollectableData found.");
+            return;
+        }
+
+        bool added = InventoryManager.Instance.AddItem(data, 1);
+        Debug.Log(added
+            ? $"✅ Added {data.ItemName}"
+            : $"❌ Failed to add {data.ItemName}");
+    }
+
+    void TryRemoveFrom(GameObject go)
+    {
+        var data = ExtractItemData(go);
+        if (data == null)
+        {
+            Debug.LogWarning("No IInventoryItem or CollectableData found.");
+            return;
+        }
+
+        bool removed = InventoryManager.Instance.RemoveItem(data.ItemId, 1);
+        Debug.Log(removed
+            ? $"🗑 Removed {data.ItemName}"
+            : $"⚠️ Failed to remove {data.ItemName}");
+    }
+
+    // ----------------- ITEM EXTRACTION -----------------
+
+    IInventoryItem ExtractItemData(GameObject go)
+    {
+        // 1) Try Collectable -> get its data
+        var collectable = go.GetComponent<Collectable>();
+        if (collectable != null)
+        {
+            return collectable.Data; // assuming you expose `public CollectableData Data;`
+        }
+
+        // 2) Try any component implementing IInventoryItem
+        var invItem = go.GetComponent<IInventoryItem>();
+        if (invItem != null)
+        {
+            return invItem;
+        }
+
+        return null;
+    }
+
+    // ----------------- PRINT INVENTORY -----------------
 
     void PrintInventory()
     {
