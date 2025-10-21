@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -26,8 +27,7 @@ public class InventoryUIController : MonoBehaviour
     void OnEnable()
     {
         InventoryManager.OnInventoryChanged += RefreshUI;
-        RefreshUI(); // <<-- add this so UI updates immediately when opening
-        //InitializeSlots();
+        RefreshUI(); // <<-- so UI updates immediately when opening
     }
 
     void OnDisable()
@@ -166,6 +166,12 @@ public class InventoryUIController : MonoBehaviour
             var newUIItem = Instantiate(prefab, slotTransform);
             slot.currentItem = newUIItem;
 
+            // ✅ set quantity text if exists
+            var qtyText = newUIItem.GetComponentInChildren<TMP_Text>();
+            if (qtyText != null)
+            {
+                qtyText.text = invSlot.Quantity > 1 ? invSlot.Quantity.ToString() : "";
+            }
             // Make sure it fits the slot visually
             var rect = newUIItem.GetComponent<RectTransform>();
             if (!rect)

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
 
@@ -22,7 +22,6 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
     }
 
-
     private void Start()
     {
         foreach (var Listing in itemPrefabs) { AddItem(Listing.Item, Listing.quantity); }
@@ -43,9 +42,8 @@ public class InventoryManager : MonoBehaviour
             return false;
 
         _inventory[item.ItemId] = new InventorySlot(item, quantity);
-        Debug.Log("REFRESHING UI");
         OnInventoryChanged?.Invoke();
-        Debug.Log("REFRESHING UI v2");
+
         return true;
     }
 
