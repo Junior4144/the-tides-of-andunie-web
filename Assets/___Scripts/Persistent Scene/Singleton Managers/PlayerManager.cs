@@ -1,3 +1,4 @@
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 
@@ -59,6 +60,8 @@ public class PlayerManager : MonoBehaviour
 
     public void SetHealth(float value) => healthController.SetCurrentHealth(value);
     public void SetDamageAmount(float value) => meleeController.SetDamageAmount(value);
-
     public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);
+
+    //collectables
+    public void AddHealth(float value) => healthController.AddHealth(value);
 }
