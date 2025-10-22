@@ -1,10 +1,15 @@
+using System;
+using System.Collections;
 using UnityEngine;
+//TODO rather than string return, return a ENUM ->(better practice, idk if it worth)
 
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance { get; private set; }
 
     [SerializeField] private ShopListing[] listings;
+
+    public static event Action<string> ShopUIError;
 
     private void Awake()
     {
@@ -18,12 +23,12 @@ public class ShopManager : MonoBehaviour
 
     public ShopListing[] GetListings() => listings;
 
-    public bool TryToBuy(ShopListing listing)
+    public string TryToBuy(ShopListing listing)
     {
         if (listing == null)
         {
             Debug.LogWarning("No listing was provided to TryBuy.");
-            return false;
+            return "NoListingProvided";
         }
 
         // Check if player can afford
@@ -32,7 +37,8 @@ public class ShopManager : MonoBehaviour
         if (CurrencyManager.Instance.Coins < listing.price)
         {
             Debug.Log("Not enough coins to buy " + listing.Item.ItemName);
-            return false;
+            //ShopUIError?.Invoke("NotEnough");
+            return "NotEnough";
         }
 
         // Attempt to add to inventory
@@ -41,13 +47,14 @@ public class ShopManager : MonoBehaviour
         if (!added)
         {
             Debug.Log("Inventory full or item cannot be added.");
-            return false;
+            //ShopUIError?.Invoke("LimitReached");
+            return "LimitReached";
         }
 
         // Deduct coins if added successfully
         CurrencyManager.Instance.TrySpendCoins(listing.price);
 
         Debug.Log($"Bought {listing.Item.ItemName} x{listing.quantity} for {listing.price} coins");
-        return true;
+        return "Success";
     }
 }
