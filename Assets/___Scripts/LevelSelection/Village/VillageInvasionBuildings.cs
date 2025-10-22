@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class VillageInvasionBuildings : MonoBehaviour
 {
-
-    public bool bigBuilding = false;
-    public bool smallBuilding = false;
-
     [Header("Fire Settings")]
     [SerializeField] private GameObject fireSoundPrefab;
     [SerializeField] private GameObject[] firePositions;
@@ -56,27 +52,22 @@ public class VillageInvasionBuildings : MonoBehaviour
         if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
-       //ReplaceSprite();
+        //ReplaceSprite();
 
-        if (bigBuilding) HandleFireBigBuilding();
-        else if (smallBuilding) HandleFireSmallBuilding();
+        HandleFireBuilding();
     }
-    private void HandleFireBigBuilding()
+    private void HandleFireBuilding()
     {
-        SpawnFire(0.5f);
+        SpawnFire();
         SpawnFireSound();
     }
 
-    private void HandleFireSmallBuilding()
-    {
-        SpawnFire(0.25f);
-    }
-    private void SpawnFire(float scale)
+
+    private void SpawnFire()
     {
         foreach (var position in firePositions)
         {
-            GameObject fire = Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
-            fire.transform.localScale = Vector3.one * scale;
+            Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
         }
     }
 
