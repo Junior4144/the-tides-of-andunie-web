@@ -23,7 +23,7 @@ public class VillagePatrol : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
-        agent.radius = 1f;
+        agent.radius = .5f;
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
         agent.avoidancePriority = Random.Range(30, 70);
 
@@ -73,7 +73,7 @@ public class VillagePatrol : MonoBehaviour
     {
         Vector3 velocity = agent.velocity;
 
-        // If agent is stationary, don’t rotate
+        // If agent is stationary, don't rotate
         if (velocity.sqrMagnitude < 0.01f) return;
 
         // Calculate facing angle from movement direction
@@ -81,12 +81,10 @@ public class VillagePatrol : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90f);
 
-        _rigidbody.SetRotation(
-            Mathf.MoveTowardsAngle(
-                _rigidbody.rotation,
-                targetRotation.eulerAngles.z,
-                _attributes.RotationSpeed * Time.deltaTime
-            )
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRotation,
+            _attributes.RotationSpeed * Time.deltaTime
         );
     }
 }
