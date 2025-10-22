@@ -7,6 +7,7 @@ public static class UIEvents
 {
     public static Action OnRequestInventoryToggle;
     public static Action OnRequestShopToggle;
+    public static Action OnRequestPauseToggle;
 }
 
 public class UIManager : MonoBehaviour
@@ -23,6 +24,9 @@ public class UIManager : MonoBehaviour
     private GameObject _ShopUI;
     private GameObject _ShopMain_UIPrehab;
 
+    [SerializeField] private GameObject _PauseUI;
+    private bool _isPaused;
+
     private void Awake()
     {
         if (Instance != null) return;
@@ -30,13 +34,12 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
     
-
     private void OnEnable()
     {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         UIEvents.OnRequestInventoryToggle += ToggleInventory;
         UIEvents.OnRequestShopToggle += ToggleShop;
-
+        UIEvents.OnRequestPauseToggle += TogglePause;
     }
 
     private void Start()
@@ -77,7 +80,6 @@ public class UIManager : MonoBehaviour
 
     private void HideAll()
     {
-        Debug.Log($"UI MANAGER HIDEALL: {_ShopUI}");
             if (_ShopUI != null)
             _ShopUI.SetActive(false);
 
@@ -109,4 +111,18 @@ public class UIManager : MonoBehaviour
         _ShopUI.SetActive(true);
     }
 
+    private void TogglePause()
+    {
+        if (_isPaused)
+        {
+            _PauseUI.SetActive(false);
+            Time.timeScale = 1f;
+            _isPaused = false;
+            return;
+        }
+
+        _PauseUI.SetActive(true);
+        Time.timeScale = 0f;
+        _isPaused = true;
+    }
 }

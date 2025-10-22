@@ -2075,7 +2075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &952897576
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2228,6 +2228,7 @@ MonoBehaviour:
   _InventoryUI_MainPrehab: {fileID: 537902609}
   _HealthBarUI: {fileID: 1196949929}
   _InventoryUI: {fileID: 1233555071}
+  _PauseUI: {fileID: 952897575}
 --- !u!1 &1196949929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,7 +2549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1600822828
 Transform:
   m_ObjectHideFlags: 0
@@ -2823,7 +2824,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10000
   m_TargetDisplay: 0
 --- !u!1 &1958056507
 GameObject:
