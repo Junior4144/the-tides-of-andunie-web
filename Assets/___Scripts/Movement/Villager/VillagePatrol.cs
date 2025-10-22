@@ -23,7 +23,11 @@ public class VillagePatrol : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
-        //add prehab position into patrolPoints array
+        agent.radius = .5f;
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        agent.avoidancePriority = Random.Range(30, 70);
+
+
         if (PatrolPoints != null)
         {
             int childCount = PatrolPoints.transform.childCount;
@@ -37,8 +41,9 @@ public class VillagePatrol : MonoBehaviour
 
         if (patrolPoints != null && patrolPoints.Length > 0)
         {
-            agent.SetDestination(patrolPoints[0].position);
-            currentPatrolPoint = patrolPoints[0];
+            currentPointIndex = Random.Range(0, patrolPoints.Length);
+            currentPatrolPoint = patrolPoints[currentPointIndex];
+            agent.SetDestination(currentPatrolPoint.position);
         }
     }
 
@@ -54,12 +59,11 @@ public class VillagePatrol : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance < 1f)
         {
             waitTimer += Time.deltaTime;
-            Debug.Log("new destination set attenpt");
+
             if (waitTimer >= waitTime)
             {
                 currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
                 currentPatrolPoint = patrolPoints[currentPointIndex];
-                Debug.Log("new destination set");
                 agent.SetDestination(patrolPoints[currentPointIndex].position);
                 waitTimer = 0f;
             }
@@ -69,7 +73,7 @@ public class VillagePatrol : MonoBehaviour
     {
         Vector3 velocity = agent.velocity;
 
-        // If agent is stationary, don’t rotate
+        // If agent is stationary, don't rotate
         if (velocity.sqrMagnitude < 0.01f) return;
 
         // Calculate facing angle from movement direction
@@ -77,12 +81,10 @@ public class VillagePatrol : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90f);
 
-        _rigidbody.SetRotation(
-            Mathf.MoveTowardsAngle(
-                _rigidbody.rotation,
-                targetRotation.eulerAngles.z,
-                _attributes.RotationSpeed * Time.deltaTime
-            )
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRotation,
+            _attributes.RotationSpeed * Time.deltaTime
         );
     }
 }
