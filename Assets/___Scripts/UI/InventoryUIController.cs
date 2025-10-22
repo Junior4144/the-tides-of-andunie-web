@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -205,4 +206,6 @@ public class InventoryUIController : MonoBehaviour
 
         Debug.Log("[InventoryUI] RefreshUI done");
     }
+
+
 }

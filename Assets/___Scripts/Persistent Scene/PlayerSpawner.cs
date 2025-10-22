@@ -19,12 +19,12 @@ public class PlayerSpawner : MonoBehaviour
 
         Debug.Log("New Player created");
 
-        if (SaveManager.Instance && UIManager.Instance.Check_HealthBar_UI_IsActive())
+        if (SaveManager.Instance && HealthUIController.Instance.Check_HealthBar_UI_IsActive())
         {
             SaveManager.Instance.RestorePlayerStats();
 
             var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
-            UIManager.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
         }
     }
 }

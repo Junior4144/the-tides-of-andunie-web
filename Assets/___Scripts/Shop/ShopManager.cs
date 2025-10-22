@@ -9,8 +9,6 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private ShopListing[] listings;
 
-    public static event Action<string> ShopUIError;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -37,7 +35,6 @@ public class ShopManager : MonoBehaviour
         if (CurrencyManager.Instance.Coins < listing.price)
         {
             Debug.Log("Not enough coins to buy " + listing.Item.ItemName);
-            //ShopUIError?.Invoke("NotEnough");
             return "NotEnough";
         }
 
@@ -47,7 +44,6 @@ public class ShopManager : MonoBehaviour
         if (!added)
         {
             Debug.Log("Inventory full or item cannot be added.");
-            //ShopUIError?.Invoke("LimitReached");
             return "LimitReached";
         }
 

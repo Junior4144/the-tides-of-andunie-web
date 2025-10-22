@@ -2,9 +2,22 @@ using UnityEngine;
 
 public class ShopUIController : MonoBehaviour
 {
+    public static ShopUIController Instance { get; private set; }
+
     [SerializeField] private Transform shopPanel;
     [SerializeField] private GameObject shopItemUIPrefab;
-    [SerializeField] private GameObject canvas;
+    [SerializeField] public GameObject canvas;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     void Start()
     {
@@ -12,9 +25,10 @@ public class ShopUIController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G)) // only for debugging
         {
-            canvas.SetActive(!canvas.activeInHierarchy);
+            UIEvents.OnRequestShopToggle?.Invoke();
+
         }
     }
     void PopulateShop()

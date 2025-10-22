@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MenuController : MonoBehaviour
+public class InventoryMenuController : MonoBehaviour
 {
     public GameObject menuCanvas;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,7 +14,7 @@ public class MenuController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
+            UIEvents.OnRequestInventoryToggle?.Invoke();
         }
     }
 }

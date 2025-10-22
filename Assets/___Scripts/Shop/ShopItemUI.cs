@@ -13,14 +13,16 @@ public class ShopItemUI : MonoBehaviour
     [SerializeField] private TMP_Text ErrorText;
 
     private ShopListing listing;
+
     private void Start() => ErrorText.gameObject.SetActive(false);
 
+    private void OnDisable() => ErrorText.gameObject.SetActive(false);
 
     public void SetData(ShopListing listing)
     {
         this.listing = listing;
         nameText.text = listing.Item.ItemName;
-        priceText.text = listing.price.ToString();
+        priceText.text = $"Price: {listing.price.ToString()}";
         icon.sprite = listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
 
         buyButton.onClick.AddListener(OnBuyClicked);
@@ -60,6 +62,11 @@ public class ShopItemUI : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        ErrorText.gameObject.SetActive(false);
+    }
+
+    public void ResetErrors()
+    {
         ErrorText.gameObject.SetActive(false);
     }
 }
