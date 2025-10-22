@@ -2,6 +2,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class UIEvents
 {
@@ -36,16 +37,18 @@ public class UIManager : MonoBehaviour
     
     private void OnEnable()
     {
+        SceneManager.activeSceneChanged += OnSceneChanged;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         UIEvents.OnRequestInventoryToggle += ToggleInventory;
         UIEvents.OnRequestShopToggle += ToggleShop;
         UIEvents.OnRequestPauseToggle += TogglePause;
     }
 
-    private void Start()
+    //ISSUE : If main menu doesn't have a shop controller -> won't allocate correctly -> need to call for 
+
+    private IEnumerator Start()
     {
-        _ShopUI = ShopUIController.Instance.canvas;
-        _ShopMain_UIPrehab = ShopUIController.Instance.gameObject;
+        yield return null;
         Debug.Log($"UI MANAGER: {_ShopUI}");
         HandleGameStateChanged(GameManager.Instance.CurrentState);
     }
@@ -101,6 +104,9 @@ public class UIManager : MonoBehaviour
     private void ToggleShop()
     {
 
+        if (!TryResolveShop())
+            return;
+
         if (_ShopUI != null && _ShopUI.activeInHierarchy)
         {
             HideAll();
@@ -109,6 +115,24 @@ public class UIManager : MonoBehaviour
 
         HideAll();
         _ShopUI.SetActive(true);
+    }
+
+    private bool TryResolveShop()
+    {
+        if (_ShopUI != null) return true;
+
+        if (ShopUIController.Instance == null)
+            return false;
+
+        _ShopUI = ShopUIController.Instance.canvas;
+        _ShopMain_UIPrehab = ShopUIController.Instance.gameObject;
+        return true;
+    }
+
+    private void OnSceneChanged(Scene scene, Scene x)
+    {
+        _ShopUI = null;
+        _ShopMain_UIPrehab = null;
     }
 
     private void TogglePause()
