@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -126,6 +127,7 @@ public class InventoryUIController : MonoBehaviour
         Debug.Log($"[InventoryUI] Cleared {cleared} items");
 
         // 2) Rebuild from inventory data
+        if (!InventoryManager.Instance) return;
         var items = InventoryManager.Instance.GetAllItems();
         if (items == null)
         {
@@ -204,4 +206,6 @@ public class InventoryUIController : MonoBehaviour
 
         Debug.Log("[InventoryUI] RefreshUI done");
     }
+
+
 }

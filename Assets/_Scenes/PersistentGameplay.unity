@@ -1633,7 +1633,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1600822829}
         m_TargetAssemblyTypeName: PausedMenu, Assembly-CSharp
-        m_MethodName: ResumeGame
+        m_MethodName: HandlePause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2075,7 +2075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &952897576
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2225,11 +2225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8691d2c56f5e8f545a7e2a240205fc0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  gameplayCanvas: {fileID: 1329781675}
-  gameplayUI: {fileID: 1329781675}
-  _healthBarUI: {fileID: 1196949932}
-  _healthBarShake: {fileID: 1196949931}
-  _InventoryUI: {fileID: 537902609}
+  _InventoryUI_MainPrehab: {fileID: 537902609}
+  _HealthBarUI: {fileID: 1196949929}
+  _InventoryUI: {fileID: 1233555071}
+  _PauseUI: {fileID: 952897575}
 --- !u!1 &1196949929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1196949930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2300,6 +2299,11 @@ MonoBehaviour:
   _healthBarDamageIndicator: {fileID: 177276959}
   _damageIndicatorSpeed: 0.5
   _delayBeforeShrink: 0.1
+--- !u!1 &1233555071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6589713735686658342, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+  m_PrefabInstance: {fileID: 913801304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1329781675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,13 +2316,14 @@ GameObject:
   - component: {fileID: 1329781680}
   - component: {fileID: 1329781679}
   - component: {fileID: 1329781678}
+  - component: {fileID: 1329781681}
   m_Layer: 5
   m_Name: Health Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1329781676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2402,6 +2407,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1329781681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329781675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c194e7fe947d7514992af6e9c77195c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthUIController
+  _healthBarUI: {fileID: 1196949932}
+  _healthBarShake: {fileID: 1196949931}
 --- !u!1 &1333691927 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2840975205732332125, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
@@ -2530,7 +2549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1600822828
 Transform:
   m_ObjectHideFlags: 0
@@ -2805,7 +2824,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10000
   m_TargetDisplay: 0
 --- !u!1 &1958056507
 GameObject:
