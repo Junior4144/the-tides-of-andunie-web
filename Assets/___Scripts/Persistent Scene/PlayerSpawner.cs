@@ -20,7 +20,7 @@ public class PlayerSpawner : MonoBehaviour
         string sceneName = gameObject.scene.name;
         Debug.Log($"PlayerSpawner: Scene: {sceneName} trying to send to dictionary");
 
-        var savedTransform = SceneSavePositionManager.Instance.GetSavedPosition(sceneName);
+        var savedTransform = SceneSavePositionManager.Instance?.GetSavedPosition(sceneName);
 
         Vector3 spawnPos;
         Quaternion spawnRot;
