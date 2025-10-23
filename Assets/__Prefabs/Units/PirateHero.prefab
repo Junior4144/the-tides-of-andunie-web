@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2171624999980729042
+--- !u!1 &797886490284572622
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4742777973402806684}
-  - component: {fileID: 5068678838467012998}
-  - component: {fileID: 2529779608957201552}
+  - component: {fileID: 6273018320394479481}
+  - component: {fileID: 3342196512666715336}
+  - component: {fileID: 7332758564662020222}
   m_Layer: 6
-  m_Name: ImpulseCollider
+  m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4742777973402806684
+--- !u!4 &6273018320394479481
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2171624999980729042}
+  m_GameObject: {fileID: 797886490284572622}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.017, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8437175951080204677}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5068678838467012998
-CircleCollider2D:
+  m_Father: {fileID: 8998662521861116559}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!70 &3342196512666715336
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2171624999980729042}
+  m_GameObject: {fileID: 797886490284572622}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 383
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -67,21 +67,26 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5250422
---- !u!114 &2529779608957201552
+  m_Offset: {x: 0.11906401, y: -0.5496069}
+  m_Size: {x: 0.7428142, y: 2.0707498}
+  m_Direction: 0
+--- !u!114 &7332758564662020222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2171624999980729042}
+  m_GameObject: {fileID: 797886490284572622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
---- !u!1 &5141889167527687833
+  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
+  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  damageDelay: 0.3
+  _animDuration: 0.6
+  animator: {fileID: 6197841025982527980}
+--- !u!1 &1098415364812090444
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,292 +94,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8437175951080204677}
-  - component: {fileID: 6132975301538320078}
-  - component: {fileID: 4308879786555504427}
-  - component: {fileID: 1227283080525761124}
-  - component: {fileID: 5708639114541283044}
-  - component: {fileID: 4396023074818679964}
-  - component: {fileID: 3241729593579430}
-  - component: {fileID: 5741293303166725818}
-  - component: {fileID: 8242130550363687132}
-  - component: {fileID: 4073483057518027734}
-  - component: {fileID: 8896437947959167244}
-  m_Layer: 6
-  m_Name: PirateMeleeClub 1
-  m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8437175951080204677
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.789999, y: -2.79, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 4703897465349137343}
-  - {fileID: 1090220312534074366}
-  - {fileID: 4742777973402806684}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &6132975301538320078
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 10
-  m_AngularDamping: 10
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!58 &4308879786555504427
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.183, y: -0.139}
-  m_Radius: 0.5250422
---- !u!114 &1227283080525761124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a5ef65276046fd4a91a2cb7a5c377e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthController
-  _currentHealth: 50
-  _maxHealth: 50
-  OnDied:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8896437947959167244}
-        m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
-        m_MethodName: RandomlyDropCollectable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3241729593579430}
-        m_TargetAssemblyTypeName: PlayerDeathAnimation, Assembly-CSharp
-        m_MethodName: DeathAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5708639114541283044}
-        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
-        m_MethodName: Destroy
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDamaged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4396023074818679964}
-        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
-        m_MethodName: Flash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5708639114541283044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
---- !u!114 &4396023074818679964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db5eac837b3ca843ba93240f179d71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlashOnDamage
-  spriteRenderer: {fileID: 6899470300584643334}
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.2
---- !u!114 &3241729593579430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
-  deathAnimation: {fileID: 3706533600887995784, guid: a6eb5691c0c264807910e50cd9638545, type: 3}
---- !u!114 &5741293303166725818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985675b5f0ec66649b5bdb96bc265519, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SquadFollower
-  moveSpeed: 7
-  maxMoveSpeed: 10
-  stoppingDistance: 0.01
-  rotationSpeed: 720
-  navMeshEngageDistance: 2.5
---- !u!114 &8242130550363687132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49331425754d18b4d8e599527a901243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
-  _isLeader: 0
---- !u!195 &4073483057518027734
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &8896437947959167244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141889167527687833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
-  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
-  _collectablePrefabs:
-  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
-  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
---- !u!1 &5477312402957383592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4703897465349137343}
-  - component: {fileID: 6899470300584643334}
-  - component: {fileID: 702584955739172055}
+  - component: {fileID: 7208357939549689441}
+  - component: {fileID: 4444451918969634893}
+  - component: {fileID: 6197841025982527980}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -382,28 +104,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4703897465349137343
+--- !u!4 &7208357939549689441
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5477312402957383592}
+  m_GameObject: {fileID: 1098415364812090444}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.42, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalPosition: {x: 0.32, y: 0.17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 8437175951080204677}
+  m_Father: {fileID: 8998662521861116559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6899470300584643334
+--- !u!212 &4444451918969634893
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5477312402957383592}
+  m_GameObject: {fileID: 1098415364812090444}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -443,8 +165,8 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1736753453
   m_SortingLayer: 5
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 315718883016047355, guid: af50e8cc11a59ab4cb4910f6b61948a8, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: -5435926560693546519, guid: a62bd20938afa4d49b78658b53ea8d5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -455,17 +177,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &702584955739172055
+--- !u!95 &6197841025982527980
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5477312402957383592}
+  m_GameObject: {fileID: 1098415364812090444}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ee34001da8dc38f45877a38a68f81b51, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8700a4a6fe75c8f4ea3a8814dbd1f6bf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -477,7 +199,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &6268526026557622871
+--- !u!1 &6113212806217388263
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,48 +207,331 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1090220312534074366}
-  - component: {fileID: 3702356730712673629}
-  - component: {fileID: 2570677483669343157}
+  - component: {fileID: 8998662521861116559}
+  - component: {fileID: 1937410672027535598}
+  - component: {fileID: 4255784000095341179}
+  - component: {fileID: 8943528671827995492}
+  - component: {fileID: 8447602456395079651}
+  - component: {fileID: 6013807941162489972}
+  - component: {fileID: 7689112777033820071}
+  - component: {fileID: 8663693184047469063}
+  - component: {fileID: 3878668067043966092}
+  - component: {fileID: 3830683419615601038}
+  - component: {fileID: 1347325167411043807}
   m_Layer: 6
-  m_Name: AttackPoint
-  m_TagString: Untagged
+  m_Name: PirateHero
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1090220312534074366
+--- !u!4 &8998662521861116559
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6268526026557622871}
+  m_GameObject: {fileID: 6113212806217388263}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.017, y: 0.6, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -34.358627, y: -5.1851616, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8437175951080204677}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!70 &3702356730712673629
-CapsuleCollider2D:
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 7208357939549689441}
+  - {fileID: 6273018320394479481}
+  - {fileID: 2695813455084435750}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1937410672027535598
+Rigidbody2D:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6268526026557622871}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 10
+  m_AngularDamping: 10
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &4255784000095341179
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.183, y: -0.139}
+  m_Radius: 0.5250422
+--- !u!114 &8943528671827995492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5ef65276046fd4a91a2cb7a5c377e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthController
+  _currentHealth: 50
+  _maxHealth: 50
+  OnDied:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7689112777033820071}
+        m_TargetAssemblyTypeName: PlayerDeathAnimation, Assembly-CSharp
+        m_MethodName: DeathAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3830683419615601038}
+        m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
+        m_MethodName: RandomlyDropCollectable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8447602456395079651}
+        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
+        m_MethodName: Destroy
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6013807941162489972}
+        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8447602456395079651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &6013807941162489972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db5eac837b3ca843ba93240f179d71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashOnDamage
+  spriteRenderer: {fileID: 4444451918969634893}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
+--- !u!114 &7689112777033820071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+  deathAnimation: {fileID: 3706533600887995784, guid: a6eb5691c0c264807910e50cd9638545, type: 3}
+--- !u!114 &8663693184047469063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49331425754d18b4d8e599527a901243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
+  _isLeader: 1
+--- !u!114 &3878668067043966092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985675b5f0ec66649b5bdb96bc265519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadFollower
+  moveSpeed: 10
+  maxMoveSpeed: 20
+  stoppingDistance: 0.01
+  rotationSpeed: 360
+  navMeshEngageDistance: 4
+--- !u!114 &3830683419615601038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
+  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _collectablePrefabs:
+  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
+  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
+--- !u!195 &1347325167411043807
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!1 &9102729505828410759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2695813455084435750}
+  - component: {fileID: 1014076738072606595}
+  - component: {fileID: 5614360270898690553}
+  m_Layer: 6
+  m_Name: ImpulseCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2695813455084435750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102729505828410759}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8998662521861116559}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1014076738072606595
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102729505828410759}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 383
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -544,22 +549,17 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.11906401, y: -0.5496069}
-  m_Size: {x: 0.7428142, y: 2.0707498}
-  m_Direction: 0
---- !u!114 &2570677483669343157
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5250422
+--- !u!114 &5614360270898690553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6268526026557622871}
+  m_GameObject: {fileID: 9102729505828410759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
-  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
-  damageDelay: 0.3
-  _animDuration: 0.6
-  animator: {fileID: 702584955739172055}
+  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
