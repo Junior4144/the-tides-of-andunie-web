@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
+
     [SerializeField] private float _attackAnimDuration = 0.5f;
     [SerializeField] private float _minIdleInterval = 5f;
     [SerializeField] private float _maxIdleInterval = 15f;
     [SerializeField] [Range(0f, 1f)] private float _specialIdleChance = 0.3f;
-    
     [SerializeField] private float _idleAngryDuration = 1f;
     [SerializeField] private float _idleAxeDuration = 1f;
-    [SerializeField] private float _idleWineDuration = 1f;
-    
+    [SerializeField] private float _idleWindDuration = 1f;
+
     private Animator _anim;
+    private PlayerHeroMovement _playerMovement;
     private float _lockedTill;
     private bool _attacked;
     private float _nextIdleCheckTime;
@@ -23,6 +24,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Awake()
     {
         _anim = GetComponent<Animator>();
+        _playerMovement = GetComponentInParent<PlayerHeroMovement>();
         _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
     }
     
@@ -30,15 +32,31 @@ public class PlayerAnimator : MonoBehaviour
     {
         _attacked = true;
     }
-    
+
     private void Update()
     {
+        HandleSpecialIdle();
+
+        var state = GetState();
+        _attacked = false;
+
+        if (state == _currentState) return;
+
+        _anim.CrossFade(state, 0, 0);
+        _currentState = state;
+    }
+    
+    private void HandleSpecialIdle()
+    {
         if (_playingSpecialIdle && Time.time >= _specialIdleEndTime)
-        {
             _playingSpecialIdle = false;
-        }
-        
-        if (Time.time >= _nextIdleCheckTime && Time.time >= _lockedTill && !_playingSpecialIdle)
+
+        if (
+            Time.time >= _nextIdleCheckTime &&
+            Time.time >= _lockedTill &&
+            !_playingSpecialIdle &&
+            !_playerMovement.IsWalking
+        )
         {
             if (UnityEngine.Random.value <= _specialIdleChance)
             {
@@ -47,19 +65,6 @@ public class PlayerAnimator : MonoBehaviour
             }
             _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
         }
-        
-        var state = GetState();
-        _attacked = false;
-        
-        if (state == _currentState) return;
-        
-        _anim.CrossFade(state, 0, 0);
-        _currentState = state;
-    }
-    
-    public void OnSpecialIdleComplete()
-    {
-        _playingSpecialIdle = false;
     }
     
     private int GetState()
@@ -73,9 +78,7 @@ public class PlayerAnimator : MonoBehaviour
         }
         
         if (_playingSpecialIdle)
-        {
             return _currentSpecialIdleState;
-        }
         
         return IdleDefault;
         
@@ -94,7 +97,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             0 => _idleAngryDuration,
             1 => _idleAxeDuration,
-            2 => _idleWineDuration,
+            2 => _idleWindDuration,
             _ => _idleAngryDuration
         };
         

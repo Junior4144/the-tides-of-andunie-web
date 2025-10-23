@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 3883044728600674497}
   - component: {fileID: 2166182335556974322}
   - component: {fileID: 6490214116593547409}
+  - component: {fileID: 6498460498772021872}
   m_Layer: 6
   m_Name: PirateHero
   m_TagString: Enemy
@@ -364,6 +365,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6498460498772021872}
+        m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
+        m_MethodName: RandomlyDropCollectable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 315232145515807971}
         m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
         m_MethodName: Destroy
@@ -460,6 +473,22 @@ MonoBehaviour:
   maxMoveSpeed: 20
   stoppingDistance: 0.01
   rotationSpeed: 360
+--- !u!114 &6498460498772021872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004876379704589269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
+  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _collectablePrefabs:
+  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
+  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
 --- !u!1 &6286216083689824971
 GameObject:
   m_ObjectHideFlags: 0

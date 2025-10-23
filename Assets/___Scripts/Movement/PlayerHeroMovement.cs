@@ -105,4 +105,6 @@ public class PlayerHeroMovement : MonoBehaviour
     public bool CanDash() => _canDash && !_isDashing;
 
     public bool IsInDash() => _isDashing;
+
+    public bool IsWalking => _isWalking;
 }

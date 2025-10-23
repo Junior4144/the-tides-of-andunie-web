@@ -1,6 +1,4 @@
-using UnityEditor.Build.Pipeline;
 using UnityEngine;
-
 
 public class PlayerManager : MonoBehaviour
 {

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LSBuildingsInvasion : MonoBehaviour
 {
-
     public bool bigBuilding = false;
     public bool smallBuilding = false;
 

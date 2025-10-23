@@ -11,11 +11,13 @@ public class VillageStateController : MonoBehaviour
     [SerializeField] private GameObject invadedObjects;
     [SerializeField] private GameObject liberatedObjects;
 
-    private void OnEnable() => LSManager.Instance.OnVillageStateChanged += HandleVillageStateChanged;
-
     private void OnDisable() => LSManager.Instance.OnVillageStateChanged -= HandleVillageStateChanged;
 
-    private void Start() => StartCoroutine(HandleVillageStateChanged());
+    private void Start()
+    {
+        LSManager.Instance.OnVillageStateChanged += HandleVillageStateChanged;
+        StartCoroutine(HandleVillageStateChanged());
+    }
 
     private IEnumerator HandleVillageStateChanged()
     {
