@@ -32,7 +32,7 @@ public class SquadFollower : MonoBehaviour
         navAgent.speed = maxMoveSpeed;
         navAgent.angularSpeed = rotationSpeed;
         navAgent.radius = 0.25f;
-        navAgent.acceleration = 100f;
+        navAgent.acceleration = 25f;
         navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         navAgent.updateRotation = false;
         navAgent.updateUpAxis = false;
