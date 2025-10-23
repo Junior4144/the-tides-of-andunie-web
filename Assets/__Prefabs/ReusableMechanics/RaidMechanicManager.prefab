@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4734975094600159188}
   - component: {fileID: 2509106713038772796}
   - component: {fileID: 1110409073488236925}
-  - component: {fileID: 7122910135655603312}
   - component: {fileID: 9106764976869871479}
   - component: {fileID: 8115295088577124013}
   m_Layer: 0
@@ -105,24 +104,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 18.258024, y: 13.276415}
   m_EdgeRadius: 0
---- !u!114 &7122910135655603312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412722760559901294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 802fbbd8cfa93a14bad694c9847a5895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RaidCutsceneController
-  raidController: {fileID: 2509106713038772796}
-  skipIntroCutscene: 0
-  _introCutscene: {fileID: 0}
-  _outroCutscene: {fileID: 0}
-  _introCutsceneCamera: {fileID: 0}
-  _outroCutsceneCamera: {fileID: 0}
 --- !u!114 &9106764976869871479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,11 +130,11 @@ AudioSource:
   m_GameObject: {fileID: 412722760559901294}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6832977069626889421, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

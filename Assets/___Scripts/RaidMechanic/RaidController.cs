@@ -64,7 +64,6 @@ public class RaidController : MonoBehaviour
     {
         if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
         {
-
             OnRaidTriggered?.Invoke();
             GetComponent<Collider2D>().enabled = false;
             if (!waitForExternalSignal)
