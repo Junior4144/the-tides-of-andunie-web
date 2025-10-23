@@ -4,6 +4,9 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using Unity.VisualScripting;
+using System;
+
+using Random = UnityEngine.Random;
 
 public class RaidController : MonoBehaviour
 {
@@ -37,14 +40,17 @@ public class RaidController : MonoBehaviour
     public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete, RaidFailed}
     private RaidState _currentState;
 
-    // ------- MUSIC -------
-    [SerializeField]
-    private RaidMusicController _musicController;
 
+    // ------- PUBLIC EVENTS -------
+    public event Action OnRaidTriggered;
+    public event Action OnPreWaveStart;
+    public event Action OnWaveStart;
+    public event Action OnRaidComplete;
+    public event Action OnRaidFailed;
+    public event Action OnRaidReset; // For the PreRaid state
 
-    // ------- CUTSCENE -------
-    [SerializeField] private RaidCutsceneController _cutsceneController;
-
+    [Tooltip("If checked, the raid will NOT start automatically. It must be started by an external script (like a cutscene) calling BeginRaidSequence().")]
+    [SerializeField] private bool waitForExternalSignal = false;
 
     void Awake()
     {
@@ -55,14 +61,26 @@ public class RaidController : MonoBehaviour
         TransitionToPreRaidState();
     }
 
-    void Start()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        _cutsceneController.OnIntroCutsceneFinished += TransitionToPreWaveState;
+        if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
+        {
+
+            OnRaidTriggered?.Invoke();
+            GetComponent<Collider2D>().enabled = false;
+            if (!waitForExternalSignal)
+            {
+                BeginRaidSequence();
+            }
+        }
     }
 
-    void OnDestroy()
+public void BeginRaidSequence()
     {
-        _cutsceneController.OnIntroCutsceneFinished -= TransitionToPreWaveState;
+        if (_currentState == RaidState.PreRaid)
+        {
+            TransitionToPreWaveState();
+        }
     }
 
     void Update()
@@ -116,7 +134,7 @@ public class RaidController : MonoBehaviour
     {
         _currentState = RaidState.PreRaid;
         _currentWaveIndex = -1;
-        _musicController?.Stop();
+        OnRaidReset?.Invoke();
     }
 
     private void TransitionToPreWaveState()
@@ -125,7 +143,7 @@ public class RaidController : MonoBehaviour
         StartNextWave();
         _alertTextController.SetText(currentWave.countDownText);
         DisplayTextThenFade(_alertTextController);
-        _musicController?.PlayPreWave();
+        OnPreWaveStart?.Invoke();
     }
 
     private void TransitionToWaveInProgressState()
@@ -135,22 +153,20 @@ public class RaidController : MonoBehaviour
         DisplayTextThenFade(_alertTextController);
         StartCoroutine(SpawnWaveEnemiesOverIntervals());
         ShowEnemiesCount();
-        _musicController?.PlayInProgress();
+        OnWaveStart?.Invoke();
     }
 
     private void TransitionToRaidCompleteState()
     {
         _currentState = RaidState.RaidComplete;
         DisplayTextThenFade(_postRaidTextController);
-        _musicController?.PlayPostRaid();
-        _cutsceneController.PlayOutroCutscene();
+        OnRaidComplete?.Invoke();
     }
 
     private void TransitionToRaidFailedState()
     {
         _currentState = RaidState.RaidFailed;
-        _musicController?.PlayPostRaid();
-        _cutsceneController.PlayOutroCutscene();
+        OnRaidFailed?.Invoke();
     }
 
 
@@ -159,11 +175,6 @@ public class RaidController : MonoBehaviour
     private bool allCurrentWaveEnemiesSpawned => _activeEnemies.Count == currentWave.enemies.Sum(enemyData => enemyData.count);
     
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
-            _cutsceneController.PlayIntroCutscene();
-    }
 
     private void StartNextWave()
     {
@@ -199,6 +210,7 @@ public class RaidController : MonoBehaviour
     private void UpdateEnemiesCountText() => _enemiesRemainingTextController.SetText($"Enemies Remaining: {_activeEnemies.Count(e => e != null)}");
 
     private void RemoveEnemiesCountText() => StartCoroutine(_enemiesRemainingTextController.FadeOut(1f));
+
     private IEnumerator SpawnWaveEnemiesOverIntervals()
     {
         if (spawnPoints.Count == 0)

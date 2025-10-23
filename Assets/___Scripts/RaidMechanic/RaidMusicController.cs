@@ -2,27 +2,56 @@ using UnityEngine;
 
 public class RaidMusicController : MonoBehaviour
 {
+    [SerializeField] private RaidController raidController;
+
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip preWaveClip;
     [SerializeField] private AudioClip inProgressClip;
     [SerializeField] private AudioClip postRaidClip;
 
-    public void PlayPreWave()
+    private void OnEnable()
+    {
+        if (raidController == null)
+        {
+            Debug.LogWarning("RaidMusicController is missing its RaidController!", this);
+            return;
+        }
+
+        raidController.OnRaidReset += Stop;
+        raidController.OnPreWaveStart += PlayPreWave;
+        raidController.OnWaveStart += PlayInProgress;
+        raidController.OnRaidComplete += PlayPostRaid;
+        raidController.OnRaidFailed += PlayPostRaid;
+    }
+
+
+    private void OnDisable()
+    {
+        if (raidController == null) return;
+
+        raidController.OnRaidReset -= Stop;
+        raidController.OnPreWaveStart -= PlayPreWave;
+        raidController.OnWaveStart -= PlayInProgress;
+        raidController.OnRaidComplete -= PlayPostRaid;
+        raidController.OnRaidFailed -= PlayPostRaid;
+    }
+
+    private void PlayPreWave()
     {
         Play(preWaveClip, loop: false);
     }
 
-    public void PlayInProgress()
+    private void PlayInProgress()
     {
         Play(inProgressClip, loop: true);
     }
 
-    public void PlayPostRaid()
+    private void PlayPostRaid()
     {
         Play(postRaidClip, loop: false);
     }
 
-    public void Stop() => audioSource.Stop();
+    private void Stop() => audioSource.Stop();
 
     private void Play(AudioClip clip, bool loop)
     {

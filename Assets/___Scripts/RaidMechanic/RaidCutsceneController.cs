@@ -5,56 +5,84 @@ using Unity.Cinemachine;
 
 public class RaidCutsceneController : MonoBehaviour
 {
+    [Header("Raid Connection")]
+    [SerializeField] private RaidController raidController;
+    [SerializeField] private bool skipIntroCutscene = false;
+
+    [Header("Cutscene Assets")]
     [SerializeField] private PlayableDirector _introCutscene;
     [SerializeField] private PlayableDirector _outroCutscene;
-
     [SerializeField] private CinemachineCamera _introCutsceneCamera;
     [SerializeField] private CinemachineCamera _outroCutsceneCamera;
-    
-    public event Action OnIntroCutsceneFinished;
-    public event Action OnOutroCutsceneFinished;
-    
+
+
     void Start()
     {
+        if (raidController == null)
+        {
+            Debug.LogWarning("RaidCutsceneController has no RaidController assigned!", this);
+            return;
+        }
+        raidController.OnRaidTriggered += HandleRaidTriggered;
+        raidController.OnRaidComplete += PlayOutroCutscene;
+        raidController.OnRaidFailed += PlayOutroCutscene;
+
         _introCutscene.stopped += OnIntroStopped;
         _outroCutscene.stopped += OnOutroStopped;
     }
-    
+
     void OnDestroy()
     {
+        if (raidController != null)
+        {
+            raidController.OnRaidTriggered -= HandleRaidTriggered;
+            raidController.OnRaidComplete -= PlayOutroCutscene;
+            raidController.OnRaidFailed -= PlayOutroCutscene;
+        }
+
         _introCutscene.stopped -= OnIntroStopped;
         _outroCutscene.stopped -= OnOutroStopped;
     }
-    
-    public void PlayIntroCutscene()
+
+    private void HandleRaidTriggered()
+    {
+        if (skipIntroCutscene)
+        {
+            raidController.BeginRaidSequence();
+        }
+        else
+        {
+            PlayIntroCutscene();
+        }
+    }
+
+    private void PlayIntroCutscene()
     {
         GameManager.Instance.SetState(GameState.Cutscene);
         PrioritizeCamera(_introCutsceneCamera);
         _introCutscene.Play();
     }
-    
-    public void PlayOutroCutscene()
+
+    private void PlayOutroCutscene()
     {
         GameManager.Instance.SetState(GameState.Cutscene);
         PrioritizeCamera(_outroCutsceneCamera);
         _outroCutscene.Play();
     }
-    
+
     private void OnIntroStopped(PlayableDirector director)
     {
         GameManager.Instance.SetState(GameState.Gameplay);
         DePrioritizeCamera(_introCutsceneCamera);
-        OnIntroCutsceneFinished?.Invoke();  
+        raidController.BeginRaidSequence();
     }
 
     private void OnOutroStopped(PlayableDirector director)
     {
         GameManager.Instance.SetState(GameState.Gameplay);
         DePrioritizeCamera(_outroCutsceneCamera);
-        OnOutroCutsceneFinished?.Invoke();
     }
 
     private void PrioritizeCamera(CinemachineCamera camera) => camera.Priority = 20;
-
     private void DePrioritizeCamera(CinemachineCamera camera) => camera.Priority = 0;
 }
