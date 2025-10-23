@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class ScenePortalController : MonoBehaviour
 {
-    //Seamless transition, for initally Gameplay
     [SerializeField]
     private string nextScene;
 
