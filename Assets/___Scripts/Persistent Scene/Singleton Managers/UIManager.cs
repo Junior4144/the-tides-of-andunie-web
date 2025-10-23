@@ -151,12 +151,6 @@ public class UIManager : MonoBehaviour
     {
         _ShopUI = null;
         _ShopMain_UIPrehab = null;
-
-        if (SceneManager.GetActiveScene().name == "Level0Stage1")
-        {
-            Debug.Log("Disabling Coin HUD");
-            _CoinHUD.SetActive(false);
-        }
     }
 
     private void TogglePause()
