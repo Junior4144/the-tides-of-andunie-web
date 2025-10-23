@@ -12,14 +12,18 @@ public class StatsUIController : MonoBehaviour
     private void OnEnable()
     {
         PlayerHealthController.OnHealthChanged += UpdateHP;
+        MeleeController.OnDamageChanged += UpdateDamage;
     }
     private void OnDisable()
     {
         PlayerHealthController.OnHealthChanged -= UpdateHP;
+        MeleeController.OnDamageChanged -= UpdateDamage;
     }
+
     private void Start()
     {
         UpdateHP(PlayerManager.Instance.GetHealth(), PlayerManager.Instance.GetMaxHealth());
+        UpdateDamage(MeleeController.Instance.GetDamageAmount());
     }
 
     public void UpdateHP(float _currentHealth, float _maxHealth)
@@ -27,9 +31,9 @@ public class StatsUIController : MonoBehaviour
         MaxHpText.text = _currentHealth.ToString();
         CurrentHpText.text = _currentHealth.ToString();
     }
-    //public void UpdateATK(int value)
-    //{
-    //    atkText.text = $"ATK: {value}";
-    //}
+    public void UpdateDamage(float value)
+    {
+        DamageText.text = value.ToString();
+    }
 
 }
