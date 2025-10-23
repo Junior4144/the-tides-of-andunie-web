@@ -93,7 +93,8 @@ public class UIManager : MonoBehaviour
 
                 if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
                 break;
-
+            case GameState.LevelSelector:
+                break;
             default:
                 break;
         }

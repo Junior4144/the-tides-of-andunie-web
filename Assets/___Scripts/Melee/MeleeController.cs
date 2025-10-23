@@ -21,19 +21,8 @@ public class MeleeController : MonoBehaviour
     [SerializeField]
     private PlayerAnimator _animator;
 
-    public static MeleeController Instance { get; private set; }
 
     public static event Action<float> OnDamageChanged;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
