@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 2288237643890385616}
   - component: {fileID: 2653467588494216797}
   - component: {fileID: 2252031075964155534}
+  - component: {fileID: 6483716325603048571}
   m_Layer: 6
   m_Name: PirateHero
   m_TagString: Enemy
@@ -522,6 +523,29 @@ MonoBehaviour:
   maxMoveSpeed: 20
   stoppingDistance: 0.01
   rotationSpeed: 360
+  navMeshEngageDistance: 4
+--- !u!195 &6483716325603048571
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5707345930154321575}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7777853474901196750
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,8 +580,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1150702212266428561}
   - {fileID: 6041004180712748091}
+  - {fileID: 7362400213490935507}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4459257246244177195
@@ -660,7 +684,7 @@ MonoBehaviour:
   _dashMultiplier: 3
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
---- !u!1001 &6755676671913800542
+--- !u!1001 &1385597061910073174
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -668,47 +692,47 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 693806402797184175}
     m_Modifications:
-    - target: {fileID: 4851313597780673343, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 5141889167527687833, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_Name
-      value: PirateMelee
+      value: PirateMeleeClub 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.08
+      value: -1.29
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.38
+      value: 0.69
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
+    - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
@@ -716,9 +740,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
---- !u!4 &1150702212266428561 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
+--- !u!4 &7362400213490935507 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5924733470511545295, guid: ceeed1976f7215844ad4e10445549ee9, type: 3}
-  m_PrefabInstance: {fileID: 6755676671913800542}
+  m_CorrespondingSourceObject: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
+  m_PrefabInstance: {fileID: 1385597061910073174}
   m_PrefabAsset: {fileID: 0}
