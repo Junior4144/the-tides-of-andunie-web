@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &61327265 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5845022087308914382, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-  m_PrefabInstance: {fileID: 4386508069941328145}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &113568861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1233,7 +1222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShakeManager
   shakeImpactSound: {fileID: 8300000, guid: d0e255443dbaf0a45a2559cf82bc86a9, type: 3}
-  globalShakeForce: 1
 --- !u!114 &1025307814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1344,6 +1332,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1477891125215377208, guid: b0483327264405149949ae0d9c70d19b, type: 3}
   m_PrefabInstance: {fileID: 296744528}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1266475381 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+  m_PrefabInstance: {fileID: 4386508069941328145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122d4a318d453c940a7086108216076a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!4 &1361959432 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6486402281866585803, guid: 77ff3c700f79d9c4f92f155cd17388af, type: 3}
@@ -34573,38 +34572,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: RaidMechanicManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: enemiesRemainingText
-      value: 
-      objectReference: {fileID: 61327265}
+    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+      propertyPath: m_Size.x
+      value: 18.258024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+      propertyPath: m_Size.y
+      value: 13.276415
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+      propertyPath: m_Offset.x
+      value: -11.62968
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+      propertyPath: m_Offset.y
+      value: 10.112077
+      objectReference: {fileID: 0}
     - target: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1720844310}
-    - target: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: 'spawnPoints.Array.data[1]'
-      value: 
-      objectReference: {fileID: 772880123}
-    - target: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: 'spawnPoints.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1115661394}
-    - target: {fileID: 2876327938038101023, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 4386508069941328147}
-    - target: {fileID: 2876327938038101023, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: preWaveClip
-      value: 
-      objectReference: {fileID: 8300000, guid: ec3f6c779a23c5244bf0364bdc8c1c7b, type: 3}
-    - target: {fileID: 2876327938038101023, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: postRaidClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 36d346f12ef004841be40071ae144ae3, type: 3}
-    - target: {fileID: 2876327938038101023, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: inProgressClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 4ea1cc88a6b94604f8973de925d569fe, type: 3}
     - target: {fileID: 4734975094600159188, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.76084
@@ -34645,16 +34632,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7122910135655603312, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7122910135655603312, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+      propertyPath: raidController
+      value: 
+      objectReference: {fileID: 1266475381}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
---- !u!82 &4386508069941328147 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3079656660035389181, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-  m_PrefabInstance: {fileID: 4386508069941328145}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7001619075006607148
 PrefabInstance:
   m_ObjectHideFlags: 0
