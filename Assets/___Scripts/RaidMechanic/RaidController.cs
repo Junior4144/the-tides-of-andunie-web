@@ -12,19 +12,17 @@ public class RaidController : MonoBehaviour
 {
 
     // ------- TEXT -------
-    [SerializeField]
-    private TextMeshProUGUI alertText;
-    [SerializeField]
-    private TextMeshProUGUI timerText;
-    [SerializeField]
-    private TextMeshProUGUI enemiesRemainingText;
+    [SerializeField] private TextMeshProUGUI alertText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI postRaidText;
+    [SerializeField] private TextMeshProUGUI enemiesRemainingText;
+    [SerializeField] private TextMeshProUGUI prizePopupText;
 
-    [SerializeField]
-    private TextMeshProUGUI postRaidText;
     private TextController _alertTextController;
     private TextController _timerTextController;
     private TextController _postRaidTextController;
     private TextController _enemiesRemainingTextController;
+    private TextController _prizePopupTextController;
 
     // ------- TIMERS -------
     private float _timeBeforeNextWaveInSeconds = 0;
@@ -58,6 +56,7 @@ public class RaidController : MonoBehaviour
         _timerTextController = new TextController(timerText);
         _postRaidTextController = new TextController(postRaidText);
         _enemiesRemainingTextController = new TextController(enemiesRemainingText);
+        _prizePopupTextController = new TextController(prizePopupText);
         TransitionToPreRaidState();
     }
 
@@ -75,7 +74,7 @@ public class RaidController : MonoBehaviour
         }
     }
 
-public void BeginRaidSequence()
+    public void BeginRaidSequence()
     {
         if (_currentState == RaidState.PreRaid)
         {
@@ -142,7 +141,7 @@ public void BeginRaidSequence()
         _currentState = RaidState.PreWave;
         StartNextWave();
         _alertTextController.SetText(currentWave.countDownText);
-        DisplayTextThenFade(_alertTextController);
+        DisplayTextThenFadeOut(_alertTextController);
         OnPreWaveStart?.Invoke();
     }
 
@@ -150,7 +149,7 @@ public void BeginRaidSequence()
     {
         _currentState = RaidState.WaveInProgress;
         _alertTextController.SetText(currentWave.waveStartText);
-        DisplayTextThenFade(_alertTextController);
+        DisplayTextThenFadeOut(_alertTextController);
         StartCoroutine(SpawnWaveEnemiesOverIntervals());
         ShowEnemiesCount();
         OnWaveStart?.Invoke();
@@ -159,7 +158,7 @@ public void BeginRaidSequence()
     private void TransitionToRaidCompleteState()
     {
         _currentState = RaidState.RaidComplete;
-        DisplayTextThenFade(_postRaidTextController);
+        DisplayTextThenFadeOut(_postRaidTextController);
         OnRaidComplete?.Invoke();
     }
 
@@ -178,9 +177,42 @@ public void BeginRaidSequence()
 
     private void StartNextWave()
     {
+        if (_currentWaveIndex >= 0) 
+        { 
+            AwardPrizesForWave(currentWave);
+        }
         _currentWaveIndex += 1;
         StartTimer();
-        DisplayTextThenFade(_alertTextController);
+        DisplayTextThenFadeOut(_alertTextController);
+    }
+
+    private void AwardPrizesForWave(WaveConfig wave)
+    {
+        if (wave.wavePrizes == null || wave.wavePrizes.Count == 0)
+        {
+            return; // No prizes for this wave
+        }
+
+        int prizesCount = 0;
+
+        foreach (var prize in wave.wavePrizes)
+        {
+            if (prize.itemPrefab == null) continue;
+
+            IInventoryItem itemData = prize.itemPrefab.GetComponent<IInventoryItem>();
+            if (itemData != null)
+            {
+                InventoryManager.Instance.AddItem(itemData, prize.quantity);
+                prizesCount += prize.quantity;
+            }
+            else
+            {
+                Debug.LogWarning($"Prize prefab {prize.itemPrefab.name} is missing an IInventoryItem component!");
+            }
+        }
+
+        _prizePopupTextController.SetText($"You have earned {prizesCount} prizes!");
+        DisplayTextThenFadeOut(_prizePopupTextController);
     }
 
     private void StartTimer()
@@ -191,7 +223,7 @@ public void BeginRaidSequence()
         StartCoroutine(Utils.ExecuteFunctionAfterDelay(_timeBeforeNextWaveInSeconds + 0.5f, _timerTextController.SetTextInvisible));
     }
 
-    private void DisplayTextThenFade(TextController controller)
+    private void DisplayTextThenFadeOut(TextController controller)
     {
         controller.SetTextVisible();
         const float baseTime = 1.5f;

@@ -8,6 +8,12 @@ public class EnemyData
     public int count;
 }
 
+[System.Serializable]
+public class PrizeItem
+{
+    public GameObject itemPrefab;
+    public int quantity;
+}
 
 [System.Serializable]
 public class WaveConfig
@@ -25,6 +31,8 @@ public class WaveConfig
     public string countDownText = "Enemies observed in the distance! Prepare to defend!!!";
 
     [Tooltip("The text that appears when the enemies start spawning.")]
-
     public string waveStartText = "Enemies are here! Attack!!!";
+
+    [Tooltip("Wave Completion Prizes")]
+    public List<PrizeItem> wavePrizes;
 }
