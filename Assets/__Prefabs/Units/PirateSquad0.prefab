@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 4606045543428363586}
   - component: {fileID: 315232145515807971}
   - component: {fileID: 4033681387115441121}
+  - component: {fileID: 3389213937291548543}
   m_Layer: 6
   m_Name: PirateSquad0
   m_TagString: Untagged
@@ -218,6 +219,22 @@ MonoBehaviour:
   _dashMultiplier: 3
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
+--- !u!114 &3389213937291548543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
+  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _collectablePrefabs:
+  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
+  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
 --- !u!1 &6004876379704589269
 GameObject:
   m_ObjectHideFlags: 0

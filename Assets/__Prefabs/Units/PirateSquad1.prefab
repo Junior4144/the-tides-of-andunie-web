@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 2288237643890385616}
   - component: {fileID: 2653467588494216797}
   - component: {fileID: 2252031075964155534}
+  - component: {fileID: 6713140173172069822}
   m_Layer: 6
   m_Name: PirateHero
   m_TagString: Enemy
@@ -522,6 +523,22 @@ MonoBehaviour:
   maxMoveSpeed: 20
   stoppingDistance: 0.01
   rotationSpeed: 360
+--- !u!114 &6713140173172069822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5707345930154321575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
+  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _collectablePrefabs:
+  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
+  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
 --- !u!1 &7777853474901196750
 GameObject:
   m_ObjectHideFlags: 0

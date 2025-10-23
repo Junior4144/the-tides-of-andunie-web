@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 1343377821889228905}
   - component: {fileID: 2296767435375132792}
   - component: {fileID: 8805459138077997689}
+  - component: {fileID: -6942814709665926042}
   m_Layer: 6
   m_Name: PirateMelee
   m_TagString: Enemy
@@ -311,6 +312,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
   _isLeader: 0
+--- !u!114 &-6942814709665926042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311024737355814348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
+  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _collectablePrefabs:
+  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
+  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
 --- !u!1 &2948648031804661030
 GameObject:
   m_ObjectHideFlags: 0
