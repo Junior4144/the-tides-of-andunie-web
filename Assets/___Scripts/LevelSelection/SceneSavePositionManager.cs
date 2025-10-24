@@ -25,6 +25,10 @@ public class SceneSavePositionManager : MonoBehaviour
         _playerPrevPosition[sceneName] = (position, rotation);
 
     }
+    public void ResetPlayerPosition(string sceneName)
+    {
+        _playerPrevPosition.Remove(sceneName);
+    }
 
     public (Vector3 pos, Quaternion rot)? GetSavedPosition(string sceneName)
     {
