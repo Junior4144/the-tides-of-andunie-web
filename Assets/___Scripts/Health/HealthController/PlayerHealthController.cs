@@ -2,18 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerHealthController : MonoBehaviour, IHealthController
+public class PlayerHealthController : HealthController
 {
-    [SerializeField] private float _currentHealth;
-    [SerializeField] private float _maxHealth;
-
-    public UnityEvent OnDied;
-    public UnityEvent OnDamaged;
-
     public static event Action<float, float> OnHealthChanged;
     //public static event Action<string, float, float> OnHealthGained;
 
-    public void TakeDamage(float damageAmount)
+    public override void TakeDamage(float damageAmount)
     {
         if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
 
@@ -31,7 +25,7 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
             OnDied.Invoke();
     }
 
-    public void AddHealth(float amount)
+    public override void AddHealth(float amount)
     {
         if (amount == 0)
             return;
@@ -43,9 +37,4 @@ public class PlayerHealthController : MonoBehaviour, IHealthController
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
     }
-
-    public float GetPercentHealth() => _currentHealth / _maxHealth;
-    public float GetCurrentHealth() => _currentHealth;
-    public float GetMaxHealth() => _maxHealth;
-    public void SetCurrentHealth(float currentHealth) => _currentHealth = currentHealth;
 }

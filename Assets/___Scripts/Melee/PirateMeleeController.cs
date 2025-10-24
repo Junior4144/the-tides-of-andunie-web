@@ -31,8 +31,9 @@ public class PirateMeleeController : MonoBehaviour
         }
     }
 
-    private bool IsEnemy(Collider2D otherCollider) =>
-        otherCollider.CompareTag("Player");
+    private bool IsEnemy(Collider2D otherCollider) => 
+        otherCollider.gameObject.layer == LayerMask.NameToLayer("Friendly");
+    
 
     private IEnumerator Attack(GameObject enemyObject)
     {
