@@ -10,18 +10,8 @@ public class InventoryUIController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs;
 
-    public static InventoryUIController Instance;
-
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-
         InitializeSlots();
     }
 
