@@ -14,8 +14,31 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (PlayerManager.Instance != null) return;
 
+        //Default Player Spawner Transform
         currentPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
-        currentPlayer.transform.rotation = transform.rotation;
+
+        string sceneName = gameObject.scene.name;
+        Debug.Log($"PlayerSpawner: Scene: {sceneName} trying to send to dictionary");
+
+        var savedTransform = SceneSavePositionManager.Instance?.GetSavedPosition(sceneName);
+
+        Vector3 spawnPos;
+        Quaternion spawnRot;
+
+        if (savedTransform != null)
+        {
+            spawnPos = savedTransform.Value.pos;
+            spawnRot = savedTransform.Value.rot;
+            Debug.Log($"Spawning player at SAVED position for scene: {sceneName}");
+        }
+        else // equals null
+        {
+            spawnPos = transform.position;
+            spawnRot = transform.rotation;
+            Debug.Log($"Spawning player at DEFAULT spawner position in scene: {sceneName}");
+        }
+
+        PlayerManager.Instance.SetPlayerTransform(spawnPos, spawnRot);
 
         Debug.Log("New Player created");
 
@@ -24,7 +47,9 @@ public class PlayerSpawner : MonoBehaviour
             SaveManager.Instance.RestorePlayerStats();
 
             var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
-            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth()); 
         }
+        
     }
+
 }

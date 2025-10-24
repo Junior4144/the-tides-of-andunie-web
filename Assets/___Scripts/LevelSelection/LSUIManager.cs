@@ -44,6 +44,8 @@ public class LSUIManager : MonoBehaviour
             LevelSelectionEnterHeader.text = "Leave Village";
             LSButtonText.text = "Leave";
 
+            SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
+
             VillageId = id;
             Location = location;
             return;

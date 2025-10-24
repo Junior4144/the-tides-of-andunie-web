@@ -57,6 +57,7 @@ public class PlayerManager : MonoBehaviour
     public float GetDamageAmount() => meleeController.GetDamageAmount();
 
     public Transform GetPlayerTransform() => gameObject.transform;
+    public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
 
     public void SetHealth(float value) => healthController.SetCurrentHealth(value);
     public void SetDamageAmount(float value) => meleeController.SetDamageAmount(value);
