@@ -66,7 +66,6 @@ public class SaveManager : MonoBehaviour
             return;
         }
         PlayerManager.Instance.SetHealth(CurrentSave.health);
-        PlayerManager.Instance.SetDamageAmount(CurrentSave.damageAmount);
         Debug.Log($"[SaveManager] Restored player  health at {CurrentSave.health}");
     }
 

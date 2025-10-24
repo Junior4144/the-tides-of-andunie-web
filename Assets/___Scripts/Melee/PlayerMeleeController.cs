@@ -2,25 +2,15 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class MeleeController : MonoBehaviour
+public class PlayerMeleeController : MonoBehaviour
 {
-    [SerializeField]
-    private float _damage = 20;
-
-    [SerializeField]
-    private float damageDelay = 0;
-
-    [SerializeField]
-    private string _layerName;
-
-    [SerializeField]
-    private float _animDuration;
+    [SerializeField] private float damageDelay = 0;
+    [SerializeField] private string _layerName;
+    [SerializeField] private float _animDuration;
 
     private bool _isAttacking = false;
 
-    [SerializeField]
-    private PlayerAnimator _animator;
-
+    [SerializeField] private PlayerAnimator _animator;
 
     public static event Action<float> OnDamageChanged;
 
@@ -40,14 +30,14 @@ public class MeleeController : MonoBehaviour
     }
 
     private bool IsEnemy(Collider2D otherCollider) =>
-    otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName);
+        otherCollider.gameObject.layer == LayerMask.NameToLayer(_layerName);
 
     private IEnumerator Attack(GameObject enemyObject)
     {
         yield return new WaitForSeconds(damageDelay);
 
         if (enemyObject)
-            enemyObject.GetComponent<IHealthController>().TakeDamage(_damage);
+            enemyObject.GetComponent<IHealthController>().TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
     }
 
     private void PlayAttackAnimation()
@@ -59,9 +49,7 @@ public class MeleeController : MonoBehaviour
             StartCoroutine(ResetAttackAnimation());
         }
         else
-        {
             Debug.LogWarning("Animator is Null. Playing no Animation");
-        }
     }
 
     private IEnumerator ResetAttackAnimation()
@@ -69,14 +57,4 @@ public class MeleeController : MonoBehaviour
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
     }
-
-    public void AddDamage(float damageToAdd)
-    {
-        _damage += damageToAdd;
-        OnDamageChanged?.Invoke(_damage);
-    }
-
-    public float GetDamageAmount() => _damage;
-    public void SetDamageAmount(float currentDamage) => _damage = currentDamage;
-
 }
