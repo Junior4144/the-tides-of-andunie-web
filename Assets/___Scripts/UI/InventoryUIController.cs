@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -9,18 +10,8 @@ public class InventoryUIController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs;
 
-    public static InventoryUIController Instance;
-
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-
         InitializeSlots();
     }
 
@@ -205,4 +196,6 @@ public class InventoryUIController : MonoBehaviour
 
         Debug.Log("[InventoryUI] RefreshUI done");
     }
+
+
 }

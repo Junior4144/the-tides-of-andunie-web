@@ -3,13 +3,23 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface IHealthController
+public abstract class HealthController : MonoBehaviour, IHealthController
 {
-    void TakeDamage(float amount);
-    void AddHealth(float amount);
-    void SetCurrentHealth(float currentHealth);
-    float GetCurrentHealth();
-    float GetMaxHealth();
-    float GetPercentHealth();
+    [SerializeField] protected float _currentHealth = 100;
+    [SerializeField] protected float _maxHealth = 100;
 
+    public UnityEvent OnDied;
+    public UnityEvent OnDamaged;
+
+    public abstract void TakeDamage(float damageAmount);
+
+    public abstract void AddHealth(float amount);
+
+    public float GetPercentHealth() => _currentHealth / _maxHealth;
+
+    public float GetCurrentHealth() => _currentHealth;
+
+    public float GetMaxHealth() => _maxHealth;
+
+    public void SetCurrentHealth(float currentHealth) => _currentHealth = currentHealth;
 }

@@ -9,29 +9,16 @@ public class PausedMenu : MonoBehaviour
     void Start() =>
         pauseMenu.SetActive(false);
 
-
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-                ResumeGame();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            HandlePause();
 
-            else
-                PauseGame();
-        }
-    }
-    public void PauseGame()
-    {
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
     }
 
-    public void ResumeGame()
+    public void HandlePause()
     {
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
+        Debug.Log("trying to pause game");
+        UIEvents.OnRequestPauseToggle?.Invoke();
     }
 }

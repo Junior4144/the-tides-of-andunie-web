@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class MeleeController : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class MeleeController : MonoBehaviour
     [SerializeField]
     private PlayerAnimator _animator;
 
+
+    public static event Action<float> OnDamageChanged;
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
@@ -66,6 +69,14 @@ public class MeleeController : MonoBehaviour
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
     }
+
+    public void AddDamage(float damageToAdd)
+    {
+        _damage += damageToAdd;
+        OnDamageChanged?.Invoke(_damage);
+    }
+
     public float GetDamageAmount() => _damage;
     public void SetDamageAmount(float currentDamage) => _damage = currentDamage;
+
 }

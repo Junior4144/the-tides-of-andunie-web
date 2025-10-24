@@ -3,6 +3,7 @@
 public class InventoryDebugger : MonoBehaviour
 {
     [SerializeField] private GameObject testItemObject;
+    [SerializeField] private GameObject NewInven;
 
     void Update()
     {
@@ -46,6 +47,11 @@ public class InventoryDebugger : MonoBehaviour
         {
             CurrencyManager.Instance.TrySpendCoins(1);
             Debug.Log($"Remove 1 Coin:");
+        }
+        if (Input.GetKeyDown(KeyCode.F)) // PRINT ONLY
+        {
+            NewInven.SetActive(!NewInven.activeInHierarchy);
+            Debug.Log($"Opening New Inventory");
         }
     }
 

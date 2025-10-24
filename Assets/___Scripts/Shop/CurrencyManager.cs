@@ -12,29 +12,24 @@ public class CurrencyManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); //removes item from game once collected
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
-
-        // Must be a root object to persist correctly
-        if (transform.parent != null)
-
-            DontDestroyOnLoad(gameObject);
     }
 
     public void AddCoins(int amount)
     {
         Coins += amount;
-        OnCoinsChanged?.Invoke(Coins); //increment coin counter 
+        OnCoinsChanged?.Invoke(Coins);
     }
 
     public bool TrySpendCoins(int amount)
     {
         if (Coins < amount) return false;
         Coins -= amount;
-        OnCoinsChanged?.Invoke(Coins); //same function as remove coins just new name
+        OnCoinsChanged?.Invoke(Coins);
         return true;
     }
 }
