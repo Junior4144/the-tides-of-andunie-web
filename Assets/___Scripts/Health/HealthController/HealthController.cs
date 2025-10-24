@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,8 +16,6 @@ public abstract class HealthController : MonoBehaviour, IHealthController
     public float GetPercentHealth() => _currentHealth / _maxHealth;
 
     public float GetCurrentHealth() => _currentHealth;
-
-    public float GetMaxHealth() => _maxHealth;
 
     public void SetCurrentHealth(float currentHealth) => _currentHealth = currentHealth;
 }

@@ -22,7 +22,7 @@ public class StatsUIController : MonoBehaviour
 
     private void Start()
     {
-        UpdateHP(PlayerManager.Instance.GetHealth(), PlayerManager.Instance.GetMaxHealth());
+        UpdateHP(PlayerManager.Instance.GetHealth(), PlayerStatsManager.Instance.MaxHealth);
         UpdateDamage(PlayerManager.Instance.GetDamageAmount());
     }
 
