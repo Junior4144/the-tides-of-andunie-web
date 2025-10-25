@@ -10,19 +10,14 @@ public class MaxHealthEffect : ItemEffect
     
     public override void Apply()
     {
-        _originalValue = PlayerStatsManager.Instance.MeleeDamage;
+        _originalValue = PlayerStatsManager.Instance.MaxHealth;
         
         if (isPercentage)
             _appliedValue = _originalValue * (1 + healthIncrease / 100f);
         else
             _appliedValue = _originalValue + healthIncrease;
         
-        PlayerStatsManager.Instance.SetMeleeDamage(_appliedValue);
-    }
-    
-    public override void Remove()
-    {
-        PlayerStatsManager.Instance.SetMeleeDamage(_originalValue);
+        PlayerStatsManager.Instance.SetMaxHealth(_appliedValue);
     }
     
     public override string GetDescription() =>

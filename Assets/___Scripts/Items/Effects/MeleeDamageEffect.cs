@@ -20,11 +20,6 @@ public class MeleeDamageEffect : ItemEffect
         PlayerStatsManager.Instance.SetMeleeDamage(_appliedValue);
     }
     
-    public override void Remove()
-    {
-        PlayerStatsManager.Instance.SetMeleeDamage(_originalValue);
-    }
-    
     public override string GetDescription() =>
         $"{(damageIncrease >= 0 ? "+" : "-")}{damageIncrease}{(isPercentage ? "%" : "")} Melee Damage";
 }

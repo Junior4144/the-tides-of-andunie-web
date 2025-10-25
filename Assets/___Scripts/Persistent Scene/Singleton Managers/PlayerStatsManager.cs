@@ -13,6 +13,7 @@ public class PlayerStatsManager : MonoBehaviour
     [SerializeField] private float _defaultMeleeDamage;
 
     public static event Action<float> OnDamageChanged;
+    public static event Action<float> OnMaxHealthChanged;
 
     void Awake()
     {
@@ -23,8 +24,7 @@ public class PlayerStatsManager : MonoBehaviour
         }
         Instance = this;
 
-        MaxHealth = _defaultMaxHealth;
-        MeleeDamage = _defaultMeleeDamage;
+        ResetToDefaults();
     }
 
     public void SetMeleeDamage(float newMeleeDamage)
@@ -33,5 +33,18 @@ public class PlayerStatsManager : MonoBehaviour
         OnDamageChanged?.Invoke(newMeleeDamage);
     }
 
-    public void SetMaxHealth(float newMaxHealth) => MaxHealth = newMaxHealth;
+    public void SetMaxHealth(float newMaxHealth)
+    {
+        MaxHealth = newMaxHealth;
+        OnMaxHealthChanged?.Invoke(newMaxHealth);
+    }
+
+    public void ResetToDefaults()
+    {
+        MaxHealth = _defaultMaxHealth;
+        MeleeDamage = _defaultMeleeDamage;
+
+        OnMaxHealthChanged?.Invoke(_defaultMaxHealth);
+        OnDamageChanged?.Invoke(_defaultMeleeDamage);
+    }
 }

@@ -11,26 +11,31 @@ public class StatsUIController : MonoBehaviour
 
     private void OnEnable()
     {
+        UpdateHP(PlayerManager.Instance.GetHealth(), 0f);
+        UpdateMaxHP(PlayerStatsManager.Instance.MaxHealth);
+        UpdateDamage(PlayerStatsManager.Instance.MeleeDamage);
+
         PlayerHealthController.OnHealthChanged += UpdateHP;
         PlayerStatsManager.OnDamageChanged += UpdateDamage;
+        PlayerStatsManager.OnMaxHealthChanged += UpdateMaxHP;
     }
     private void OnDisable()
     {
         PlayerHealthController.OnHealthChanged -= UpdateHP;
         PlayerStatsManager.OnDamageChanged -= UpdateDamage;
+        PlayerStatsManager.OnMaxHealthChanged -= UpdateMaxHP;
     }
 
-    private void Start()
+    public void UpdateHP(float currentHealth, float _)
     {
-        UpdateHP(PlayerManager.Instance.GetHealth(), PlayerStatsManager.Instance.MaxHealth);
-        UpdateDamage(PlayerManager.Instance.GetDamageAmount());
+        CurrentHpText.text = currentHealth.ToString();
     }
 
-    public void UpdateHP(float _currentHealth, float _maxHealth)
+    public void UpdateMaxHP(float maxHealth)
     {
-        MaxHpText.text = _currentHealth.ToString();
-        CurrentHpText.text = _currentHealth.ToString();
+        MaxHpText.text = maxHealth.ToString();
     }
+
     public void UpdateDamage(float value)
     {
         DamageText.text = value.ToString();
