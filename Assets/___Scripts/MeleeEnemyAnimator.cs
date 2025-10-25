@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class MeleeEnemyAnimator : MonoBehaviour
 {
     [SerializeField] private float _attackAnimDuration = 0f;
