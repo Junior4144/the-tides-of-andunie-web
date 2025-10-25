@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 4520652188570031145}
   - component: {fileID: 5534519863704837094}
   - component: {fileID: 8374283230742663881}
-  - component: {fileID: 8689809598641845332}
+  - component: {fileID: 7372975589076501999}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8689809598641845332
+--- !u!114 &7372975589076501999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -337,9 +337,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4388631196668833303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed2ee5fbea349e4d8d6e7e019b4a1e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e665f1088cffb4d939a793598150a3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScaleOnEnable
+  m_EditorClassIdentifier: Assembly-CSharp::LargeUIAnimation
+  AnimationType: 1
+  distance: 20
+  duration: 0.2
+  ease: 9
 --- !u!1 &6582659886994896114
 GameObject:
   m_ObjectHideFlags: 0

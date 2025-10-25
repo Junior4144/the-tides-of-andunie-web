@@ -1396,6 +1396,7 @@ GameObject:
   - component: {fileID: 303124061}
   - component: {fileID: 303124060}
   - component: {fileID: 303124059}
+  - component: {fileID: 303124063}
   m_Layer: 0
   m_Name: PlayerStatsPage
   m_TagString: Untagged
@@ -1503,6 +1504,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303124057}
   m_CullTransparentMesh: 1
+--- !u!114 &303124063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303124057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e665f1088cffb4d939a793598150a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LargeUIAnimation
+  AnimationType: 0
+  distance: 20
+  duration: 0.2
+  ease: 9
 --- !u!1001 &323000154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3741,6 +3758,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3357813122796057356, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 913801308}
+    - targetCorrespondingSourceObject: {fileID: 2266649784135045999, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 945395699}
+    - targetCorrespondingSourceObject: {fileID: 701467228990400494, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1749705584}
+    - targetCorrespondingSourceObject: {fileID: 2585100474045498754, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1120492820}
   m_SourcePrefab: {fileID: 100100000, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
 --- !u!224 &913801305 stripped
 RectTransform:
@@ -3909,6 +3935,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 932179699}
   m_CullTransparentMesh: 1
+--- !u!1 &945395693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2266649784135045999, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+  m_PrefabInstance: {fileID: 913801304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &945395699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945395693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e665f1088cffb4d939a793598150a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LargeUIAnimation
+  AnimationType: 0
+  distance: 20
+  duration: 0.2
+  ease: 9
 --- !u!1 &952897575
 GameObject:
   m_ObjectHideFlags: 0
@@ -4064,6 +4111,27 @@ Transform:
   - {fileID: 198116852}
   m_Father: {fileID: 1958056508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1120492816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2585100474045498754, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+  m_PrefabInstance: {fileID: 913801304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1120492820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120492816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e665f1088cffb4d939a793598150a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LargeUIAnimation
+  AnimationType: 0
+  distance: 20
+  duration: 0.2
+  ease: 9
 --- !u!1 &1169129482
 GameObject:
   m_ObjectHideFlags: 0
@@ -5638,7 +5706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cc2080d68953b4ebcd819a18c764a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxEquippedSlots: 3
+  _maxEquippedSlots: 3
 --- !u!1 &1708765118
 GameObject:
   m_ObjectHideFlags: 0
@@ -5684,6 +5752,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RestartLevel
   _sceneController: {fileID: 1333691928}
+--- !u!1 &1749705580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 701467228990400494, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+  m_PrefabInstance: {fileID: 913801304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1749705584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749705580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e665f1088cffb4d939a793598150a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LargeUIAnimation
+  AnimationType: 0
+  distance: 20
+  duration: 0.2
+  ease: 9
 --- !u!1001 &1780666514
 PrefabInstance:
   m_ObjectHideFlags: 0
