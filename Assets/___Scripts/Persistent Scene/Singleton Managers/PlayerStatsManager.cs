@@ -22,10 +22,7 @@ public class PlayerStatsManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
 
-    void Start()
-    {
         MaxHealth = _defaultMaxHealth;
         MeleeDamage = _defaultMeleeDamage;
     }
