@@ -43,6 +43,7 @@ public class InventoryManager : MonoBehaviour
 
         _inventory[item.ItemId] = new InventorySlot(item, quantity);
         OnInventoryChanged?.Invoke();
+        ApplyItemEffects();
 
         return true;
     }
@@ -61,13 +62,11 @@ public class InventoryManager : MonoBehaviour
             _inventory.Remove(itemId);
 
         OnInventoryChanged?.Invoke();
+        ApplyItemEffects();
         return true;
     }
 
-    public bool HasItem(string itemId)
-    {
-        return _inventory.ContainsKey(itemId);
-    }
+    public bool HasItem(string itemId) => _inventory.ContainsKey(itemId);
 
     public int GetItemQuantity(string itemId)
     {
@@ -77,15 +76,14 @@ public class InventoryManager : MonoBehaviour
         return 0;
     }
 
-    public List<InventorySlot> GetAllItems()
+    public List<InventorySlot> GetAllItems() => new(_inventory.Values);
+
+    public void ClearInventory() => _inventory.Clear();
+
+    private void ApplyItemEffects()
     {
-        return new List<InventorySlot>(_inventory.Values);
+        // remove all effects
+        // add all effects
     }
 
-    public void ClearInventory()
-    {
-        _inventory.Clear();
-    }
-
-    public void AddPerk(string perkId) { }
 }

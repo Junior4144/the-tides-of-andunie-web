@@ -32,7 +32,9 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void SetMeleeDamage(float newMeleeDamage)
     {
-        _defaultMeleeDamage = newMeleeDamage;
+        MeleeDamage = newMeleeDamage;
         OnDamageChanged?.Invoke(newMeleeDamage);
     }
+
+    public void SetMaxHealth(float newMaxHealth) => MaxHealth = newMaxHealth;
 }
