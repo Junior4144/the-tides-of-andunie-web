@@ -1580,12 +1580,17 @@ PrefabInstance:
       propertyPath: _sceneFadeDuration
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4557573968484440001, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 8503392292891309090, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3380117300767497778, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
+    - {fileID: 8503392292891309090, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -3017,7 +3022,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.703277, y: 1.431244, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4818,8 +4823,17 @@ PrefabInstance:
       propertyPath: _sceneFadeDuration
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4557573968484440001, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8503392292891309090, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3380117300767497778, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
+    - {fileID: 8503392292891309090, guid: 3ef57e7171f037143ac59512115dd5e3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
