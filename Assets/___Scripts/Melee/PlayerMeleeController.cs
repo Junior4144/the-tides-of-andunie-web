@@ -12,8 +12,6 @@ public class PlayerMeleeController : MonoBehaviour
 
     [SerializeField] private PlayerAnimator _animator;
 
-    public static event Action<float> OnDamageChanged;
-
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
         var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;

@@ -12,12 +12,12 @@ public class StatsUIController : MonoBehaviour
     private void OnEnable()
     {
         PlayerHealthController.OnHealthChanged += UpdateHP;
-        PlayerMeleeController.OnDamageChanged += UpdateDamage;
+        PlayerStatsManager.OnDamageChanged += UpdateDamage;
     }
     private void OnDisable()
     {
         PlayerHealthController.OnHealthChanged -= UpdateHP;
-        PlayerMeleeController.OnDamageChanged -= UpdateDamage;
+        PlayerStatsManager.OnDamageChanged -= UpdateDamage;
     }
 
     private void Start()
