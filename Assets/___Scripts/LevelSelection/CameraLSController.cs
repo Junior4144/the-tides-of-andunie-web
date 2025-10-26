@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 enum MouseButton { Left = 0, Right = 1, Middle = 2 }
@@ -5,6 +6,7 @@ enum MouseButton { Left = 0, Right = 1, Middle = 2 }
 public class CameraLSController : MonoBehaviour
 {
     [SerializeField] private float dragSpeed = 5f;
+    [SerializeField] private float dragLerpFactor = 0.02f;
     [SerializeField] private BoxCollider2D boundary;
 
     [Header("Cursor Sprites")]
@@ -54,7 +56,7 @@ public class CameraLSController : MonoBehaviour
             newPos.x = Mathf.Clamp(newPos.x, bounds.min.x, bounds.max.x);
             newPos.y = Mathf.Clamp(newPos.y, bounds.min.y, bounds.max.y);
 
-            transform.position = newPos;
+            transform.position = Vector3.Lerp(transform.position, newPos, dragLerpFactor);
         }
 
         if (Input.GetMouseButtonUp((int)button))
@@ -85,5 +87,6 @@ public class CameraLSController : MonoBehaviour
             Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
         }
     }
+
 
 }

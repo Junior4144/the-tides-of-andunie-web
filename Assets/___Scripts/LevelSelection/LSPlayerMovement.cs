@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class LSPlayerMovement : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 360f;
-    [SerializeField] private float InPlaceRotationSpeed = 3000f;
     public Vector2 cursorHotSpot = Vector2.zero;
 
     NavMeshAgent agent;
