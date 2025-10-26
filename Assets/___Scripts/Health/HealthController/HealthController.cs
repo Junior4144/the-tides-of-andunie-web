@@ -8,6 +8,7 @@ public abstract class HealthController : MonoBehaviour, IHealthController
 
     public UnityEvent OnDied;
     public UnityEvent OnDamaged;
+    private bool _isShielded;
 
     public abstract void TakeDamage(float damageAmount);
 
