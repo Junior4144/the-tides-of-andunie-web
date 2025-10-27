@@ -3,19 +3,13 @@ using System.Collections;
 
 public class PirateMeleeController : MonoBehaviour
 {
-    [SerializeField]
-    private PirateAttributes pirateAttributes;
+    [SerializeField] private PirateAttributes _pirateAttributes;
+    [SerializeField] private MeleeEnemyAnimator _animator;
 
-    [SerializeField]
-    private float damageDelay = 0;
-
-    [SerializeField]
-    private float _animDuration;
+    [SerializeField] private float _damageDelay = 0;
+    [SerializeField] private float _animDuration;
 
     private bool _isAttacking = false;
-
-    public Animator animator;
-
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
@@ -37,30 +31,27 @@ public class PirateMeleeController : MonoBehaviour
 
     private IEnumerator Attack(GameObject enemyObject)
     {
-        yield return new WaitForSeconds(damageDelay);
+        yield return new WaitForSeconds(_damageDelay);
 
         if (enemyObject)
-            enemyObject.GetComponent<IHealthController>().TakeDamage(pirateAttributes.DamageAmount);
+            enemyObject.GetComponent<IHealthController>().TakeDamage(_pirateAttributes.DamageAmount);
     }
 
     private void PlayAttackAnimation()
     {
-        if (animator)
+        if (_animator)
         {   
             _isAttacking = true;
-            animator.SetBool("IsAttacking", true);
+            _animator.TriggerAttack();
             StartCoroutine(ResetAttackAnimation());
         }
         else
-        {
             Debug.LogWarning("Animator is Null. Playing no Animation");
-        }
     }
 
     private IEnumerator ResetAttackAnimation()
     {
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
-        animator.SetBool("IsAttacking", false);
     }
 }

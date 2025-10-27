@@ -55,8 +55,6 @@ public class PiratePatrol : MonoBehaviour
 
         player = PlayerManager.Instance.transform;
 
-        agent.SetDestination(player.position);
-
         RotateTowardsMovementDirection();
 
         if (patrolPoints == null) return;

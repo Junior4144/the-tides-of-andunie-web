@@ -106,7 +106,8 @@ public class SquadImpulseController : MonoBehaviour
     {
         yield return new WaitForSeconds(_impulseDuration);
         
-        transform.position = _heroRigidBody.transform.position;
+        if (_heroRigidBody)
+            transform.position = _heroRigidBody.transform.position;
     }
 
     private void SpawnParticles(Vector2 position, Vector2 direction)
