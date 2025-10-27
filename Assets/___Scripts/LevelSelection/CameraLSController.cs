@@ -53,8 +53,17 @@ public class CameraLSController : MonoBehaviour
             Vector3 diff = lastMousePos - currentMousePos;
 
             Vector3 newPos = transform.position + diff * dragSpeed;
-            newPos.x = Mathf.Clamp(newPos.x, bounds.min.x, bounds.max.x);
-            newPos.y = Mathf.Clamp(newPos.y, bounds.min.y, bounds.max.y);
+            float camHeight = cam.orthographicSize;
+            float camWidth = camHeight * cam.aspect;
+
+            // Clamp using edge-aware logic
+            newPos.x = Mathf.Clamp(newPos.x,
+                bounds.min.x + camWidth,
+                bounds.max.x - camWidth);
+
+            newPos.y = Mathf.Clamp(newPos.y,
+                bounds.min.y + camHeight,
+                bounds.max.y - camHeight);
 
             transform.position = Vector3.Lerp(transform.position, newPos, dragLerpFactor);
         }
