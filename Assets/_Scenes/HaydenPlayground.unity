@@ -2174,7 +2174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1669282451
 Transform:
   m_ObjectHideFlags: 0
@@ -2207,10 +2207,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveSpeed: 10
   maxMoveSpeed: 20
-  stoppingDistance: 0.01
+  minSpeedInFormation: 15
+  deceleration: 30
+  stoppingDistance: 0.2
   rotationSpeed: 360
   navMeshEngageDistance: 4
-  debugMode: 1
+  debugMode: 0
 --- !u!114 &1669282453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32774,7 +32776,7 @@ Transform:
   m_GameObject: {fileID: 2024426712}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 1.45, z: 0}
+  m_LocalPosition: {x: 0.36, y: 2.19, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -32797,10 +32799,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveSpeed: 10
   maxMoveSpeed: 20
-  stoppingDistance: 0.01
+  minSpeedInFormation: 10
+  deceleration: 30
+  stoppingDistance: 0.2
   rotationSpeed: 360
   navMeshEngageDistance: 4
-  debugMode: 1
+  debugMode: 0
 --- !u!114 &2024426715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36005,7 +36009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!58 &3883721863900365488
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -36421,10 +36425,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveSpeed: 10
   maxMoveSpeed: 20
-  stoppingDistance: 0.01
+  minSpeedInFormation: 15
+  deceleration: 30
+  stoppingDistance: 0.2
   rotationSpeed: 360
   navMeshEngageDistance: 4
-  debugMode: 1
+  debugMode: 0
 --- !u!95 &8823191251855820769
 Animator:
   serializedVersion: 7
