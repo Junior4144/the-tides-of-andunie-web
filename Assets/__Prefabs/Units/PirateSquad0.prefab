@@ -1,0 +1,246 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4441501422373369235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7758077146234083845}
+  - component: {fileID: 6903477672995990105}
+  - component: {fileID: 4000344000894102699}
+  - component: {fileID: 4606045543428363586}
+  - component: {fileID: 315232145515807971}
+  - component: {fileID: 4033681387115441121}
+  - component: {fileID: 3389213937291548543}
+  m_Layer: 6
+  m_Name: PirateSquad0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7758077146234083845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.950596, y: -38.330296, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4266971730143767778}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &6903477672995990105
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 10
+  m_AngularDamping: 10
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!195 &4000344000894102699
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &4606045543428363586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
+  PatrolPoints: {fileID: 1139301298604974885, guid: 3722a43977583c24fb11e7742d111841, type: 3}
+  waitTime: 2
+  awarenessDistance: 100
+  player: {fileID: 0}
+  _attributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+--- !u!114 &315232145515807971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyController
+--- !u!114 &4033681387115441121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113d429657bb1a84094bc6d9ce983e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadImpulseManager
+  _squadImpulseForce: 16
+  _impulseDuration: 0.5
+  _squadDirectionWeight: 0.7
+  _individualDirectionWeight: 0.3
+  _centralImpactMultiplier: 2.5
+  _minFallOffMultiplier: 0.2
+  _maxFallOffDistance: 10
+  _dashMultiplier: 3
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
+  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
+--- !u!114 &3389213937291548543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
+  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _collectablePrefabs:
+  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
+  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
+--- !u!1001 &5176606075981233773
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7758077146234083845}
+    m_Modifications:
+    - target: {fileID: 6113212806217388263, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_Name
+      value: PirateHero (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 315232145515807971}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943528671827995492, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+--- !u!4 &4266971730143767778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8998662521861116559, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+  m_PrefabInstance: {fileID: 5176606075981233773}
+  m_PrefabAsset: {fileID: 0}

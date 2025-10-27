@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4545394533255824032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1046920975250577746}
+  - component: {fileID: 1863980443667321743}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1046920975250577746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4545394533255824032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.49775, y: -4.24673, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1863980443667321743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4545394533255824032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb91f1092be3e94ca3704418b3f05f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopManager
+  listings:
+  - inventoryItem: {fileID: 4326929394897501988, guid: 1ffdeaf766730ba4d835bf4b8bcca3e1, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
+  - inventoryItem: {fileID: -9091845258873656778, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
+    quantity: 1
+    price: 5
