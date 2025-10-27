@@ -37,4 +37,22 @@ public class PlayerHealthController : HealthController
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
     }
+    public void SetCurrentHealth(float currentHealth)
+    {
+        _currentHealth = Mathf.Clamp(currentHealth, 0, _maxHealth);
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+    }
+
+    public void SetPercentHealth(float percent01)
+    {
+        percent01 = Mathf.Clamp01(percent01);
+        _currentHealth = percent01 * _maxHealth;
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+    }
+
+    public void AddHealthClamped(float amount)
+    {
+        _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, _maxHealth);
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+    }
 }

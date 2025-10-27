@@ -4,7 +4,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    private IHealthController healthController;
+    private PlayerHealthController healthController;
 
     private PlayerHeroMovement _playerMovement;
 
@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
-        healthController = GetComponentInChildren<IHealthController>();
+        healthController = GetComponentInChildren<PlayerHealthController>();
         _playerMovement = GetComponent<PlayerHeroMovement>();
     }
 
