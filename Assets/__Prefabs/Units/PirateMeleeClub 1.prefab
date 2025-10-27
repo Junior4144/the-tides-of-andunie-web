@@ -311,7 +311,7 @@ MonoBehaviour:
   moveSpeed: 7
   maxMoveSpeed: 10
   stoppingDistance: 0.01
-  rotationSpeed: 720
+  rotationSpeed: 360
   navMeshEngageDistance: 2.5
 --- !u!114 &8242130550363687132
 MonoBehaviour:
@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 4703897465349137343}
   - component: {fileID: 6899470300584643334}
   - component: {fileID: 702584955739172055}
+  - component: {fileID: 7282908836447154667}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -477,6 +478,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7282908836447154667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5477312402957383592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616136e9426c2ae45889c3244666cd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyAnimator
+  _attackAnimDuration: 0.4111
 --- !u!1 &6268526026557622871
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
-  pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
-  damageDelay: 0.3
-  _animDuration: 0.6
-  animator: {fileID: 702584955739172055}
+  _pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  _animator: {fileID: 7282908836447154667}
+  _damageDelay: 0.3
+  _animDuration: 0.4111

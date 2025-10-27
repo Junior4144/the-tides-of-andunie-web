@@ -38,7 +38,7 @@ public class LSPlayerSpawner : MonoBehaviour
             SaveManager.Instance.RestorePlayerStats();
 
             var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
-            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), PlayerStatsManager.Instance.MaxHealth);
         }
     }
 }

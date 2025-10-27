@@ -14,6 +14,10 @@ public class SaveManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    private void Start()
+    {
         InitializeDefaultSave();
     }
 
@@ -28,12 +32,12 @@ public class SaveManager : MonoBehaviour
         CurrentSave = new PlayerSaveData()
         {
             sceneName = SceneManager.GetActiveScene().name,
-            health = PlayerManager.Instance.GetHealth(),
-            damageAmount = PlayerManager.Instance.GetDamageAmount(),
+            health = PlayerStatsManager.Instance.MaxHealth,
+            damageAmount = PlayerStatsManager.Instance.MeleeDamage,
             lastLocation = "DefaultSpawn"
-
         };
         Debug.Log($"[SaveManager] OnInitalStart saves player health at {CurrentSave.health}");
+        Debug.Log($"[SaveManager] OnInitalStart saves player melee at {CurrentSave.damageAmount}");
     }
     private void AssignDefaultValues()
     {
@@ -66,7 +70,6 @@ public class SaveManager : MonoBehaviour
             return;
         }
         PlayerManager.Instance.SetHealth(CurrentSave.health);
-        PlayerManager.Instance.SetDamageAmount(CurrentSave.damageAmount);
         Debug.Log($"[SaveManager] Restored player  health at {CurrentSave.health}");
     }
 
