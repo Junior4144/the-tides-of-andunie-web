@@ -1332,17 +1332,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1477891125215377208, guid: b0483327264405149949ae0d9c70d19b, type: 3}
   m_PrefabInstance: {fileID: 296744528}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1266475381 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-  m_PrefabInstance: {fileID: 4386508069941328145}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122d4a318d453c940a7086108216076a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!4 &1361959432 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6486402281866585803, guid: 77ff3c700f79d9c4f92f155cd17388af, type: 3}
@@ -34572,26 +34561,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RaidMechanicManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_Size.x
-      value: 18.258024
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_Size.y
-      value: 13.276415
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_Offset.x
-      value: -11.62968
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110409073488236925, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_Offset.y
-      value: 10.112077
-      objectReference: {fileID: 0}
-    - target: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: prizePopupText
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2509106713038772796, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
@@ -34636,41 +34605,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5845022087308914382, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_text
-      value: emojis here
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845022087308914382, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8fc6eca80c2fc2042903949c637fd6ac, type: 2}
-    - target: {fileID: 5845022087308914382, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -3261593597863203285, guid: 8fc6eca80c2fc2042903949c637fd6ac, type: 2}
-    - target: {fileID: 5845022087308914382, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7122910135655603312, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7122910135655603312, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: raidController
-      value: 
-      objectReference: {fileID: 1266475381}
-    - target: {fileID: 8115295088577124013, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: m_Volume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8115295088577124013, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: -6832977069626889421, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5435009855204993176, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
