@@ -25,12 +25,13 @@ public class RaidController : MonoBehaviour
     private float _masterTimer = 0f;
 
     // ------- WAVE CONFIG -------
-    [SerializeField] private RaidConfig raidConfig;
-    [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private RaidConfig _raidConfig;
+    public List<GameObject> RaidCompletionRewards => _raidConfig.RaidCompletionRewards.RewardItems;
+    [SerializeField] private List<Transform> _spawnPoints;
 
-    private Queue<float> _wavesSpawnStartTimes = new Queue<float>();
-    private List<WaveConfig> _wavesCurrentlySpawning = new List<WaveConfig>();
-    private List<GameObject> _spawnedEnemies = new List<GameObject>();
+    private Queue<float> _wavesSpawnStartTimes = new();
+    private List<WaveConfig> _wavesCurrentlySpawning = new();
+    private List<GameObject> _spawnedEnemies = new();
     private int _totalNumberOfEnemies;
 
     // ------- STATES -------
@@ -53,7 +54,7 @@ public class RaidController : MonoBehaviour
         _timerTextController = new TextController(timerText);
         _postRaidTextController = new TextController(postRaidText);
         _enemiesRemainingTextController = new TextController(enemiesRemainingText);
-        _totalNumberOfEnemies = raidConfig.waves.Sum(wave => wave.enemies.Sum(enemyData => enemyData.count));
+        _totalNumberOfEnemies = _raidConfig.Waves.Sum(wave => wave.enemies.Sum(enemyData => enemyData.count));
         TransitionToPreRaidState();
     }
 
@@ -75,7 +76,7 @@ public class RaidController : MonoBehaviour
         TransitionToRaidInProgressState();
         var spawnStartTimesList = new List<float>();
         float schedulingTimePointer = _masterTimer;
-        foreach (WaveConfig wave in raidConfig.waves)
+        foreach (WaveConfig wave in _raidConfig.Waves)
         {
             float spawnStartTime = schedulingTimePointer + wave.countdown;
             StartCoroutine(ScheduleWave(wave, spawnStartTime));
@@ -237,7 +238,7 @@ public class RaidController : MonoBehaviour
 
     private IEnumerator SpawnWaveEnemiesOverIntervals(WaveConfig wave)
     {
-        if (spawnPoints.Count == 0)
+        if (_spawnPoints.Count == 0)
         {
             Debug.LogError("No spawn points assigned for raid wave.");
             yield break;
@@ -245,7 +246,7 @@ public class RaidController : MonoBehaviour
 
         _wavesCurrentlySpawning.Add(wave);
 
-        List<GameObject> spawnPool = new List<GameObject>();
+        List<GameObject> spawnPool = new();
         foreach (var enemyData in wave.enemies) 
         {
             for (int _ = 0; _ < enemyData.count; _++) spawnPool.Add(enemyData.prefab);
@@ -255,7 +256,7 @@ public class RaidController : MonoBehaviour
 
         foreach (GameObject enemyPrefab in spawnPool)
         {
-            Transform chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+            Transform chosenSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
             GameObject newEnemy = Instantiate(enemyPrefab, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
             _spawnedEnemies.Add(newEnemy);
             yield return new WaitForSeconds(wave.spawnInterval);
