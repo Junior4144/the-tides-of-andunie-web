@@ -1,18 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class EnemyData
 {
     public GameObject prefab;
     public int count;
-}
-
-[System.Serializable]
-public class PrizeItem
-{
-    public GameObject itemPrefab;
-    public int quantity;
 }
 
 [System.Serializable]
@@ -32,7 +26,5 @@ public class WaveConfig
 
     [Tooltip("The text that appears when the enemies start spawning.")]
     public string waveStartText = "Enemies are here! Attack!!!";
-
-    [Tooltip("Wave Completion Prizes")]
-    public List<PrizeItem> wavePrizes;
+    public float totalDuration => countdown + spawnInterval * enemies.Sum(enemyData => enemyData.count);
 }
