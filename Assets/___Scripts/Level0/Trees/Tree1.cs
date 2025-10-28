@@ -1,11 +1,22 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Tree1 : TreeFire
 {
     protected override void SpawnNewFire()
     {
-        Instantiate(fireSprite_1, _fire_position_1.transform.position, Quaternion.identity);
-        Instantiate(fireSprite_2, _fire_position_2.transform.position, Quaternion.identity);
+        string scene = SceneManager.GetActiveScene().name;
+
+        if (scene == "LevelSelector")
+        {
+            Instantiate(fireSprite_1, _fire_position_list[0].transform.position, Quaternion.identity);
+            return;
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            Instantiate(fireSprite_1, _fire_position_list[i].transform.position, Quaternion.identity);
+        }
 
     }
     protected void SpawnFireSound()

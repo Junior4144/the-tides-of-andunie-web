@@ -44,6 +44,8 @@ public class LSManager : MonoBehaviour
     {
         if (startGlobalInvasion)
             TriggerGlobalInvasion();
+
+        OnGlobalInvasionStarted?.Invoke();
     }
 
     public void SetVillageState(string villageId, VillageState newState)

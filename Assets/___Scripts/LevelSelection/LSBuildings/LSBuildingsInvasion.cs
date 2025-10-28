@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LSBuildingsInvasion : MonoBehaviour
@@ -22,16 +23,24 @@ public class LSBuildingsInvasion : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        int fireCount = Mathf.Min(transform.childCount, 5);
-        firePositions = new GameObject[fireCount];
-        for (int i = 0; i < fireCount; i++)
-            firePositions[i] = transform.GetChild(i).gameObject;
+
+        List<GameObject> list = new List<GameObject>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i).gameObject;
+            if (child.name == "VillagerSpawner")
+                continue;
+
+            list.Add(child);
+        }
+
+        firePositions = list.ToArray(); // sized exactly to valid ones
     }
 
     private void OnEnable()
     {
         LSManager.OnGlobalInvasionStarted += HandleInvasion;
-
     }
     private void OnDisable()
     {
@@ -75,6 +84,12 @@ public class LSBuildingsInvasion : MonoBehaviour
     }
     private void SpawnFire(float scale)
     {
+        if (fireSprites == null || fireSprites.Length == 0 || fireSprites[0] == null)
+        {
+            Debug.Log($"{name}: fireSprites not assigned or empty!");
+            return;
+        }
+
         foreach (var position in firePositions)
         {
             GameObject fire = Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
