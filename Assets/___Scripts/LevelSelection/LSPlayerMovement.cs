@@ -8,6 +8,7 @@ public class LSPlayerMovement : MonoBehaviour
 
     NavMeshAgent agent;
     Camera cam;
+    Vector3 smoothDir;
 
     private void Awake()
     {
@@ -18,10 +19,9 @@ public class LSPlayerMovement : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
-    private void Start()
-    {
+    private void Start() =>
         cam = CameraManager.Instance.GetCamera();
-    }
+
 
     void Update()
     {

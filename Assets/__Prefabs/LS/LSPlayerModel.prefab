@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 20
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6
@@ -433,7 +432,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!1 &1625973445411220463
 GameObject:
   m_ObjectHideFlags: 0
