@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(DestroyController))]
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
@@ -48,13 +49,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    //------HEALTH------//
     public float GetHealth() => healthController.GetCurrentHealth();
     public float GetPercentHealth() => healthController.GetPercentHealth();
     public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
+
+    public void SetHealth(float value) => healthController.SetCurrentHealth(value);
+    public void AddHealth(float value) => healthController.AddHealth(value);
+
+
+    //------OTHER------//
     public Transform GetPlayerTransform() => gameObject.transform;
     
     public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
-    public void SetHealth(float value) => healthController.SetCurrentHealth(value);
-    public void AddHealth(float value) => healthController.AddHealth(value);
+    
     public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);    
 }

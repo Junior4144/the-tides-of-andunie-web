@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerSquadFollower : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -215,7 +214,6 @@ public class PlayerSquadFollower : MonoBehaviour
 
     private void SetVelocity(Vector2 velocity) => rb.linearVelocity = velocity;
     
-    // TODO: use these logs to debug physics jittering glitch
     private void DebugLogs(Vector2 directionToTarget, float distanceToTarget)
     {
         Vector3 actualMovement = transform.position - lastPosition;
@@ -249,19 +247,15 @@ public class PlayerSquadFollower : MonoBehaviour
     {
         if (player == null) return;
         
-        // Target position
         Gizmos.color = inFormation ? Color.cyan : Color.green;
         Gizmos.DrawWireSphere(targetPositionInFormation, 0.2f);
         
-        // Formation threshold
         Gizmos.color = new Color(0, 1, 1, 0.2f);
         Gizmos.DrawWireSphere(targetPositionInFormation, inFormationThreshold);
         
-        // Direction line
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, targetPositionInFormation);
         
-        // Velocity indicator
         Gizmos.color = Color.red;
         if (rb != null)
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)rb.linearVelocity * 0.5f);
