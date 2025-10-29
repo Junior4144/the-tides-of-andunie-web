@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class SquadFollower : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -8,20 +10,33 @@ public class SquadFollower : MonoBehaviour
     [SerializeField] private float maxMoveSpeed = 20f;
     [SerializeField] private float stoppingDistance = 0.01f;
     [SerializeField] private float rotationSpeed = 360f;
+    [SerializeField] private float navMeshEngageDistance = 4f;
     
 
     private Transform squad;
     private Rigidbody2D rb;
+    private NavMeshAgent navAgent;
 
     private Vector3 formationOffsetLocal;
     private float formationAngleLocal;
     private Vector3 targetPositionInFormation;
     private SquadImpulseController _squadImpulseController;
+    private bool usingNavMesh = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        navAgent = GetComponent<NavMeshAgent>();
         _squadImpulseController = GetComponentInParent<SquadImpulseController>();
+
+        navAgent.speed = maxMoveSpeed;
+        navAgent.angularSpeed = rotationSpeed;
+        navAgent.radius = 0.25f;
+        navAgent.acceleration = 25f;
+        navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        navAgent.updateRotation = false;
+        navAgent.updateUpAxis = false;
+        navAgent.enabled = false;
 
         if (transform.parent != null)
         {
@@ -49,7 +64,25 @@ public class SquadFollower : MonoBehaviour
 
         if (_squadImpulseController.IsInImpulse()) return;
 
-        MoveTowardsFormationPosition();
+        float distanceToFormation = Vector3.Distance(transform.position, targetPositionInFormation);
+
+        if (distanceToFormation > navMeshEngageDistance)
+        {
+            if (!usingNavMesh)
+            {
+                EnableNavMesh();
+            }
+            navAgent.SetDestination(targetPositionInFormation);
+            RotateTowardsMovementDirection();
+        }
+        else
+        {
+            if (usingNavMesh)
+            {
+                DisableNavMesh();
+            }
+            MoveTowardsFormationPosition();
+        }
     }
 
     void LateUpdate()
@@ -62,6 +95,18 @@ public class SquadFollower : MonoBehaviour
 
         Vector3 unitOffsetFromSquadCenter = squad.rotation * formationOffsetLocal;
         targetPositionInFormation = squad.position + unitOffsetFromSquadCenter;
+    }
+
+    private void EnableNavMesh()
+    {
+        usingNavMesh = true;
+        navAgent.enabled = true;
+    }
+
+    private void DisableNavMesh()
+    {
+        usingNavMesh = false;
+        navAgent.enabled = false;
     }
 
     private void MoveTowardsFormationPosition()
@@ -77,12 +122,16 @@ public class SquadFollower : MonoBehaviour
             SetVelocity(Vector2.zero);
     }
 
-    // THIS METHOD WAS THE PROBLEM AND HAS BEEN REMOVED (hoarding this for now)
-    // private void RotateTowardsFormationPosition(Vector3 direction)
-    // {
-    //     if (direction != Vector3.zero)
-    //         SetRotation(targetAngle: Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-    // }
+    private void RotateTowardsMovementDirection()
+    {
+        Vector3 velocity = navAgent.velocity;
+        
+        if (velocity.sqrMagnitude > 0.01f)
+        {
+            float targetAngle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg - 90;
+            SetRotation(targetAngle);
+        }
+    }
 
     private void MatchFormationAngle() =>
         SetRotation(targetAngle: squad.eulerAngles.z + formationAngleLocal);

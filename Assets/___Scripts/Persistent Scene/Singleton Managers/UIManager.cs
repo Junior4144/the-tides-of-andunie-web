@@ -18,8 +18,11 @@ public class UIManager : MonoBehaviour
     [Header("UI Main Groups")]
     [SerializeField] private GameObject _InventoryUI_MainPrehab;
 
+    [Header("HUD Groups")]
+    [SerializeField] private GameObject _HealthBarHUD;
+    [SerializeField] private GameObject _CoinHUD;
+
     [Header("UI Groups")]
-    [SerializeField] private GameObject _HealthBarUI;
     [SerializeField] private GameObject _InventoryUI;
 
     private GameObject _ShopUI;
@@ -44,8 +47,6 @@ public class UIManager : MonoBehaviour
         UIEvents.OnRequestPauseToggle += TogglePause;
     }
 
-    //ISSUE : If main menu doesn't have a shop controller -> won't allocate correctly -> need to call for 
-
     private IEnumerator Start()
     {
         yield return null;
@@ -63,18 +64,36 @@ public class UIManager : MonoBehaviour
         {
             case GameState.Gameplay:
                 _InventoryUI_MainPrehab.SetActive(true);
-                _HealthBarUI.SetActive(true);
+                _HealthBarHUD.SetActive(true);
+                _CoinHUD.SetActive(true);
+
+                if (SceneManager.GetActiveScene().name == "Level0Stage1")
+                {
+                    Debug.Log("Disabling Coin HUD");
+                    _CoinHUD.SetActive(false);
+                }
 
                 if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(true);
                 break;
 
             case GameState.Menu:
-            case GameState.Paused:
-            case GameState.Cutscene:
-                _HealthBarUI.SetActive(false);
+                _HealthBarHUD.SetActive(false);
+                _CoinHUD.SetActive(false);
+
                 _InventoryUI_MainPrehab.SetActive(false);
 
                 if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
+                break;
+            case GameState.Paused:
+
+            case GameState.Cutscene:
+                _HealthBarHUD.SetActive(false);
+                _CoinHUD.SetActive(false);
+                _InventoryUI_MainPrehab.SetActive(false);
+
+                if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
+                break;
+            case GameState.LevelSelector:
                 break;
             default:
                 break;

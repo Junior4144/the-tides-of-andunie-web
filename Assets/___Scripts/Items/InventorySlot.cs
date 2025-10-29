@@ -4,7 +4,7 @@ using System;
 public class InventorySlot
 {
     public IInventoryItem Item { get; private set; }
-    public int Quantity { get; private set; }
+    public int Quantity { get; set; }
 
     public InventorySlot(IInventoryItem item, int quantity = 1)
     {
@@ -18,6 +18,7 @@ public class InventorySlot
             return false;
 
         int newQuantity = Quantity + amount;
+
         if (newQuantity > Item.MaxStackSize)
             return false;
 

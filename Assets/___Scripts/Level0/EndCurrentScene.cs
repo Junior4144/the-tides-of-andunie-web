@@ -25,6 +25,17 @@ public class EndCurrentScene : MonoBehaviour
 
         LoadNextStage();
     }
+
+    public void SkipStage()
+    {
+        Debug.Log("[EndCurrentScene] SKIP — jumping to next scene");
+
+        AudioManager.Instance.FadeAudio();
+        SaveManager.Instance.SavePlayerStats();
+        PlayerManager.Instance.HandleDestroy();
+        LoadNextStage();
+    }
+
     public void NextStage() =>
         LoadNextStage();
 

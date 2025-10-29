@@ -4,8 +4,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    private IHealthController healthController;
-    private MeleeController meleeController;
+    private PlayerHealthController healthController;
 
     private PlayerHeroMovement _playerMovement;
 
@@ -18,8 +17,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
-        healthController = GetComponentInChildren<IHealthController>();
-        meleeController = GetComponentInChildren<MeleeController>();
+        healthController = GetComponentInChildren<PlayerHealthController>();
         _playerMovement = GetComponent<PlayerHeroMovement>();
     }
 
@@ -50,17 +48,13 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
     public float GetHealth() => healthController.GetCurrentHealth();
     public float GetPercentHealth() => healthController.GetPercentHealth();
-    public float GetDamageAmount() => meleeController.GetDamageAmount();
-
+    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
     public Transform GetPlayerTransform() => gameObject.transform;
-
+    
+    public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
     public void SetHealth(float value) => healthController.SetCurrentHealth(value);
-    public void SetDamageAmount(float value) => meleeController.SetDamageAmount(value);
-    public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);
-
-    //collectables
     public void AddHealth(float value) => healthController.AddHealth(value);
+    public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);    
 }

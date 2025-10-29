@@ -1,15 +1,26 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface IHealthController
+public abstract class HealthController : MonoBehaviour, IHealthController
 {
-    void TakeDamage(float amount);
-    void AddHealth(float amount);
-    void SetCurrentHealth(float currentHealth);
-    float GetCurrentHealth();
-    float GetMaxHealth();
-    float GetPercentHealth();
+    [SerializeField] protected float _currentHealth = 100;
+    [SerializeField] protected float _maxHealth = 100;
+
+    public UnityEvent OnDied;
+    public UnityEvent OnDamaged;
+    private bool _isShielded;
+
+    public abstract void TakeDamage(float damageAmount);
+    public abstract void AddHealth(float amount);
+
+    public float GetCurrentHealth() => _currentHealth;
+
+    public float GetMaxHealth() => _maxHealth;
+
+    public virtual float GetPercentHealth() =>
+        _maxHealth > 0 ? _currentHealth / _maxHealth : 0f;
 
 }
+
+
+

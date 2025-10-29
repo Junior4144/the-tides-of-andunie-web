@@ -30,7 +30,6 @@ public class LSPlayerSpawner : MonoBehaviour
 
         currentPlayer = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity);
         currentPlayer.transform.rotation = spawnPoint.transform.rotation;
-        currentPlayer.transform.localScale = Vector3.one * 0.3f;
         Debug.Log("New Player created");
 
         if (SaveManager.Instance && HealthUIController.Instance.Check_HealthBar_UI_IsActive())
@@ -38,7 +37,7 @@ public class LSPlayerSpawner : MonoBehaviour
             SaveManager.Instance.RestorePlayerStats();
 
             var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
-            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), healthController.GetMaxHealth());
+            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), PlayerStatsManager.Instance.MaxHealth);
         }
     }
 }
