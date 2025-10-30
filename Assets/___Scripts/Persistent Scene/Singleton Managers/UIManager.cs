@@ -94,6 +94,11 @@ public class UIManager : MonoBehaviour
                 if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
                 break;
             case GameState.LevelSelector:
+                _InventoryUI_MainPrehab.SetActive(true);
+                _HealthBarHUD.SetActive(false);
+                _CoinHUD.SetActive(false);
+
+                if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
                 break;
             default:
                 break;
