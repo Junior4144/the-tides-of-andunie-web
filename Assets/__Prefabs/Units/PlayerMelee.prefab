@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 5175908850688776466}
   - component: {fileID: 4166825581964633108}
   - component: {fileID: 6708454229682337644}
-  - component: {fileID: 2096131484532490312}
   - component: {fileID: 3360640840094134886}
   m_Layer: 7
   m_Name: PlayerMelee
@@ -124,7 +123,7 @@ MonoBehaviour:
   OnDied:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2096131484532490312}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
         m_MethodName: RandomlyDropCollectable
         m_Mode: 1
@@ -250,22 +249,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2096131484532490312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741255900045499738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
-  _enemyAttribute: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
-  _collectablePrefabs:
-  - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
-  - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
 --- !u!114 &3360640840094134886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8048680114406357195}
   - component: {fileID: 1460679851199021258}
+  - component: {fileID: 8239796322970668903}
   m_Layer: 7
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -352,6 +336,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
+--- !u!114 &8239796322970668903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793183974941345552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdacf22dd5d741245bd72a32dd59722f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSquadImpulseListener
+  _layerName: Enemy
 --- !u!1 &4685652572769770297
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +397,7 @@ CapsuleCollider2D:
     m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
