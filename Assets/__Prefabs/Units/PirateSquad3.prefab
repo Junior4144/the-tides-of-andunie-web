@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4116870742636555381}
   - component: {fileID: 710227985642154554}
   - component: {fileID: 2321421154614933258}
-  - component: {fileID: 5659300444648968212}
+  - component: {fileID: 1411568186649678754}
   m_Layer: 6
   m_Name: PirateSquad3
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
   PatrolPoints: {fileID: 0}
   waitTime: 2
-  awarenessDistance: 100
+  awarenessDistance: 10
   player: {fileID: 0}
   _attributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
 --- !u!114 &2321421154614933258
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyController
---- !u!114 &5659300444648968212
+--- !u!114 &1411568186649678754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,19 +127,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3636506273057607973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 113d429657bb1a84094bc6d9ce983e53, type: 3}
+  m_Script: {fileID: 11500000, guid: 689e2d991e880764589fbefbf01aa7ae, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SquadImpulseManager
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseController
   _squadImpulseForce: 16
   _impulseDuration: 0.5
   _squadDirectionWeight: 0.7
   _individualDirectionWeight: 0.3
-  _centralImpactMultiplier: 2.5
+  _centralImpactMultiplier: 4
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
-  _dashMultiplier: 3
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
+  _dashMultiplier: 3
 --- !u!1001 &61982333984331978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -151,6 +151,10 @@ PrefabInstance:
     - target: {fileID: 5141889167527687833, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_Name
       value: PirateMeleeClub 1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6132975301538320078, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalPosition.x
@@ -214,6 +218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PirateMeleeClub 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6132975301538320078, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.21
@@ -272,6 +280,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2098429403811026244}
     m_Modifications:
+    - target: {fileID: 1014076738072606595, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014076738072606595, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937410672027535598, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687984896407524584, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: _layerName
+      value: Friendly
+      objectReference: {fileID: 0}
     - target: {fileID: 6113212806217388263, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
       propertyPath: m_Name
       value: PirateHero (1)
@@ -344,7 +368,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4011328556017072643, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -365,6 +390,10 @@ PrefabInstance:
     - target: {fileID: 5141889167527687833, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_Name
       value: PirateMeleeClub 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6132975301538320078, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8437175951080204677, guid: 8536e8f9baff20c4591d1069bbd5f120, type: 3}
       propertyPath: m_LocalPosition.x

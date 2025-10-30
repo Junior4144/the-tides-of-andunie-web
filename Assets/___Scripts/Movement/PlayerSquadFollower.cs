@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,13 +18,15 @@ public class PlayerSquadFollower : MonoBehaviour
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
     private NavMeshAgent navAgent;
+    private PlayerHeroMovement playerHeroMovement;
 
-    private Vector3 formationOffsetLocal;
-    private float formationAngleLocal;
-    private Vector3 targetPositionInFormation;
+    private Vector3 _formationOffsetLocal;
+    private float _formationAngleLocal;
+    private Vector3 _targetPositionInFormation;
     private SquadImpulseController _squadImpulseController;
-    private bool usingNavMesh = false;
-    private bool inFormation = false;
+    private bool _usingNavMesh = false;
+    private bool _isInFormation = false;
+    private bool _isDashing = false;
     
     private Vector3 lastPosition;
     private Vector3 lastTargetPosition;
@@ -37,12 +40,21 @@ public class PlayerSquadFollower : MonoBehaviour
         transform.SetParent(null);
     }
 
+    void OnDestroy()
+    {
+        if (playerHeroMovement != null)
+            playerHeroMovement.OnPlayerDash -= HandlePlayerDash;
+    }
+
     void Update()
     {
-        if (!TryFindPlayer()) return;
-        
+        if (!TryFindAndSetPlayer()) return;
+
         UpdateFormationTarget();
-        HandleMovement();
+
+        if (!_isDashing)
+            HandleMovement();
+
         UpdateDebugTracking();
     }
 
@@ -74,67 +86,70 @@ public class PlayerSquadFollower : MonoBehaviour
         }
 
         Vector3 worldOffset = transform.position - transform.parent.position;
-        formationOffsetLocal = Quaternion.Inverse(transform.parent.rotation) * worldOffset;
-        formationAngleLocal = transform.eulerAngles.z - transform.parent.eulerAngles.z;
+        _formationOffsetLocal = Quaternion.Inverse(transform.parent.rotation) * worldOffset;
+        _formationAngleLocal = transform.eulerAngles.z - transform.parent.eulerAngles.z;
 
         lastPosition = transform.position;
     }
 
-    private bool TryFindPlayer()
+    private bool TryFindAndSetPlayer()
     {
         if (player != null) return true;
-        
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
             player = playerObj.transform;
             playerRb = playerObj.GetComponent<Rigidbody2D>();
+            playerHeroMovement = playerObj.GetComponent<PlayerHeroMovement>();
+
+            if (playerHeroMovement != null)
+                playerHeroMovement.OnPlayerDash += HandlePlayerDash;
         }
-        
+
         return player != null;
     }
 
     private void UpdateFormationTarget()
     {
-        Vector3 unitOffsetFromSquadCenter = player.rotation * formationOffsetLocal;
-        targetPositionInFormation = player.position + unitOffsetFromSquadCenter;
+        Vector3 unitOffsetFromSquadCenter = player.rotation * _formationOffsetLocal;
+        _targetPositionInFormation = player.position + unitOffsetFromSquadCenter;
     }
 
     private void HandleMovement()
     {
-        float distanceToFormation = Vector3.Distance(transform.position, targetPositionInFormation);
+        float distanceToFormation = Vector3.Distance(transform.position, _targetPositionInFormation);
 
         if (distanceToFormation > navMeshEngageDistance)
         {
             HandleNavMeshMovement();
-            inFormation = false;
+            _isInFormation = false;
         }
         else if (distanceToFormation <= inFormationThreshold)
         {
             HandleInFormation();
-            inFormation = true;
+            _isInFormation = true;
         }
         else
         {
             HandleDirectMovement(distanceToFormation);
-            inFormation = false;
+            _isInFormation = false;
         }
     }
 
     private void HandleNavMeshMovement()
     {
-        if (!usingNavMesh) EnableNavMesh();
+        if (!_usingNavMesh) EnableNavMesh();
         
-        navAgent.SetDestination(targetPositionInFormation);
+        navAgent.SetDestination(_targetPositionInFormation);
         RotateTowardsMovementDirection();
     }
 
     private void HandleInFormation()
     {
-        if (usingNavMesh) DisableNavMesh();
+        if (_usingNavMesh) DisableNavMesh();
         
-        // Lock to formation and match player velocity
-        rb.MovePosition(targetPositionInFormation);
+        rb.MovePosition(_targetPositionInFormation);
         MatchFormationAngle();
         
         if (playerRb != null)
@@ -145,7 +160,7 @@ public class PlayerSquadFollower : MonoBehaviour
 
     private void HandleDirectMovement(float distance)
     {
-        if (usingNavMesh) DisableNavMesh();
+        if (_usingNavMesh) DisableNavMesh();
         
         MoveTowardsFormationPosition(distance);
     }
@@ -153,24 +168,24 @@ public class PlayerSquadFollower : MonoBehaviour
     private void UpdateDebugTracking()
     {
         lastPosition = transform.position;
-        lastTargetPosition = targetPositionInFormation;
+        lastTargetPosition = _targetPositionInFormation;
     }
 
     private void EnableNavMesh()
     {
-        usingNavMesh = true;
+        _usingNavMesh = true;
         navAgent.enabled = true;
     }
 
     private void DisableNavMesh()
     {
-        usingNavMesh = false;
+        _usingNavMesh = false;
         navAgent.enabled = false;
     }
 
     private void MoveTowardsFormationPosition(float distanceToTarget)
     {
-        Vector3 directionToTarget = (targetPositionInFormation - transform.position).normalized;
+        Vector3 directionToTarget = (_targetPositionInFormation - transform.position).normalized;
         
         if (debugMode) DebugLogs(directionToTarget, distanceToTarget);
 
@@ -203,7 +218,7 @@ public class PlayerSquadFollower : MonoBehaviour
         Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg - 90;
 
     private void MatchFormationAngle() =>
-        SetRotation(targetAngle: player.eulerAngles.z + formationAngleLocal);
+        SetRotation(targetAngle: player.eulerAngles.z + _formationAngleLocal);
 
     private void SetRotation(float targetAngle)
     {
@@ -213,16 +228,32 @@ public class PlayerSquadFollower : MonoBehaviour
     }
 
     private void SetVelocity(Vector2 velocity) => rb.linearVelocity = velocity;
-    
+
+    private void HandlePlayerDash(Vector2 dashDirection, float dashForce, float dashDuration) =>
+        StartCoroutine(DashCoroutine(dashForce, dashDuration));
+
+    private IEnumerator DashCoroutine(float dashForce, float dashDuration)
+    {
+        _isDashing = true;
+
+        if (_usingNavMesh) DisableNavMesh();
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(dashDuration);
+        _isDashing = false;
+    }
+
     private void DebugLogs(Vector2 directionToTarget, float distanceToTarget)
     {
         Vector3 actualMovement = transform.position - lastPosition;
-        Vector3 targetMovement = targetPositionInFormation - lastTargetPosition;
+        Vector3 targetMovement = _targetPositionInFormation - lastTargetPosition;
         
         Debug.Log($"[PlayerSquadFollower] === FRAME DEBUG ===");
-        Debug.Log($"In Formation: {inFormation}");
+        Debug.Log($"In Formation: {_isInFormation}");
         Debug.Log($"Position: {transform.position}");
-        Debug.Log($"Target: {targetPositionInFormation}");
+        Debug.Log($"Target: {_targetPositionInFormation}");
         Debug.Log($"Direction: {directionToTarget}");
         Debug.Log($"Direction.normalized: {directionToTarget.normalized}");
         Debug.Log($"Distance: {distanceToTarget}");
@@ -247,14 +278,14 @@ public class PlayerSquadFollower : MonoBehaviour
     {
         if (player == null) return;
         
-        Gizmos.color = inFormation ? Color.cyan : Color.green;
-        Gizmos.DrawWireSphere(targetPositionInFormation, 0.2f);
+        Gizmos.color = _isInFormation ? Color.cyan : Color.green;
+        Gizmos.DrawWireSphere(_targetPositionInFormation, 0.2f);
         
         Gizmos.color = new Color(0, 1, 1, 0.2f);
-        Gizmos.DrawWireSphere(targetPositionInFormation, inFormationThreshold);
+        Gizmos.DrawWireSphere(_targetPositionInFormation, inFormationThreshold);
         
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, targetPositionInFormation);
+        Gizmos.DrawLine(transform.position, _targetPositionInFormation);
         
         Gizmos.color = Color.red;
         if (rb != null)

@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 42533560477664706}
   - component: {fileID: 3603910217672744378}
   - component: {fileID: 6585815476499022404}
+  - component: {fileID: -8835309898677657402}
   m_Layer: 7
   m_Name: PlayerHeroAldarion 1
   m_TagString: Player
@@ -725,6 +726,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AldarionDialogueTest
   _dialogueBubbleInfo: {fileID: 11400000, guid: c29d49fa75620e34995f40858757a6a2, type: 2}
+--- !u!114 &-8835309898677657402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409650198408161721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05bcdefb80e98845944247f7ddbce81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSquadImpulseController
+  _squadImpulseForce: 16
+  _impulseDuration: 0.3
+  _squadDirectionWeight: 0.7
+  _individualDirectionWeight: 0.3
+  _centralImpactMultiplier: 4
+  _minFallOffMultiplier: 0.2
+  _maxFallOffDistance: 5
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
+  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!1 &8228389641742845611
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,7 +829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad920b54eda6af479902e9518bd8d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
-  _damage: 20
   damageDelay: 0.3
   _layerName: Enemy
   _animDuration: 0.6
@@ -944,7 +965,7 @@ MonoBehaviour:
   _specialIdleChance: 0.3
   _idleAngryDuration: 1
   _idleAxeDuration: 1
-  _idleWineDuration: 1
+  _idleWindDuration: 1
 --- !u!1001 &1721321287126870574
 PrefabInstance:
   m_ObjectHideFlags: 0

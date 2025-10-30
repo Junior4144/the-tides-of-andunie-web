@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerHeroMovement : MonoBehaviour
 {
+    public event Action<Vector2, float, float> OnPlayerDash;
+
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float rotationSpeed = 200f;
@@ -75,6 +77,8 @@ public class PlayerHeroMovement : MonoBehaviour
 
         body.linearVelocity = Vector2.zero;
         body.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
+
+        OnPlayerDash?.Invoke(transform.up, dashForce, dashDuration);
 
         yield return new WaitForSeconds(dashDuration);
         _isDashing = false;
