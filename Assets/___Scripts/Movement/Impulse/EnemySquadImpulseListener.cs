@@ -9,8 +9,10 @@ public class EnemySquadImpulseListener : MonoBehaviour
 
     void Start()
     {
-        if (transform.parent != null && transform.parent.parent != null)
-            _rb = transform.parent.parent.GetComponent<Rigidbody2D>();
+        if (transform.parent != null)
+            _rb = transform.parent.GetComponent<Rigidbody2D>();
+        else
+            Debug.LogWarning($"[EnemySquadImpulseListener] Parent hierarchy incomplete! parent={transform.parent?.name}");
 
         _controller = GetComponentInParent<EnemySquadImpulseController>();
 
@@ -19,9 +21,9 @@ public class EnemySquadImpulseListener : MonoBehaviour
         else
         {
             if (_controller == null)
-                Debug.LogWarning($"{gameObject.name}: Could not find EnemySquadImpulseController in parent hierarchy.");
+                Debug.LogWarning($"[EnemySquadImpulseListener]: Could not find EnemySquadImpulseController in parent hierarchy.");
             if (_rb == null)
-                Debug.LogWarning($"{gameObject.name}: Could not find Rigidbody2D on parent's parent.");
+                Debug.LogWarning($"[EnemySquadImpulseListener]: Could not find Rigidbody2D on parent.");
         }
     }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerSquadFollower : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -14,16 +15,16 @@ public class PlayerSquadFollower : MonoBehaviour
     [SerializeField] private bool debugMode = false;
     
 
-    private Transform player;
-    private Rigidbody2D rb;
-    private Rigidbody2D playerRb;
-    private NavMeshAgent navAgent;
-    private PlayerHeroMovement playerHeroMovement;
+    private Transform _player;
+    private Rigidbody2D _rb;
+    private Rigidbody2D _playerRb;
+    private NavMeshAgent _navAgent;
+    private PlayerHeroMovement _playerHeroMovement;
 
     private Vector3 _formationOffsetLocal;
     private float _formationAngleLocal;
     private Vector3 _targetPositionInFormation;
-    private SquadImpulseController _squadImpulseController;
+    private PlayerSquadImpulseController _squadImpulseController;
     private bool _usingNavMesh = false;
     private bool _isInFormation = false;
     private bool _isDashing = false;
@@ -42,39 +43,51 @@ public class PlayerSquadFollower : MonoBehaviour
 
     void OnDestroy()
     {
-        if (playerHeroMovement != null)
-            playerHeroMovement.OnPlayerDash -= HandlePlayerDash;
+        if (_playerHeroMovement != null)
+            _playerHeroMovement.OnPlayerDash -= HandlePlayerDash;
     }
 
     void Update()
     {
-        if (!TryFindAndSetPlayer()) return;
+        if (!_player) return;
+        if (_isDashing) return;
+        if (_squadImpulseController.IsInImpulse()) return;
 
         UpdateFormationTarget();
-
-        if (!_isDashing)
-            HandleMovement();
-
+        HandleMovement();
         UpdateDebugTracking();
     }
 
     private void InitializeComponents()
     {
-        rb = GetComponent<Rigidbody2D>();
-        navAgent = GetComponent<NavMeshAgent>();
-        _squadImpulseController = GetComponentInParent<SquadImpulseController>();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObj != null)
+        {
+            _player = playerObj.transform;
+            _playerRb = playerObj.GetComponent<Rigidbody2D>();
+            _playerHeroMovement = playerObj.GetComponent<PlayerHeroMovement>();
+            _squadImpulseController = playerObj.GetComponent<PlayerSquadImpulseController>();
+
+            if (_playerHeroMovement != null)
+                _playerHeroMovement.OnPlayerDash += HandlePlayerDash;
+        }
+
+        _rb = GetComponent<Rigidbody2D>();
+        _navAgent = GetComponent<NavMeshAgent>();
+        
     }
     
     private void ConfigureNavMesh()
     {
-        navAgent.speed = maxMoveSpeed;
-        navAgent.angularSpeed = rotationSpeed;
-        navAgent.radius = 0.25f;
-        navAgent.acceleration = 75f;
-        navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-        navAgent.updateRotation = false;
-        navAgent.updateUpAxis = false;
-        navAgent.enabled = false;
+        _navAgent.speed = maxMoveSpeed;
+        _navAgent.angularSpeed = rotationSpeed;
+        _navAgent.radius = 0.25f;
+        _navAgent.acceleration = 75f;
+        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        _navAgent.updateRotation = false;
+        _navAgent.updateUpAxis = false;
+        _navAgent.enabled = false;
     }
 
     private void InitializeFormationData()
@@ -92,28 +105,10 @@ public class PlayerSquadFollower : MonoBehaviour
         lastPosition = transform.position;
     }
 
-    private bool TryFindAndSetPlayer()
-    {
-        if (player != null) return true;
-
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-            playerRb = playerObj.GetComponent<Rigidbody2D>();
-            playerHeroMovement = playerObj.GetComponent<PlayerHeroMovement>();
-
-            if (playerHeroMovement != null)
-                playerHeroMovement.OnPlayerDash += HandlePlayerDash;
-        }
-
-        return player != null;
-    }
-
     private void UpdateFormationTarget()
     {
-        Vector3 unitOffsetFromSquadCenter = player.rotation * _formationOffsetLocal;
-        _targetPositionInFormation = player.position + unitOffsetFromSquadCenter;
+        Vector3 unitOffsetFromSquadCenter = _player.rotation * _formationOffsetLocal;
+        _targetPositionInFormation = _player.position + unitOffsetFromSquadCenter;
     }
 
     private void HandleMovement()
@@ -141,7 +136,7 @@ public class PlayerSquadFollower : MonoBehaviour
     {
         if (!_usingNavMesh) EnableNavMesh();
         
-        navAgent.SetDestination(_targetPositionInFormation);
+        _navAgent.SetDestination(_targetPositionInFormation);
         RotateTowardsMovementDirection();
     }
 
@@ -149,11 +144,11 @@ public class PlayerSquadFollower : MonoBehaviour
     {
         if (_usingNavMesh) DisableNavMesh();
         
-        rb.MovePosition(_targetPositionInFormation);
+        _rb.MovePosition(_targetPositionInFormation);
         MatchFormationAngle();
         
-        if (playerRb != null)
-            SetVelocity(playerRb.linearVelocity);
+        if (_playerRb != null)
+            SetVelocity(_playerRb.linearVelocity);
         else
             SetVelocity(Vector2.zero);
     }
@@ -174,13 +169,13 @@ public class PlayerSquadFollower : MonoBehaviour
     private void EnableNavMesh()
     {
         _usingNavMesh = true;
-        navAgent.enabled = true;
+        _navAgent.enabled = true;
     }
 
     private void DisableNavMesh()
     {
         _usingNavMesh = false;
-        navAgent.enabled = false;
+        _navAgent.enabled = false;
     }
 
     private void MoveTowardsFormationPosition(float distanceToTarget)
@@ -205,7 +200,7 @@ public class PlayerSquadFollower : MonoBehaviour
 
     private void RotateTowardsMovementDirection()
     {
-        Vector3 velocity = navAgent.velocity;
+        Vector3 velocity = _navAgent.velocity;
         
         if (velocity.sqrMagnitude > 0.01f)
         {
@@ -218,16 +213,16 @@ public class PlayerSquadFollower : MonoBehaviour
         Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg - 90;
 
     private void MatchFormationAngle() =>
-        SetRotation(targetAngle: player.eulerAngles.z + _formationAngleLocal);
+        SetRotation(targetAngle: _player.eulerAngles.z + _formationAngleLocal);
 
     private void SetRotation(float targetAngle)
     {
-        float currentAngle = rb.rotation;
+        float currentAngle = _rb.rotation;
         float newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
-        rb.SetRotation(newAngle);
+        _rb.SetRotation(newAngle);
     }
 
-    private void SetVelocity(Vector2 velocity) => rb.linearVelocity = velocity;
+    private void SetVelocity(Vector2 velocity) => _rb.linearVelocity = velocity;
 
     private void HandlePlayerDash(Vector2 dashDirection, float dashForce, float dashDuration) =>
         StartCoroutine(DashCoroutine(dashForce, dashDuration));
@@ -238,8 +233,8 @@ public class PlayerSquadFollower : MonoBehaviour
 
         if (_usingNavMesh) DisableNavMesh();
 
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(dashDuration);
         _isDashing = false;
@@ -257,10 +252,10 @@ public class PlayerSquadFollower : MonoBehaviour
         Debug.Log($"Direction: {directionToTarget}");
         Debug.Log($"Direction.normalized: {directionToTarget.normalized}");
         Debug.Log($"Distance: {distanceToTarget}");
-        Debug.Log($"Current Velocity: {rb.linearVelocity}");
+        Debug.Log($"Current Velocity: {_rb.linearVelocity}");
         Debug.Log($"Actual Movement: {actualMovement}");
         Debug.Log($"Target Movement: {targetMovement}");
-        Debug.Log($"Player Rotation: {player.eulerAngles.z}");
+        Debug.Log($"Player Rotation: {_player.eulerAngles.z}");
         
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(transform.position, 0.3f);
         if (overlaps.Length > 1)
@@ -276,7 +271,7 @@ public class PlayerSquadFollower : MonoBehaviour
     
     void OnDrawGizmos()
     {
-        if (player == null) return;
+        if (_player == null) return;
         
         Gizmos.color = _isInFormation ? Color.cyan : Color.green;
         Gizmos.DrawWireSphere(_targetPositionInFormation, 0.2f);
@@ -288,7 +283,7 @@ public class PlayerSquadFollower : MonoBehaviour
         Gizmos.DrawLine(transform.position, _targetPositionInFormation);
         
         Gizmos.color = Color.red;
-        if (rb != null)
-            Gizmos.DrawLine(transform.position, transform.position + (Vector3)rb.linearVelocity * 0.5f);
+        if (_rb != null)
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3)_rb.linearVelocity * 0.5f);
     }
 }

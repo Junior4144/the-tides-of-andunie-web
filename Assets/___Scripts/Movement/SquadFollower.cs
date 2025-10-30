@@ -62,11 +62,7 @@ public class SquadFollower : MonoBehaviour
             return;
         }
 
-        if (_squadImpulseController.IsInImpulse())
-        {
-            Debug.Log("[SquadFollower] In Impulse. Not moving.");
-            return;
-        }
+        if (_squadImpulseController.IsInImpulse()) return;
 
         float distanceToFormation = Vector3.Distance(transform.position, targetPositionInFormation);
 

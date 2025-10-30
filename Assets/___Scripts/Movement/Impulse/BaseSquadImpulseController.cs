@@ -11,7 +11,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
     [SerializeField] private float _impulseDuration = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float _squadDirectionWeight = 0.7f;
     [SerializeField] [Range(0f, 1f)] private float _individualDirectionWeight = 0.3f;
-    [SerializeField] private float _centralImpactMultiplier = 4f;
+    [SerializeField] private float _centralImpactMultiplier = 2.5f;
     [SerializeField] private float _minFallOffMultiplier = 0.2f;
     [SerializeField] private float _maxFallOffDistance = 10f;
 
@@ -41,6 +41,8 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
     {
         if (rb != null && !_squadMemberRigidbodies.Contains(rb))
             _squadMemberRigidbodies.Add(rb);
+        else if (rb != null)
+            Debug.LogWarning($"[BaseSquadImpulseController] Attempted duplicate registration: {rb.gameObject.name} (InstanceID: {rb.GetInstanceID()})");
     }
 
     public void UnregisterMember(Rigidbody2D rb)

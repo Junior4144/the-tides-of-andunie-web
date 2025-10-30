@@ -131,9 +131,9 @@ PrefabInstance:
       propertyPath: PatrolPoints
       value: 
       objectReference: {fileID: 382777437}
-    - target: {fileID: 710227985642154554, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: awarenessDistance
-      value: 3
+    - target: {fileID: 1411568186649678754, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
+      propertyPath: _squadImpulseForce
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
       propertyPath: m_LocalPosition.x
@@ -178,10 +178,6 @@ PrefabInstance:
     - target: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
       propertyPath: m_Name
       value: PirateSquad3 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -254,7 +250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192681414}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DummySquadCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,79 +772,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed57eb032514015499058ac84aba541f, type: 3}
---- !u!1001 &617207826
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 710227985642154554, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: PatrolPoints
-      value: 
-      objectReference: {fileID: 382777437}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -34.09
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098429403811026244, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_Name
-      value: PirateSquad3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5624045655531233510, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      propertyPath: _animDuration
-      value: 0.411
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5659300444648968212, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1232412491}
-  m_SourcePrefab: {fileID: 100100000, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
 --- !u!4 &699124421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
@@ -1101,29 +1024,11 @@ PolygonCollider2D:
       - {x: -38.565125, y: -17.502415}
       - {x: 39.441452, y: -17.48396}
   m_UseDelaunayMesh: 0
---- !u!1 &945115616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1741255900045499738, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-  m_PrefabInstance: {fileID: 1938871541}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &945115617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3594781517951141403, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
   m_PrefabInstance: {fileID: 1938871541}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &945115628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945115616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdacf22dd5d741245bd72a32dd59722f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSquadImpulseListener
-  _layerName: Enemy
 --- !u!1 &950530951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,33 +1365,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1477891125215377208, guid: b0483327264405149949ae0d9c70d19b, type: 3}
   m_PrefabInstance: {fileID: 296744528}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1232412484 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-  m_PrefabInstance: {fileID: 617207826}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1232412491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232412484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 689e2d991e880764589fbefbf01aa7ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseController
-  _squadImpulseForce: 16
-  _impulseDuration: 0.5
-  _squadDirectionWeight: 0.7
-  _individualDirectionWeight: 0.3
-  _centralImpactMultiplier: 2.5
-  _minFallOffMultiplier: 0.2
-  _maxFallOffDistance: 10
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
-  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
-  _dashMultiplier: 3
 --- !u!1 &1238646506 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1793183974941345552, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
@@ -31958,9 +31836,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1741255900045499738, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 945115628}
     - targetCorrespondingSourceObject: {fileID: 1793183974941345552, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1238646509}
@@ -35116,7 +34991,6 @@ SceneRoots:
   - {fileID: 2037494376}
   - {fileID: 1980727585}
   - {fileID: 25207163}
-  - {fileID: 617207826}
   - {fileID: 950530954}
   - {fileID: 4778096342307548310}
   - {fileID: 192681414}
