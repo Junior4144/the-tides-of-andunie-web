@@ -35,26 +35,23 @@ public class LSBuildingsInvasion : MonoBehaviour
             list.Add(child);
         }
 
-        firePositions = list.ToArray(); // sized exactly to valid ones
+        firePositions = list.ToArray();
     }
 
     private void OnEnable()
     {
-        LSManager.OnGlobalInvasionStarted += HandleInvasion;
+        //LSManager.OnGlobalInvasionStarted += HandleInvasion;
+        InSceneActivationManager.OnSceneActivated += ApplyCurrentState;
     }
     private void OnDisable()
     {
-        LSManager.OnGlobalInvasionStarted -= HandleInvasion;
+        //LSManager.OnGlobalInvasionStarted -= HandleInvasion;
+        InSceneActivationManager.OnSceneActivated -= ApplyCurrentState;
     }
-    private void Start()
+
+    private void ApplyCurrentState()
     {
-        StartCoroutine(ApplyCurrentState());
-    }
-    private IEnumerator ApplyCurrentState()
-    {
-        yield return null;
-        if (LSManager.Instance.HasInvasionStarted)
-            HandleInvasion();
+        HandleInvasion();
     }
     private void HandleInvasion()
     {
@@ -64,7 +61,8 @@ public class LSBuildingsInvasion : MonoBehaviour
         if (string.IsNullOrEmpty(villageId))
             return;
 
-        if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
+        if (LSManager.Instance == null ||
+            LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
         ReplaceSprite();

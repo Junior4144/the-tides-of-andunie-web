@@ -8,12 +8,30 @@ public class FireZoomToggle : MonoBehaviour
 
     GameObject[] fireObjects;
     bool lastState = true;
+    private void OnEnable()
+    {
+        InSceneActivationManager.OnSceneActivated += CacheAnimation;
+    }
 
-    private IEnumerator Start()
+    private void OnDisable()
+    {
+        InSceneActivationManager.OnSceneActivated -= CacheAnimation;
+    }
+    private void Start()
+    {
+        cam = CameraManager.Instance.GetCamera();
+    }
+
+    private void CacheAnimation()
+    {
+        StartCoroutine(StartingCacheAnimation());
+    }
+
+    private IEnumerator StartingCacheAnimation()
     {
         yield return null;
         fireObjects = GameObject.FindGameObjectsWithTag("FireAnimation");
-        cam = CameraManager.Instance.GetCamera();
+        
     }
 
     void Update()
