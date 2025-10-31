@@ -49,7 +49,6 @@ public class LSBuildingsInvasion : MonoBehaviour
 
     private void HandleInvasion()
     {
-        Debug.LogError("Handling invasion");
         if (!gameObject.scene.name.Contains("LevelSelector"))
             return;
 

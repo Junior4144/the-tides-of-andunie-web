@@ -69,7 +69,6 @@ public class LSManager : MonoBehaviour
 
         globalInvasionEventSent = true;
 
-        Debug.LogError("Handling Global Invoke");
         OnGlobalInvasionStarted?.Invoke();
     }
     public void SetVillageState(string villageId, VillageState newState)
