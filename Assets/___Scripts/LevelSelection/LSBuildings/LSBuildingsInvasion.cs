@@ -40,21 +40,16 @@ public class LSBuildingsInvasion : MonoBehaviour
 
     private void OnEnable()
     {
-        //LSManager.OnGlobalInvasionStarted += HandleInvasion;
-        InSceneActivationManager.OnSceneActivated += ApplyCurrentState;
+        LSManager.OnGlobalInvasionStarted += HandleInvasion;
     }
     private void OnDisable()
     {
-        //LSManager.OnGlobalInvasionStarted -= HandleInvasion;
-        InSceneActivationManager.OnSceneActivated -= ApplyCurrentState;
+        LSManager.OnGlobalInvasionStarted -= HandleInvasion;
     }
 
-    private void ApplyCurrentState()
-    {
-        HandleInvasion();
-    }
     private void HandleInvasion()
     {
+        Debug.LogError("Handling invasion");
         if (!gameObject.scene.name.Contains("LevelSelector"))
             return;
 
@@ -73,7 +68,6 @@ public class LSBuildingsInvasion : MonoBehaviour
     private void HandleFireBigBuilding()
     {
         SpawnFire(0.5f);
-        SpawnFireSound();
     }
 
     private void HandleFireSmallBuilding()
@@ -93,6 +87,7 @@ public class LSBuildingsInvasion : MonoBehaviour
             GameObject fire = Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
             fire.transform.localScale = Vector3.one * scale;
         }
+
     }
 
     private void SpawnFireSound()

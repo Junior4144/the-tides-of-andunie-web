@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum VillageState
 {
@@ -29,9 +30,11 @@ public class LSManager : MonoBehaviour
     public bool startGlobalInvasion = false;
 
     public event Action<string, VillageState> OnVillageStateChanged;
-    public static event Action OnGlobalInvasionStarted; // for level 1
+    public static event Action OnGlobalInvasionStarted;
 
     public bool HasInvasionStarted => invasionStarted;
+
+    public bool globalInvasionEventSent = false;
 
     void Awake()
     {
@@ -40,14 +43,35 @@ public class LSManager : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        InSceneActivationManager.OnSceneActivated -= LevelSelectorActive;
+    }
+
+
     private void Start()
     {
         if (startGlobalInvasion)
             TriggerGlobalInvasion();
+            InSceneActivationManager.OnSceneActivated += LevelSelectorActive;
 
+        if (SceneManager.GetActiveScene().name == "LevelSelector")
+        {
+            Debug.Log("LSManager started inside LevelSelector — manual invoke");
+            LevelSelectorActive();
+        }
+
+    }
+    private void LevelSelectorActive()
+    {
+        if (globalInvasionEventSent)
+            return;
+
+        globalInvasionEventSent = true;
+
+        Debug.LogError("Handling Global Invoke");
         OnGlobalInvasionStarted?.Invoke();
     }
-
     public void SetVillageState(string villageId, VillageState newState)
     {
         for (int i = 0; i < villages.Count; i++)
@@ -90,7 +114,12 @@ public class LSManager : MonoBehaviour
             OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);
         }
 
-        OnGlobalInvasionStarted?.Invoke();
+        if (!globalInvasionEventSent)
+        {
+            globalInvasionEventSent = true;
+            OnGlobalInvasionStarted?.Invoke();
+        }
+
     }
 
     public string DetermineNextScene(string villageId)
