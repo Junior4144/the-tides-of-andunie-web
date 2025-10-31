@@ -90,17 +90,26 @@ public class RaidController : MonoBehaviour
 
     private IEnumerator ScheduleWave(WaveConfig wave, float spawnStartTime)
     {
-        float waitTime = spawnStartTime - _masterTimer;
+        float alertTextTime = spawnStartTime - wave.countdown;
+        yield return StartCoroutine(WaitUntilMasterTimer(alertTextTime));
+
+        _alertTextController.SetText(wave.countDownText);
+        DisplayTextThenFadeOut(_alertTextController);
+
+        yield return StartCoroutine(WaitUntilMasterTimer(spawnStartTime));
+
+        _alertTextController.SetText(wave.waveStartText);
+        DisplayTextThenFadeOut(_alertTextController);
+
+        yield return StartCoroutine(SpawnWaveEnemiesOverIntervals(wave));
+    }
+    private IEnumerator WaitUntilMasterTimer(float targetTime)
+    {
+        float waitTime = targetTime - _masterTimer;
         if (waitTime > 0)
         {
             yield return new WaitForSeconds(waitTime);
         }
-        
-
-        _alertTextController.SetText(wave.waveStartText);
-        DisplayTextThenFadeOut(_alertTextController);
-        
-        yield return StartCoroutine(SpawnWaveEnemiesOverIntervals(wave));
     }
 
     void Update()
