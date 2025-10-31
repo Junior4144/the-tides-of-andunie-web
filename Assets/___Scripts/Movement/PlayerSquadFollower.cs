@@ -143,7 +143,7 @@ public class PlayerSquadFollower : MonoBehaviour
     private void HandleInFormation()
     {
         if (_usingNavMesh) DisableNavMesh();
-        
+
         _rb.MovePosition(_targetPositionInFormation);
         MatchFormationAngle();
         
