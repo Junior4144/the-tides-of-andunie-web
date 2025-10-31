@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerHeroMovement : MonoBehaviour
 {
+    public event Action<Vector2, float, float> OnPlayerDash;
+
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float rotationSpeed = 200f;
@@ -17,9 +19,9 @@ public class PlayerHeroMovement : MonoBehaviour
     [Header("Footstep Settings")]
     [SerializeField] private float footstepInterval = 0.5f;
     
-    private Rigidbody2D body;
-    private Impulse impulseScript;
-    private AldarionWalkingSoundController footstepController;
+    private Rigidbody2D _rb;
+    private PlayerSquadImpulseController _impulseController;
+    private AldarionWalkingSoundController _footstepController;
     
     private bool _isDashing = false;
     private bool _canDash = true;
@@ -28,16 +30,16 @@ public class PlayerHeroMovement : MonoBehaviour
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        impulseScript = GetComponentInChildren<Impulse>();
-        footstepController = GetComponentInChildren<AldarionWalkingSoundController>();
+        _rb = GetComponent<Rigidbody2D>();
+        _impulseController = GetComponent <PlayerSquadImpulseController>();
+        _footstepController = GetComponentInChildren<AldarionWalkingSoundController>();
     }
 
     void Update()
     {
         _isWalking = false;
 
-        if (impulseScript != null && impulseScript.IsInImpulse()) return;
+        if (_impulseController.IsInImpulse()) return;
 
         HandleDashingInput();
 
@@ -45,7 +47,7 @@ public class PlayerHeroMovement : MonoBehaviour
 
         HandleWalkingInput();
 
-        _isWalking = body.linearVelocity.magnitude >= 1;
+        _isWalking = _rb.linearVelocity.magnitude >= 1;
         
         HandleWalkingSounds();
     }
@@ -62,10 +64,10 @@ public class PlayerHeroMovement : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal");
 
         if (Math.Abs(yInput) > 0)
-            body.linearVelocity = transform.up * yInput * moveSpeed;
+            _rb.linearVelocity = transform.up * yInput * moveSpeed;
 
         if (Math.Abs(xInput) > 0)
-            body.angularVelocity = -xInput * rotationSpeed;
+            _rb.angularVelocity = -xInput * rotationSpeed;
     }
 
     private IEnumerator DashCoroutine()
@@ -73,8 +75,10 @@ public class PlayerHeroMovement : MonoBehaviour
         _isDashing = true;
         _canDash = false;
 
-        body.linearVelocity = Vector2.zero;
-        body.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
+
+        OnPlayerDash?.Invoke(transform.up, dashForce, dashDuration);
 
         yield return new WaitForSeconds(dashDuration);
         _isDashing = false;
@@ -95,8 +99,8 @@ public class PlayerHeroMovement : MonoBehaviour
 
         if (_footstepTimer <= 0f)
         {
-            if (footstepController != null)
-                footstepController.PlayFootstep();
+            if (_footstepController != null)
+                _footstepController.PlayFootstep();
             
             _footstepTimer = footstepInterval;
         }

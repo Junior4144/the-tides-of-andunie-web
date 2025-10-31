@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4000344000894102699}
   - component: {fileID: 4606045543428363586}
   - component: {fileID: 315232145515807971}
-  - component: {fileID: 4033681387115441121}
   - component: {fileID: 3389213937291548543}
+  - component: {fileID: 1749397139603800654}
   m_Layer: 6
   m_Name: PirateSquad0
   m_TagString: Untagged
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
   PatrolPoints: {fileID: 1139301298604974885, guid: 3722a43977583c24fb11e7742d111841, type: 3}
   waitTime: 2
-  awarenessDistance: 100
+  awarenessDistance: 10
   player: {fileID: 0}
   _attributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
 --- !u!114 &315232145515807971
@@ -116,28 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyController
---- !u!114 &4033681387115441121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4441501422373369235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 113d429657bb1a84094bc6d9ce983e53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SquadImpulseManager
-  _squadImpulseForce: 16
-  _impulseDuration: 0.5
-  _squadDirectionWeight: 0.7
-  _individualDirectionWeight: 0.3
-  _centralImpactMultiplier: 2.5
-  _minFallOffMultiplier: 0.2
-  _maxFallOffDistance: 10
-  _dashMultiplier: 3
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
-  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!114 &3389213937291548543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +132,28 @@ MonoBehaviour:
   _collectablePrefabs:
   - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
   - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
+--- !u!114 &1749397139603800654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441501422373369235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689e2d991e880764589fbefbf01aa7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseController
+  _squadImpulseForce: 16
+  _impulseDuration: 0.5
+  _squadDirectionWeight: 0.7
+  _individualDirectionWeight: 0.3
+  _centralImpactMultiplier: 2.5
+  _minFallOffMultiplier: 0.2
+  _maxFallOffDistance: 10
+  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
+  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
+  _dashMultiplier: 2
 --- !u!1001 &5176606075981233773
 PrefabInstance:
   m_ObjectHideFlags: 0
