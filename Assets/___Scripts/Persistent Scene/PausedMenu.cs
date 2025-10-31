@@ -21,4 +21,12 @@ public class PausedMenu : MonoBehaviour
         Debug.Log("trying to pause game");
         UIEvents.OnRequestPauseToggle?.Invoke();
     }
+    public void HandleSkip()
+    {
+        Debug.Log("SKIP pressed — handling all transitions");
+
+        GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
+        if (obj.TryGetComponent(out EndCurrentScene ecs))
+            ecs.NextStage();
+    }
 }

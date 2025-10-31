@@ -25,4 +25,8 @@ public class CameraManager : MonoBehaviour
 
         _camera.gameObject.SetActive(true);
     }
+    public Camera GetCamera()
+    {
+        return _camera;
+    }
 }

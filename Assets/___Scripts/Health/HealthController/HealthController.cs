@@ -8,14 +8,19 @@ public abstract class HealthController : MonoBehaviour, IHealthController
 
     public UnityEvent OnDied;
     public UnityEvent OnDamaged;
+    private bool _isShielded;
 
     public abstract void TakeDamage(float damageAmount);
-
     public abstract void AddHealth(float amount);
-
-    public float GetPercentHealth() => _currentHealth / _maxHealth;
 
     public float GetCurrentHealth() => _currentHealth;
 
-    public void SetCurrentHealth(float currentHealth) => _currentHealth = currentHealth;
+    public float GetMaxHealth() => _maxHealth;
+
+    public virtual float GetPercentHealth() =>
+        _maxHealth > 0 ? _currentHealth / _maxHealth : 0f;
+
 }
+
+
+

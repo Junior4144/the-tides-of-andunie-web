@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 3878668067043966092}
   - component: {fileID: 3830683419615601038}
   - component: {fileID: 1347325167411043807}
+  - component: {fileID: 5041550572485495600}
   m_Layer: 6
   m_Name: PirateHero
   m_TagString: Enemy
@@ -496,6 +497,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5041550572485495600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113212806217388263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c33910631b85164bb4b30d6e5a6f3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShieldController
+  _degrees: 120
 --- !u!1 &9102729505828410759
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,25 @@ public class PlayerMeleeController : MonoBehaviour
 
     [SerializeField] private PlayerAnimator _animator;
 
+    //private Collider2D testing;
+
+    private Vector2 GetContactPoint(Collider2D otherCollider)
+    {
+        //testing = otherCollider;
+
+        Collider2D myCollider = GetComponent<Collider2D>();
+        return otherCollider.ClosestPoint(transform.TransformPoint(myCollider.offset));
+    }
+
+    // Contact point visualization
+    /*void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        
+        Vector2 closestPoint = testing.ClosestPoint(transform.TransformPoint(GetComponent<Collider2D>().offset));
+        Gizmos.DrawSphere(new Vector3(closestPoint.x, closestPoint.y, 0f), 0.2f);
+    }*/
+
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
         var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
@@ -22,7 +41,14 @@ public class PlayerMeleeController : MonoBehaviour
             !_isAttacking
         )
         {
-            StartCoroutine(Attack(otherCollider.gameObject));
+            ShieldController enemyShield = otherCollider.gameObject.GetComponent<ShieldController>();
+            if (
+                enemyShield == null || 
+                !enemyShield.ShieldBlocks(GetContactPoint(otherCollider))
+            )
+            {
+                StartCoroutine(Attack(otherCollider.gameObject));
+            }
             PlayAttackAnimation();
         }
     }
