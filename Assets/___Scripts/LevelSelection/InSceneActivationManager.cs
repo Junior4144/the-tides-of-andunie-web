@@ -15,7 +15,6 @@ public class InSceneActivationManager : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.activeSceneChanged -= OnActiveSceneChanged;
-        LSManager.Instance.globalInvasionEventSent = false;
     }
 
     private void OnActiveSceneChanged(Scene oldScene, Scene newScene)

@@ -30,10 +30,11 @@ public class LSManager : MonoBehaviour
     public bool startGlobalInvasion = false;
 
     public event Action<string, VillageState> OnVillageStateChanged;
-    public static event Action OnGlobalInvasionStarted;
+    public static event Action UpdateVillageInvasionStatus;
 
     public bool HasInvasionStarted => invasionStarted;
 
+    [HideInInspector]
     public bool globalInvasionEventSent = false;
 
     void Awake()
@@ -42,34 +43,25 @@ public class LSManager : MonoBehaviour
         Instance = this;
 
     }
-
-    private void OnDisable()
-    {
-        InSceneActivationManager.OnSceneActivated -= LevelSelectorActive;
-    }
-
+    private void OnEnable() => InSceneActivationManager.OnSceneActivated += LevelSelectorActive;
 
     private void Start()
     {
         if (startGlobalInvasion)
-            TriggerGlobalInvasion();
-            InSceneActivationManager.OnSceneActivated += LevelSelectorActive;
-
-        if (SceneManager.GetActiveScene().name == "LevelSelector")
         {
-            Debug.Log("LSManager started inside LevelSelector — manual invoke");
+            TriggerGlobalInvasion();
+            LevelSelectorActive();
+        }
+        else if (SceneManager.GetActiveScene().name == "LevelSelector")
+        {
+            Debug.Log("[LS Manager] LSManager started inside LevelSelector — manual invoke");
             LevelSelectorActive();
         }
 
     }
     private void LevelSelectorActive()
     {
-        if (globalInvasionEventSent)
-            return;
-
-        globalInvasionEventSent = true;
-
-        OnGlobalInvasionStarted?.Invoke();
+        UpdateVillageInvasionStatus?.Invoke();
     }
     public void SetVillageState(string villageId, VillageState newState)
     {
@@ -104,6 +96,7 @@ public class LSManager : MonoBehaviour
     {
         if (invasionStarted) return;
         invasionStarted = true;
+
         Debug.Log("Global Invasion Starting");
         for (int i = 0; i < villages.Count; i++)
         {
@@ -112,13 +105,6 @@ public class LSManager : MonoBehaviour
             villages[i].state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);
         }
-
-        if (!globalInvasionEventSent)
-        {
-            globalInvasionEventSent = true;
-            OnGlobalInvasionStarted?.Invoke();
-        }
-
     }
 
     public string DetermineNextScene(string villageId)

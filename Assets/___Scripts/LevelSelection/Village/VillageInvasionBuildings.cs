@@ -27,12 +27,12 @@ public class VillageInvasionBuildings : MonoBehaviour
 
     private void OnEnable()
     {
-        LSManager.OnGlobalInvasionStarted += HandleInvasion;
+        LSManager.UpdateVillageInvasionStatus += HandleInvasion;
 
     }
     private void OnDisable()
     {
-        LSManager.OnGlobalInvasionStarted -= HandleInvasion;
+        LSManager.UpdateVillageInvasionStatus -= HandleInvasion;
     }
     private void Start()
     {

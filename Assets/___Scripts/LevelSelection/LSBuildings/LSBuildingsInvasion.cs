@@ -40,11 +40,11 @@ public class LSBuildingsInvasion : MonoBehaviour
 
     private void OnEnable()
     {
-        LSManager.OnGlobalInvasionStarted += HandleInvasion;
+        LSManager.UpdateVillageInvasionStatus += HandleInvasion;
     }
     private void OnDisable()
     {
-        LSManager.OnGlobalInvasionStarted -= HandleInvasion;
+        LSManager.UpdateVillageInvasionStatus -= HandleInvasion;
     }
 
     private void HandleInvasion()
@@ -55,8 +55,7 @@ public class LSBuildingsInvasion : MonoBehaviour
         if (string.IsNullOrEmpty(villageId))
             return;
 
-        if (LSManager.Instance == null ||
-            LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
+        if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
 
