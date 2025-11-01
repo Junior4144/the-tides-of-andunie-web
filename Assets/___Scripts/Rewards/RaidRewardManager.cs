@@ -4,42 +4,39 @@ using System.Collections.Generic;
 public class RaidRewardManager : MonoBehaviour
 {
     public static RaidRewardManager Instance;
-    [SerializeField] public RaidController raidController;
-    [SerializeField] public RewardController rewardController;
-
-    [SerializeField] private Transform shopPanel;
-    [SerializeField] private GameObject shopItemUIPrefab;
-    [SerializeField] public GameObject canvas;
+    [SerializeField] public RaidController RaidController;
+    [SerializeField] public RewardUIController RewardUI;
+    [SerializeField] private Transform RewardContainer;
+    [SerializeField] private GameObject RewardItemUIPrefab;
 
 
     void Awake()
     {
         Instance = this;
-        rewardController.HideRewards();
+        RewardUI.HideRewards();
     }
 
     public void OnEnable()
     {
-        raidController.OnRaidComplete += HandleRaidFinished;
+        RaidController.OnRaidComplete += HandleRaidFinished;
     }
 
     public void OnDisable()
     {
-        raidController.OnRaidComplete -= HandleRaidFinished;
+        RaidController.OnRaidComplete -= HandleRaidFinished;
     }
 
     private void HandleRaidFinished()
     {
-        List<RewardListing> rewards = raidController.RaidCompletionRewards;
+        List<RewardListing> rewards = RaidController.RaidCompletionRewards;
 
         foreach (var reward in rewards)
         {
-            var uiObj = Instantiate(shopItemUIPrefab, shopPanel);
-            var ui = uiObj.GetComponent<ShopItemUI>();
-
+            var uiObj = Instantiate(RewardItemUIPrefab, RewardContainer);
+            var ui = uiObj.GetComponent<RewardItemUI>();
             ui.SetData(reward);
         }
 
-        rewardController.ShowRewards(rewards);
+        RewardUI.ShowRewards(rewards);
     }
 }
