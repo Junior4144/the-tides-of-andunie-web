@@ -59,10 +59,12 @@ public class LSBuildingsInvasion : MonoBehaviour
             LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
-        ReplaceSprite();
+
 
         if (bigBuilding) HandleFireBigBuilding();
         else if (smallBuilding) HandleFireSmallBuilding();
+
+        ReplaceSprite();
     }
     private void HandleFireBigBuilding()
     {

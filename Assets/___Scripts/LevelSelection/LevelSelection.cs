@@ -16,9 +16,10 @@ public class LevelSelection : MonoBehaviour
     public static event Action EnterLeaveVillageZone;
     public static event Action ExitLeaveVillageZone;
 
-    public static event Action<string, string> PlayerActivatedMenu;
+    public static event Action<string, string, bool> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
+    public bool TriggerGlobalInvasion = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -56,9 +57,9 @@ public class LevelSelection : MonoBehaviour
     private void ProceedToNextStage()
     {
         if (isExit)
-            PlayerActivatedMenu?.Invoke("EXIT", location);
+            PlayerActivatedMenu?.Invoke("EXIT", location, TriggerGlobalInvasion);
         else
-            PlayerActivatedMenu?.Invoke(villageId, location);
+            PlayerActivatedMenu?.Invoke(villageId, location, false);
     }
 
 }
