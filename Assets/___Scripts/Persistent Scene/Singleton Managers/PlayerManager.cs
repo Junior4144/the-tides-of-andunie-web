@@ -1,10 +1,12 @@
 using UnityEngine;
 
+[RequireComponent(typeof(DestroyController))]
+[RequireComponent(typeof(PlayerHeroMovement))]
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    private PlayerHealthController healthController;
+    private PlayerHealthController _healthController;
 
     private PlayerHeroMovement _playerMovement;
 
@@ -17,7 +19,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
-        healthController = GetComponentInChildren<PlayerHealthController>();
+        _healthController = GetComponentInChildren<PlayerHealthController>();
         _playerMovement = GetComponent<PlayerHeroMovement>();
     }
 
@@ -48,13 +50,23 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public float GetHealth() => healthController.GetCurrentHealth();
-    public float GetPercentHealth() => healthController.GetPercentHealth();
+    //------HEALTH------//
+    public float GetHealth() => _healthController.GetCurrentHealth();
+    public float GetPercentHealth() => _healthController.GetPercentHealth();
     public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
+    public void SetHealth(float value) => _healthController.SetCurrentHealth(value);
+    public void AddHealth(float value) => _healthController.AddHealth(value);
+
+
+    //------TRANSFORM------//
     public Transform GetPlayerTransform() => gameObject.transform;
-    
     public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
-    public void SetHealth(float value) => healthController.SetCurrentHealth(value);
-    public void AddHealth(float value) => healthController.AddHealth(value);
+
+
+    //------MOVEMENT------//
+    public bool IsInDash() => _playerMovement.IsInDash();
+    
+    
+    //------DESTROY------//
     public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);    
 }
