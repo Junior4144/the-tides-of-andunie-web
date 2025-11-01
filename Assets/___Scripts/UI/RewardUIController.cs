@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-public class RewardController : MonoBehaviour
+public class RewardUIController : MonoBehaviour
 {
     public GameObject rewardsCanvas;
 
