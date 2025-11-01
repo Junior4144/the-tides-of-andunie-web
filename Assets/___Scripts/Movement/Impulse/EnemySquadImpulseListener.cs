@@ -7,7 +7,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
     private EnemySquadImpulseController _controller;
     private Rigidbody2D _rb;
 
-    void Start()
+    void Awake()
     {
         if (transform.parent != null)
             _rb = transform.parent.GetComponent<Rigidbody2D>();
