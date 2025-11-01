@@ -520,7 +520,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2695813455084435750}
   - component: {fileID: 1014076738072606595}
-  - component: {fileID: 4011328556017072643}
   - component: {fileID: 3687984896407524584}
   m_Layer: 6
   m_Name: ImpulseCollider
@@ -557,10 +556,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 383
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -580,33 +579,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
---- !u!50 &4011328556017072643
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9102729505828410759}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &3687984896407524584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,3 +591,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5fcfb1c2216b4e4888e75cc876fe2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseListener
+  _layerName: Friendly
