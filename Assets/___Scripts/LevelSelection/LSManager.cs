@@ -34,8 +34,6 @@ public class LSManager : MonoBehaviour
 
     public bool HasInvasionStarted => invasionStarted;
 
-    [HideInInspector]
-    public bool globalInvasionEventSent = false;
 
     void Awake()
     {

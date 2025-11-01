@@ -18,7 +18,6 @@ public class LSUIManager : MonoBehaviour
 
     public static LSUIManager Instance;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -35,7 +34,7 @@ public class LSUIManager : MonoBehaviour
 
     void Start() => LevelSelectionEnterUI.SetActive(false);
 
-    private void HandleMenu(string id, string location, bool triggerGlobalInvasion)
+    private void HandleMenu(string id, string location, bool triggerGlobalInvasion, bool LiberateVillage, string VillageLiberationID)
     {
         if (id == "EXIT")
         {
@@ -45,6 +44,7 @@ public class LSUIManager : MonoBehaviour
             LSButtonText.text = "Leave";
 
             if(triggerGlobalInvasion) LSManager.Instance.TriggerGlobalInvasion();
+            if (LiberateVillage) LSManager.Instance.SetVillageState(VillageLiberationID, VillageState.Liberated_Done);
 
             SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
 

@@ -6,6 +6,7 @@ public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private string villageId;
     [SerializeField] bool isExit;
+    [SerializeField] private string VillageLiberationID;
 
     private bool isPlayerInside = false;
 
@@ -16,10 +17,12 @@ public class LevelSelection : MonoBehaviour
     public static event Action EnterLeaveVillageZone;
     public static event Action ExitLeaveVillageZone;
 
-    public static event Action<string, string, bool> PlayerActivatedMenu;
+    public static event Action<string, string, bool, bool, string> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
     public bool TriggerGlobalInvasion = false;
+    public bool LiberateVillage = false;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -57,9 +60,9 @@ public class LevelSelection : MonoBehaviour
     private void ProceedToNextStage()
     {
         if (isExit)
-            PlayerActivatedMenu?.Invoke("EXIT", location, TriggerGlobalInvasion);
+            PlayerActivatedMenu?.Invoke("EXIT", location, TriggerGlobalInvasion, LiberateVillage, VillageLiberationID);
         else
-            PlayerActivatedMenu?.Invoke(villageId, location, false);
+            PlayerActivatedMenu?.Invoke(villageId, location, false, false, "");
     }
 
 }
