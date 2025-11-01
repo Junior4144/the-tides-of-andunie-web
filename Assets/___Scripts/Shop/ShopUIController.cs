@@ -43,4 +43,8 @@ public class ShopUIController : MonoBehaviour
             ui.SetData(listing);
         }
     }
+    public void HandleExitClick()
+    {
+        UIEvents.OnRequestShopToggle?.Invoke();
+    }
 }
