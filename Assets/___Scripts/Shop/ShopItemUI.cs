@@ -13,7 +13,6 @@ public class ShopItemUI : MonoBehaviour
     [SerializeField] private TMP_Text ErrorText;
 
     private ShopListing listing;
-    private RewardListing reward_listing;
 
     private void Start() => ErrorText.gameObject.SetActive(false);
 
@@ -27,22 +26,6 @@ public class ShopItemUI : MonoBehaviour
         icon.sprite = listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
 
         buyButton.onClick.AddListener(OnBuyClicked);
-    }
-
-    public void SetData(RewardListing reward)
-    {
-        this.reward_listing = reward;
-        nameText.text = reward_listing.Item.ItemName;
-        priceText.text = "Price: FREE";
-        icon.sprite = reward_listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
-
-        buyButton.onClick.AddListener(HandleRewardClick);
-    }
-
-    void HandleRewardClick()
-    {
-        InventoryManager.Instance.AddItem(this.reward_listing.Item);
-        RaidRewardManager.Instance.rewardController.HideRewards();
     }
 
     void OnBuyClicked()
