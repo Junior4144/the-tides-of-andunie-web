@@ -7,6 +7,7 @@ using System;
 
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Collider2D))]
 public class RaidController : MonoBehaviour
 {
 
@@ -26,7 +27,7 @@ public class RaidController : MonoBehaviour
 
     // ------- WAVE CONFIG -------
     [SerializeField] private RaidConfig _raidConfig;
-    public List<GameObject> RaidCompletionRewards => _raidConfig.RaidCompletionRewards.RewardItems;
+    public List<RewardListing> RaidCompletionRewards => _raidConfig.RaidCompletionRewards.RewardItems;
     [SerializeField] private List<Transform> _spawnPoints;
 
     private Queue<float> _wavesSpawnStartTimes = new();

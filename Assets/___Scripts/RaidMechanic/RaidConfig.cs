@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public class RaidConfig : ScriptableObject
 {
     public List<WaveConfig> Waves;
-    public RewardTable RaidCompletionRewards; 
+    public RewardsConfig RaidCompletionRewards; 
 }
