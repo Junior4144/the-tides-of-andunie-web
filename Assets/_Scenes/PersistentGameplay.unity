@@ -3291,7 +3291,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.3539007, y: 2.28332, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4363,6 +4363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1100156451}
+  - component: {fileID: 1100156452}
   m_Layer: 0
   m_Name: CoinUI
   m_TagString: Untagged
@@ -4386,6 +4387,20 @@ Transform:
   - {fileID: 198116852}
   m_Father: {fileID: 1958056508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1100156452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100156450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8a5749c1b5ced409caebeaee3aec52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyUI
+  coinContainer: {fileID: 1527515895}
+  coinText: {fileID: 1527515896}
 --- !u!1 &1120492816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2585100474045498754, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
@@ -5205,7 +5220,6 @@ GameObject:
   - component: {fileID: 1391784850}
   - component: {fileID: 1391784853}
   - component: {fileID: 1391784852}
-  - component: {fileID: 1391784854}
   - component: {fileID: 1391784855}
   m_Layer: 0
   m_Name: Panel
@@ -5273,20 +5287,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391784849}
   m_CullTransparentMesh: 1
---- !u!114 &1391784854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391784849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c8a5749c1b5ced409caebeaee3aec52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CurrencyUI
-  coinContainer: {fileID: 1527515895}
-  coinText: {fileID: 1527515896}
 --- !u!114 &1391784855
 MonoBehaviour:
   m_ObjectHideFlags: 0
