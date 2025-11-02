@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class InventoryUIController : MonoBehaviour
+public class EquipUIController : MonoBehaviour
 {
     public GameObject InventoryPanel;
     public GameObject slotPrefab;
@@ -19,13 +19,13 @@ public class InventoryUIController : MonoBehaviour
 
     void OnEnable()
     {
-        InventoryManager.OnInventoryChanged += RefreshUI;
+        InventoryManager.OnEquippedItemsChanged += RefreshUI;
         RefreshUI(); // <<-- so UI updates immediately when opening
     }
 
     void OnDisable()
     {
-        InventoryManager.OnInventoryChanged -= RefreshUI;
+        InventoryManager.OnEquippedItemsChanged -= RefreshUI;
     }
 
     private void InitializeSlots()
@@ -35,7 +35,7 @@ public class InventoryUIController : MonoBehaviour
 
         for (int i = 0; i < slotCount; i++)
         {
-            var slot = Instantiate(slotPrefab, InventoryPanel.transform).GetComponent<Slot>();
+            var slot = Instantiate(slotPrefab, InventoryPanel.transform).GetComponent<UnequipSlot>();
             if (inventoryItems[i] != null)
             {
                 GameObject item = Instantiate(inventoryItems[i].InventoryIconPrefab, slot.transform);
@@ -65,7 +65,7 @@ public class InventoryUIController : MonoBehaviour
         int cleared = 0;
         foreach (Transform slotTransform in InventoryPanel.transform)
         {
-            var slot = slotTransform.GetComponent<Slot>();
+            var slot = slotTransform.GetComponent<UnequipSlot>();
             if (!slot)
             {
                 Debug.LogWarning($"[InventoryUI] Child '{slotTransform.name}' has no Slot component.");
@@ -81,12 +81,11 @@ public class InventoryUIController : MonoBehaviour
 
             slot.currentItem = null;
         }
-
         Debug.Log($"[InventoryUI] Cleared {cleared} items");
 
         // 2) Rebuild from inventory data
         if (!InventoryManager.Instance) return;
-        var items = InventoryManager.Instance.GetAllItems();
+        var items = InventoryManager.Instance.GetEquippedItems();
         if (items == null)
         {
             Debug.LogError("[InventoryUI] InventoryManager returned null list.");
@@ -105,7 +104,7 @@ public class InventoryUIController : MonoBehaviour
 
             var invSlot = items[i];
             var slotTransform = InventoryPanel.transform.GetChild(slotIndex);
-            var slot = slotTransform.GetComponent<Slot>();
+            var slot = slotTransform.GetComponent<UnequipSlot>();
             if (!slot)
             {
                 Debug.LogWarning($"[InventoryUI] Slot {slotIndex} missing Slot component.");
