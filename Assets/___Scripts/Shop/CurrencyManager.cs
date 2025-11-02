@@ -5,6 +5,7 @@ public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager Instance { get; private set; }
 
+    [SerializeField]
     public int Coins { get; private set; }
     public event Action<int> OnCoinsChanged;
 
@@ -23,6 +24,7 @@ public class CurrencyManager : MonoBehaviour
     {
         Coins += amount;
         OnCoinsChanged?.Invoke(Coins);
+        Debug.Log($"[Curreny Manager] Coins: {Coins}");
     }
 
     public bool TrySpendCoins(int amount)
