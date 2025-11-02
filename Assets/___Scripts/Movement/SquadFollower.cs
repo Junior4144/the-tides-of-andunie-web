@@ -20,14 +20,14 @@ public class SquadFollower : MonoBehaviour
     private Vector3 formationOffsetLocal;
     private float formationAngleLocal;
     private Vector3 targetPositionInFormation;
-    private SquadImpulseController _squadImpulseController;
+    private EnemySquadImpulseController _squadImpulseController;
     private bool usingNavMesh = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         navAgent = GetComponent<NavMeshAgent>();
-        _squadImpulseController = GetComponentInParent<SquadImpulseController>();
+        _squadImpulseController = GetComponentInParent<EnemySquadImpulseController>();
 
         navAgent.speed = maxMoveSpeed;
         navAgent.angularSpeed = rotationSpeed;

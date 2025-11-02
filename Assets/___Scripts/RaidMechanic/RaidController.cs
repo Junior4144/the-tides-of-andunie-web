@@ -3,48 +3,51 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using Unity.VisualScripting;
+using System;
 
+using Random = UnityEngine.Random;
+
+[RequireComponent(typeof(Collider2D))]
 public class RaidController : MonoBehaviour
 {
 
     // ------- TEXT -------
-    [SerializeField]
-    private TextMeshProUGUI alertText;
-    [SerializeField]
-    private TextMeshProUGUI timerText;
-    [SerializeField]
-    private TextMeshProUGUI enemiesRemainingText;
+    [SerializeField] private TextMeshProUGUI alertText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI postRaidText;
+    [SerializeField] private TextMeshProUGUI enemiesRemainingText;
 
-    [SerializeField]
-    private TextMeshProUGUI postRaidText;
     private TextController _alertTextController;
     private TextController _timerTextController;
     private TextController _postRaidTextController;
     private TextController _enemiesRemainingTextController;
 
-    // ------- TIMERS -------
-    private float _timeBeforeNextWaveInSeconds = 0;
-    private float _tickTimer = 0f;
+    // ------- TIME -------
+    private float _masterTimer = 0f;
 
-    // ------- CONFIG & STATE DATA -------
-    [SerializeField] private RaidConfig raidConfig;
-    [SerializeField] private List<Transform> spawnPoints;
-    [SerializeField] private float _losingHealthPercentage = 0.15f;
+    // ------- WAVE CONFIG -------
+    [SerializeField] private RaidConfig _raidConfig;
+    public List<RewardListing> RaidCompletionRewards => _raidConfig.RaidCompletionRewards.RewardItems;
+    [SerializeField] private List<Transform> _spawnPoints;
 
-    private int _currentWaveIndex;
-    private List<GameObject> _activeEnemies = new List<GameObject>();
-    public enum RaidState { PreRaid, PreWave, WaveInProgress, RaidComplete, RaidFailed}
+    private Queue<float> _wavesSpawnStartTimes = new();
+    private List<WaveConfig> _wavesCurrentlySpawning = new();
+    private List<GameObject> _spawnedEnemies = new();
+    private int _totalNumberOfEnemies;
+
+    // ------- STATES -------
+    public enum RaidState { PreRaid, RaidInProgress, RaidComplete, RaidFailed }
     private RaidState _currentState;
 
-    // ------- MUSIC -------
-    [SerializeField]
-    private RaidMusicController _musicController;
+    // ------- PUBLIC EVENTS -------
+    public event Action OnRaidTriggered;
+    public event Action OnRaidStart;
+    public event Action OnRaidComplete;
+    public event Action OnRaidFailed;
+    public event Action OnRaidReset; // For the PreRaid state
 
-
-    // ------- CUTSCENE -------
-    [SerializeField] private RaidCutsceneController _cutsceneController;
-
+    [Tooltip("If checked, the raid will NOT start automatically. It must be started by an external script (like a cutscene) calling BeginRaidSequence().")]
+    [SerializeField] private bool waitForExternalSignal = false;
 
     void Awake()
     {
@@ -52,135 +55,162 @@ public class RaidController : MonoBehaviour
         _timerTextController = new TextController(timerText);
         _postRaidTextController = new TextController(postRaidText);
         _enemiesRemainingTextController = new TextController(enemiesRemainingText);
+        _totalNumberOfEnemies = _raidConfig.Waves.Sum(wave => wave.enemies.Sum(enemyData => enemyData.count));
         TransitionToPreRaidState();
     }
 
-    void Start()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        _cutsceneController.OnIntroCutsceneFinished += TransitionToPreWaveState;
+        if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
+        {
+            OnRaidTriggered?.Invoke();
+            GetComponent<Collider2D>().enabled = false;
+            if (!waitForExternalSignal)
+            {
+                BeginRaidSequence();
+            }
+        }
     }
 
-    void OnDestroy()
+    public void BeginRaidSequence()
     {
-        _cutsceneController.OnIntroCutsceneFinished -= TransitionToPreWaveState;
+        TransitionToRaidInProgressState();
+        var spawnStartTimesList = new List<float>();
+        float schedulingTimePointer = _masterTimer;
+        foreach (WaveConfig wave in _raidConfig.Waves)
+        {
+            float spawnStartTime = schedulingTimePointer + wave.countdown;
+            StartCoroutine(ScheduleWave(wave, spawnStartTime));
+            spawnStartTimesList.Add(spawnStartTime);
+            schedulingTimePointer += wave.totalDuration;
+        }
+
+        spawnStartTimesList.Sort();
+        _wavesSpawnStartTimes = new Queue<float>(spawnStartTimesList);
+    }
+
+    private IEnumerator ScheduleWave(WaveConfig wave, float spawnStartTime)
+    {
+        float alertTextTime = spawnStartTime - wave.countdown;
+        yield return StartCoroutine(WaitUntilMasterTimer(alertTextTime));
+
+        _alertTextController.SetText(wave.countDownText);
+        DisplayTextThenFadeOut(_alertTextController);
+
+        yield return StartCoroutine(WaitUntilMasterTimer(spawnStartTime));
+
+        _alertTextController.SetText(wave.waveStartText);
+        DisplayTextThenFadeOut(_alertTextController);
+
+        yield return StartCoroutine(SpawnWaveEnemiesOverIntervals(wave));
+    }
+    private IEnumerator WaitUntilMasterTimer(float targetTime)
+    {
+        float waitTime = targetTime - _masterTimer;
+        if (waitTime > 0)
+        {
+            yield return new WaitForSeconds(waitTime);
+        }
     }
 
     void Update()
     {
-        if (_currentState == RaidState.PreWave)
+        if (_currentState == RaidState.RaidInProgress)
         {
-            UpdateTimer();
-
-            if (_timeBeforeNextWaveInSeconds <= 0)
-                TransitionToWaveInProgressState();
-        }
-        else if (_currentState == RaidState.WaveInProgress)
-        {
-            if (PlayerManager.Instance.GetPercentHealth() < _losingHealthPercentage)
+            TickMasterTimer();
+            ShowEnemiesCount();
+            bool allEnemiesWereSpawned = AllEnemiesWereSpawned;
+            bool allSpawnedEnemiesAreDead = AllSpawnedEnemiesAreDead;
+            
+            if (allEnemiesWereSpawned && allSpawnedEnemiesAreDead)
             {
-                TransitionToRaidFailedState();
-                _activeEnemies.Clear();
-                RemoveEnemiesCountText();
-                return;
+                TransitionToRaidCompleteState();
             }
-
-            if (allCurrentWaveEnemiesSpawned && allActiveEnemiesAreDead)
+            else if (IsSpawning || (allEnemiesWereSpawned && !allSpawnedEnemiesAreDead))
             {
-                if (_currentWaveIndex + 1 < raidConfig.waves.Count)
-                    TransitionToPreWaveState();
+                _timerTextController.SetText("00:00");
+                FlashTimerWhiteRed();
+            }
+            else // counting down
+            {
+                float timeTillNextSpawn = GetTimeTillNextWaveSpawn();
+
+                if (timeTillNextSpawn <= 5f)
+                {
+                    FlashTimerWhiteRed();
+                }
                 else
-                    TransitionToRaidCompleteState();
-                _activeEnemies.Clear();
-                RemoveEnemiesCountText();
+                {
+                    timerText.color = Color.white;
+                }
+                ShowTimer(timeTillNextSpawn);
             }
-            else
-                UpdateEnemiesCountText();
         }
     }
-    
-    private void UpdateTimer()
+
+    private void TickMasterTimer()
     {
-        _tickTimer += Time.deltaTime;
-        if (_tickTimer >= 1f)
+        _masterTimer += Time.deltaTime;
+    }
+
+    private void FlashTimerWhiteRed()
+    {
+        bool isOddSeconds = ((int)_masterTimer & 1) == 1;
+        timerText.color = isOddSeconds ? Color.white : Color.red;
+    }
+
+    private void ShowTimer(float time)
+    {
+        _timerTextController.SetText(Utils.FormatTime(time));
+        _timerTextController.SetTextVisible();
+    }
+    
+    private float GetTimeTillNextWaveSpawn()
+    {
+        while (_wavesSpawnStartTimes.Count > 0 && _wavesSpawnStartTimes.First() < _masterTimer)
         {
-            _tickTimer = 0f;
-            _timeBeforeNextWaveInSeconds--;
-            if (_timeBeforeNextWaveInSeconds >= 0)
-            {
-                _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
-            }
+            _wavesSpawnStartTimes.Dequeue();
         }
+
+        return _wavesSpawnStartTimes.Count == 0 ? 0f :  _wavesSpawnStartTimes.First() - _masterTimer;
     }
 
     private void TransitionToPreRaidState()
     {
         _currentState = RaidState.PreRaid;
-        _currentWaveIndex = -1;
-        _musicController?.Stop();
+        OnRaidReset?.Invoke();
     }
 
-    private void TransitionToPreWaveState()
+    private void TransitionToRaidInProgressState()
     {
-        _currentState = RaidState.PreWave;
-        StartNextWave();
-        _alertTextController.SetText(currentWave.countDownText);
-        DisplayTextThenFade(_alertTextController);
-        _musicController?.PlayPreWave();
-    }
-
-    private void TransitionToWaveInProgressState()
-    {
-        _currentState = RaidState.WaveInProgress;
-        _alertTextController.SetText(currentWave.waveStartText);
-        DisplayTextThenFade(_alertTextController);
-        StartCoroutine(SpawnWaveEnemiesOverIntervals());
+        _masterTimer = 0f;
+        _currentState = RaidState.RaidInProgress;
+        UpdateEnemiesCountText();
         ShowEnemiesCount();
-        _musicController?.PlayInProgress();
+        OnRaidStart?.Invoke();
     }
 
     private void TransitionToRaidCompleteState()
     {
         _currentState = RaidState.RaidComplete;
-        DisplayTextThenFade(_postRaidTextController);
-        _musicController?.PlayPostRaid();
-        _cutsceneController.PlayOutroCutscene();
+        DisplayTextThenFadeOut(_postRaidTextController);
+        RemoveEnemiesCountText();
+        _timerTextController.SetTextInvisible();
+        OnRaidComplete?.Invoke();
     }
 
     private void TransitionToRaidFailedState()
     {
         _currentState = RaidState.RaidFailed;
-        _musicController?.PlayPostRaid();
-        _cutsceneController.PlayOutroCutscene();
+        OnRaidFailed?.Invoke();
     }
 
+    private bool AllSpawnedEnemiesAreDead => !_spawnedEnemies.Any(enemy => enemy != null);
+    private bool IsSpawning => _wavesCurrentlySpawning.Count > 0;
 
-    private WaveConfig currentWave => raidConfig.waves[_currentWaveIndex];
-    private bool allActiveEnemiesAreDead => !_activeEnemies.Any(enemy => enemy != null);
-    private bool allCurrentWaveEnemiesSpawned => _activeEnemies.Count == currentWave.enemies.Sum(enemyData => enemyData.count);
-    
+    private bool AllEnemiesWereSpawned => _totalNumberOfEnemies == _spawnedEnemies.Count;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && _currentState == RaidState.PreRaid)
-            _cutsceneController.PlayIntroCutscene();
-    }
-
-    private void StartNextWave()
-    {
-        _currentWaveIndex += 1;
-        StartTimer();
-        DisplayTextThenFade(_alertTextController);
-    }
-
-    private void StartTimer()
-    {
-        _timeBeforeNextWaveInSeconds = currentWave.countdown;
-        _timerTextController.SetText(Utils.FormatTime(_timeBeforeNextWaveInSeconds));
-        _timerTextController.SetTextVisible();
-        StartCoroutine(Utils.ExecuteFunctionAfterDelay(_timeBeforeNextWaveInSeconds + 0.5f, _timerTextController.SetTextInvisible));
-    }
-
-    private void DisplayTextThenFade(TextController controller)
+    private void DisplayTextThenFadeOut(TextController controller)
     {
         controller.SetTextVisible();
         const float baseTime = 1.5f;
@@ -196,36 +226,57 @@ public class RaidController : MonoBehaviour
         _enemiesRemainingTextController.SetTextVisible();
     }
 
-    private void UpdateEnemiesCountText() => _enemiesRemainingTextController.SetText($"Enemies Remaining: {_activeEnemies.Count(e => e != null)}");
-
-    private void RemoveEnemiesCountText() => StartCoroutine(_enemiesRemainingTextController.FadeOut(1f));
-    private IEnumerator SpawnWaveEnemiesOverIntervals()
+    private void UpdateEnemiesCountText()
     {
-        if (spawnPoints.Count == 0)
-            Debug.LogError("No spawn points assigned for raid wave.");
+        // 1. Get current enemy count (Inefficient, but simple)
+        int currentEnemies = _spawnedEnemies.Count(e => e != null);
 
-        List<EnemyData> enemiesToSpawn = new List<EnemyData>();
-
-        foreach (var enemyData in currentWave.enemies)
-            enemiesToSpawn.Add(new EnemyData { prefab = enemyData.prefab, count = enemyData.count, });
-
-        do
+        if (currentEnemies == 0)
         {
-            List<EnemyData> availableEnemies = enemiesToSpawn.FindAll(enemy => enemy.count > 0);
-            if (availableEnemies.Count == 0)
-                break;
+            _enemiesRemainingTextController.SetText(""); // Show nothing if no enemies
+            return;
+        }
 
-            EnemyData chosenEnemyData = availableEnemies[Random.Range(0, availableEnemies.Count)];
+        // --- THIS IS THE FIX ---
+        // 2. Create a collection of 💀 strings and join them
+        string skullText = string.Concat(Enumerable.Repeat("💀", currentEnemies));
 
-            Transform chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+        // 3. Set the text
+        _enemiesRemainingTextController.SetText(skullText);
+    }
+    private void RemoveEnemiesCountText() => StartCoroutine(_enemiesRemainingTextController.FadeOut(1f));
 
-            GameObject newEnemy = Instantiate(chosenEnemyData.prefab, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
+    private IEnumerator SpawnWaveEnemiesOverIntervals(WaveConfig wave)
+    {
+        if (_spawnPoints.Count == 0)
+        {
+            Debug.LogError("No spawn points assigned for raid wave.");
+            yield break;
+        }
 
-            _activeEnemies.Add(newEnemy);
+        _wavesCurrentlySpawning.Add(wave);
 
-            chosenEnemyData.count--;
+        List<GameObject> spawnPool = new();
+        foreach (var enemyData in wave.enemies) 
+        {
+            for (int _ = 0; _ < enemyData.count; _++) spawnPool.Add(enemyData.prefab);
+        }
 
-            yield return new WaitForSeconds(currentWave.spawnInterval);
-        } while (true);
+        Utils.ShuffleList(spawnPool);
+
+        foreach (GameObject enemyPrefab in spawnPool)
+        {
+            Transform chosenSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
+            GameObject newEnemy = Instantiate(enemyPrefab, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
+            _spawnedEnemies.Add(newEnemy);
+            yield return new WaitForSeconds(wave.spawnInterval);
+        }
+
+        _wavesCurrentlySpawning.Remove(wave);
+    }
+
+    public void EndRaid()
+    {
+        StopAllCoroutines(); // stop all waves
     }
 }

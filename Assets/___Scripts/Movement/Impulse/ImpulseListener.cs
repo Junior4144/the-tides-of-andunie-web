@@ -22,8 +22,7 @@ public class ImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
-        bool isDashing = otherCollider.GetComponentInParent<PlayerHeroMovement>().IsInDash();
-
-        _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection, isDashing);
+        // TODO: Don't apply dash multiplier to player units
+        _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection, PlayerManager.Instance.IsInDash());
     }  
 }
