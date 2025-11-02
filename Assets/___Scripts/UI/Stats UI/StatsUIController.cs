@@ -13,8 +13,6 @@ public class StatsUIController : MonoBehaviour
 
     private void OnEnable()
     {
-
-
         PlayerStatsManager.OnDamageChanged += UpdateDamage;
         PlayerStatsManager.OnMaxHealthChanged += UpdateMaxHP;
 
