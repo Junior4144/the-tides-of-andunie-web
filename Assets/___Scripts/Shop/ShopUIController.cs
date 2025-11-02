@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShopUIController : MonoBehaviour
 {
-    public static ShopUIController Instance { get; private set; }
+    public static ShopUIController Instance { get; private set; } // TODO consider changing this to be named manager
 
     [SerializeField] private Transform shopPanel;
     [SerializeField] private GameObject shopItemUIPrefab;

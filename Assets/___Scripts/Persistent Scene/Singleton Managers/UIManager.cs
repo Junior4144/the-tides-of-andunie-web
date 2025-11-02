@@ -131,7 +131,7 @@ public class UIManager : MonoBehaviour
         if (!TryResolveShop())
             return;
 
-        if (_ShopUI != null && _ShopUI.activeInHierarchy)
+        if (_ShopUI != null && _ShopUI.activeInHierarchy) // if shop UI is active -> deactivate
         {
             HideAll();
             return;
@@ -161,7 +161,7 @@ public class UIManager : MonoBehaviour
 
     private void TogglePause()
     {
-        HideAll();
+        //HideAll();
         if (_isPaused)
         {
             _PauseUI.SetActive(false);

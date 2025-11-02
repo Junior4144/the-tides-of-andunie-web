@@ -14,7 +14,6 @@ public class LSPlayerMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        // required for 2D navmesh
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
