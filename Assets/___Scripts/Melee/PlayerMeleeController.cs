@@ -1,49 +1,42 @@
 using UnityEngine;
 using System.Collections;
-using System;
+using UnityEngine.Rendering;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerMeleeController : MonoBehaviour
 {
     [SerializeField] private float damageDelay = 0;
     [SerializeField] private string _layerName;
     [SerializeField] private float _animDuration;
+    [SerializeField] private AudioClip _attackSound;
 
     private bool _isAttacking = false;
 
     [SerializeField] private PlayerAnimator _animator;
+    private AudioSource _audioSource;
 
-    //private Collider2D testing;
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     private Vector2 GetContactPoint(Collider2D otherCollider)
     {
-        //testing = otherCollider;
-
         Collider2D myCollider = GetComponent<Collider2D>();
         return otherCollider.ClosestPoint(transform.TransformPoint(myCollider.offset));
     }
 
-    // Contact point visualization
-    /*void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        
-        Vector2 closestPoint = testing.ClosestPoint(transform.TransformPoint(GetComponent<Collider2D>().offset));
-        Gizmos.DrawSphere(new Vector3(closestPoint.x, closestPoint.y, 0f), 0.2f);
-    }*/
-
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
-        
         if (
             IsEnemy(otherCollider) &&
-            health != null &&
+            otherCollider.GetComponent(typeof(IHealthController)) is IHealthController &&
             !_isAttacking
         )
         {
             ShieldController enemyShield = otherCollider.gameObject.GetComponent<ShieldController>();
             if (
-                enemyShield == null || 
+                enemyShield == null ||
                 !enemyShield.ShieldBlocks(GetContactPoint(otherCollider))
             )
             {
@@ -70,10 +63,19 @@ public class PlayerMeleeController : MonoBehaviour
         {
             _isAttacking = true;
             _animator.TriggerAttack();
+            PlayAttackSound();
             StartCoroutine(ResetAttackAnimation());
         }
         else
             Debug.LogWarning("Animator is Null. Playing no Animation");
+    }
+
+    private void PlayAttackSound()
+    {
+        if (_attackSound != null)
+            _audioSource.PlayOneShot(_attackSound, volumeScale: 0.4f);
+        else
+            Debug.LogWarning("[PlayerMeleeController] Attack sound is null. Playing no sound");
     }
 
     private IEnumerator ResetAttackAnimation()
