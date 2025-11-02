@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class RaidMusicController : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class RaidMusicController : MonoBehaviour
     [SerializeField] private AudioClip preWaveClip;
     [SerializeField] private AudioClip inProgressClip;
     [SerializeField] private AudioClip postRaidClip;
+    [SerializeField] private float postRaidMusicDelay = 0.5f;
+
+    private void Awake()
+    {
+        if (preWaveClip != null) preWaveClip.LoadAudioData();
+        if (inProgressClip != null) inProgressClip.LoadAudioData();
+        if (postRaidClip != null) postRaidClip.LoadAudioData();
+    }
 
     private void OnEnable()
     {
