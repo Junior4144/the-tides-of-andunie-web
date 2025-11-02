@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Collider2D))]
 public abstract class Collectable : MonoBehaviour
 {
     [SerializeField] protected AudioClip _pickupSound;
@@ -29,6 +31,9 @@ public abstract class Collectable : MonoBehaviour
 
     protected IEnumerator DestroyAfterSound()
     {
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+
         yield return new WaitForSeconds(_pickupSound.length);
         Destroy(gameObject);
     }
