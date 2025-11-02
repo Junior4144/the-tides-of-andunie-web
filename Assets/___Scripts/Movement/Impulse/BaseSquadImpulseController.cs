@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine.AI;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public abstract class BaseSquadImpulseController : MonoBehaviour
 {
     [Header("Impulse Settings")]
@@ -23,10 +24,12 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
     protected Rigidbody2D _heroRigidBody;
     protected NavMeshAgent _agent;
     protected List<Rigidbody2D> _squadMemberRigidbodies = new();
+    protected AudioSource _audioSource;
 
     protected virtual void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Update()
@@ -58,7 +61,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
         ApplyImpulseToUnits(impulseDirection, contactPoint, isDashing);
         StartCoroutine(AdjustSquadPosition());
         SpawnParticles(contactPoint, impulseDirection);
-        PlaySound(contactPoint);
+        PlaySound();
 
         _impulseTimer = _impulseDuration;
     }
@@ -123,7 +126,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
         Instantiate(_impulseParticlePrefab, position, rotation);
     }
 
-    private void PlaySound(Vector2 position)
+    private void PlaySound()
     {
         if (_impulseSound == null)
         {
@@ -131,6 +134,6 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
             return;
         }
 
-        AudioSource.PlayClipAtPoint(_impulseSound, position, 1.0f);
+        _audioSource.PlayOneShot(_impulseSound);
     }
 }

@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class EnemySquadImpulseListener : MonoBehaviour
 {
-    [SerializeField] private string _layerName = "Player";
+    [SerializeField] private string _layerName = "Friendly";
 
     private EnemySquadImpulseController _controller;
     private Rigidbody2D _rb;
 
-    void Start()
+    void Awake()
     {
         if (transform.parent != null)
             _rb = transform.parent.GetComponent<Rigidbody2D>();

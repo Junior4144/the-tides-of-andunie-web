@@ -27,6 +27,9 @@ public class InventoryDebugger : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
             PrintPlayerStats();
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            AddCoins();
     }
 
     private void DebugAddItem()
@@ -189,5 +192,10 @@ public class InventoryDebugger : MonoBehaviour
         Debug.Log($"Melee Damage: {PlayerStatsManager.Instance.MeleeDamage}");
         Debug.Log($"Max Health: {PlayerStatsManager.Instance.MaxHealth}");
         Debug.Log("==================================");
+    }
+
+    private void AddCoins()
+    {
+        CurrencyManager.Instance.AddCoins(10);
     }
 }
