@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class EnemyData
@@ -7,7 +8,6 @@ public class EnemyData
     public GameObject prefab;
     public int count;
 }
-
 
 [System.Serializable]
 public class WaveConfig
@@ -25,6 +25,6 @@ public class WaveConfig
     public string countDownText = "Enemies observed in the distance! Prepare to defend!!!";
 
     [Tooltip("The text that appears when the enemies start spawning.")]
-
     public string waveStartText = "Enemies are here! Attack!!!";
+    public float totalDuration => countdown + spawnInterval * enemies.Sum(enemyData => enemyData.count);
 }

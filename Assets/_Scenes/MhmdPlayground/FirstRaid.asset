@@ -12,18 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426be3247e6dad342b860d70d6f41aa0, type: 3}
   m_Name: FirstRaid
   m_EditorClassIdentifier: Assembly-CSharp::RaidConfig
-  waves:
+  Waves:
   - enemies:
-    - prefab: {fileID: 1040669209115769438, guid: fcbd6da086cb7f442ad90f76c81138cc, type: 3}
+    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
       count: 1
-    countdown: 3
+    countdown: 2
     spawnInterval: 1
-    countDownText: Enemies observed in the distance! Prepare to fight!!!
-    waveStartText: Enemies are here! Attack!!!
-  - enemies:
-    - prefab: {fileID: 1040669209115769438, guid: fcbd6da086cb7f442ad90f76c81138cc, type: 3}
-      count: 1
-    countdown: 3
-    spawnInterval: 1
-    countDownText: Another wave of enemies Coming up! Prepare to fight!!!
-    waveStartText: Enemies are here! Attack!!!
+    countDownText: Enemies observed in the distance!
+    waveStartText: Enemies are here! Fight!
+  RaidCompletionRewards: {fileID: 11400000, guid: 8256c6a4fb22eee42836c7eba0eea068, type: 2}
