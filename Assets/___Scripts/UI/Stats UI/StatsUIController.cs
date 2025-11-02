@@ -5,40 +5,58 @@ public class StatsUIController : MonoBehaviour
 {
     [Header("Stat Text References")]
     [SerializeField] private TextMeshProUGUI MaxHpText;
-    [SerializeField] private TextMeshProUGUI CurrentHpText;
-    [SerializeField] private TextMeshProUGUI DamageText;
+    [SerializeField] private TextMeshProUGUI MaxHpAdditiveText;
 
+
+    [SerializeField] private TextMeshProUGUI DamageText;
+    [SerializeField] private TextMeshProUGUI DamageAdditiveText;
 
     private void OnEnable()
     {
-        UpdateHP(PlayerManager.Instance.GetHealth(), 0f);
-        UpdateMaxHP(PlayerStatsManager.Instance.MaxHealth);
-        UpdateDamage(PlayerStatsManager.Instance.MeleeDamage);
 
-        PlayerHealthController.OnHealthChanged += UpdateHP;
+
         PlayerStatsManager.OnDamageChanged += UpdateDamage;
         PlayerStatsManager.OnMaxHealthChanged += UpdateMaxHP;
+
+        if (PlayerStatsManager.Instance != null)
+        {
+            UpdateMaxHP(PlayerStatsManager.Instance.MaxHealth, PlayerStatsManager.Instance.DefaultMaxHealth);
+            UpdateDamage(PlayerStatsManager.Instance.MeleeDamage, PlayerStatsManager.Instance.DefaultMeleeDamage);
+        }
     }
     private void OnDisable()
     {
-        PlayerHealthController.OnHealthChanged -= UpdateHP;
         PlayerStatsManager.OnDamageChanged -= UpdateDamage;
         PlayerStatsManager.OnMaxHealthChanged -= UpdateMaxHP;
     }
 
-    public void UpdateHP(float currentHealth, float _)
-    {
-        CurrentHpText.text = currentHealth.ToString();
-    }
 
-    public void UpdateMaxHP(float maxHealth)
+    public void UpdateMaxHP(float maxHealth, float defaultMaxHealth)
     {
+        float additive = maxHealth - defaultMaxHealth;
+
         MaxHpText.text = maxHealth.ToString();
+
+        if (additive > 0)
+            MaxHpAdditiveText.text = $"(+{additive})";
+        else if (additive < 0)
+            MaxHpAdditiveText.text = $"({additive})";
+        else
+            MaxHpAdditiveText.text = "";
     }
 
-    public void UpdateDamage(float value)
+    public void UpdateDamage(float damage, float defaultDamage)
     {
-        DamageText.text = value.ToString();
+        float additive = damage - defaultDamage;
+        Debug.Log($"[STATSUICONTROLLER] damage: {damage}");
+        DamageText.text = damage.ToString();
+
+        if (additive > 0)
+            DamageAdditiveText.text = $"(+{additive})";
+        else if (additive < 0)
+            DamageAdditiveText.text = $"({additive})";
+        else
+            DamageAdditiveText.text = "";
     }
 
 }
