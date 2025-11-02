@@ -3,20 +3,17 @@ using UnityEngine.AI;
 
 public class PiratePatrol : MonoBehaviour
 {
-    public GameObject PatrolPoints;
+    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private float waitTime = 2f;
+    [SerializeField] private float awarenessDistance = 10f;
+    [SerializeField] private PirateAttributes _attributes;
 
-    private Transform[] patrolPoints;
-    public float waitTime = 2f;
-    public float awarenessDistance = 10f; // gimzmo to check distance -> you can see as it yellow circle
-
-    public Transform player;
+    private Transform player;
     private int currentPointIndex = 0;
     private NavMeshAgent agent;
     private float waitTimer;
     private Transform currentPatrolPoint;
     private Rigidbody2D _rigidbody;
-
-    [SerializeField] PirateAttributes _attributes;
 
     void Awake()
     {
@@ -25,46 +22,31 @@ public class PiratePatrol : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
-        //add prehab position into patrolPoints array
-        if (PatrolPoints != null)
-        {
-            int childCount = PatrolPoints.transform.childCount;
-            patrolPoints = new Transform[childCount];
-
-            for (int i = 0; i < childCount; i++)
-            {
-                patrolPoints[i] = PatrolPoints.transform.GetChild(i);
-            }
-        }
-
-        if (patrolPoints != null && patrolPoints.Length > 0)
+        if (HasPatrolPoints())
         {
             agent.SetDestination(patrolPoints[0].position);
             currentPatrolPoint = patrolPoints[0];
-        } else
-        {
-            agent.SetDestination(PlayerManager.Instance.transform.position);
         }
     }
 
+    private bool HasPatrolPoints() => patrolPoints != null && patrolPoints.Length > 0;
+
     void Update()
     {
-        if (!agent.enabled) return;
-
-        if (!PlayerManager.Instance) return;
+        if (!agent.enabled || !PlayerManager.Instance) return;
 
         player = PlayerManager.Instance.transform;
-
         RotateTowardsMovementDirection();
 
-        if (patrolPoints == null) return;
-
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        if (distanceToPlayer <= awarenessDistance)
+        if (!HasPatrolPoints())
         {
-            currentPatrolPoint = player.transform;
-            RotateTowardsMovementDirection();
+            agent.SetDestination(player.position);
+            return;
+        }
+
+        if (Vector2.Distance(transform.position, player.position) <= awarenessDistance)
+        {
+            currentPatrolPoint = player;
             agent.SetDestination(player.position);
             return;
         }
@@ -77,7 +59,7 @@ public class PiratePatrol : MonoBehaviour
             {
                 currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
                 currentPatrolPoint = patrolPoints[currentPointIndex];
-                agent.SetDestination(patrolPoints[currentPointIndex].position);
+                agent.SetDestination(currentPatrolPoint.position);
                 waitTimer = 0f;
             }
         }

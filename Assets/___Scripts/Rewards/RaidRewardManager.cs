@@ -50,6 +50,7 @@ public class RaidRewardManager : MonoBehaviour
     {
         yield return new WaitForSeconds(showRewardsDelay);
         PlayRewardSound();
+        yield return new WaitForSeconds(0.1f);
         RewardUI.ShowRewards(rewards);
     }
 

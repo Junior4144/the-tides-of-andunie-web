@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerHeroMovement : MonoBehaviour
 {
     public event Action<Vector2, float, float> OnPlayerDash;
@@ -10,19 +11,21 @@ public class PlayerHeroMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float rotationSpeed = 200f;
-    
+
     [Header("Dash")]
     [SerializeField] private float dashForce = 30f;
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float dashCooldown = 0.7f;
+    [SerializeField] private AudioClip dashSound;
 
     [Header("Footstep Settings")]
     [SerializeField] private float footstepInterval = 0.5f;
-    
+
     private Rigidbody2D _rb;
     private PlayerSquadImpulseController _impulseController;
     private AldarionWalkingSoundController _footstepController;
-    
+    private AudioSource _audioSource;
+
     private bool _isDashing = false;
     private bool _canDash = true;
     private bool _isWalking = false;
@@ -33,6 +36,7 @@ public class PlayerHeroMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _impulseController = GetComponent <PlayerSquadImpulseController>();
         _footstepController = GetComponentInChildren<AldarionWalkingSoundController>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -64,7 +68,7 @@ public class PlayerHeroMovement : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal");
 
         if (Math.Abs(yInput) > 0)
-            _rb.linearVelocity = transform.up * yInput * moveSpeed;
+            _rb.linearVelocity = moveSpeed * yInput * transform.up;
 
         if (Math.Abs(xInput) > 0)
             _rb.angularVelocity = -xInput * rotationSpeed;
@@ -72,12 +76,14 @@ public class PlayerHeroMovement : MonoBehaviour
 
     private IEnumerator DashCoroutine()
     {
+        PlayDashSound();
+
         _isDashing = true;
         _canDash = false;
 
         _rb.linearVelocity = Vector2.zero;
         _rb.AddForce(transform.up * dashForce, ForceMode2D.Impulse);
-
+        
         OnPlayerDash?.Invoke(transform.up, dashForce, dashDuration);
 
         yield return new WaitForSeconds(dashDuration);
@@ -86,7 +92,15 @@ public class PlayerHeroMovement : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         _canDash = true;
     }
-    
+
+    private void PlayDashSound()
+    {
+        if (dashSound != null)
+            _audioSource.PlayOneShot(dashSound, volumeScale: 0.3f);
+        else
+            Debug.LogWarning("[PlayerHeroMovement] Dash sound is null. Playing no sound");
+    }
+
     private void HandleWalkingSounds()
     {
         if (!_isWalking)

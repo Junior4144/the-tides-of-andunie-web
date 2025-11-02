@@ -52,9 +52,8 @@ MonoBehaviour:
   timerText: {fileID: 2188252105263313793}
   postRaidText: {fileID: 7937583416519018540}
   enemiesRemainingText: {fileID: 5845022087308914382}
-  raidConfig: {fileID: 11400000, guid: 1b238a33119ad8d4f9e971388e615d08, type: 2}
-  spawnPoints:
-  - {fileID: 0}
+  _raidConfig: {fileID: 0}
+  _spawnPoints: []
   waitForExternalSignal: 0
 --- !u!61 &1110409073488236925
 BoxCollider2D:
@@ -119,6 +118,7 @@ MonoBehaviour:
   preWaveClip: {fileID: 8300000, guid: ec3f6c779a23c5244bf0364bdc8c1c7b, type: 3}
   inProgressClip: {fileID: 8300000, guid: 4ea1cc88a6b94604f8973de925d569fe, type: 3}
   postRaidClip: {fileID: 8300000, guid: 36d346f12ef004841be40071ae144ae3, type: 3}
+  postRaidMusicDelay: 0.5
 --- !u!82 &8115295088577124013
 AudioSource:
   m_ObjectHideFlags: 0

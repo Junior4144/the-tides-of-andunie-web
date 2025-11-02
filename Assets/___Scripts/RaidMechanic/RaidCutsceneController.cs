@@ -8,6 +8,7 @@ public class RaidCutsceneController : MonoBehaviour
     [Header("Raid Connection")]
     [SerializeField] private RaidController raidController;
     [SerializeField] private bool skipIntroCutscene = false;
+    [SerializeField] private bool skipOutroCutscene = false;
 
     [Header("Cutscene Assets")]
     [SerializeField] private PlayableDirector _introCutscene;
@@ -65,6 +66,8 @@ public class RaidCutsceneController : MonoBehaviour
 
     private void PlayOutroCutscene()
     {
+        if (skipOutroCutscene) return;
+
         GameManager.Instance.SetState(GameState.Cutscene);
         PrioritizeCamera(_outroCutsceneCamera);
         _outroCutscene.Play();
