@@ -31,9 +31,16 @@ public class InventoryManager : MonoBehaviour
     public bool AddItem(IInventoryItem item, int quantity = 1)
     {
         if (!IsValidAddition(item, quantity)) return false;
-        if (HasItem(item.ItemId)) return AddToExistingSlot(item.ItemId, quantity);
-        
-        return CreateNewSlot(item, quantity);
+        if (HasItem(item.ItemId))
+        {
+            bool result =  AddToExistingSlot(item.ItemId, quantity);
+            OnInventoryChanged?.Invoke();
+            return result;
+        }
+
+        bool res = CreateNewSlot(item, quantity);
+        OnInventoryChanged?.Invoke();
+        return res;
     }
 
     public bool RemoveItem(string itemId, int quantity = 1)
