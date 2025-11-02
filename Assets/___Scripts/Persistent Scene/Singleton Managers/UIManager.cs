@@ -96,7 +96,7 @@ public class UIManager : MonoBehaviour
             case GameState.LevelSelector:
                 _InventoryUI_MainPrehab.SetActive(true);
                 _HealthBarHUD.SetActive(false);
-                _CoinHUD.SetActive(false);
+                _CoinHUD.SetActive(true);
 
                 if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
                 break;
@@ -161,6 +161,7 @@ public class UIManager : MonoBehaviour
 
     private void TogglePause()
     {
+        HideAll();
         if (_isPaused)
         {
             _PauseUI.SetActive(false);
