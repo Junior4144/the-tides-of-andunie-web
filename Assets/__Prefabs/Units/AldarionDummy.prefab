@@ -4964,6 +4964,7 @@ GameObject:
   - component: {fileID: 3738890781187070372}
   - component: {fileID: 5854737754245490132}
   - component: {fileID: 1458417207652074467}
+  - component: {fileID: 3417496988110385828}
   m_Layer: 7
   m_Name: AldarionDummy
   m_TagString: Player
@@ -5030,8 +5031,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
   _bubblePrefab: {fileID: 8188844361341347319, guid: 8527841c2ddaeea44b43f264e353577c, type: 3}
   _offsetX: 0
-  _offsetY: 2.5
+  _offsetY: 1.5
   _camera: {fileID: 0}
+  _typeSound: {fileID: 8300000, guid: 3aed475c7c7e1b84e98a0f50c58f2b4b, type: 3}
 --- !u!82 &1458417207652074467
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5045,7 +5047,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5129,6 +5131,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &3417496988110385828
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4321275065208990504}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4755559374076988478
 GameObject:
   m_ObjectHideFlags: 0
