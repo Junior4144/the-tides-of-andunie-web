@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7361892367648708929}
   - component: {fileID: 585788219599681380}
+  - component: {fileID: 5861763741894850605}
   m_Layer: 0
   m_Name: BattleBatPrehab
   m_TagString: Untagged
@@ -49,3 +50,19 @@ MonoBehaviour:
   stackable: 1
   maxStackSize: 10
   inventoryIconPrefab: {fileID: 2061766692026739118, guid: dc21eda95f555bb43b358817f2961a66, type: 3}
+  _effects:
+  - {fileID: 5861763741894850605}
+--- !u!114 &5861763741894850605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726475722721263400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2266e0143b156f046a63eb51eff4cd14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeDamageEffect
+  damageIncrease: 20
+  isPercentage: 0
