@@ -7,12 +7,16 @@ public class ZoomResponsiveIcon : MonoBehaviour
     private RectTransform _rect;
 
     [Header("Zoom Settings")]
-    public float minZoom = 10f;     // Closest to ground
-    public float maxZoom = 340f;    // Farthest view
+    public float minZoom = 10f;
+    public float maxZoom = 340f;
 
-    [Header("Icon Size (UI)")]
-    public float minSize = 5f;      // when zoomed in
-    public float maxSize = 25f;     // when zoomed out
+    [Header("Icon Width (UI)")]
+    public float minWidth = 10f;
+    public float maxWidth = 20f;
+
+    [Header("Icon Height (UI)")]
+    public float minHeight = 7f;
+    public float maxHeight = 14f;
 
     [Header("Fading")]
     public float fadeStart = 15f;
@@ -40,10 +44,11 @@ public class ZoomResponsiveIcon : MonoBehaviour
 
         float zoom = _camera.orthographicSize;
 
-        // Scale icon with zoom
+        // Scale width & height independently
         float t = Mathf.InverseLerp(minZoom, maxZoom, zoom);
-        float size = Mathf.Lerp(minSize, maxSize, t);
-        _rect.sizeDelta = new Vector2(size, size);
+        float width = Mathf.Lerp(minWidth, maxWidth, t);
+        float height = Mathf.Lerp(minHeight, maxHeight, t);
+        _rect.sizeDelta = new Vector2(width, height);
 
         // Fade with zoom
         float fadeT = Mathf.InverseLerp(fadeEnd, fadeStart, zoom);
