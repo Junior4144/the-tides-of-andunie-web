@@ -185,13 +185,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192681414}
+  - component: {fileID: 192681415}
   m_Layer: 7
   m_Name: DummySquadCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &192681414
 Transform:
   m_ObjectHideFlags: 0
@@ -208,6 +209,18 @@ Transform:
   - {fileID: 945115617}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &192681415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192681413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f743b341980bd4bbbe4c3bc9bdd10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &193368164
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,11 +476,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.014742
+      value: -29.44
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9148693
+      value: 1.42
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1573,24 +1586,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1477891125215377208, guid: b0483327264405149949ae0d9c70d19b, type: 3}
   m_PrefabInstance: {fileID: 296744528}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1238646506 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1793183974941345552, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-  m_PrefabInstance: {fileID: 1938871541}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1238646509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238646506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdacf22dd5d741245bd72a32dd59722f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSquadImpulseListener
-  _layerName: Enemy
 --- !u!1001 &1261103059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1602,6 +1597,10 @@ PrefabInstance:
     - target: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
       propertyPath: m_Name
       value: PirateSquad0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606045543428363586, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
       propertyPath: PatrolPoints
@@ -32045,29 +32044,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 192681414}
     m_Modifications:
-    - target: {fileID: 1460679851199021258, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1460679851199021258, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 1741255900045499738, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
       propertyPath: m_Name
       value: PlayerMelee
       objectReference: {fileID: 0}
-    - target: {fileID: 1967221963042940464, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 3594781517951141403, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.19
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 3594781517951141403, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.52
+      value: 1.96
       objectReference: {fileID: 0}
     - target: {fileID: 3594781517951141403, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32104,10 +32091,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1793183974941345552, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1238646509}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
 --- !u!1 &1949926992
 GameObject:
@@ -32168,11 +32152,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.190159
+      value: -26.99
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.328491
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34991,7 +34975,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8624960192997306231, guid: 6de3c3ff1506d674dbbbf93e090f8a42, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8624960192997306231, guid: 6de3c3ff1506d674dbbbf93e090f8a42, type: 3}
       propertyPath: testItemObject

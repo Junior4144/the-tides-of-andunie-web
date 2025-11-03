@@ -317,6 +317,51 @@ Transform:
   - {fileID: 4199917997071080750}
   m_Father: {fileID: 972147263853389966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4533156573625248925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6633546317897590661}
+  - component: {fileID: 1240597475055352430}
+  m_Layer: 7
+  m_Name: SquadSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6633546317897590661
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533156573625248925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 972147263853389966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1240597475055352430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533156573625248925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15359ddbfc9de694bb29285f5e9d67d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  spawnKey: 109
 --- !u!1 &6549749987079265144
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +557,7 @@ Transform:
   - {fileID: 36867604486992053}
   - {fileID: 8353749739833740229}
   - {fileID: 2653729124395941360}
+  - {fileID: 6633546317897590661}
   - {fileID: 2694864086039254093}
   - {fileID: 7022903041274511878}
   m_Father: {fileID: 0}
@@ -560,7 +606,7 @@ MonoBehaviour:
   dashForce: 30
   dashDuration: 0.2
   dashCooldown: 0.7
-  dashSound: {fileID: 0}
+  dashSound: {fileID: 8300000, guid: 45587d4c2a06a1d41a2771275bcd0eed, type: 3}
   footstepInterval: 0.3
 --- !u!114 &5365342492064239941
 MonoBehaviour:

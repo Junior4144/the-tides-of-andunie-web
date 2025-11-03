@@ -96,7 +96,7 @@ public class PlayerHeroMovement : MonoBehaviour
     private void PlayDashSound()
     {
         if (dashSound != null)
-            _audioSource.PlayOneShot(dashSound, volumeScale: 0.3f);
+            _audioSource.PlayOneShot(dashSound, volumeScale: 0.0f);
         else
             Debug.LogWarning("[PlayerHeroMovement] Dash sound is null. Playing no sound");
     }
