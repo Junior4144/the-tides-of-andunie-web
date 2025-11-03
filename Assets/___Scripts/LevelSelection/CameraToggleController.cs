@@ -9,11 +9,13 @@ public class CameraToggleController : MonoBehaviour
     {
         UIEvents.OnRequestShopToggle += HandleCameraToggle;
         UIEvents.OnRequestInventoryToggle += HandleCameraToggle;
+        UIEvents.OnRequestPauseToggle += HandleCameraToggle;
     }
     private void OnDisable()
     {
         UIEvents.OnRequestShopToggle -= HandleCameraToggle;
         UIEvents.OnRequestInventoryToggle -= HandleCameraToggle;
+        UIEvents.OnRequestPauseToggle -= HandleCameraToggle;
     }
 
     private void HandleCameraToggle()

@@ -8,11 +8,13 @@ public class LSModelToggle : MonoBehaviour
     {
         UIEvents.OnRequestShopToggle += HandleModelToggle;
         UIEvents.OnRequestInventoryToggle += HandleModelToggle;
+        UIEvents.OnRequestPauseToggle += HandleModelToggle;
     }
     private void OnDisable()    
     {   
         UIEvents.OnRequestShopToggle -= HandleModelToggle;
         UIEvents.OnRequestInventoryToggle -= HandleModelToggle;
+        UIEvents.OnRequestPauseToggle -= HandleModelToggle;
     }
 
     private void HandleModelToggle()

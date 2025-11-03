@@ -33,11 +33,10 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) return;
-
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
     }
-    
+
     private void OnEnable()
     {
         SceneManager.activeSceneChanged += OnSceneChanged;
@@ -50,7 +49,6 @@ public class UIManager : MonoBehaviour
     private IEnumerator Start()
     {
         yield return null;
-        Debug.Log($"UI MANAGER: {_ShopUI}");
         HandleGameStateChanged(GameManager.Instance.CurrentState);
     }
         
