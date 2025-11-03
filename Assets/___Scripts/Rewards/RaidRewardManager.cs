@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 [RequireComponent(typeof(AudioSource))]
 public class RaidRewardManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class RaidRewardManager : MonoBehaviour
     [SerializeField] private GameObject RewardItemUIPrefab;
     [SerializeField] private float showRewardsDelay = 0.5f;
     [SerializeField] private AudioClip rewardSound;
+    public event Action OnRewardCollected;
 
     private AudioSource _audioSource;
 
@@ -44,6 +46,11 @@ public class RaidRewardManager : MonoBehaviour
         }
 
         StartCoroutine(ShowRewardsAfterDelay(rewards));
+    }
+
+    public void ReportRewardCollected()
+    {
+        OnRewardCollected?.Invoke();
     }
 
     private IEnumerator ShowRewardsAfterDelay(List<RewardListing> rewards)
