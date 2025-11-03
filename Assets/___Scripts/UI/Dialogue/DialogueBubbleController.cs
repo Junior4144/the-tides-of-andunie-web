@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioSource))]
 public class DialogueBubbleController : MonoBehaviour
 {
     const float defaultDuration = 3f;
@@ -12,15 +13,18 @@ public class DialogueBubbleController : MonoBehaviour
     [SerializeField] private float _offsetX = 0f;
     [SerializeField] private float _offsetY = 3f;
     [SerializeField] private Camera _camera;
+    [SerializeField] private AudioClip _typeSound;
 
     private GameObject _bubbleInstance;
     private TextMeshProUGUI _textMesh;
     private Coroutine _typeDialogueCoroutine;
     private bool _isShowingBubble = false;
+    private AudioSource _audioSource;
 
 
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         _bubbleInstance = Instantiate(_bubblePrefab, GetNewBubblePosition(), Quaternion.identity);
         _bubbleInstance.SetActive(false);
 
@@ -45,7 +49,6 @@ public class DialogueBubbleController : MonoBehaviour
 
     private Vector3 GetNewBubblePosition() =>
         new(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
-
 
     public void ShowBubbleFromSignal(string text)
     {
@@ -84,12 +87,24 @@ public class DialogueBubbleController : MonoBehaviour
             displayedText = _textMesh.text.Insert(alphaIndex, htmlAlpha);
             _textMesh.text = displayedText;
 
+            PlayTypeSound();
             yield return new WaitForSeconds(1 / typeSpeed);
         }
 
         yield return new WaitForSeconds(secondsAfterTyping);
         _bubbleInstance.SetActive(false);
         _isShowingBubble = false;
+    }
+
+    private void PlayTypeSound()
+    {
+        if (_audioSource == null || _typeSound == null)
+        {
+            Debug.LogWarning("[DialogueBubble] Missing audio component");
+            return;
+        }
+
+        _audioSource.PlayOneShot(_typeSound);
     }
 
     private void OnDestroy()
