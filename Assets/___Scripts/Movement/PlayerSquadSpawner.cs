@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerSquadSpawner : MonoBehaviour
@@ -13,50 +12,48 @@ public class PlayerSquadSpawner : MonoBehaviour
 
     private void SpawnSquadFormation()
     {
-        if (!TryGetManager(out var manager)) return;
+        if (SquadFormationManager.Instance == null)
+        {
+            Debug.LogError("[PlayerSquadSpawner] SquadFormationManager.Instance is null");
+            return;
+        }
 
         Vector2 playerPos = transform.position;
-        var formation = manager.GetFormation();
+        IReadOnlyList<FormationPosition> formation = SquadFormationManager.Instance.GetFormation();
 
         LogSpawnStart(playerPos, formation.Count);
-        SpawnAllUnits(formation, playerPos);
-    }
 
-    private void SpawnAllUnits(IReadOnlyList<FormationPosition> formation, Vector2 playerPos)
-    {
         foreach (var unit in formation)
-            SpawnUnitAtOffset(unit, playerPos);
+            SpawnUnit(unit, playerPos);
     }
 
-    private void SpawnUnitAtOffset(FormationPosition unit, Vector2 playerPos)
+    private void SpawnUnit(FormationPosition unit, Vector2 playerPos)
     {
         GameObject prefab = SquadFormationManager.Instance.GetPrefab(unit.unitType);
 
-        if (prefab == null)
-        {
-            Debug.LogError($"[PlayerSquadSpawner] No prefab found for {unit.unitType}");
-            return;
-        }
+        if (!ValidatePrefab(prefab, unit.unitType)) return;
 
         Vector2 spawnPos = playerPos + unit.offset;
         GameObject spawned = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        if (spawned.TryGetComponent<PlayerSquadFollower>(out var follower))
-        {
-            follower.Initialize(unit.offset);
-        }
-
-        LogUnitSpawned(unit.unitType.ToString(), spawnPos, unit.offset);
+        InitializeFollower(spawned, unit.offset);
+        LogUnitSpawned(unit.unitType, spawnPos, unit.offset);
     }
 
-    private bool TryGetManager(out SquadFormationManager manager)
+    private bool ValidatePrefab(GameObject prefab, UnitType unitType)
     {
-        manager = SquadFormationManager.Instance;
+        if (prefab != null) return true;
 
-        if (manager != null) return true;
-
-        Debug.LogError("[PlayerSquadSpawner] FormationSquadManager.Instance is null. Cannot spawn squad.");
+        Debug.LogError($"[PlayerSquadSpawner] No prefab found for {unitType}");
         return false;
+    }
+
+    private void InitializeFollower(GameObject spawned, Vector2 offset)
+    {
+        if (spawned.TryGetComponent<PlayerSquadFollower>(out var follower))
+        {
+            follower.Initialize(offset);
+        }
     }
 
     private void LogSpawnStart(Vector2 playerPos, int unitCount)
@@ -66,9 +63,9 @@ public class PlayerSquadSpawner : MonoBehaviour
         Debug.Log($"[PlayerSquadSpawner] Total units {unitCount}");
     }
 
-    private void LogUnitSpawned(string unitName, Vector2 spawnPos, Vector2 offset)
+    private void LogUnitSpawned(UnitType unitType, Vector2 spawnPos, Vector2 offset)
     {
-        Debug.Log($"[PlayerSquadSpawner] Spawned unit {unitName}");
+        Debug.Log($"[PlayerSquadSpawner] Spawned unit {unitType}");
         Debug.Log($"[PlayerSquadSpawner] Spawn position {spawnPos}");
         Debug.Log($"[PlayerSquadSpawner] Offset {offset}");
     }
