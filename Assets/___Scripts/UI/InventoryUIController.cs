@@ -8,11 +8,13 @@ public class InventoryUIController : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject slotPrefab;
     public int slotCount;
-    public GameObject[] itemPrefabs;
+    public IInventoryItem[] inventoryItems;
 
     void Awake()
     {
+        inventoryItems = new IInventoryItem[slotCount];
         InitializeSlots();
+
     }
 
     void OnEnable()
@@ -33,57 +35,20 @@ public class InventoryUIController : MonoBehaviour
 
         for (int i = 0; i < slotCount; i++)
         {
-            Slot slot = Instantiate(slotPrefab, InventoryPanel.transform).GetComponent<Slot>();
-            if (i < itemPrefabs.Length)
+            var slot = Instantiate(slotPrefab, InventoryPanel.transform).GetComponent<Slot>();
+            if (inventoryItems[i] != null)
             {
-                GameObject item = Instantiate(itemPrefabs[i], slot.transform);
+                GameObject item = Instantiate(inventoryItems[i].InventoryIconPrefab, slot.transform);
                 RectTransform rect = item.GetComponent<RectTransform>();
                 rect.anchoredPosition = Vector2.zero;
                 rect.localScale = Vector3.one;
-                slot.currentItem = item;
+                slot.currentItem = inventoryItems[i];
             }
         }
 
         // ✅ Force Unity to rebuild the layout once all slots exist
         LayoutRebuilder.ForceRebuildLayoutImmediate(InventoryPanel.GetComponent<RectTransform>());
         Debug.Log($"[InventoryController] Initialized {slotCount} slots.");
-    }
-
-    public bool AddItem(GameObject itemPrefab)
-    {
-        Debug.Log($"[InventoryController] Checking {InventoryPanel.transform.childCount} slots...");
-
-        int index = 0;
-        foreach (Transform slotTransform in InventoryPanel.transform)
-        {
-            Slot slot = slotTransform.GetComponent<Slot>();
-            if (slot == null)
-            {
-                Debug.LogWarning($"[InventoryController] Child {index}: No Slot component!");
-            }
-            else
-            {
-                Debug.Log($"[InventoryController] Slot {index}: currentItem = {(slot.currentItem ? slot.currentItem.name : "null")}");
-                if (slot.currentItem == null)
-                {
-                    GameObject newItem = Instantiate(itemPrefab, slotTransform);
-                    RectTransform rect = newItem.GetComponent<RectTransform>();
-                    rect.anchoredPosition = Vector2.zero;
-                    rect.localScale = Vector3.one;
-                    slot.currentItem = newItem;
-
-                    // ✅ Force layout rebuild right after adding an item
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(InventoryPanel.GetComponent<RectTransform>());
-
-                    Debug.Log($"[InventoryController] ✅ Added {newItem.name} to Slot {index}");
-                    return true;
-                }
-            }
-            index++;
-        }
-
-        Debug.LogWarning("⚠️ Inventory full, could not add item.");
-        return false;
     }
 
     private void RefreshUI()
@@ -107,13 +72,16 @@ public class InventoryUIController : MonoBehaviour
                 continue;
             }
 
-            if (slot.currentItem)
+            // Destroy all child GameObjects inside this slot
+            for (int i = slotTransform.childCount - 1; i >= 0; i--)
             {
-                Destroy(slot.currentItem);
-                slot.currentItem = null;
+                Destroy(slotTransform.GetChild(i).gameObject);
                 cleared++;
             }
+
+            slot.currentItem = null;
         }
+
         Debug.Log($"[InventoryUI] Cleared {cleared} items");
 
         // 2) Rebuild from inventory data
@@ -147,16 +115,16 @@ public class InventoryUIController : MonoBehaviour
             }
 
             // Prefab must be a UI GameObject with RectTransform (NOT a Canvas)
-            GameObject prefab = invSlot.Item.InventoryIconPrefab;
-            if (!prefab)
+            IInventoryItem item = invSlot.Item;
+            if (!item.InventoryIconPrefab)
             {
                 Debug.LogWarning($"[InventoryUI] Item '{invSlot.Item.ItemName}' has no InventoryIconPrefab.");
                 slotIndex++;
                 continue;
             }
 
-            var newUIItem = Instantiate(prefab, slotTransform);
-            slot.currentItem = newUIItem;
+            var newUIItem = Instantiate(item.InventoryIconPrefab, slotTransform);
+            slot.currentItem = item;
 
             // ✅ set quantity text if exists
             var qtyText = newUIItem.GetComponentInChildren<TMP_Text>();
@@ -164,11 +132,14 @@ public class InventoryUIController : MonoBehaviour
             {
                 qtyText.text = invSlot.Quantity > 1 ? invSlot.Quantity.ToString() : "";
             }
+            if (qtyText == null)
+                Debug.LogWarning($"[InventoryUI] No TMP_Text found in '{item.InventoryIconPrefab.name}'");
+
             // Make sure it fits the slot visually
             var rect = newUIItem.GetComponent<RectTransform>();
             if (!rect)
             {
-                Debug.LogWarning($"[InventoryUI] Icon prefab '{prefab.name}' has no RectTransform (is it a UI prefab?).");
+                Debug.LogWarning($"[InventoryUI] Icon prefab '{item.InventoryIconPrefab.name}' has no RectTransform (is it a UI prefab?).");
             }
             else
             {
@@ -184,7 +155,7 @@ public class InventoryUIController : MonoBehaviour
             // Optional: ensure it has an Image
             var img = newUIItem.GetComponentInChildren<Image>();
             if (!img)
-                Debug.LogWarning($"[InventoryUI] Icon prefab '{prefab.name}' has no Image component.");
+                Debug.LogWarning($"[InventoryUI] Icon prefab '{item.InventoryIconPrefab.name}' has no Image component.");
 
             slotIndex++;
         }

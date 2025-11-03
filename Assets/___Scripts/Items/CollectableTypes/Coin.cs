@@ -1,19 +1,19 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour, ICollectable
+public class Coin : Collectable
 {
-    [SerializeField]
-    private int amount;
+    [SerializeField] private int _amount;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
-        Debug.Log("Coin Collider Triggered");
         HandlePickUp();
-        Destroy(gameObject);
+        
     }
 
-    public void HandlePickUp() =>
-        CurrencyManager.Instance.AddCoins(amount);
-
+    public void HandlePickUp()
+    {
+        CurrencyManager.Instance.AddCoins(_amount);
+        PlayPickupSound();
+    }
 }

@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class Grub : MonoBehaviour, ICollectable
+public class Grub : Collectable
 {
-    [SerializeField]
-    private int AmountOfHealth;
+    [SerializeField] private int _amountOfHealth;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player")) return;
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Friendly")) return;
         HandlePickUp();
     }
 
@@ -15,9 +14,7 @@ public class Grub : MonoBehaviour, ICollectable
     {
         if (PlayerManager.Instance.GetPercentHealth() > .98) return;
 
-        PlayerManager.Instance.AddHealth(AmountOfHealth);
-        Destroy(gameObject);
+        PlayPickupSound();
+        PlayerManager.Instance.AddHealth(_amountOfHealth);
     }
-
-
 }

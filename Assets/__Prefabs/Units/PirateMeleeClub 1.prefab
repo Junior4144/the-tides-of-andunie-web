@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4742777973402806684}
   - component: {fileID: 5068678838467012998}
-  - component: {fileID: 2529779608957201552}
+  - component: {fileID: 3431942342876772817}
   m_Layer: 6
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2171624999980729042}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalPosition: {x: 0.15, y: -0.488, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,10 +46,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 383
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -69,7 +69,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
---- !u!114 &2529779608957201552
+--- !u!114 &3431942342876772817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,9 +78,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2171624999980729042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fcfb1c2216b4e4888e75cc876fe2b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseListener
+  _layerName: Friendly
 --- !u!1 &5141889167527687833
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +187,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.183, y: -0.139}
+  m_Offset: {x: 0.15, y: -0.488}
   m_Radius: 0.5250422
 --- !u!114 &1227283080525761124
 MonoBehaviour:
@@ -326,6 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
   _isLeader: 0
+  _unitType: 1
 --- !u!195 &4073483057518027734
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -445,7 +447,7 @@ SpriteRenderer:
   m_SortingLayerID: -1736753453
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 315718883016047355, guid: af50e8cc11a59ab4cb4910f6b61948a8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 931f72579cc1c764b9fceacfaaea7961, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -517,13 +519,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6268526026557622871}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.017, y: 0.6, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.3272622, w: 0.94493353}
+  m_LocalPosition: {x: -0.252, y: 0.965, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8437175951080204677}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.205}
 --- !u!70 &3702356730712673629
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

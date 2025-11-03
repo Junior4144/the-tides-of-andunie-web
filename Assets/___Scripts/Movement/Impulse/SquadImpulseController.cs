@@ -25,13 +25,13 @@ public class SquadImpulseController : MonoBehaviour
 
     private float _impulseTimer = 0f;
     private Rigidbody2D _heroRigidBody;
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
 
-    private List<Rigidbody2D> _squadMemberRigidbodies = new List<Rigidbody2D>();
+    private List<Rigidbody2D> _squadMemberRigidbodies = new();
 
     void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
 
         _squadMemberRigidbodies.AddRange(
             GetComponentsInChildren<Rigidbody2D>()
@@ -46,7 +46,7 @@ public class SquadImpulseController : MonoBehaviour
     void Update()
     {
         if (_impulseTimer > 0) _impulseTimer -= Time.deltaTime;
-        else agent.enabled = true;
+        else _agent.enabled = true;
     }
 
     public bool IsInImpulse() => _impulseTimer > 0;

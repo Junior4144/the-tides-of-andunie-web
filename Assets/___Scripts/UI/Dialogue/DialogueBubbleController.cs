@@ -1,9 +1,7 @@
 using System.Collections;
-using NUnit.Framework.Internal;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class DialogueBubbleController : MonoBehaviour
 {
@@ -27,10 +25,12 @@ public class DialogueBubbleController : MonoBehaviour
         _bubbleInstance.SetActive(false);
 
         Canvas canvas = _bubbleInstance.GetComponentInChildren<Canvas>();
-        if (canvas != null && _camera != null)
-            canvas.worldCamera = _camera;
-        else
-            Debug.LogWarning("Camera was not attached to dialogue bubble");
+
+        // TODO: Check if this code is necessary
+        // if (canvas != null && _camera != null)
+        //     canvas.worldCamera = _camera;
+        // else
+        //     Debug.LogWarning("Camera was not attached to dialogue bubble");
 
         _textMesh = _bubbleInstance.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -44,7 +44,7 @@ public class DialogueBubbleController : MonoBehaviour
     }
 
     private Vector3 GetNewBubblePosition() =>
-        new Vector3(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
+        new(transform.position.x + _offsetX, transform.position.y + _offsetY, 0f);
 
 
     public void ShowBubbleFromSignal(string text)
@@ -65,9 +65,6 @@ public class DialogueBubbleController : MonoBehaviour
         _textMesh.enableAutoSizing = fontSize <= 0f;
         if (fontSize > 0f)
             _textMesh.fontSize = fontSize;
-
-        /*if (_hideCoroutine != null)
-            StopCoroutine(_hideCoroutine);*/
 
         _typeDialogueCoroutine = StartCoroutine(TypeDialogueText(text, duration));
     }
@@ -99,5 +96,6 @@ public class DialogueBubbleController : MonoBehaviour
     {
         SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
     }
+
     private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_bubbleInstance, SceneManager.GetActiveScene());
 }

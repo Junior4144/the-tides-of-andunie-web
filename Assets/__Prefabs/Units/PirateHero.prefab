@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitIdentifier
   _isLeader: 1
+  _unitType: 2
 --- !u!114 &3878668067043966092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,7 +521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2695813455084435750}
   - component: {fileID: 1014076738072606595}
-  - component: {fileID: 5614360270898690553}
+  - component: {fileID: 3687984896407524584}
   m_Layer: 6
   m_Name: ImpulseCollider
   m_TagString: Untagged
@@ -556,10 +557,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 383
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -579,7 +580,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5250422
---- !u!114 &5614360270898690553
+--- !u!114 &3687984896407524584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -588,6 +589,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9102729505828410759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccab4c027191a74d83acc1f9632a3f2, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fcfb1c2216b4e4888e75cc876fe2b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnitImpulseListener
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseListener
+  _layerName: Friendly
