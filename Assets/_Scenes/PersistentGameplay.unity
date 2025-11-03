@@ -3085,6 +3085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972129258}
   - component: {fileID: 972129259}
+  - component: {fileID: 972129260}
   m_Layer: 0
   m_Name: SquadFormationManager
   m_TagString: Untagged
@@ -3119,6 +3120,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23497b833e7cd2478579039a739722d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _unitRegistry: {fileID: 972129260}
+  _formationPositions: []
+--- !u!114 &972129260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972129257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bfda715d1963fb4481ac97615375a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitRegistry
+  _unitMappings:
+  - unitType: 0
+    prefab: {fileID: 1741255900045499738, guid: 07620154fee1d9f42b81ddf20f0f564b, type: 3}
 --- !u!1 &1004120037
 GameObject:
   m_ObjectHideFlags: 0
@@ -4422,7 +4440,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c3e6d874bcb64214193e5bcd2be7a6f7, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

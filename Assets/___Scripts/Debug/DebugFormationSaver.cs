@@ -3,18 +3,10 @@ using UnityEngine;
 
 public class DebugFormationSaver : MonoBehaviour
 {
-    [SerializeField] private bool saveOnStart = true;
-    [SerializeField] private KeyCode saveKey = KeyCode.M;
-
     void Start()
     {
-        if (saveOnStart) TrySaveFormation();
+        TrySaveFormation();
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(saveKey)) TrySaveFormation();
-    } 
 
     private void TrySaveFormation()
     {
@@ -26,7 +18,7 @@ public class DebugFormationSaver : MonoBehaviour
 
     private bool HasValidManager()
     {
-        if (FormationSquadManager.Instance != null) return true;
+        if (SquadFormationManager.Instance != null) return true;
 
         Debug.LogError("[DebugFormationSaver] FormationSquadManager.Instance is null. Cannot save formation.");
         return false;
@@ -34,7 +26,7 @@ public class DebugFormationSaver : MonoBehaviour
 
     private void ClearAndSaveFormation()
     {
-        FormationSquadManager.Instance.ClearFormation();
+        SquadFormationManager.Instance.ClearFormation();
         SaveChildrenToFormation();
         LogFormationSaved();
     }
@@ -50,14 +42,29 @@ public class DebugFormationSaver : MonoBehaviour
 
     private void AddChildToFormation(Transform child, Vector2 parentPos)
     {
-        Vector2 offset = (Vector2)child.position - parentPos;
-        string prefabName = child.gameObject.name;
+        UnitIdentifier unitId = child.GetComponent<UnitIdentifier>();
 
-        Debug.Log($"[DebugFormationSaver] Unit saved {prefabName}");
+        if (!ValidateUnit(unitId, child.name)) return;
+
+        Vector2 offset = (Vector2)child.position - parentPos;
+        UnitType unitType = unitId.UnitType;
+
+        Debug.Log($"[DebugFormationSaver] Unit saved {unitType}");
         Debug.Log($"[DebugFormationSaver] Position {child.position}");
         Debug.Log($"[DebugFormationSaver] Offset {offset}");
 
-        FormationSquadManager.Instance.AddUnitToFormation(child.gameObject, offset);
+        SquadFormationManager.Instance.AddUnitToFormation(unitType, offset);
+    }
+
+    private bool ValidateUnit(UnitIdentifier unitId, string childName)
+    {
+        if (unitId == null)
+        {
+            Debug.LogWarning($"[DebugFormationSaver] Skipping {childName} - missing UnitIdentifier");
+            return false;
+        }
+
+        return true;
     }
 
     private void LogFormationSaved()
