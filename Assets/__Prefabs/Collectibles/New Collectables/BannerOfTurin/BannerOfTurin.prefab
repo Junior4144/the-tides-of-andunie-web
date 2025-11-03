@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4294389301115459722}
   - component: {fileID: -4127132681348763777}
   - component: {fileID: 6019191573831752350}
-  - component: {fileID: 745684619106202189}
   m_Layer: 0
   m_Name: BannerOfTurin
   m_TagString: Untagged
@@ -53,7 +52,6 @@ MonoBehaviour:
   inventoryIconPrefab: {fileID: 891255100769462917, guid: 927b41e80907e4f48b0627d3d1f29436, type: 3}
   _effects:
   - {fileID: 6019191573831752350}
-  - {fileID: 745684619106202189}
 --- !u!114 &6019191573831752350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,18 +65,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaxHealthEffect
   healthIncrease: 20
-  isPercentage: 0
---- !u!114 &745684619106202189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411192712462462758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2266e0143b156f046a63eb51eff4cd14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeDamageEffect
-  damageIncrease: 20
   isPercentage: 0
