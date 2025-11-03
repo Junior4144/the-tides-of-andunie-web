@@ -86,7 +86,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &4606045543428363586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,10 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
-  PatrolPoints: {fileID: 0}
+  patrolPoints: []
   waitTime: 2
   awarenessDistance: 10
-  player: {fileID: 0}
   _attributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
 --- !u!114 &315232145515807971
 MonoBehaviour:
