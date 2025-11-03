@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
@@ -10,7 +11,7 @@ public class RewardItemUI : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text ErrorText;
-
+    
     private RewardListing reward_listing;
 
     private void Start() => ErrorText.gameObject.SetActive(false);
@@ -30,6 +31,7 @@ public class RewardItemUI : MonoBehaviour
     {
         InventoryManager.Instance.AddItem(this.reward_listing.Item);
         RaidRewardManager.Instance.RewardUI.HideRewards();
+        RaidRewardManager.Instance.ReportRewardCollected();
     }
 
     private void HandleLimitReached() { StopAllCoroutines(); StartCoroutine(LimitReached()); }

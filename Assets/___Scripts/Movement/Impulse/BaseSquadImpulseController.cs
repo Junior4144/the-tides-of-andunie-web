@@ -43,15 +43,24 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
     public void RegisterMember(Rigidbody2D rb)
     {
         if (rb != null && !_squadMemberRigidbodies.Contains(rb))
+        {
             _squadMemberRigidbodies.Add(rb);
+            Debug.Log($"[BaseSquadImpulseController] Unit registered {rb.gameObject.name}");
+        }
         else if (rb != null)
-            Debug.LogWarning($"[BaseSquadImpulseController] Attempted duplicate registration: {rb.gameObject.name} (InstanceID: {rb.GetInstanceID()})");
+        {
+            Debug.LogWarning($"[BaseSquadImpulseController] Duplicate registration {rb.gameObject.name}");
+        }
     }
 
     public void UnregisterMember(Rigidbody2D rb)
     {
         if (rb != null && _squadMemberRigidbodies.Contains(rb))
+        {
             _squadMemberRigidbodies.Remove(rb);
+            Debug.Log($"[BaseSquadImpulseController] Unit unregistered {rb.gameObject.name}");
+            Debug.Log($"[BaseSquadImpulseController] Total members {_squadMemberRigidbodies.Count}");
+        }
     }
 
     protected abstract float GetDashMultiplier(bool isDashing);

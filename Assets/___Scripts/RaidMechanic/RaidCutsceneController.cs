@@ -25,9 +25,12 @@ public class RaidCutsceneController : MonoBehaviour
             return;
         }
         raidController.OnRaidTriggered += HandleRaidTriggered;
-        raidController.OnRaidComplete += PlayOutroCutscene;
+        if (RewardsExist())
+            RaidRewardManager.Instance.OnRewardCollected += PlayOutroCutscene;
+        else
+            raidController.OnRaidComplete += PlayOutroCutscene;
+        
         raidController.OnRaidFailed += PlayOutroCutscene;
-
         _introCutscene.stopped += OnIntroStopped;
         _outroCutscene.stopped += OnOutroStopped;
     }
@@ -37,13 +40,20 @@ public class RaidCutsceneController : MonoBehaviour
         if (raidController != null)
         {
             raidController.OnRaidTriggered -= HandleRaidTriggered;
-            raidController.OnRaidComplete -= PlayOutroCutscene;
+            if (RewardsExist())
+                RaidRewardManager.Instance.OnRewardCollected -= PlayOutroCutscene;
+            else
+                raidController.OnRaidComplete -= PlayOutroCutscene;
+            
             raidController.OnRaidFailed -= PlayOutroCutscene;
         }
 
         _introCutscene.stopped -= OnIntroStopped;
         _outroCutscene.stopped -= OnOutroStopped;
     }
+
+
+    private bool RewardsExist() => raidController.RaidCompletionRewards.Count > 0;
 
     private void HandleRaidTriggered()
     {

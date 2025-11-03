@@ -28,17 +28,34 @@ public class PlayerSquadFollower : MonoBehaviour
     private bool _usingNavMesh = false;
     private bool _isInFormation = false;
     private bool _isDashing = false;
-    
+    private bool _offsetInitialized = false;
+
     private Vector3 lastPosition;
     private Vector3 lastTargetPosition;
+
+    public void Initialize(Vector2 formationOffset)
+    {
+        _formationOffsetLocal = formationOffset;
+        _formationAngleLocal = 0f;
+        _offsetInitialized = true;
+        lastPosition = transform.position;
+
+        Debug.Log($"[PlayerSquadFollower] Offset initialized {_formationOffsetLocal}");
+    }
 
     void Start()
     {
         InitializeComponents();
         ConfigureNavMesh();
-        InitializeFormationData();
 
-        transform.SetParent(null);
+        if (!_offsetInitialized)
+            Debug.LogWarning($"[PlayerSquadFollower] Offset not initialized for {gameObject.name}");
+
+        if (_player != null)
+        {
+            UpdateFormationTarget();
+            Debug.Log($"[PlayerSquadFollower] Initial target position {_targetPositionInFormation}");
+        }
     }
 
     void OnDestroy()
@@ -88,21 +105,6 @@ public class PlayerSquadFollower : MonoBehaviour
         _navAgent.updateRotation = false;
         _navAgent.updateUpAxis = false;
         _navAgent.enabled = false;
-    }
-
-    private void InitializeFormationData()
-    {
-        if (transform.parent == null)
-        {
-            Debug.LogWarning($"{gameObject.name}: Could not find squad parent object.");
-            return;
-        }
-
-        Vector3 worldOffset = transform.position - transform.parent.position;
-        _formationOffsetLocal = Quaternion.Inverse(transform.parent.rotation) * worldOffset;
-        _formationAngleLocal = transform.eulerAngles.z - transform.parent.eulerAngles.z;
-
-        lastPosition = transform.position;
     }
 
     private void UpdateFormationTarget()
