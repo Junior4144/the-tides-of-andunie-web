@@ -3,8 +3,15 @@ using System.Collections.Generic;
 
 public class DebugDisplay : MonoBehaviour
 {
-    private static List<string> logs = new List<string>();
-    private static int maxLogs = 10;
+    private static readonly List<string> logs = new();
+    private static readonly int maxLogs = 25;
+    private bool _showDebug = false;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F9))
+            _showDebug = !_showDebug;
+    }
 
     void OnEnable()
     {
@@ -25,6 +32,8 @@ public class DebugDisplay : MonoBehaviour
 
     void OnGUI()
     {
+        if (!_showDebug) return;
+
         GUILayout.BeginArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20));
         foreach (string log in logs)
         {
