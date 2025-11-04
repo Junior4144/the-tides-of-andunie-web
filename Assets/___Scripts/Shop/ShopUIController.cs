@@ -23,14 +23,7 @@ public class ShopUIController : MonoBehaviour
     {
         PopulateShop();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G)) // only for debugging
-        {
-            UIEvents.OnRequestShopToggle?.Invoke();
 
-        }
-    }
     void PopulateShop()
     {
         ShopListing[] listings = ShopManager.Instance.GetListings();
