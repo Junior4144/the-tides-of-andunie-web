@@ -26,7 +26,7 @@ public class RandomPatrol : MonoBehaviour
     {
         RotateTowardsMovementDirection();
 
-        if (!agent.pathPending && agent.remainingDistance <= 1f)
+        if (!agent.pathPending && agent.remainingDistance <= 5f)
         {
             waitTimer += Time.deltaTime;
             if (waitTimer >= waitTime)

@@ -2,21 +2,18 @@ using UnityEngine;
 
 public class DialogueSignalReceiver : MonoBehaviour
 {
-    private DialogueBubbleController _dialogueController;
+    [SerializeField] private DialogueBubbleController _dialogueController;
 
     void Start()
     {
-        StartCoroutine(FindDialogueController());
-    }
-    
-    private System.Collections.IEnumerator FindDialogueController()
-    {
-        yield return null;
-        
-        _dialogueController = FindFirstObjectByType<DialogueBubbleController>();
-        if (_dialogueController == null)
+        if (!_dialogueController)
         {
-            Debug.LogError("Could not find DialogueBubbleController!");
+            _dialogueController = FindFirstObjectByType<DialogueBubbleController>();
+
+            if (!_dialogueController)
+            {
+                Debug.LogError("[DialogueSignalReceiver] Could not find DialogueBubbleController!");
+            }
         }
     }
     
@@ -28,10 +25,5 @@ public class DialogueSignalReceiver : MonoBehaviour
     public void ShowDialogueLong(string text)
     {
         _dialogueController.ShowBubble(text, 4f);
-    }
-    
-    public void ShowDialogueCustom(string text)
-    {
-        _dialogueController.ShowBubble(text, 2f);
     }
 }
