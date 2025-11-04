@@ -34,10 +34,13 @@ public class DebugDisplay : MonoBehaviour
     {
         if (!_showDebug) return;
 
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.normal.textColor = Color.white;
+
         GUILayout.BeginArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20));
         foreach (string log in logs)
         {
-            GUILayout.Label(log);
+            GUILayout.Label(log, style);
         }
         GUILayout.EndArea();
     }

@@ -20,20 +20,20 @@ public class HealthUIController : MonoBehaviour
         PlayerHealthController.OnHealthChanged += HandleHealthChanged;
     }
 
-    private void HandleHealthChanged(float _currentHealth, float _maxhealth)
+    private void HandleHealthChanged(float currentHealth, float maxhealth)
     {
         if (!_healthBarShake.gameObject.activeSelf) return;
 
         _healthBarShake.Shake();
-        _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
+        _healthBarUI.UpdateHealthBar(currentHealth, maxhealth);
 
     }
 
-    public void UpdateHealthBar(float _currentHealth, float _maxhealth)
+    public void UpdateHealthBar(float currentHealth, float maxhealth)
     {
-        if (!_healthBarUI.gameObject.activeSelf) return;
+        if (Check_HealthBar_UI_IsActive()) return;
 
-        _healthBarUI.UpdateHealthBar(_currentHealth, _maxhealth);
+        _healthBarUI.UpdateHealthBar(currentHealth, maxhealth);
     }
 
     public bool Check_HealthBar_UI_IsActive() => _healthBarUI.gameObject.activeInHierarchy;

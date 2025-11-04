@@ -1844,7 +1844,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.02806, y: -0.6313238, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1965,9 +1965,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
   orthographic size: 10
   m_Depth: -1
@@ -3279,11 +3279,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8691d2c56f5e8f545a7e2a240205fc0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  _InventoryUI_MainPrehab: {fileID: 537902609}
-  _HealthBarHUD: {fileID: 1196949929}
-  _CoinHUD: {fileID: 198116851}
-  _InventoryUI: {fileID: 1233555071}
-  _PauseUI: {fileID: 952897575}
+  _UIPrefab: {fileID: 537902609}
+  _healthBarHUD: {fileID: 1196949929}
+  _coinHUD: {fileID: 1391784849}
+  _inventoryUI: {fileID: 1233555071}
+  _pauseUI: {fileID: 952897575}
 --- !u!1 &1196949929
 GameObject:
   m_ObjectHideFlags: 0

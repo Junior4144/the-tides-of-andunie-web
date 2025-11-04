@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,19 +15,19 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [Header("UI Main Groups")]
-    [SerializeField] private GameObject _InventoryUI_MainPrehab;
+    [SerializeField] private GameObject _UIPrefab;
 
     [Header("HUD Groups")]
-    [SerializeField] private GameObject _HealthBarHUD;
-    [SerializeField] private GameObject _CoinHUD;
+    [SerializeField] private GameObject _healthBarHUD;
+    [SerializeField] private GameObject _coinHUD;
 
     [Header("UI Groups")]
-    [SerializeField] private GameObject _InventoryUI;
+    [SerializeField] private GameObject _inventoryUI;
 
-    private GameObject _ShopUI;
-    private GameObject _ShopMain_UIPrehab;
+    private GameObject _shopUI;
+    private GameObject _shopUIPrefab;
 
-    [SerializeField] private GameObject _PauseUI;
+    [SerializeField] private GameObject _pauseUI;
     private bool _isPaused;
 
     private void Awake()
@@ -61,115 +60,135 @@ public class UIManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Gameplay:
-                _InventoryUI_MainPrehab.SetActive(true);
-                _HealthBarHUD.SetActive(true);
-                _CoinHUD.SetActive(true);
-
-                if (SceneManager.GetActiveScene().name == "Level0Stage1")
-                {
-                    Debug.Log("Disabling Coin HUD");
-                    _CoinHUD.SetActive(false);
-                }
-
-                if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(true);
+                ShowGameplayUI();
                 break;
-
             case GameState.Menu:
-                _HealthBarHUD.SetActive(false);
-                _CoinHUD.SetActive(false);
-
-                _InventoryUI_MainPrehab.SetActive(false);
-
-                if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
+                ShowMenuUI();
                 break;
             case GameState.Paused:
-
             case GameState.Cutscene:
-                _HealthBarHUD.SetActive(false);
-                _CoinHUD.SetActive(false);
-                _InventoryUI_MainPrehab.SetActive(false);
-
-                if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
+                ShowCutsceneUI();
                 break;
             case GameState.LevelSelector:
-                _InventoryUI_MainPrehab.SetActive(true);
-                _HealthBarHUD.SetActive(false);
-                _CoinHUD.SetActive(true);
-
-                if (_ShopMain_UIPrehab) _ShopMain_UIPrehab.SetActive(false);
-                break;
-            default:
+                ShowLevelSelectorUI();
                 break;
         }
     }
 
+    private void ShowGameplayUI()
+    {
+        _UIPrefab.SetActive(true);
+        _healthBarHUD.SetActive(true);
+        _coinHUD.SetActive(!IsLevel0Stage1);
+
+        if (_shopUIPrefab)
+            _shopUIPrefab.SetActive(true);
+    }
+
+    private void ShowMenuUI()
+    {
+        _healthBarHUD.SetActive(false);
+        _coinHUD.SetActive(false);
+        _UIPrefab.SetActive(false);
+
+        if (_shopUIPrefab)
+            _shopUIPrefab.SetActive(false);
+    }
+
+    private void ShowCutsceneUI()
+    {
+        _healthBarHUD.SetActive(false);
+        _coinHUD.SetActive(false);
+        _UIPrefab.SetActive(false);
+
+        if (_shopUIPrefab)
+            _shopUIPrefab.SetActive(false);
+    }
+
+    private void ShowLevelSelectorUI()
+    {
+        _UIPrefab.SetActive(true);
+        _healthBarHUD.SetActive(false);
+        _coinHUD.SetActive(true);
+
+        if (_shopUIPrefab)
+            _shopUIPrefab.SetActive(false);
+    }
+
+    private bool IsLevel0Stage1 => SceneManager.GetActiveScene().name == "Level0Stage1";
+
     private void HideAll()
     {
-            if (_ShopUI != null)
-            _ShopUI.SetActive(false);
+        if (_shopUI != null)
+            _shopUI.SetActive(false);
 
-        _InventoryUI.SetActive(false);
+        _inventoryUI.SetActive(false);
     }
 
     private void ToggleInventory()
     {
-        if (_InventoryUI != null && _InventoryUI.activeInHierarchy)
+        if (_inventoryUI.activeInHierarchy)
         {
-            HideAll();
+            _inventoryUI.SetActive(false);
             return;
         }
 
         HideAll();
-        _InventoryUI.SetActive(true);
+        _inventoryUI.SetActive(true);
     }
 
     private void ToggleShop()
     {
-
         if (!TryResolveShop())
             return;
 
-        if (_ShopUI != null && _ShopUI.activeInHierarchy) // if shop UI is active -> deactivate
+        if (_shopUI.activeInHierarchy)
         {
-            HideAll();
+            _shopUI.SetActive(false);
             return;
         }
 
         HideAll();
-        _ShopUI.SetActive(true);
+        _shopUI.SetActive(true);
     }
 
     private bool TryResolveShop()
     {
-        if (_ShopUI != null) return true;
+        if (_shopUI != null) return true;
 
         if (ShopUIController.Instance == null)
             return false;
 
-        _ShopUI = ShopUIController.Instance.canvas;
-        _ShopMain_UIPrehab = ShopUIController.Instance.gameObject;
+        _shopUI = ShopUIController.Instance.canvas;
+        _shopUIPrefab = ShopUIController.Instance.gameObject;
         return true;
     }
 
-    private void OnSceneChanged(Scene scene, Scene x)
+    private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
-        _ShopUI = null;
-        _ShopMain_UIPrehab = null;
+        _shopUI = null;
+        _shopUIPrefab = null;
     }
 
     private void TogglePause()
     {
-        //HideAll();
         if (_isPaused)
-        {
-            _PauseUI.SetActive(false);
-            Time.timeScale = 1f;
-            _isPaused = false;
-            return;
-        }
+            Resume();
+        else
+            Pause();
+    }
 
-        _PauseUI.SetActive(true);
+    private void Pause()
+    {
+        _pauseUI.SetActive(true);
         Time.timeScale = 0f;
         _isPaused = true;
+    }
+
+    private void Resume()
+    {
+        _pauseUI.SetActive(false);
+        Time.timeScale = 1f;
+        _isPaused = false;
     }
 }
