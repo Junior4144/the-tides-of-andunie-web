@@ -10,39 +10,76 @@ public class PlayerSquadImpulseListener : MonoBehaviour
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody2D>();
+        Debug.Log($"[PlayerSquadImpulseListener] Found rigidbody {_rb?.name}");
 
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
+        if (PlayerManager.Instance == null)
         {
-            _controller = playerObj.GetComponent<PlayerSquadImpulseController>();
+            Debug.LogError("[PlayerSquadImpulseListener] PlayerManager instance null");
+            return;
+        }
 
-            if (_controller != null)
-                _controller.RegisterMember(_rb);
-            else
-                Debug.LogWarning($"{gameObject.name}: Player found but PlayerSquadImpulseController component is missing.");
+        GameObject playerObj = PlayerManager.Instance.gameObject;
+        if (playerObj == null)
+        {
+            Debug.LogError("[PlayerSquadImpulseListener] Player gameobject null");
+            return;
+        }
+
+        Debug.Log($"[PlayerSquadImpulseListener] Found player {playerObj.name}");
+        _controller = playerObj.GetComponent<PlayerSquadImpulseController>();
+
+        if (_controller != null)
+        {
+            _controller.RegisterMember(_rb);
+            Debug.Log($"[PlayerSquadImpulseListener] Registered member {gameObject.name}");
         }
         else
-            Debug.LogWarning($"{gameObject.name}: Could not find Player via tag.");
+        {
+            Debug.LogError("[PlayerSquadImpulseListener] Missing controller component");
+        }
     }
 
     void OnDestroy()
     {
         if (_controller != null)
+        {
             _controller.UnregisterMember(_rb);
+            Debug.Log($"[PlayerSquadImpulseListener] Unregistered member {gameObject.name}");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (_controller == null) return;
-        if (_controller.IsInImpulse()) return;
-        if (otherCollider.gameObject.name != "ImpulseCollider") return;
-        if (otherCollider.gameObject.layer != LayerMask.NameToLayer(_layerName)) return;
+        Debug.Log($"[PlayerSquadImpulseListener] Trigger entered {otherCollider.gameObject.name}");
 
-        Debug.Log("[PlayerSquadImpulseListener] detected ImpulseCollider");
+        if (_controller == null)
+        {
+            Debug.Log("[PlayerSquadImpulseListener] No controller found");
+            return;
+        }
+
+        if (_controller.IsInImpulse())
+        {
+            Debug.Log("[PlayerSquadImpulseListener] Already in impulse");
+            return;
+        }
+
+        if (otherCollider.gameObject.name != "ImpulseCollider")
+        {
+            Debug.Log($"[PlayerSquadImpulseListener] Wrong collider name {otherCollider.gameObject.name}");
+            return;
+        }
+
+        if (otherCollider.gameObject.layer != LayerMask.NameToLayer(_layerName))
+        {
+            Debug.Log($"[PlayerSquadImpulseListener] Wrong layer {LayerMask.LayerToName(otherCollider.gameObject.layer)}");
+            return;
+        }
 
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
+        Debug.Log($"[PlayerSquadImpulseListener] Initiating impulse {impulseDirection}");
         _controller.InitiateSquadImpulse(closestPoint, impulseDirection, false);
     }
 }
