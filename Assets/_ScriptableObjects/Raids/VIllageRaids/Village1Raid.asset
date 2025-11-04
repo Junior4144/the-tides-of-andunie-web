@@ -15,7 +15,7 @@ MonoBehaviour:
   Waves:
   - enemies:
     - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 4
+      count: 3
     countdown: 5
     spawnInterval: 1
     countDownText: 
@@ -26,7 +26,7 @@ MonoBehaviour:
     - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
       count: 1
     countdown: 20
-    spawnInterval: 10
+    spawnInterval: 1
     countDownText: 
     waveStartText: 
   - enemies:
@@ -34,8 +34,8 @@ MonoBehaviour:
       count: 1
     - prefab: {fileID: 7777853474901196750, guid: 60ce51ed4adafac4aa5aa10c128cc421, type: 3}
       count: 1
-    countdown: 0
-    spawnInterval: 0
+    countdown: 20
+    spawnInterval: 1
     countDownText: 
     waveStartText: 
   - enemies:
