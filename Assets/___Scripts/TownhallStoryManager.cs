@@ -8,6 +8,7 @@ public class TownhallStoryManager : MonoBehaviour
     [SerializeField] private PlayableDirector _cutscene;
     [SerializeField] private CinemachineCamera _cutsceneCamera;
     [SerializeField] private GameObject _playerSpawner;
+    [SerializeField] private AudioSource _backgroundChatter;
 
     void Start()
     {
@@ -21,9 +22,13 @@ public class TownhallStoryManager : MonoBehaviour
         {
             _cutscene.Play();
             SetPlayerSpawnerActive(false);
+            SetBackgroundChatterActive(false);
         }
         else
+        {
             SetPlayerSpawnerActive(true);
+            SetBackgroundChatterActive(true);
+        }
     }
 
     void OnDestroy()
@@ -42,6 +47,8 @@ public class TownhallStoryManager : MonoBehaviour
         if (_cutsceneCamera)
             _cutsceneCamera.Priority = 20;
 
+        SetBackgroundChatterActive(false);
+
         Debug.Log("[TownhallStoryManager] Cutscene started");
     }
 
@@ -53,6 +60,7 @@ public class TownhallStoryManager : MonoBehaviour
             _cutsceneCamera.Priority = 0;
 
         SetPlayerSpawnerActive(true);
+        SetBackgroundChatterActive(true);
 
         Debug.Log("[TownhallStoryManager] Cutscene stopped");
     }
@@ -63,6 +71,19 @@ public class TownhallStoryManager : MonoBehaviour
         {
             _playerSpawner.SetActive(active);
             Debug.Log($"[TownhallStoryManager] Player spawner {(active ? "enabled" : "disabled")}");
+        }
+    }
+
+    private void SetBackgroundChatterActive(bool active)
+    {
+        if (_backgroundChatter)
+        {
+            if (active)
+                _backgroundChatter.Play();
+            else
+                _backgroundChatter.Stop();
+
+            Debug.Log($"[TownhallStoryManager] Background chatter {(active ? "enabled" : "disabled")}");
         }
     }
 }

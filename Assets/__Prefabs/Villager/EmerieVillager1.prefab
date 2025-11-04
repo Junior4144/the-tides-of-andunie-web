@@ -99,7 +99,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9160097388206928311}
-  - component: {fileID: 404117126064226527}
   m_Layer: 0
   m_Name: EmerieVillager1
   m_TagString: Untagged
@@ -117,25 +116,9 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: -8.24, y: -27.92, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.6999999, y: 0.6999999, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7880764681677283317}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &404117126064226527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461613298389866321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef03c20dcaba58142b9068dc23ed7118, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueBubbleController
-  _bubblePrefab: {fileID: 8188844361341347319, guid: 8527841c2ddaeea44b43f264e353577c, type: 3}
-  _offsetX: 0
-  _offsetY: 2.5
-  _camera: {fileID: 0}
