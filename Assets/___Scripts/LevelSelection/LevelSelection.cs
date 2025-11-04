@@ -12,25 +12,22 @@ public class LevelSelection : MonoBehaviour
 
     public static event Action OnPlayerEnterSelectionZone;
     public static event Action OnPlayerExitSelectionZone;
-
-
     public static event Action EnterLeaveVillageZone;
     public static event Action ExitLeaveVillageZone;
-
-    public static event Action<string, string, bool, bool, string> PlayerActivatedMenu;
+    public static event Action<string, string> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
     public bool TriggerGlobalInvasion = false;
     public bool LiberateVillage = false;
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (isExit) // Different Invoke because box are different sizes -> map are different scales
+        if (isExit)
             EnterLeaveVillageZone?.Invoke();
-        else OnPlayerEnterSelectionZone?.Invoke();
+        else 
+            OnPlayerEnterSelectionZone?.Invoke();
 
         Debug.Log("[Level Selection] Player entered level zone");
         isPlayerInside = true;
@@ -42,10 +39,11 @@ public class LevelSelection : MonoBehaviour
 
         if (isExit)
             ExitLeaveVillageZone?.Invoke();
-        else OnPlayerExitSelectionZone?.Invoke();
+        else 
+            OnPlayerExitSelectionZone?.Invoke();
 
-        Debug.Log("[Level Selection] Player left level zone");
         isPlayerInside = false;
+        Debug.Log("[Level Selection] Player left level zone");
     }
 
     private void Update()
@@ -60,9 +58,9 @@ public class LevelSelection : MonoBehaviour
     private void ProceedToNextStage()
     {
         if (isExit)
-            PlayerActivatedMenu?.Invoke("EXIT", location, TriggerGlobalInvasion, LiberateVillage, VillageLiberationID);
+            PlayerActivatedMenu?.Invoke("EXIT", location);
         else
-            PlayerActivatedMenu?.Invoke(villageId, location, false, false, "");
+            PlayerActivatedMenu?.Invoke(villageId, location);
     }
 
 }

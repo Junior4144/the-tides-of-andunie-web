@@ -34,7 +34,7 @@ public class LSUIManager : MonoBehaviour
 
     void Start() => LevelSelectionEnterUI.SetActive(false);
 
-    private void HandleMenu(string id, string location, bool triggerGlobalInvasion, bool LiberateVillage, string VillageLiberationID)
+    private void HandleMenu(string id, string location)
     {
         if (id == "EXIT")
         {
@@ -42,9 +42,6 @@ public class LSUIManager : MonoBehaviour
             CurrentCanvas = LevelSelectionEnterUI;
             LevelSelectionEnterHeader.text = "Leave Village";
             LSButtonText.text = "Leave";
-
-            if(triggerGlobalInvasion) LSManager.Instance.TriggerGlobalInvasion();
-            if (LiberateVillage) LSManager.Instance.SetVillageState(VillageLiberationID, VillageState.Liberated_Done);
 
             SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
 

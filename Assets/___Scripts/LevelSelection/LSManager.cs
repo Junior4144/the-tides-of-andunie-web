@@ -82,7 +82,6 @@ public class LSManager : MonoBehaviour
     {
         for (int i = 0; i < villages.Count; i++)
         {
-            Debug.Log($"LSMANAGER ->villages[i].id = {villages[i].id} vs VillageID: {villageId}");
             if (villages[i].id == villageId)
                 return villages[i].state;
         }
