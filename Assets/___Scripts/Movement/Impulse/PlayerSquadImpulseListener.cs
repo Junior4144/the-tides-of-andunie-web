@@ -54,27 +54,13 @@ public class PlayerSquadImpulseListener : MonoBehaviour
 
         if (_controller == null)
         {
-            Debug.Log("[PlayerSquadImpulseListener] No controller found");
+            Debug.LogError("[PlayerSquadImpulseListener] No controller found");
             return;
         }
 
-        if (_controller.IsInImpulse())
-        {
-            Debug.Log("[PlayerSquadImpulseListener] Already in impulse");
-            return;
-        }
-
-        if (otherCollider.gameObject.name != "ImpulseCollider")
-        {
-            Debug.Log($"[PlayerSquadImpulseListener] Wrong collider name {otherCollider.gameObject.name}");
-            return;
-        }
-
-        if (otherCollider.gameObject.layer != LayerMask.NameToLayer(_layerName))
-        {
-            Debug.Log($"[PlayerSquadImpulseListener] Wrong layer {LayerMask.LayerToName(otherCollider.gameObject.layer)}");
-            return;
-        }
+        if (_controller.IsInImpulse()) return;
+        if (otherCollider.gameObject.name != "ImpulseCollider") return;
+        if (otherCollider.gameObject.layer != LayerMask.NameToLayer(_layerName)) return;
 
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
