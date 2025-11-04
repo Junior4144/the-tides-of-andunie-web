@@ -17,8 +17,6 @@ public class LevelSelection : MonoBehaviour
     public static event Action<string, string> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
-    public bool TriggerGlobalInvasion = false;
-    public bool LiberateVillage = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -42912,6 +42912,54 @@ PrefabInstance:
       propertyPath: _dialogueController
       value: 
       objectReference: {fileID: 1625509627}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Signals.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: 'm_Events.m_Signals.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f5fa6f07f2d51249b91056869e12977, type: 2}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleTriggerGlobalInvasion
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TownhallInvasionTriggerReceiver, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770990976144287130, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770990976144287130, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_SceneBindings.Array.data[6].key
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3770990976144287130, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 
@@ -42920,6 +42968,10 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[1].value
       value: 
       objectReference: {fileID: 8952110163454393483}
+    - target: {fileID: 3770990976144287130, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+      propertyPath: m_SceneBindings.Array.data[6].value
+      value: 
+      objectReference: {fileID: 4762879758986922719}
     - target: {fileID: 5689464120129070296, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -42973,6 +43025,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+--- !u!114 &4762879758986922719 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3643384651748933310, guid: 5db5bd8d563afad41861a8fff57d0544, type: 3}
+  m_PrefabInstance: {fileID: 4762879758986922717}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
 --- !u!4 &4846474863424915902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 855413444145619617, guid: 585ab782e44a2e745bc89c93d0e84da2, type: 3}

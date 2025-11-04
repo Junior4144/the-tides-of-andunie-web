@@ -39,7 +39,10 @@ public class TownhallStoryManager : MonoBehaviour
     private void InitializeScene()
     {
         if (GlobalStoryManager.Instance.playTownhallCutscene && _cutscene)
+        {
+            LSManager.Instance.TriggerGlobalInvasion();
             StartCutscene();
+        }
         else
             StartGameplay();
     }
