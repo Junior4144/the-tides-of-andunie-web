@@ -6,6 +6,7 @@ public class CameraTargetFinder : MonoBehaviour
     void Start()
     {
         var cam = GetComponent<CinemachineCamera>();
-        cam.Follow = PlayerManager.Instance.gameObject.transform;
+        if (PlayerManager.Instance?.gameObject.transform) cam.Follow = PlayerManager.Instance.gameObject.transform;
+
     }
 }
