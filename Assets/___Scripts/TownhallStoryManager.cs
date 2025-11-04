@@ -4,7 +4,9 @@ using Unity.Cinemachine;
 
 public class TownhallStoryManager : MonoBehaviour
 {
-    [SerializeField] private bool _playCutscene = false;
+    const int CUTSCENE_CAMERA_PRIORITY = 20;
+    const int DEFAULT_CAMERA_PRIORITY = 0;
+
     [SerializeField] private PlayableDirector _cutscene;
     [SerializeField] private CinemachineCamera _cutsceneCamera;
     [SerializeField] private GameObject _playerSpawner;
@@ -12,78 +14,94 @@ public class TownhallStoryManager : MonoBehaviour
 
     void Start()
     {
-        if (_cutscene)
-        {
-            _cutscene.played += OnCutsceneStarted;
-            _cutscene.stopped += OnCutsceneStopped;
-        }
-
-        if (_playCutscene && _cutscene)
-        {
-            _cutscene.Play();
-            SetPlayerSpawnerActive(false);
-            SetBackgroundChatterActive(false);
-        }
-        else
-        {
-            SetPlayerSpawnerActive(true);
-            SetBackgroundChatterActive(true);
-        }
+        SubscribeToCutsceneEvents();
+        InitializeScene();
     }
 
-    void OnDestroy()
+    void OnDestroy() => UnsubscribeFromCutsceneEvents();
+
+    private void SubscribeToCutsceneEvents()
     {
-        if (_cutscene)
-        {
-            _cutscene.played -= OnCutsceneStarted;
-            _cutscene.stopped -= OnCutsceneStopped;
-        }
+        if (!_cutscene) return;
+
+        _cutscene.played += OnCutsceneStarted;
+        _cutscene.stopped += OnCutsceneStopped;
+    }
+
+    private void UnsubscribeFromCutsceneEvents()
+    {
+        if (!_cutscene) return;
+
+        _cutscene.played -= OnCutsceneStarted;
+        _cutscene.stopped -= OnCutsceneStopped;
+    }
+
+    private void InitializeScene()
+    {
+        if (GlobalStoryManager.Instance.playTownhallCutscene && _cutscene)
+            StartCutscene();
+        else
+            StartGameplay();
+    }
+
+    private void StartCutscene()
+    {
+        _cutscene.Play();
+        SetGameplayElementsActive(false);
+        GlobalStoryManager.Instance.playTownhallCutscene = false;
+    }
+
+    private void StartGameplay()
+    {
+        GameManager.Instance.SetState(GameState.Gameplay);
+        SetGameplayElementsActive(true);
     }
 
     private void OnCutsceneStarted(PlayableDirector director)
     {
         GameManager.Instance.SetState(GameState.Cutscene);
-
-        if (_cutsceneCamera)
-            _cutsceneCamera.Priority = 20;
-
+        SetCutsceneCameraPriority(CUTSCENE_CAMERA_PRIORITY);
         SetBackgroundChatterActive(false);
-
         Debug.Log("[TownhallStoryManager] Cutscene started");
     }
 
     private void OnCutsceneStopped(PlayableDirector director)
     {
         GameManager.Instance.SetState(GameState.Gameplay);
-
-        if (_cutsceneCamera)
-            _cutsceneCamera.Priority = 0;
-
-        SetPlayerSpawnerActive(true);
-        SetBackgroundChatterActive(true);
-
+        SetCutsceneCameraPriority(DEFAULT_CAMERA_PRIORITY);
+        SetGameplayElementsActive(true);
         Debug.Log("[TownhallStoryManager] Cutscene stopped");
+    }
+
+    private void SetCutsceneCameraPriority(int priority)
+    {
+        if (_cutsceneCamera)
+            _cutsceneCamera.Priority = priority;
+    }
+
+    private void SetGameplayElementsActive(bool active)
+    {
+        SetPlayerSpawnerActive(active);
+        SetBackgroundChatterActive(active);
     }
 
     private void SetPlayerSpawnerActive(bool active)
     {
-        if (_playerSpawner)
-        {
-            _playerSpawner.SetActive(active);
-            Debug.Log($"[TownhallStoryManager] Player spawner {(active ? "enabled" : "disabled")}");
-        }
+        if (!_playerSpawner) return;
+
+        _playerSpawner.SetActive(active);
+        Debug.Log($"[TownhallStoryManager] Player spawner {(active ? "enabled" : "disabled")}");
     }
 
     private void SetBackgroundChatterActive(bool active)
     {
-        if (_backgroundChatter)
-        {
-            if (active)
-                _backgroundChatter.Play();
-            else
-                _backgroundChatter.Stop();
+        if (!_backgroundChatter) return;
 
-            Debug.Log($"[TownhallStoryManager] Background chatter {(active ? "enabled" : "disabled")}");
-        }
+        if (active)
+            _backgroundChatter.Play();
+        else
+            _backgroundChatter.Stop();
+
+        Debug.Log($"[TownhallStoryManager] Background chatter {(active ? "enabled" : "disabled")}");
     }
 }
