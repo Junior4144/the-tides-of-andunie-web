@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using Unity.Cinemachine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class TownhallStoryManager : MonoBehaviour
 {
@@ -12,7 +14,24 @@ public class TownhallStoryManager : MonoBehaviour
     [SerializeField] private GameObject _playerSpawner;
     [SerializeField] private AudioSource _backgroundChatter;
 
-    void Start()
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
+    {
+        StartCoroutine(CheckAfterLoading(newScene));
+    }
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
+    {
+        yield return null;
+
+        if (newScene == gameObject.scene)
+            ActivateCutsceneLogic();
+    }
+
+    private void ActivateCutsceneLogic()
     {
         SubscribeToCutsceneEvents();
         InitializeScene();
