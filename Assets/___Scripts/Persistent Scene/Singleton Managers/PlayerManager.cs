@@ -1,14 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(DestroyController))]
-[RequireComponent(typeof(PlayerHeroMovement))]
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
     private PlayerHealthController _healthController;
 
-    private PlayerHeroMovement _playerMovement;
+    //private PlayerHeroMovement _playerMovement;
 
     private void Awake()
     {
@@ -20,7 +19,7 @@ public class PlayerManager : MonoBehaviour
 
         Instance = this;
         _healthController = GetComponentInChildren<PlayerHealthController>();
-        _playerMovement = GetComponent<PlayerHeroMovement>();
+        //_playerMovement = GetComponent<PlayerHeroMovement>();
     }
 
     private void OnEnable() =>
@@ -37,13 +36,13 @@ public class PlayerManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Gameplay:
-                if (!_playerMovement) return;
-                _playerMovement.enabled = true;
+                //if (!_playerMovement) return;
+                //_playerMovement.enabled = true;
                 break;
             case GameState.Menu:
             case GameState.Paused:
             case GameState.Cutscene:
-                _playerMovement.enabled = false;
+                //_playerMovement.enabled = false;
                 break;
             default:
                 break;
@@ -64,7 +63,7 @@ public class PlayerManager : MonoBehaviour
 
 
     //------MOVEMENT------//
-    public bool IsInDash() => _playerMovement.IsInDash();
+    //public bool IsInDash() => _playerMovement.IsInDash();
     
     
     //------DESTROY------//

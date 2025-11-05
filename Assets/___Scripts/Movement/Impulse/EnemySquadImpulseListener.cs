@@ -45,6 +45,6 @@ public class EnemySquadImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
-        _controller.InitiateSquadImpulse(closestPoint, impulseDirection, PlayerManager.Instance.IsInDash());
+        //TODO _controller.InitiateSquadImpulse(closestPoint, impulseDirection, PlayerManager.Instance.IsInDash());
     }
 }

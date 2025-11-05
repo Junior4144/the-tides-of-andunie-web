@@ -23,6 +23,6 @@ public class ImpulseListener : MonoBehaviour
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
         // TODO: Don't apply dash multiplier to player units
-        _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection, PlayerManager.Instance.IsInDash());
+        //TODO _squadManager.InitiateSquadImpulse(closestPoint, impulseDirection, PlayerManager.Instance.IsInDash());
     }  
 }
