@@ -20761,6 +20761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
   dashDistance: 5
+  dashDuration: 0.12
   dashCooldown: 0.4
 --- !u!114 &8045057175555163923
 MonoBehaviour:
@@ -20776,10 +20777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::randommovementscript
   speed: 10
   attackScript: {fileID: 8228389643143249322}
-  rotationSpeed: 15
-  startTurnBoost: 1.2
-  endTurnDamp: 0.7
-  minTurnSpeed: 4
+  rotationSpeed: 10
   rotationSnapBuffer: 0.005
 --- !u!1001 &8134910208090270236
 PrefabInstance:
@@ -20911,9 +20909,9 @@ MonoBehaviour:
   _layerName: Enemy
   _animDuration: 0.6
   _attackSound: {fileID: 8300000, guid: 45587d4c2a06a1d41a2771275bcd0eed, type: 3}
-  attackTurnSpeed: 15
+  attackTurnSpeed: 1000
   _animator: {fileID: 3536749356906977445}
-  hopDistance: 0
+  rotationThreshold: 1
 --- !u!4 &8353749738433360071
 Transform:
   m_ObjectHideFlags: 0

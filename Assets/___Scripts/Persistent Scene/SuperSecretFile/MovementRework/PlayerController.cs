@@ -1,111 +1,68 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 5f; // Player movement speed
-
+    [SerializeField] private float speed = 5f;
     [SerializeField] private AttackRework attackScript;
 
-    [SerializeField] private float rotationSpeed = 8f;       // Base speed
-    [SerializeField] private float startTurnBoost = 1.3f;    // Increase speed when starting a turn
-    [SerializeField] private float endTurnDamp = 0.85f;      // Slow just before finishing
-    [SerializeField] private float minTurnSpeed = 4f;        // Never rotate slower than this
-    [SerializeField] private float rotationSnapBuffer = 0.12f; // anti-spam delay
+    [SerializeField] private float rotationSpeed = 8f;
+    [SerializeField] private float rotationSnapBuffer = 0.12f;
     private float lastTurnTime = 0f;
 
     private bool movementEnabled = true;
 
+    private Rigidbody2D PlayerRigidBody;
+    private Vector2 movementInput;
+
+    void Awake()
+    {
+        PlayerRigidBody = GetComponent<Rigidbody2D>();
+    }
+
     public void SetMovementEnabled(bool enabled)
     {
         movementEnabled = enabled;
+        if (!enabled) PlayerRigidBody.linearVelocity = Vector2.zero;
     }
 
     void Update()
     {
-        if (!movementEnabled) return;
-
-        // Detect keys
-        bool up = Input.GetKey(KeyCode.W);
-        bool down = Input.GetKey(KeyCode.S);
-        bool left = Input.GetKey(KeyCode.A);
-        bool right = Input.GetKey(KeyCode.D);
-
-        // Fix diagonal speed (1 / √2 = 0.7071)
-        float diagMultiplier = 1f;
-        if ((up || down) && (left || right))
+        if (!movementEnabled)
         {
-            diagMultiplier = 0.7071f;
+            movementInput = Vector2.zero;
+            return;
         }
 
-        // Movement (world-space to avoid rotation affecting WASD direction)
-        if (up)
-            transform.Translate(Vector2.up * testVert(Vector2.up) * diagMultiplier, Space.World);
+        // Gather input
+        float moveX = 0f;
+        float moveY = 0f;
 
-        if (left)
-            transform.Translate(Vector2.left * testHor(Vector2.left) * diagMultiplier, Space.World);
+        if (Input.GetKey(KeyCode.W)) moveY += 1f;
+        if (Input.GetKey(KeyCode.S)) moveY -= 1f;
+        if (Input.GetKey(KeyCode.A)) moveX -= 1f;
+        if (Input.GetKey(KeyCode.D)) moveX += 1f;
 
-        if (down)
-            transform.Translate(Vector2.down * testVert(Vector2.down) * diagMultiplier, Space.World);
+        movementInput = new Vector2(moveX, moveY);
 
-        if (right)
-            transform.Translate(Vector2.right * testHor(Vector2.right) * diagMultiplier, Space.World);
+        // Normalize diagonal movement
+        if (movementInput.magnitude > 1f)
+            movementInput.Normalize();
     }
 
-    private float testHor(Vector2 dir)
+    void FixedUpdate()
     {
-        Vector2 origin = transform.position;
-        float offset;
-        if (dir.Equals(Vector2.left))
+        if (attackScript.IsAttacking)
         {
-            offset = -0.125f; // Offset for left side of character
-        }
-        else
-        {
-            offset = 0.125f; // Offset for right side of character
-        }
-        origin.x += offset;
-        RaycastHit2D raycast = Physics2D.Raycast(origin, dir, speed * Time.deltaTime);
-
-        if (raycast.collider != null && raycast.collider.gameObject.tag == "Collidable")
-        { // If raycast hits something tagged "Collidable"
-            float distance = Math.Abs(raycast.point.x - origin.x);
-            return distance;
+            PlayerRigidBody.linearVelocity = Vector2.zero;
+            return;
         }
 
-        return speed * Time.deltaTime;
-    }
+        // Apply movement using physics
+        PlayerRigidBody.linearVelocity = movementInput * speed;
 
-    private float testVert(Vector2 dir)
-    {
-        Vector2 origin = transform.position;
-        float offset;
-        if (dir.Equals(Vector2.up))
-        {
-            offset = .1f; // Offset for top side of character
-        }
-        else
-        {
-            offset = -0.5f; // Offset for bottom side of character
-        }
-        origin.y += offset;
-        RaycastHit2D raycast = Physics2D.Raycast(origin, dir, speed * Time.deltaTime);
-
-        if (raycast.collider != null && raycast.collider.gameObject.tag == "Collidable")
-        { // If raycast hits something tagged "Collidable"
-            float distance = Math.Abs(raycast.point.y - origin.y);
-            return distance;
-        }
-
-        return speed * Time.deltaTime;
-    }
-
-    private void FixedUpdate()
-    {
-        if (attackScript.IsAttacking) return;
+        // Handle rotation
+        if (movementInput != Vector2.zero)
             RotatePlayerEightWay();
     }
 
@@ -114,45 +71,28 @@ public class PlayerController : MonoBehaviour
         if (Time.time - lastTurnTime < rotationSnapBuffer)
             return;
 
-        bool up = Input.GetKey(KeyCode.W);
-        bool down = Input.GetKey(KeyCode.S);
-        bool left = Input.GetKey(KeyCode.A);
-        bool right = Input.GetKey(KeyCode.D);
-
-        if (!up && !down && !left && !right) return;
-
-        float targetAngle = transform.eulerAngles.z;
         lastTurnTime = Time.time;
 
-        // 8-direction target angles
-        if (up && right) targetAngle = -45f;
-        else if (up && left) targetAngle = 45f;
-        else if (down && right) targetAngle = -135f;
-        else if (down && left) targetAngle = 135f;
-        else if (up) targetAngle = 0f;
-        else if (down) targetAngle = 180f;
-        else if (right) targetAngle = -90f;
-        else if (left) targetAngle = 90f;
+        float targetAngle = transform.eulerAngles.z;
 
-        // Calculate angle difference (0–180 degrees)
-        float angleDiff = Mathf.DeltaAngle(transform.eulerAngles.z, targetAngle);
+        bool isDiagonal =
+            (movementInput.y > 0 && movementInput.x != 0) ||
+            (movementInput.y < 0 && movementInput.x != 0);
 
-        // Dynamic turn speed based on angle distance
-        float dynamicSpeed = rotationSpeed;
+        float currentRotationSpeed = isDiagonal ? 20f : 10f;
 
-        // Boost at start of turn (snappy feel)
-        if (Mathf.Abs(angleDiff) > 60f)
-            dynamicSpeed *= startTurnBoost;
+        // 8-direction rotation angles
+        if (movementInput.y > 0 && movementInput.x > 0) targetAngle = -45f;
+        else if (movementInput.y > 0 && movementInput.x < 0) targetAngle = 45f;
+        else if (movementInput.y < 0 && movementInput.x > 0) targetAngle = -135f;
+        else if (movementInput.y < 0 && movementInput.x < 0) targetAngle = 135f;
+        else if (movementInput.y > 0) targetAngle = 0f;
+        else if (movementInput.y < 0) targetAngle = 180f;
+        else if (movementInput.x > 0) targetAngle = -90f;
+        else if (movementInput.x < 0) targetAngle = 90f;
 
-        // Damp near finish (ease-out)
-        if (Mathf.Abs(angleDiff) < 20f)
-            dynamicSpeed *= endTurnDamp;
-
-        // Minimum turn speed
-        dynamicSpeed = Mathf.Max(dynamicSpeed, minTurnSpeed);
-
-        // Smooth rotate
+        // Smooth rotation
         Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, dynamicSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime);
     }
 }

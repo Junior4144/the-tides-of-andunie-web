@@ -24,9 +24,9 @@ public class AttackRework : MonoBehaviour
 
     private float targetAngle;
 
+    [SerializeField] private float rotationThreshold = 1f; // how close to target angle before stopping
 
-    [Header("Hop Dash Settings")]
-    [SerializeField] private float hopDistance = 0.20f; // tiny dash forward
+    private bool _isRotating = false;
 
 
     private void Awake()
@@ -36,15 +36,11 @@ public class AttackRework : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !_isAttacking)
+        // Start rotation on click (if not already attacking)
+        if (Input.GetMouseButtonDown(0) && !_isRotating)
         {
             SetTargetDirection();
-            HopThenAttack();
-        }
-
-        if (_isAttacking)
-        {
-            SmoothRotateToTarget();
+            StartRotateToTarget();
         }
     }
 
@@ -52,29 +48,50 @@ public class AttackRework : MonoBehaviour
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePos - playerRoot.position);
-        targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f; // face up corrected
+        targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+    }
+    private void StartRotateToTarget()
+    {
+        if (!_isRotating)
+            StartCoroutine(RotateToTargetCoroutine());
+    }
+    private IEnumerator RotateToTargetCoroutine()
+    {
+        _isRotating = true;
+
+        while (true)
+        {
+            Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
+            playerRoot.rotation = Quaternion.RotateTowards(
+                playerRoot.rotation,
+                targetRot,
+                attackTurnSpeed * Time.deltaTime
+            );
+
+            float angleDiff = Quaternion.Angle(playerRoot.rotation, targetRot);
+            if (angleDiff < rotationThreshold)
+                break;
+
+            yield return null;
+        }
+
+        _isRotating = false;
+        OnRotationComplete();
     }
 
-    private void SmoothRotateToTarget()
+    //private void SmoothRotateToTarget()
+    //{
+    //    Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
+    //    playerRoot.rotation = Quaternion.RotateTowards(
+    //        playerRoot.rotation,
+    //        targetRot,
+    //        attackTurnSpeed * Time.deltaTime
+    //    );
+    //}
+    private void OnRotationComplete()
     {
-        Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
-        playerRoot.rotation = Quaternion.Lerp(playerRoot.rotation, targetRot, attackTurnSpeed * Time.deltaTime);
-    }
-
-    private void HopThenAttack()
-    {
-        _isAttacking = true;
-
-        // Face the target direction first
-        playerRoot.rotation = Quaternion.Euler(0, 0, targetAngle);
-
-        // Small step forward (sprite faces up, so use .up)
-        playerRoot.position += playerRoot.up * hopDistance;
-
-        // now attack
         PlayAttackAnimation();
     }
-
     private void PlayAttackAnimation()
     {
         if (_animator)
@@ -112,7 +129,6 @@ public class AttackRework : MonoBehaviour
         if (!_isAttacking)
         {
             SetTargetDirection();
-            HopThenAttack();
         }
     }
 }
