@@ -61,7 +61,7 @@ public class PlayerBowAttackController : MonoBehaviour
         else
         {
             if (BowCharge > 0f)
-                BowCharge -= 1f * Time.deltaTime * 3f;
+                BowCharge -= 10f * Time.deltaTime;
             else
             {
                 BowCharge = 0f;

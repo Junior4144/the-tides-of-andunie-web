@@ -15478,7 +15478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2103198657
 Transform:
   m_ObjectHideFlags: 0
@@ -21866,7 +21866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8228389643143249322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21887,6 +21887,10 @@ MonoBehaviour:
   attackTurnSpeed: 1000
   _animator: {fileID: 3536749356906977445}
   rotationThreshold: 1
+  BowPowerSlider: {fileID: 447156929}
+  BowPower: 10
+  MaxBowCharge: 3
+  RotationSpeed: 0.25
 --- !u!4 &8353749738433360071
 Transform:
   m_ObjectHideFlags: 0

@@ -44,9 +44,6 @@ public class ArrowProjectile : MonoBehaviour
         // Destroy the arrow on impact
         if (collision.CompareTag("Building")) Destroy(gameObject);
 
-
-        
-
         Destroy(gameObject, 10f);
     }
 
