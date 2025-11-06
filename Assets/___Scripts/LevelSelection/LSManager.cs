@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum VillageState
 {
@@ -29,9 +30,10 @@ public class LSManager : MonoBehaviour
     public bool startGlobalInvasion = false;
 
     public event Action<string, VillageState> OnVillageStateChanged;
-    public static event Action OnGlobalInvasionStarted; // for level 1
+    public static event Action UpdateVillageInvasionStatus;
 
     public bool HasInvasionStarted => invasionStarted;
+
 
     void Awake()
     {
@@ -39,13 +41,26 @@ public class LSManager : MonoBehaviour
         Instance = this;
 
     }
+    private void OnEnable() => InSceneActivationManager.OnSceneActivated += LevelSelectorActive;
 
     private void Start()
     {
         if (startGlobalInvasion)
+        {
             TriggerGlobalInvasion();
-    }
+            LevelSelectorActive();
+        }
+        else if (SceneManager.GetActiveScene().name == "LevelSelector")
+        {
+            Debug.Log("[LS Manager] LSManager started inside LevelSelector — manual invoke");
+            LevelSelectorActive();
+        }
 
+    }
+    private void LevelSelectorActive()
+    {
+        UpdateVillageInvasionStatus?.Invoke();
+    }
     public void SetVillageState(string villageId, VillageState newState)
     {
         for (int i = 0; i < villages.Count; i++)
@@ -67,7 +82,6 @@ public class LSManager : MonoBehaviour
     {
         for (int i = 0; i < villages.Count; i++)
         {
-            Debug.Log($"LSMANAGER ->villages[i].id = {villages[i].id} vs VillageID: {villageId}");
             if (villages[i].id == villageId)
                 return villages[i].state;
         }
@@ -79,6 +93,7 @@ public class LSManager : MonoBehaviour
     {
         if (invasionStarted) return;
         invasionStarted = true;
+
         Debug.Log("Global Invasion Starting");
         for (int i = 0; i < villages.Count; i++)
         {
@@ -87,8 +102,6 @@ public class LSManager : MonoBehaviour
             villages[i].state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);
         }
-
-        OnGlobalInvasionStarted?.Invoke();
     }
 
     public string DetermineNextScene(string villageId)

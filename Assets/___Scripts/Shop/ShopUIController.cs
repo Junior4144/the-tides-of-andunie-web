@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShopUIController : MonoBehaviour
 {
-    public static ShopUIController Instance { get; private set; }
+    public static ShopUIController Instance { get; private set; } // TODO consider changing this to be named manager
 
     [SerializeField] private Transform shopPanel;
     [SerializeField] private GameObject shopItemUIPrefab;
@@ -23,14 +23,7 @@ public class ShopUIController : MonoBehaviour
     {
         PopulateShop();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G)) // only for debugging
-        {
-            UIEvents.OnRequestShopToggle?.Invoke();
 
-        }
-    }
     void PopulateShop()
     {
         ShopListing[] listings = ShopManager.Instance.GetListings();
@@ -42,5 +35,9 @@ public class ShopUIController : MonoBehaviour
 
             ui.SetData(listing);
         }
+    }
+    public void HandleExitClick()
+    {
+        UIEvents.OnRequestShopToggle?.Invoke();
     }
 }

@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     //------HEALTH------//
-    public float GetHealth() => _healthController.GetCurrentHealth();
+    public float GetCurrentHealth() => _healthController.GetCurrentHealth();
     public float GetPercentHealth() => _healthController.GetPercentHealth();
     public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
     public void SetHealth(float value) => _healthController.SetCurrentHealth(value);

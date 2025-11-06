@@ -1,55 +1,49 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
-    private GameObject currentPlayer;
 
-    private void Awake() =>
-        OnSceneLoaded();
+    private void Awake() => SpawnPlayer();
 
-    private void OnSceneLoaded()
+    private void SpawnPlayer()
     {
-        if (PlayerManager.Instance != null) return;
+        Debug.Log("[PlayerSpawner] Spawning player");
+        Instantiate(playerPrefab, transform.position, Quaternion.identity);
 
-        //Default Player Spawner Transform
-        currentPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
-
-        string sceneName = gameObject.scene.name;
-        Debug.Log($"PlayerSpawner: Scene: {sceneName} trying to send to dictionary");
-
-        var savedTransform = SceneSavePositionManager.Instance?.GetSavedPosition(sceneName);
-
-        Vector3 spawnPos;
-        Quaternion spawnRot;
-
-        if (savedTransform != null)
-        {
-            spawnPos = savedTransform.Value.pos;
-            spawnRot = savedTransform.Value.rot;
-            Debug.Log($"Spawning player at SAVED position for scene: {sceneName}");
-        }
-        else // equals null
-        {
-            spawnPos = transform.position;
-            spawnRot = transform.rotation;
-            Debug.Log($"Spawning player at DEFAULT spawner position in scene: {sceneName}");
-        }
-
+        var (spawnPos, spawnRot) = DetermineSpawnTransform();
         PlayerManager.Instance.SetPlayerTransform(spawnPos, spawnRot);
 
-        Debug.Log("New Player created");
+        Debug.Log("[PlayerSpawner] Player spawned successfully");
 
-        if (SaveManager.Instance && HealthUIController.Instance.Check_HealthBar_UI_IsActive())
-        {
-            SaveManager.Instance.RestorePlayerStats();
-
-            var healthController = PlayerManager.Instance.GetComponentInChildren<IHealthController>();
-            HealthUIController.Instance.UpdateHealthBar(healthController.GetCurrentHealth(), PlayerStatsManager.Instance.MaxHealth); 
-        }
-        
+        RestorePlayerStats();
     }
 
+    private (Vector3 pos, Quaternion rot) DetermineSpawnTransform()
+    {
+        var savedTransform = SceneSavePositionManager.Instance?.GetSavedPosition(gameObject.scene.name);
+
+        if (savedTransform.HasValue)
+        {
+            Debug.Log($"[PlayerSpawner] Using saved position {savedTransform.Value.pos}");
+            return savedTransform.Value;
+        }
+
+        transform.GetPositionAndRotation(out var defaultPos, out var defaultRot);
+        Debug.Log($"[PlayerSpawner] Using default position {defaultPos}");
+        return (defaultPos, defaultRot);
+    }
+
+    private void RestorePlayerStats()
+    {
+        if (!SaveManager.Instance || !HealthUIController.Instance.Check_HealthBar_UI_IsActive())
+            return;
+
+        SaveManager.Instance.RestorePlayerStats();
+
+        HealthUIController.Instance.UpdateHealthBar(
+            currentHealth: PlayerManager.Instance.GetCurrentHealth(),
+            maxhealth: PlayerStatsManager.Instance.MaxHealth
+        );
+    }
 }

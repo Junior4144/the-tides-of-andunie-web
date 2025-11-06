@@ -43,7 +43,7 @@ public class PlayerHeroMovement : MonoBehaviour
     {
         _isWalking = false;
 
-        if (_impulseController.IsInImpulse()) return;
+        if (!_impulseController || _impulseController.IsInImpulse()) return;
 
         HandleDashingInput();
 

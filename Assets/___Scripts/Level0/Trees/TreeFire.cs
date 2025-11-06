@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class TreeFire : MonoBehaviour
@@ -5,34 +8,66 @@ public abstract class TreeFire : MonoBehaviour
     public GameObject fireSound;
 
     [SerializeField]
-    protected GameObject _fire_position_1;
+    private GameObject[] _fire_position_list;
     [SerializeField]
-    protected GameObject _fire_position_2;
-    [SerializeField]
-    protected GameObject _fire_position_3;
-    [SerializeField]
-    protected GameObject _fire_position_4;
-    [SerializeField]
-    protected GameObject _fire_position_5;
-    [SerializeField]
-    protected GameObject _fire_position_6;
+    private GameObject fireSprite_1;
 
-    [SerializeField]
-    protected GameObject fireSprite_1;
-    [SerializeField]
-    protected GameObject fireSprite_2;
-    [SerializeField]
-    protected GameObject fireSprite_3;
-    [SerializeField]
-    protected GameObject fireSprite_4;
-    [SerializeField]
-    protected GameObject fireSprite_5;
-    [SerializeField]
-    protected GameObject fireSprite_6;
+    private bool _isLevelSelectorScene;
+
+    private void OnEnable()
+    {
+        InSceneActivationManager.OnSceneActivated += StartLevelSelectorFire;
+    }
+    private void OnDisable()
+    {
+        InSceneActivationManager.OnSceneActivated -= StartLevelSelectorFire;
+    }
 
     private void Awake()
     {
-        SpawnNewFire();
+        CacheFirePoints();
+
+        _isLevelSelectorScene = gameObject.scene.name == "LevelSelector";
+
+        if (!_isLevelSelectorScene)
+        {
+            SpawnFire();
+            SpawnFireSound();
+        }
+            
     }
-    protected abstract void SpawnNewFire();
+
+    private void CacheFirePoints()
+    {
+        int fireCount = transform.childCount;
+        _fire_position_list = new GameObject[fireCount];
+
+        for (int i = 0; i < fireCount; i++)
+        {
+            _fire_position_list[i] = transform.GetChild(i).gameObject;
+        }
+    }
+
+    private void SpawnFire()
+    {
+        int fireCount = _fire_position_list.Length;
+
+        for (int i = 0; i < fireCount; i++)
+        {
+            Instantiate(fireSprite_1, _fire_position_list[i].transform.position, Quaternion.identity);
+            if (_isLevelSelectorScene) break;
+        }
+    }
+    private void SpawnFireSound()
+    {
+        if (fireSound != null)
+            Instantiate(fireSound, transform.position, Quaternion.identity, transform);
+    }
+
+    private void StartLevelSelectorFire()
+    {
+        if (_isLevelSelectorScene)
+            SpawnFire();
+    }
 }
+

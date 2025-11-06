@@ -55,7 +55,7 @@ public class PlayerAnimator : MonoBehaviour
             Time.time >= _nextIdleCheckTime &&
             Time.time >= _lockedTill &&
             !_playingSpecialIdle &&
-            !_playerMovement.IsWalking
+            (_playerMovement == null || !_playerMovement.IsWalking)
         )
         {
             if (UnityEngine.Random.value <= _specialIdleChance)
