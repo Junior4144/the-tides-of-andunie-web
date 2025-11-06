@@ -1,147 +1,117 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
+using UnityEditor.Playables;
 using UnityEngine;
 
 
 public class PlayerBowAttackController : MonoBehaviour
 {
     [SerializeField] private Transform playerRoot;
-    [SerializeField] private float damageDelay = 0;
     [SerializeField] private string _layerName;
     [SerializeField] private float _animDuration;
     [SerializeField] private AudioClip _attackSound;
-    [SerializeField] private float attackTurnSpeed = 15f;
     [SerializeField] private PlayerAnimator _animator;
-    [SerializeField] private float rotationThreshold = 1f; // how close to target angle before stopping
 
-    private bool _isAttacking = false;
-    private float targetAngle;
-    private bool _isRotating = false;
     private AudioSource _audioSource;
-    private bool _queuedAttack = false;
+    private bool _isAttacking = false;
 
     public bool IsAttacking => _isAttacking;
     public float AttackDuration => _animDuration;
 
-    public BowWeapon bowWeapon;
+    public Transform firePoint;
+    public GameObject arrowSprite;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }
 
+    [Range(0f, 10f)]
+    [SerializeField] float BowPower;
+
+    [Range(0f, 3f)]
+    [SerializeField] float MaxBowCharge;
+
+    [SerializeField] GameObject ArrowPrehab;
+
+    float BowCharge;
+
+    bool CanFire = true;
+
+    private void Start()
+    {
+        //BowPowerSlider.value = 0f;
+        //BowPowerSlider.maxValue = MaxBowCharge;
+    }
+
+
+
     private void Update()
     {
-        // When player clicks
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && CanFire)
         {
-            if (!_isAttacking && !_isRotating)
-            {
-                // Start attack normally
-                SetTargetDirection();
-                StartRotateToTarget();
-            }
-            else if (_isAttacking && !_queuedAttack)
-            {
-                // Queue one attack only
-                _queuedAttack = true;
-            }
+            _isAttacking = true;
+            ChargeBow();
+        }
+        else if (Input.GetMouseButton(0) && CanFire)
+        {
+            RotateHand();
+        }
+        else if (Input.GetMouseButtonUp(0) && CanFire)
+        {
+            FireBow();
+        }
+        else
+        {
+            CanFire = true;
+            //if (BowCharge > 0f)
+            //{
+            //    BowCharge -= 1f * Time.deltaTime;
+            //}
+            //else
+            //{
+            //    BowCharge = 0f;
+            //    CanFire = true;
+
+            //}
+            //BowPowerSlider.value = BowCharge;
         }
     }
-
-    private void SetTargetDirection()
+    void ChargeBow()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mousePos - playerRoot.position);
-        targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-    }
+        arrowSprite.SetActive(true);
+        BowCharge += Time.deltaTime;
 
-    private void StartRotateToTarget()
-    {
-        _isAttacking = true;
-        if (!_isRotating)
-            StartCoroutine(RotateToTargetCoroutine());
-    }
+        //BowPowerSlider.value = BowCharge;
 
-    private IEnumerator RotateToTargetCoroutine()
-    {
-        _isRotating = true;
-
-        while (true)
+        if(BowCharge > MaxBowCharge)
         {
-            Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
-            playerRoot.rotation = Quaternion.RotateTowards(
-                playerRoot.rotation,
-                targetRot,
-                attackTurnSpeed * Time.deltaTime
-            );
-
-            float angleDiff = Quaternion.Angle(playerRoot.rotation, targetRot);
-            if (angleDiff < rotationThreshold)
-                break;
-
-            yield return null;
+            //BowPowerSlider.value = MaxBowCharge;
         }
-
-        _isRotating = false;
-        OnRotationComplete();
     }
-
-    private void OnRotationComplete()
+    private void FireBow()
     {
-        PlayAttackAnimation();
-    }
+        CanFire = false;
 
-    private void PlayAttackAnimation()
-    {
-        //if (_animator)
-        //    _animator.TriggerAttack();
+        if (BowCharge < MaxBowCharge) BowCharge = MaxBowCharge;
 
-            bowWeapon.Fire();
+        float ArrowSpeed = BowCharge + BowPower;
 
-        if (_attackSound)
-            _audioSource.PlayOneShot(_attackSound, 0.4f);
+        float angle = Utility.AngleTowardsMouse(gameObject.transform.position);
+        Quaternion rot = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
-        StartCoroutine(ResetAttackAnimation());
-    }
+        ArrowProjectile arrow = Instantiate(ArrowPrehab, gameObject.transform.position, rot).GetComponent<ArrowProjectile>();
+        arrow.ArrowVelocity = ArrowSpeed;
 
-    private IEnumerator ResetAttackAnimation()
-    {
-        yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
+        arrowSprite.SetActive(false);
 
-        // If queued attack exists, immediately trigger it
-        if (_queuedAttack)
-        {
-            _queuedAttack = false;
-            SetTargetDirection();
-            StartRotateToTarget();
-        }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void RotateHand()
     {
-        if (!_isAttacking) return;
-        if (col.gameObject.layer != LayerMask.NameToLayer(_layerName)) return;
-
-        if (col.TryGetComponent(out IHealthController health))
-            StartCoroutine(DealDamage(health));
+        float angle = Utility.AngleTowardsMouse(playerRoot.position);
+        playerRoot.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
-    private IEnumerator DealDamage(IHealthController health)
-    {
-        yield return new WaitForSeconds(damageDelay);
-        health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
-    }
-
-    public void TriggerAttackExternal()
-    {
-        if (!_isAttacking)
-        {
-            SetTargetDirection();
-        }
-        else if (!_queuedAttack)
-        {
-            _queuedAttack = true;
-        }
-    }
 }

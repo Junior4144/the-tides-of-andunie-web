@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerAttackController attackScript;
     [SerializeField] private PlayerBowAttackController bowAttackScript;
     [SerializeField] private float rotationSpeed = 8f;
-    [SerializeField] private float rotationSnapBuffer = 0.12f;
+    //[SerializeField] private float rotationSnapBuffer = 0.12f;
     private float lastTurnTime = 0f;
 
     private bool movementEnabled = true;
@@ -57,14 +57,18 @@ public class PlayerController : MonoBehaviour
 
         // Handle rotation
         if (movementInput != Vector2.zero && !attackScript.IsAttacking && !bowAttackScript.IsAttacking)
+        {
+            Debug.Log("WASD based ROTATION");
             RotatePlayerEightWay();
+        }
+            
     }
     private void RotatePlayerEightWay()
     {
-        if (Time.time - lastTurnTime < rotationSnapBuffer)
-            return;
+        //if (Time.time - lastTurnTime < rotationSnapBuffer)
+        //    return;
 
-        lastTurnTime = Time.time;
+        //lastTurnTime = Time.time;
 
         float targetAngle = transform.eulerAngles.z;
 
