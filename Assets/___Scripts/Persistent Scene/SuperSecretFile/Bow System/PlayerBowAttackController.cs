@@ -111,7 +111,7 @@ public class PlayerBowAttackController : MonoBehaviour
     private void RotateHand()
     {
         float angle = Utility.AngleTowardsMouse(playerRoot.position);
-        playerRoot.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        playerRoot.gameObject.GetComponent<Rigidbody2D>().MoveRotation(Quaternion.Euler(new Vector3(0f, 0f, angle)));
     }
 
 }
