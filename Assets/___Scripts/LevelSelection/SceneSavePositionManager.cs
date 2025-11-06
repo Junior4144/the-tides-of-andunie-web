@@ -20,31 +20,35 @@ public class SceneSavePositionManager : MonoBehaviour
 
     public void SavePlayerPosition(string sceneName, Vector3 position, Quaternion rotation)
     {
-        Debug.Log($"Saving Player Last Position in {sceneName} at {position} and {rotation}");
-
+        Debug.Log($"[SceneSavePositionManager] Position saved {sceneName} {position}");
         _playerPrevPosition[sceneName] = (position, rotation);
-
     }
+
     public void ResetPlayerPosition(string sceneName)
     {
+        Debug.Log($"[SceneSavePositionManager] Position reset {sceneName}");
         _playerPrevPosition.Remove(sceneName);
     }
 
     public (Vector3 pos, Quaternion rot)? GetSavedPosition(string sceneName)
     {
-        Debug.Log($"Trying to get from dictionary at {sceneName}");
-        PrintDic();
-        if ( _playerPrevPosition.ContainsKey(sceneName))
+        PrintDictionary();
+        if (_playerPrevPosition.ContainsKey(sceneName))
+        {
+            Debug.Log($"[SceneSavePositionManager] Position found {sceneName}");
             return _playerPrevPosition[sceneName];
+        }
+        Debug.Log($"[SceneSavePositionManager] Position not found {sceneName}");
         return null;
     }
 
-    public void PrintDic()
+    public void PrintDictionary()
     {
+        Debug.Log("===Saved Positions===");
         foreach (var kvp in _playerPrevPosition)
         {
             var (pos, rot) = kvp.Value;
-            Debug.Log($"Scene: {kvp.Key} | Position: {pos} | Rotation: {rot}");
+            Debug.Log($"[SceneSavePositionManager] Scene {kvp.Key} pos:{pos} rot:{rot}");
         }
     }
 }

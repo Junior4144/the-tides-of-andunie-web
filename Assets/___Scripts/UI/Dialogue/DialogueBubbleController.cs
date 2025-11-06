@@ -101,10 +101,10 @@ public class DialogueBubbleController : MonoBehaviour
         if (_audioSource == null || _typeSound == null)
         {
             Debug.LogWarning("[DialogueBubble] Missing audio component");
-            return;
+            return; 
         }
 
-        _audioSource.PlayOneShot(_typeSound);
+        _audioSource.PlayOneShot(_typeSound, volumeScale: 0.2f);
     }
 
     private void OnDestroy()

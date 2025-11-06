@@ -13,15 +13,11 @@ public class ScenePortalController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;    
 
-        Debug.Log("[NextSceneController] Next Scene is starting");
-        GameObject _player = PlayerManager.Instance.gameObject;
-        Debug.Log($"Player: {_player.name} and saving data");
-
         AudioManager.Instance.FadeAudio();
 
         SaveManager.Instance.SavePlayerStats();
 
-        SceneSavePositionManager.Instance.SavePlayerPosition(SceneManager.GetActiveScene().name, lastPosition.transform.position, lastPosition.transform.rotation);
+        SceneSavePositionManager.Instance.SavePlayerPosition(gameObject.scene.name, lastPosition.transform.position, lastPosition.transform.rotation);
 
         PlayerManager.Instance.HandleDestroy();
 
@@ -29,7 +25,7 @@ public class ScenePortalController : MonoBehaviour
     }
 
     public void NextStage() =>
-    LoadNextStage();
+        LoadNextStage();
 
     void LoadNextStage() =>
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);

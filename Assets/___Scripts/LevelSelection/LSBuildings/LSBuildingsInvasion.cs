@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LSBuildingsInvasion : MonoBehaviour
@@ -22,31 +23,30 @@ public class LSBuildingsInvasion : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        int fireCount = Mathf.Min(transform.childCount, 5);
-        firePositions = new GameObject[fireCount];
-        for (int i = 0; i < fireCount; i++)
-            firePositions[i] = transform.GetChild(i).gameObject;
+
+        List<GameObject> list = new List<GameObject>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i).gameObject;
+            if (child.name == "VillagerSpawner")
+                continue;
+
+            list.Add(child);
+        }
+
+        firePositions = list.ToArray();
     }
 
     private void OnEnable()
     {
-        LSManager.OnGlobalInvasionStarted += HandleInvasion;
-
+        LSManager.UpdateVillageInvasionStatus += HandleInvasion;
     }
     private void OnDisable()
     {
-        LSManager.OnGlobalInvasionStarted -= HandleInvasion;
+        LSManager.UpdateVillageInvasionStatus -= HandleInvasion;
     }
-    private void Start()
-    {
-        StartCoroutine(ApplyCurrentState());
-    }
-    private IEnumerator ApplyCurrentState()
-    {
-        yield return null;
-        if (LSManager.Instance.HasInvasionStarted)
-            HandleInvasion();
-    }
+
     private void HandleInvasion()
     {
         if (!gameObject.scene.name.Contains("LevelSelector"))
@@ -58,15 +58,16 @@ public class LSBuildingsInvasion : MonoBehaviour
         if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
-        ReplaceSprite();
+
 
         if (bigBuilding) HandleFireBigBuilding();
         else if (smallBuilding) HandleFireSmallBuilding();
+
+        ReplaceSprite();
     }
     private void HandleFireBigBuilding()
     {
         SpawnFire(0.5f);
-        SpawnFireSound();
     }
 
     private void HandleFireSmallBuilding()
@@ -75,11 +76,18 @@ public class LSBuildingsInvasion : MonoBehaviour
     }
     private void SpawnFire(float scale)
     {
+        if (fireSprites == null || fireSprites.Length == 0 || fireSprites[0] == null)
+        {
+            Debug.Log($"{name}: fireSprites not assigned or empty!");
+            return;
+        }
+
         foreach (var position in firePositions)
         {
             GameObject fire = Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
             fire.transform.localScale = Vector3.one * scale;
         }
+
     }
 
     private void SpawnFireSound()

@@ -15,8 +15,8 @@ public class GlobalStoryManager : MonoBehaviour
     public bool playTownhallCutscene = true;
     #endregion
 
-    #region YourSceneBoolsHere
-  
+    #region LevelSelector
+    public bool playLSInvasionCutscene = false;
     #endregion
 }
 

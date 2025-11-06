@@ -18,7 +18,6 @@ public class LSUIManager : MonoBehaviour
 
     public static LSUIManager Instance;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)

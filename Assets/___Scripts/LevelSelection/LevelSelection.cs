@@ -6,16 +6,14 @@ public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private string villageId;
     [SerializeField] bool isExit;
+    [SerializeField] private string VillageLiberationID;
 
     private bool isPlayerInside = false;
 
     public static event Action OnPlayerEnterSelectionZone;
     public static event Action OnPlayerExitSelectionZone;
-
-
     public static event Action EnterLeaveVillageZone;
     public static event Action ExitLeaveVillageZone;
-
     public static event Action<string, string> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
@@ -24,9 +22,10 @@ public class LevelSelection : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (isExit) // Different Invoke because box are different sizes -> map are different scales
+        if (isExit)
             EnterLeaveVillageZone?.Invoke();
-        else OnPlayerEnterSelectionZone?.Invoke();
+        else 
+            OnPlayerEnterSelectionZone?.Invoke();
 
         Debug.Log("[Level Selection] Player entered level zone");
         isPlayerInside = true;
@@ -38,10 +37,11 @@ public class LevelSelection : MonoBehaviour
 
         if (isExit)
             ExitLeaveVillageZone?.Invoke();
-        else OnPlayerExitSelectionZone?.Invoke();
+        else 
+            OnPlayerExitSelectionZone?.Invoke();
 
-        Debug.Log("[Level Selection] Player left level zone");
         isPlayerInside = false;
+        Debug.Log("[Level Selection] Player left level zone");
     }
 
     private void Update()

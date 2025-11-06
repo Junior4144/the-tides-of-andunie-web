@@ -15,29 +15,25 @@ MonoBehaviour:
   Waves:
   - enemies:
     - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 1
-    - prefab: {fileID: 7777853474901196750, guid: 60ce51ed4adafac4aa5aa10c128cc421, type: 3}
-      count: 1
-    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 1
+      count: 2
     countdown: 5
     spawnInterval: 1
     countDownText: Enemies observed in the distance!
     waveStartText: Enemies are here! Fight!
   - enemies:
     - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 2
-    - prefab: {fileID: 7159113859293338447, guid: 87c0aae70bb75a04d93cd4c8a0b3e711, type: 3}
+      count: 1
+    - prefab: {fileID: 7777853474901196750, guid: 60ce51ed4adafac4aa5aa10c128cc421, type: 3}
       count: 1
     countdown: 20
     spawnInterval: 1
     countDownText: 
     waveStartText: 
   - enemies:
+    - prefab: {fileID: 7159113859293338447, guid: 87c0aae70bb75a04d93cd4c8a0b3e711, type: 3}
+      count: 1
     - prefab: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
       count: 1
-    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 2
     countdown: 20
     spawnInterval: 1
     countDownText: 
