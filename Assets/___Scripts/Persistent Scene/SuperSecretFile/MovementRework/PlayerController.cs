@@ -65,10 +65,6 @@ public class PlayerController : MonoBehaviour
     }
     private void RotatePlayerEightWay()
     {
-        //if (Time.time - lastTurnTime < rotationSnapBuffer)
-        //    return;
-
-        //lastTurnTime = Time.time;
 
         float targetAngle = transform.eulerAngles.z;
 

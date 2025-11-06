@@ -48,8 +48,6 @@ public class PlayerBowAttackController : MonoBehaviour
         BowPowerSlider.maxValue = MaxBowCharge;
     }
 
-
-
     private void Update()
     {
         if (Input.GetMouseButton(0) && CanFire)
@@ -58,23 +56,16 @@ public class PlayerBowAttackController : MonoBehaviour
             ChargeBow();
             RotateHand();
         }
-
         else if (Input.GetMouseButtonUp(0) && CanFire)
-        {
             FireBow();
-        }
         else
         {
-            //CanFire = true;
             if (BowCharge > 0f)
-            {
-                BowCharge -= 1f * Time.deltaTime;
-            }
+                BowCharge -= 1f * Time.deltaTime * 3f;
             else
             {
                 BowCharge = 0f;
                 CanFire = true;
-
             }
             BowPowerSlider.value = BowCharge;
         }
@@ -83,7 +74,7 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         arrowSprite.SetActive(true);
 
-        BowCharge += Time.deltaTime;
+        BowCharge += Time.deltaTime * 3f;
 
         BowPowerSlider.value = BowCharge;
 
@@ -105,6 +96,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
         ArrowProjectile arrow = Instantiate(ArrowPrehab, gameObject.transform.position, rot).GetComponent<ArrowProjectile>();
         arrow.ArrowVelocity = ArrowSpeed;
+        arrow.power = BowCharge;
 
         _isAttacking = false;
         arrowSprite.SetActive(false);
@@ -114,7 +106,7 @@ public class PlayerBowAttackController : MonoBehaviour
     private void RotateHand()
     {
         float targetAngle = Utility.AngleTowardsMouse(playerRoot.position);
-        float currentAngle = playerRoot.gameObject.GetComponent<Rigidbody2D>().rotation; // Rigidbody2D stores rotation as a float (degrees)
+        float currentAngle = playerRoot.gameObject.GetComponent<Rigidbody2D>().rotation;
 
         float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, RotationSpeed);
 
