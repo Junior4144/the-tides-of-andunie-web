@@ -4,8 +4,8 @@
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private AttackRework attackScript;
-
+    [SerializeField] private PlayerAttackController attackScript;
+    [SerializeField] private PlayerBowAttackController bowAttackScript;
     [SerializeField] private float rotationSpeed = 8f;
     [SerializeField] private float rotationSnapBuffer = 0.12f;
     private float lastTurnTime = 0f;
@@ -52,20 +52,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (attackScript.IsAttacking)
-        {
-            PlayerRigidBody.linearVelocity = Vector2.zero;
-            return;
-        }
-
         // Apply movement using physics
         PlayerRigidBody.linearVelocity = movementInput * speed;
 
         // Handle rotation
-        if (movementInput != Vector2.zero)
+        if (movementInput != Vector2.zero && !attackScript.IsAttacking && !bowAttackScript.IsAttacking)
             RotatePlayerEightWay();
     }
-
     private void RotatePlayerEightWay()
     {
         if (Time.time - lastTurnTime < rotationSnapBuffer)

@@ -1,33 +1,26 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.LowLevel;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(AudioSource))]
-public class AttackRework : MonoBehaviour
+public class PlayerAttackController : MonoBehaviour
 {
-    [SerializeField] private Transform playerRoot; // assign parent in inspector
-
+    [SerializeField] private Transform playerRoot;
     [SerializeField] private float damageDelay = 0;
     [SerializeField] private string _layerName;
     [SerializeField] private float _animDuration;
     [SerializeField] private AudioClip _attackSound;
-
     [SerializeField] private float attackTurnSpeed = 15f;
-
-    private bool _isAttacking = false;
-    public float AttackDuration => _animDuration;
     [SerializeField] private PlayerAnimator _animator;
-    private AudioSource _audioSource;
-
-    public bool IsAttacking => _isAttacking;
-
-    private float targetAngle;
-
     [SerializeField] private float rotationThreshold = 1f; // how close to target angle before stopping
 
+    private bool _isAttacking = false;
+    private float targetAngle;
     private bool _isRotating = false;
+    private AudioSource _audioSource;
+    private bool _queuedAttack = false;
 
+    public bool IsAttacking => _isAttacking;
+    public float AttackDuration => _animDuration;
 
     private void Awake()
     {
@@ -36,11 +29,20 @@ public class AttackRework : MonoBehaviour
 
     private void Update()
     {
-        // Start rotation on click (if not already attacking)
-        if (Input.GetMouseButtonDown(0) && !_isRotating)
+        // When player clicks
+        if (Input.GetMouseButtonDown(0))
         {
-            SetTargetDirection();
-            StartRotateToTarget();
+            if (!_isAttacking && !_isRotating)
+            {
+                // Start attack normally
+                SetTargetDirection();
+                StartRotateToTarget();
+            }
+            else if (_isAttacking && !_queuedAttack)
+            {
+                // Queue one attack only
+                _queuedAttack = true;
+            }
         }
     }
 
@@ -50,11 +52,14 @@ public class AttackRework : MonoBehaviour
         Vector2 direction = (mousePos - playerRoot.position);
         targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
     }
+
     private void StartRotateToTarget()
     {
+        _isAttacking = true;
         if (!_isRotating)
             StartCoroutine(RotateToTargetCoroutine());
     }
+
     private IEnumerator RotateToTargetCoroutine()
     {
         _isRotating = true;
@@ -79,19 +84,11 @@ public class AttackRework : MonoBehaviour
         OnRotationComplete();
     }
 
-    //private void SmoothRotateToTarget()
-    //{
-    //    Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
-    //    playerRoot.rotation = Quaternion.RotateTowards(
-    //        playerRoot.rotation,
-    //        targetRot,
-    //        attackTurnSpeed * Time.deltaTime
-    //    );
-    //}
     private void OnRotationComplete()
     {
         PlayAttackAnimation();
     }
+
     private void PlayAttackAnimation()
     {
         if (_animator)
@@ -107,6 +104,14 @@ public class AttackRework : MonoBehaviour
     {
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
+
+        // If queued attack exists, immediately trigger it
+        if (_queuedAttack)
+        {
+            _queuedAttack = false;
+            SetTargetDirection();
+            StartRotateToTarget();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -129,6 +134,10 @@ public class AttackRework : MonoBehaviour
         if (!_isAttacking)
         {
             SetTargetDirection();
+        }
+        else if (!_queuedAttack)
+        {
+            _queuedAttack = true;
         }
     }
 }

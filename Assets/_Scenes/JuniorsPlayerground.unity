@@ -14350,7 +14350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1820438620
 Transform:
   m_ObjectHideFlags: 0
@@ -14487,6 +14487,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcc63eba772861458914fea69d36732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTargetFinder
+--- !u!1 &1916965059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1916965060}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1916965060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916965059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.53, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103198657}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2044882240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
@@ -14629,6 +14660,174 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092216387}
   m_CullTransparentMesh: 1
+--- !u!1 &2103198656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2103198657}
+  - component: {fileID: 2103198658}
+  - component: {fileID: 2103198660}
+  - component: {fileID: 2103198659}
+  m_Layer: 7
+  m_Name: BowWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2103198657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103198656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 1.31, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1916965060}
+  m_Father: {fileID: 972147265135252364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2103198658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103198656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac1cd14a10051148ae500cb04cad96e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BowWeapon
+  bullet: {fileID: 2366741659865636554, guid: 5678b6d0a7760c44885b83c475476a35, type: 3}
+  firePoint: {fileID: 1916965060}
+  fireForce: 10
+--- !u!114 &2103198659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103198656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6734851deaa31d4db7ee8ed956141be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBowAttackController
+  playerRoot: {fileID: 972147265135252364}
+  damageDelay: 0.4
+  _layerName: Enemy
+  _animDuration: 0.7
+  _attackSound: {fileID: 0}
+  attackTurnSpeed: 1000
+  _animator: {fileID: 0}
+  rotationThreshold: 1
+  bowWeapon: {fileID: 2103198658}
+--- !u!82 &2103198660
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103198656}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &2134152902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
@@ -14925,6 +15124,7 @@ Transform:
   - {fileID: 6633546317169335431}
   - {fileID: 2694864086919524175}
   - {fileID: 7022903040411040004}
+  - {fileID: 2103198657}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1147490085036384970
@@ -20633,7 +20833,6 @@ GameObject:
   - component: {fileID: 972147265135252364}
   - component: {fileID: 8045057175555163918}
   - component: {fileID: 8045057175555163923}
-  - component: {fileID: 8045057175555163920}
   - component: {fileID: 5365342490647079495}
   - component: {fileID: 3790337935346384786}
   - component: {fileID: 2142873932529157109}
@@ -20746,23 +20945,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &8045057175555163920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650197277250235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 088aa71c8927957478211855db0bd5cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
-  dashDistance: 5
-  dashDuration: 0.12
-  dashCooldown: 0.4
 --- !u!114 &8045057175555163923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20777,6 +20961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::randommovementscript
   speed: 10
   attackScript: {fileID: 8228389643143249322}
+  bowAttackScript: {fileID: 2103198659}
   rotationSpeed: 10
   rotationSnapBuffer: 0.005
 --- !u!1001 &8134910208090270236
@@ -20891,7 +21076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8228389643143249322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20907,7 +21092,7 @@ MonoBehaviour:
   playerRoot: {fileID: 972147265135252364}
   damageDelay: 0.4
   _layerName: Enemy
-  _animDuration: 0.6
+  _animDuration: 0.7
   _attackSound: {fileID: 8300000, guid: 45587d4c2a06a1d41a2771275bcd0eed, type: 3}
   attackTurnSpeed: 1000
   _animator: {fileID: 3536749356906977445}
