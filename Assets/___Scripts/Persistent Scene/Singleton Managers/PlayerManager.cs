@@ -6,8 +6,9 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
 
     private PlayerHealthController _healthController;
-
     //private PlayerHeroMovement _playerMovement;
+    private PlayerSquadImpulseController _playerSquadImpulseController;
+
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class PlayerManager : MonoBehaviour
         Instance = this;
         _healthController = GetComponentInChildren<PlayerHealthController>();
         //_playerMovement = GetComponent<PlayerHeroMovement>();
+        _playerSquadImpulseController = GetComponentInChildren<PlayerSquadImpulseController>();
     }
 
     private void OnEnable() =>
@@ -64,6 +66,7 @@ public class PlayerManager : MonoBehaviour
 
     //------MOVEMENT------//
     //public bool IsInDash() => _playerMovement.IsInDash();
+    public bool IsInImpulse() => _playerSquadImpulseController.IsInImpulse();
     
     
     //------DESTROY------//

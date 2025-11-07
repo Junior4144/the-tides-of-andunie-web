@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+
+
         // Gather input
         float moveX = 0f;
         float moveY = 0f;
@@ -52,13 +54,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (PlayerManager.Instance.IsInImpulse()) return;
+        
         // Apply movement using physics
         PlayerRigidBody.linearVelocity = movementInput * speed;
 
         // Handle rotation
         if (movementInput != Vector2.zero && !attackScript.IsAttacking && !bowAttackScript.IsAttacking)
         {
-            Debug.Log("WASD based ROTATION");
             RotatePlayerEightWay();
         }
             
