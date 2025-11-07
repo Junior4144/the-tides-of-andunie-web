@@ -11,6 +11,7 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] PlayerAnimator animator;
     [SerializeField] AudioClip attackSound;
     [SerializeField] GameObject hitEffectPrefab;
+    [SerializeField] GameObject impulseCollider;
 
     [Header("Settings")]
     [SerializeField] float attackDuration = 0.5f;
@@ -37,6 +38,7 @@ public class PlayerAttackController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !isAttacking)
             StartAttack();
 
+        impulseCollider.SetActive(isAttacking);
     }
 
     void StartAttack()
