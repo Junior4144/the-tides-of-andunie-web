@@ -34,25 +34,15 @@ public class PlayerAttackController : MonoBehaviour
     public float RotationSpeed = 1f;
 
     private bool isSwinging = false;
-    private bool inputEnabled = false;
+
     private void Awake()
     {
         _isAttacking = false;
         _audioSource = GetComponent<AudioSource>();
-        StartCoroutine(EnableInputAfterDelay(0.2f));
     }
-
-    private IEnumerator EnableInputAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        inputEnabled = true;
-    }
-
 
     private void Update()
     {
-        if (!inputEnabled) return;
-
         if (Input.GetMouseButton(0) && CanAttack)
         {
             _isAttacking = true;

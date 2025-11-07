@@ -44,13 +44,6 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         _isAttacking = false;
-        StartCoroutine(EnableInputAfterDelay(0.2f));
-    }
-
-    private IEnumerator EnableInputAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        inputEnabled = true;
     }
 
 
@@ -59,10 +52,16 @@ public class PlayerBowAttackController : MonoBehaviour
         BowPowerSlider.value = 0f;
         BowPowerSlider.maxValue = MaxBowCharge;
     }
+    private void OnEnable()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        _isAttacking = false;
+        BowPowerSlider.value = 0f;
+        BowPowerSlider.maxValue = MaxBowCharge;
+    }
 
     private void Update()
     {
-        if (!inputEnabled) return;
 
         if (Input.GetMouseButton(0) && CanFire)
         {
