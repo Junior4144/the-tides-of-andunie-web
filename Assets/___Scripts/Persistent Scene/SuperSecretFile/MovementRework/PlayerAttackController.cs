@@ -17,10 +17,7 @@ public class PlayerAttackController : MonoBehaviour
 
 
     private bool _isAttacking = false;
-    private float targetAngle;
-    private bool _isRotating = false;
     private AudioSource _audioSource;
-    private bool _queuedAttack = false;
 
     public bool IsAttacking => _isAttacking;
     public float AttackDuration => _animDuration;
@@ -37,29 +34,24 @@ public class PlayerAttackController : MonoBehaviour
     public float RotationSpeed = 1f;
 
     private bool isSwinging = false;
-
+    private bool inputEnabled = false;
     private void Awake()
     {
+        _isAttacking = false;
         _audioSource = GetComponent<AudioSource>();
+        StartCoroutine(EnableInputAfterDelay(0.2f));
     }
+
+    private IEnumerator EnableInputAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        inputEnabled = true;
+    }
+
 
     private void Update()
     {
-        //// When player clicks
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if (!_isAttacking && !_isRotating)
-        //    {
-        //        // Start attack normally
-        //        //SetTargetDirection();
-        //        //StartRotateToTarget();
-        //    }
-        //    else if (_isAttacking && !_queuedAttack)
-        //    {
-        //        // Queue one attack only
-        //        _queuedAttack = true;
-        //    }
-        //}
+        if (!inputEnabled) return;
 
         if (Input.GetMouseButton(0) && CanAttack)
         {
@@ -113,10 +105,6 @@ public class PlayerAttackController : MonoBehaviour
         float angle = Utility.AngleTowardsMouse(gameObject.transform.position);
         Quaternion rot = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
-        //ArrowProjectile arrow = Instantiate(ArrowPrehab, gameObject.transform.position, rot).GetComponent<ArrowProjectile>();
-        //arrow.ArrowVelocity = ArrowSpeed;
-        //arrow.power = BowCharge;
-
         PlayAttackAnimation();
     }
 
@@ -129,44 +117,6 @@ public class PlayerAttackController : MonoBehaviour
 
         playerRoot.gameObject.GetComponent<Rigidbody2D>().MoveRotation(smoothAngle);
     }
-
-    //private void SetTargetDirection()
-    //{
-    //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    Vector2 direction = (mousePos - playerRoot.position);
-    //    targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-    //}
-
-    //private void StartRotateToTarget()
-    //{
-    //    _isAttacking = true;
-    //    if (!_isRotating)
-    //        StartCoroutine(RotateToTargetCoroutine());
-    //}
-
-    //private IEnumerator RotateToTargetCoroutine()
-    //{
-    //    _isRotating = true;
-
-    //    while (true)
-    //    {
-    //        Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
-    //        playerRoot.rotation = Quaternion.RotateTowards(
-    //            playerRoot.rotation,
-    //            targetRot,
-    //            attackTurnSpeed * Time.deltaTime
-    //        );
-
-    //        float angleDiff = Quaternion.Angle(playerRoot.rotation, targetRot);
-    //        if (angleDiff < rotationThreshold)
-    //            break;
-
-    //        yield return null;
-    //    }
-
-    //    _isRotating = false;
-    //    OnRotationComplete();
-    //}
 
     private void PlayAttackAnimation()
     {

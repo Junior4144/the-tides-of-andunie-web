@@ -50,7 +50,7 @@ public class PlayerDash : MonoBehaviour
         canDash = false;
         isDashing = true;
 
-        playerMove?.SetMovementEnabled(false);
+
 
         Vector2 start = transform.position;
         Vector2 target = start + direction * dashDistance;
@@ -66,7 +66,7 @@ public class PlayerDash : MonoBehaviour
         }
 
         isDashing = false;
-        playerMove?.SetMovementEnabled(true);
+
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;

@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] private float rotationSnapBuffer = 0.12f;
     private float lastTurnTime = 0f;
 
-    private bool movementEnabled = true;
 
     private Rigidbody2D PlayerRigidBody;
     private Vector2 movementInput;
@@ -20,21 +19,8 @@ public class PlayerController : MonoBehaviour
         PlayerRigidBody = GetComponent<Rigidbody2D>();
     }
 
-    public void SetMovementEnabled(bool enabled)
-    {
-        movementEnabled = enabled;
-        if (!enabled) PlayerRigidBody.linearVelocity = Vector2.zero;
-    }
-
     void Update()
     {
-        if (!movementEnabled)
-        {
-            movementInput = Vector2.zero;
-            return;
-        }
-
-
 
         // Gather input
         float moveX = 0f;
@@ -56,39 +42,60 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerManager.Instance.IsInImpulse()) return;
         
-        // Apply movement using physics
         PlayerRigidBody.linearVelocity = movementInput * speed;
 
-        // Handle rotation
-        if (movementInput != Vector2.zero && !attackScript.IsAttacking && !bowAttackScript.IsAttacking)
+        if (!attackScript.IsAttacking && !bowAttackScript.IsAttacking)
         {
             RotatePlayerEightWay();
         }
             
     }
+
     private void RotatePlayerEightWay()
     {
+        if (movementInput == Vector2.zero) return;
 
-        float targetAngle = transform.eulerAngles.z;
+        // Calculate angle based on input
+        float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
 
-        bool isDiagonal =
-            (movementInput.y > 0 && movementInput.x != 0) ||
-            (movementInput.y < 0 && movementInput.x != 0);
+        // Snap to nearest 45° for 8-direction rotation
+        float snappedAngle = Mathf.Round(angle / 45f) * 45f;
 
-        float currentRotationSpeed = isDiagonal ? 20f : 10f;
+        // Smoothly interpolate between current and target rotation
+        float currentAngle = PlayerRigidBody.rotation;
+        float targetAngle = snappedAngle - 90f;
 
-        // 8-direction rotation angles
-        if (movementInput.y > 0 && movementInput.x > 0) targetAngle = -45f;
-        else if (movementInput.y > 0 && movementInput.x < 0) targetAngle = 45f;
-        else if (movementInput.y < 0 && movementInput.x > 0) targetAngle = -135f;
-        else if (movementInput.y < 0 && movementInput.x < 0) targetAngle = 135f;
-        else if (movementInput.y > 0) targetAngle = 0f;
-        else if (movementInput.y < 0) targetAngle = 180f;
-        else if (movementInput.x > 0) targetAngle = -90f;
-        else if (movementInput.x < 0) targetAngle = 90f;
-
-        // Smooth rotation
-        Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime);
+        bool isDiagonal = Mathf.Abs(movementInput.x) > 0 && Mathf.Abs(movementInput.y) > 0;
+        float adjustedRotationSpeed = isDiagonal ? rotationSpeed * 1.5f : rotationSpeed;
+        float newAngle = Mathf.LerpAngle(currentAngle, targetAngle, adjustedRotationSpeed * Time.fixedDeltaTime);
+        PlayerRigidBody.MoveRotation(newAngle);
     }
 }
+
+//private void RotatePlayerEightWay()
+//{
+//    if (movementInput == Vector2.zero)
+//        return;
+
+//    float targetAngle = transform.eulerAngles.z;
+
+//    bool isDiagonal =
+//        (movementInput.y > 0 && movementInput.x != 0) ||
+//        (movementInput.y < 0 && movementInput.x != 0);
+
+//    float currentRotationSpeed = isDiagonal ? 20f : 10f;
+
+//    // 8-direction rotation angles
+//    if (movementInput.y > 0 && movementInput.x > 0) targetAngle = -45f;
+//    else if (movementInput.y > 0 && movementInput.x < 0) targetAngle = 45f;
+//    else if (movementInput.y < 0 && movementInput.x > 0) targetAngle = -135f;
+//    else if (movementInput.y < 0 && movementInput.x < 0) targetAngle = 135f;
+//    else if (movementInput.y > 0) targetAngle = 0f;
+//    else if (movementInput.y < 0) targetAngle = 180f;
+//    else if (movementInput.x > 0) targetAngle = -90f;
+//    else if (movementInput.x < 0) targetAngle = 90f;
+
+//    // Smooth rotation
+//    Quaternion targetRot = Quaternion.Euler(0, 0, targetAngle);
+//    transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime);
+//}

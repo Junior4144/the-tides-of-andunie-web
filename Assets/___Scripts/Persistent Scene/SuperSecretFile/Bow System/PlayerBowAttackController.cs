@@ -25,10 +25,12 @@ public class PlayerBowAttackController : MonoBehaviour
 
     public float RotationSpeed = 1f;
 
-    private void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
+
+    float BowCharge;
+
+    bool CanFire = true;
+
+    private bool inputEnabled = false;
 
     [Range(0f, 10f)]
     [SerializeField] float BowPower;
@@ -38,9 +40,19 @@ public class PlayerBowAttackController : MonoBehaviour
 
     [SerializeField] GameObject ArrowPrehab;
 
-    float BowCharge;
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        _isAttacking = false;
+        StartCoroutine(EnableInputAfterDelay(0.2f));
+    }
 
-    bool CanFire = true;
+    private IEnumerator EnableInputAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        inputEnabled = true;
+    }
+
 
     private void Start()
     {
@@ -50,6 +62,8 @@ public class PlayerBowAttackController : MonoBehaviour
 
     private void Update()
     {
+        if (!inputEnabled) return;
+
         if (Input.GetMouseButton(0) && CanFire)
         {
             _isAttacking = true;
@@ -89,7 +103,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
         if (BowCharge > MaxBowCharge) BowCharge = MaxBowCharge;
 
-        float ArrowSpeed = BowCharge + BowPower;
+        float ArrowSpeed = BowCharge + BowPower * 3f;
 
         float angle = Utility.AngleTowardsMouse(gameObject.transform.position);
         Quaternion rot = Quaternion.Euler(new Vector3(0f, 0f, angle));
