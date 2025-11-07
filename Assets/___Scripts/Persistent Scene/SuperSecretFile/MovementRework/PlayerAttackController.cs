@@ -10,11 +10,8 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] private string _layerName;
     [SerializeField] private float _animDuration;
     [SerializeField] private AudioClip _attackSound;
-    [SerializeField] private float attackTurnSpeed = 15f;
     [SerializeField] private PlayerAnimator _animator;
-    [SerializeField] private float rotationThreshold = 1f; // how close to target angle before stopping
     [SerializeField] Slider BowPowerSlider;
-
 
     private bool _isAttacking = false;
     private AudioSource _audioSource;

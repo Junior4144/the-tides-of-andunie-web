@@ -30,7 +30,6 @@ public class PlayerBowAttackController : MonoBehaviour
 
     bool CanFire = true;
 
-    private bool inputEnabled = false;
 
     [Range(0f, 10f)]
     [SerializeField] float BowPower;
@@ -46,16 +45,8 @@ public class PlayerBowAttackController : MonoBehaviour
         _isAttacking = false;
     }
 
-
     private void Start()
     {
-        BowPowerSlider.value = 0f;
-        BowPowerSlider.maxValue = MaxBowCharge;
-    }
-    private void OnEnable()
-    {
-        _audioSource = GetComponent<AudioSource>();
-        _isAttacking = false;
         BowPowerSlider.value = 0f;
         BowPowerSlider.maxValue = MaxBowCharge;
     }
@@ -83,6 +74,7 @@ public class PlayerBowAttackController : MonoBehaviour
             BowPowerSlider.value = BowCharge;
         }
     }
+
     void ChargeBow()
     {
         arrowSprite.SetActive(true);
@@ -96,6 +88,7 @@ public class PlayerBowAttackController : MonoBehaviour
             BowPowerSlider.value = MaxBowCharge;
         }
     }
+
     private void FireBow()
     {
         CanFire = false;
