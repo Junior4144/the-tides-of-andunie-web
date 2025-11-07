@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +13,16 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] private AudioClip _attackSound;
     [SerializeField] private PlayerAnimator _animator;
     [SerializeField] Slider BowPowerSlider;
+    [SerializeField] private GameObject hitEffectPrefab;
 
     private bool _isAttacking = false;
     private AudioSource _audioSource;
+    private HashSet<Collider2D> _enemiesHit = new HashSet<Collider2D>();
 
     public bool IsAttacking => _isAttacking;
     public float AttackDuration => _animDuration;
+
+    private Rigidbody2D PlayerRigidBody;
 
     [Range(0f, 10f)]
     [SerializeField] float BowPower;
@@ -36,6 +41,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         _isAttacking = false;
         _audioSource = GetComponent<AudioSource>();
+        PlayerRigidBody = GetComponentInParent<Rigidbody2D>();
     }
 
     private void Update()
@@ -43,10 +49,24 @@ public class PlayerAttackController : MonoBehaviour
         if (Input.GetMouseButton(0) && CanAttack)
         {
             _isAttacking = true;
-            ChargeBow();
             RotateHand();
         }
         else if (Input.GetMouseButtonUp(0) && CanAttack)
+        {
+            FireBow();
+            RotateHand();
+        }
+
+
+
+
+        if (Input.GetMouseButton(1) && CanAttack)
+        {
+            _isAttacking = true;
+            ChargeBow();
+            RotateHand();
+        }
+        else if (Input.GetMouseButtonUp(1) && CanAttack)
         {
             FireBow();
             RotateHand();
@@ -114,6 +134,7 @@ public class PlayerAttackController : MonoBehaviour
             _audioSource.PlayOneShot(_attackSound, 0.4f);
 
         isSwinging = true;
+
        StartCoroutine(SwingingAttack());
     }
 
@@ -122,21 +143,43 @@ public class PlayerAttackController : MonoBehaviour
         yield return new WaitForSeconds(_animDuration);
         isSwinging = false;
         _isAttacking = false;
+        ResetAttack();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (!_isAttacking) return;
         if (col.gameObject.layer != LayerMask.NameToLayer(_layerName)) return;
+        if (!col.CompareTag("Enemy")) return;
+        if (_enemiesHit.Contains(col)) return; // already hit this enemy
+
+        _enemiesHit.Add(col); // mark this enemy as hit
 
         if (col.TryGetComponent(out IHealthController health))
             StartCoroutine(DealDamage(health));
+
+        Vector2 playerPos = PlayerRigidBody.transform.position;
+
+        Vector2 enemyPos = col.transform.position;
+
+        Vector2 facingDirection = (playerPos - enemyPos).normalized;
+
+        float angle = Mathf.Atan2(facingDirection.y, facingDirection.x) * Mathf.Rad2Deg;
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+
+        Instantiate(hitEffectPrefab, enemyPos, rotation);
     }
 
     private IEnumerator DealDamage(IHealthController health)
     {
         yield return new WaitForSeconds(damageDelay);
         health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
+    }
+
+    public void ResetAttack()
+    {
+        _enemiesHit.Clear();
     }
 
 }
