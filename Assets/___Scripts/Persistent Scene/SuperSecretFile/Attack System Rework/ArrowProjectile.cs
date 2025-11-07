@@ -4,53 +4,41 @@ public class ArrowProjectile : MonoBehaviour
 {
     [HideInInspector] public float ArrowVelocity;
 
-    [SerializeField] Rigidbody2D rb;
-
     [SerializeField] private string _layerName;
 
     [SerializeField] GameObject expo;
 
-    public float power;
+    [HideInInspector] public float power;
+
+    private Rigidbody2D _rb;
 
     private void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();   
         Destroy(gameObject, 4f);
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = transform.up * ArrowVelocity;
-        
+        _rb.linearVelocity = transform.up * ArrowVelocity;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Optional: only damage certain layers
-        if (collision.gameObject.layer == LayerMask.NameToLayer(_layerName))
+        SpawnExplosion();
+
+        if (collision.TryGetComponent(out IHealthController health))
         {
-            if (collision.TryGetComponent(out IHealthController health))
-            {
-                health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
-
-                GameObject expoObject = Instantiate(expo, transform.position, transform.rotation);
-
-                float scale = GetScaleFromPower(power);
-                expoObject.transform.localScale = Vector3.one * scale;
-
-                Destroy(gameObject);
-            }
+            health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
         }
 
-        // Destroy the arrow on impact
-        if (collision.CompareTag("Building")) Destroy(gameObject);
-
-        Destroy(gameObject, 10f);
+        Destroy(gameObject);
     }
 
-    private float GetScaleFromPower(float p)
+    private void SpawnExplosion()
     {
-        if (p < 1f) return 1f;
-        if (p < 2f) return 2f;
-        return 3f;
+        GameObject expoObject = Instantiate(expo, transform.position, transform.rotation);
+        expoObject.transform.localScale = Vector3.one * Mathf.Max(1f, power);
     }
+
 }

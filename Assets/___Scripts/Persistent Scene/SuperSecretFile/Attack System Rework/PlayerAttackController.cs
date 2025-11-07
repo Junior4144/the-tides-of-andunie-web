@@ -165,7 +165,7 @@ public class PlayerAttackController : MonoBehaviour
         Vector2 facingDirection = (playerPos - enemyPos).normalized;
 
         float angle = Mathf.Atan2(facingDirection.y, facingDirection.x) * Mathf.Rad2Deg;
-
+            
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle - 90f);
 
         Instantiate(hitEffectPrefab, enemyPos, rotation);

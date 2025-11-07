@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5330592361273956601}
   - component: {fileID: 8698220747469749359}
   - component: {fileID: 761894873910390958}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ArrowProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,10 +76,10 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 114817
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -116,6 +116,7 @@ MonoBehaviour:
   rb: {fileID: 5330592361273956601}
   _layerName: Enemy
   expo: {fileID: 3548132128928179003, guid: 816b8b3ddb7e3164ca497829de8edc83, type: 3}
+  power: 0
 --- !u!1 &7778605343423404073
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8676298102503304527}
   - component: {fileID: 5717780818283433678}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5073083039147025799}
   - component: {fileID: 2609255441417525230}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
