@@ -84,7 +84,7 @@ public class PlayerAttackController : MonoBehaviour
         Vector2 playerPos = rb.transform.position;
         Vector2 dir = (enemyPos - playerPos).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Quaternion rot = Quaternion.Euler(0f, 0f, angle - 90f);
+        Quaternion rot = Quaternion.Euler(0f, 0f, angle + 90f);
         Instantiate(hitEffectPrefab, enemyPos, rot);
     }
 }
