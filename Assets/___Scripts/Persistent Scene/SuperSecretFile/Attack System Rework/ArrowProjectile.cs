@@ -26,12 +26,6 @@ public class ArrowProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         SpawnExplosion();
-
-        if (collision.TryGetComponent(out IHealthController health))
-        {
-            health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
-        }
-
         Destroy(gameObject);
     }
 
