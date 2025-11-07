@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.LowLevel;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerAttackController attackScript;
     [SerializeField] private PlayerBowAttackController bowAttackScript;
     [SerializeField] private float rotationSpeed = 8f;
+    [SerializeField] private float mouseRotationSpeed = .25f;
 
     private Rigidbody2D PlayerRigidBody;
     private Vector2 movementInput;
@@ -43,6 +45,10 @@ public class PlayerController : MonoBehaviour
         {
             RotatePlayerEightWay();
         }
+        else
+        {
+            RotateHand();
+        }
     }
 
     private void RotatePlayerEightWay()
@@ -63,5 +69,11 @@ public class PlayerController : MonoBehaviour
         float adjustedRotationSpeed = isDiagonal ? rotationSpeed * 2f : rotationSpeed;
         float newAngle = Mathf.LerpAngle(currentAngle, targetAngle, adjustedRotationSpeed * Time.fixedDeltaTime);
         PlayerRigidBody.MoveRotation(newAngle);
+    }
+    void RotateHand()
+    {
+        float targetAngle = Utility.AngleTowardsMouse(transform.position);
+        float smoothAngle = Mathf.LerpAngle(PlayerRigidBody.rotation, targetAngle, mouseRotationSpeed);
+        PlayerRigidBody.MoveRotation(smoothAngle);
     }
 }

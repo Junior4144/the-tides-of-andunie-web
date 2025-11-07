@@ -6,180 +6,85 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class PlayerAttackController : MonoBehaviour
 {
-    [SerializeField] private Transform playerRoot;
-    [SerializeField] private float damageDelay = 0;
-    [SerializeField] private string _layerName;
-    [SerializeField] private float _animDuration;
-    [SerializeField] private AudioClip _attackSound;
-    [SerializeField] private PlayerAnimator _animator;
-    [SerializeField] Slider BowPowerSlider;
-    [SerializeField] private GameObject hitEffectPrefab;
+    [Header("References")]
+    [SerializeField] Transform playerRoot;
+    [SerializeField] PlayerAnimator animator;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] GameObject hitEffectPrefab;
 
-    private bool _isAttacking = false;
-    private AudioSource _audioSource;
-    private HashSet<Collider2D> _enemiesHit = new HashSet<Collider2D>();
+    [Header("Settings")]
+    [SerializeField] float attackDuration = 0.5f;
+    [SerializeField] float damageDelay = 0f;
 
-    public bool IsAttacking => _isAttacking;
-    public float AttackDuration => _animDuration;
+    AudioSource audioSrc;
+    Rigidbody2D rb;
+    HashSet<Collider2D> hitEnemies = new();
 
-    private Rigidbody2D PlayerRigidBody;
+    bool isAttacking;
 
-    [Range(0f, 10f)]
-    [SerializeField] float BowPower;
+    public bool IsAttacking => isAttacking;
+    public float AttackDuration => attackDuration;
 
-    [Range(0f, 3f)]
-    [SerializeField] float MaxBowCharge; 
-
-    float BowCharge;
-
-    bool CanAttack = true;
-    public float RotationSpeed = 1f;
-
-    private bool isSwinging = false;
-
-    private void Awake()
+    void Awake()
     {
-        _isAttacking = false;
-        _audioSource = GetComponent<AudioSource>();
-        PlayerRigidBody = GetComponentInParent<Rigidbody2D>();
+        audioSrc = GetComponent<AudioSource>();
+        rb = playerRoot.GetComponent<Rigidbody2D>();
+        isAttacking = false;
     }
 
-    private void Update()
+    void Update()
     {
-        if (Input.GetMouseButton(0) && CanAttack)
-        {
-            _isAttacking = true;
-            RotateHand();
-        }
-        else if (Input.GetMouseButtonUp(0) && CanAttack)
-        {
-            FireBow();
-            RotateHand();
-        }
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
+            StartAttack();
 
-
-
-
-        if (Input.GetMouseButton(1) && CanAttack)
-        {
-            _isAttacking = true;
-            ChargeBow();
-            RotateHand();
-        }
-        else if (Input.GetMouseButtonUp(1) && CanAttack)
-        {
-            FireBow();
-            RotateHand();
-        }
-        else
-        {
-            
-            if (BowCharge > 0f)
-                BowCharge -= 10f * Time.deltaTime;
-            else
-            {
-                BowCharge = 0f;
-                CanAttack = true;
-            }
-            BowPowerSlider.value = BowCharge;
-        }
-
-        if (isSwinging)
-        {
-            RotateHand();
-        }
     }
 
-    void ChargeBow()
+    void StartAttack()
     {
-        BowCharge += Time.deltaTime * 3f;
-
-        BowPowerSlider.value = BowCharge;
-
-        if (BowCharge > MaxBowCharge)
-        {
-            BowPowerSlider.value = MaxBowCharge;
-        }
-    }
-    private void FireBow()
-    {
-        CanAttack = false;
-
-        if (BowCharge > MaxBowCharge) BowCharge = MaxBowCharge;
-
-        float ArrowSpeed = BowCharge + BowPower;
-
-        float angle = Utility.AngleTowardsMouse(gameObject.transform.position);
-        Quaternion rot = Quaternion.Euler(new Vector3(0f, 0f, angle));
-
+        isAttacking = true;
         PlayAttackAnimation();
     }
 
-    private void RotateHand()
+    void PlayAttackAnimation()
     {
-        float targetAngle = Utility.AngleTowardsMouse(playerRoot.position);
-        float currentAngle = playerRoot.gameObject.GetComponent<Rigidbody2D>().rotation;
-
-        float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, RotationSpeed);
-
-        playerRoot.gameObject.GetComponent<Rigidbody2D>().MoveRotation(smoothAngle);
+        animator?.TriggerAttack();
+        if (attackSound) audioSrc.PlayOneShot(attackSound, 0.4f);
+        StartCoroutine(AttackRoutine());
     }
 
-    private void PlayAttackAnimation()
+    IEnumerator AttackRoutine()
     {
-        if (_animator)
-            _animator.TriggerAttack();
-
-        if (_attackSound)
-            _audioSource.PlayOneShot(_attackSound, 0.4f);
-
-        isSwinging = true;
-
-       StartCoroutine(SwingingAttack());
+        yield return new WaitForSeconds(attackDuration);
+        isAttacking = false;
+        hitEnemies.Clear();
     }
 
-    private IEnumerator SwingingAttack()
+    void OnTriggerEnter2D(Collider2D col)
     {
-        yield return new WaitForSeconds(_animDuration);
-        isSwinging = false;
-        _isAttacking = false;
-        ResetAttack();
-    }
+        if (!isAttacking) return;
+        if (hitEnemies.Contains(col)) return;
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (!_isAttacking) return;
-        if (col.gameObject.layer != LayerMask.NameToLayer(_layerName)) return;
-        if (!col.CompareTag("Enemy")) return;
-        if (_enemiesHit.Contains(col)) return; // already hit this enemy
-
-        _enemiesHit.Add(col); // mark this enemy as hit
-
+        
         if (col.TryGetComponent(out IHealthController health))
+        {
+            hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
-
-        Vector2 playerPos = PlayerRigidBody.transform.position;
-
-        Vector2 enemyPos = col.transform.position;
-
-        Vector2 facingDirection = (playerPos - enemyPos).normalized;
-
-        float angle = Mathf.Atan2(facingDirection.y, facingDirection.x) * Mathf.Rad2Deg;
-            
-        Quaternion rotation = Quaternion.Euler(0f, 0f, angle - 90f);
-
-        Instantiate(hitEffectPrefab, enemyPos, rotation);
+            SpawnHitEffect(col.transform.position);
+        } 
     }
 
-    private IEnumerator DealDamage(IHealthController health)
+    IEnumerator DealDamage(IHealthController health)
     {
         yield return new WaitForSeconds(damageDelay);
         health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
     }
 
-    public void ResetAttack()
+    void SpawnHitEffect(Vector2 enemyPos)
     {
-        _enemiesHit.Clear();
+        Vector2 playerPos = rb.transform.position;
+        Vector2 dir = (enemyPos - playerPos).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Quaternion rot = Quaternion.Euler(0f, 0f, angle - 90f);
+        Instantiate(hitEffectPrefab, enemyPos, rot);
     }
-
 }

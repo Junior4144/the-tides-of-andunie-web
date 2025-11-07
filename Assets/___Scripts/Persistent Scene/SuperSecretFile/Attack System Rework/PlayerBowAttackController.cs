@@ -10,18 +10,31 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] Slider bowPowerSlider;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject arrowSprite;
+    [SerializeField] GameObject ChargeSliderUI;
 
     [Header("Settings")]
     [SerializeField] float arrowSpeedMultiplier = 10f;
     [SerializeField] float minArrowSpeed = 1f;
     [SerializeField] float maxCharge = 3f;
-    [SerializeField] float rotationSpeed = 1f;
+    [SerializeField] float chargeRate = 3f;
+    [SerializeField] float chargeDecreaseRate = 10f;
 
     AudioSource audioSrc;
     Rigidbody2D rb;
     bool isAttacking;
     bool canFire = true;
     float charge;
+
+    private void OnEnable()
+    {
+        ChargeSliderUI.SetActive(true);
+    }
+    private void OnDisable()
+    {
+        bowPowerSlider.value = 0f;
+        charge = 0f;
+        ChargeSliderUI.SetActive(false);
+    }
 
     public bool IsAttacking => isAttacking;
 
@@ -44,9 +57,8 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         isAttacking = true;
         arrowSprite.SetActive(true);
-        charge = Mathf.Min(charge + Time.deltaTime * 3f, maxCharge);
+        charge = Mathf.Min(charge + Time.deltaTime * chargeRate, maxCharge);
         bowPowerSlider.value = charge;
-        RotateHand();
     }
 
     void FireBow()
@@ -69,16 +81,9 @@ public class PlayerBowAttackController : MonoBehaviour
 
     void HandleCooldown()
     {
-        charge = Mathf.Max(0f, charge - 10f * Time.deltaTime);
+        charge = Mathf.Max(0f, charge - chargeDecreaseRate * Time.deltaTime);
         if (charge == 0f) canFire = true;
         bowPowerSlider.value = charge;
-    }
-
-    void RotateHand()
-    {
-        float targetAngle = Utility.AngleTowardsMouse(playerRoot.position);
-        float smoothAngle = Mathf.LerpAngle(rb.rotation, targetAngle, rotationSpeed);
-        rb.MoveRotation(smoothAngle);
     }
 
     void ResetAfterFire()
