@@ -1,122 +1,90 @@
-using System.Collections;
-using System.Runtime.CompilerServices;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class PlayerBowAttackController : MonoBehaviour
 {
-    [SerializeField] private Transform playerRoot;
-    [SerializeField] private string _layerName;
-    [SerializeField] private float _animDuration;
-    [SerializeField] private AudioClip _attackSound;
-    [SerializeField] private PlayerAnimator _animator;
-    [SerializeField] Slider BowPowerSlider;
+    [Header("References")]
+    [SerializeField] Transform playerRoot; // GETCOMOOITENT IN PARENT
+    [SerializeField] PlayerAnimator animator;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] Slider bowPowerSlider;
+    [SerializeField] GameObject arrowPrefab;
+    [SerializeField] GameObject arrowSprite;
 
-    private AudioSource _audioSource;
-    private bool _isAttacking = false;
+    [Header("Settings")]
+    [SerializeField] float arrowSpeedMultiplier = 10f;
+    [SerializeField] float minArrowSpeed = 1f;
+    [SerializeField] float maxCharge = 3f;
+    [SerializeField] float rotationSpeed = 1f;
 
-    public bool IsAttacking => _isAttacking;
-    public float AttackDuration => _animDuration;
+    AudioSource audioSrc;
+    Rigidbody2D rb;
+    bool isAttacking;
+    bool canFire = true;
+    float charge;
 
-    public Transform firePoint;
-    public GameObject arrowSprite;
+    public bool IsAttacking => isAttacking;
 
-    public float RotationSpeed = 1f;
-
-
-    float BowCharge;
-
-    bool CanFire = true;
-
-
-    [Range(0f, 10f)]
-    [SerializeField] float BowPower;
-
-    [Range(0f, 3f)]
-    [SerializeField] float MaxBowCharge;
-
-    [SerializeField] GameObject ArrowPrehab;
-
-    private void Awake()
+    void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
-        _isAttacking = false;
+        audioSrc = GetComponent<AudioSource>();
+        rb = playerRoot.GetComponent<Rigidbody2D>();
+        bowPowerSlider.value = 0f;
+        bowPowerSlider.maxValue = maxCharge;
     }
 
-    private void Start()
+    void Update()
     {
-        BowPowerSlider.value = 0f;
-        BowPowerSlider.maxValue = MaxBowCharge;
+        if (!canFire) HandleCooldown();
+        else if (Input.GetMouseButton(0)) StartCharging();
+        else if (Input.GetMouseButtonUp(0)) FireBow();
     }
 
-    private void Update()
+    void StartCharging()
     {
-
-        if (Input.GetMouseButton(0) && CanFire)
-        {
-            _isAttacking = true;
-            ChargeBow();
-            RotateHand();
-        }
-        else if (Input.GetMouseButtonUp(0) && CanFire)
-            FireBow();
-        else
-        {
-            if (BowCharge > 0f)
-                BowCharge -= 10f * Time.deltaTime;
-            else
-            {
-                BowCharge = 0f;
-                CanFire = true;
-            }
-            BowPowerSlider.value = BowCharge;
-        }
-    }
-
-    void ChargeBow()
-    {
+        isAttacking = true;
         arrowSprite.SetActive(true);
-
-        BowCharge += Time.deltaTime * 3f;
-
-        BowPowerSlider.value = BowCharge;
-
-        if (BowCharge > MaxBowCharge)
-        {
-            BowPowerSlider.value = MaxBowCharge;
-        }
+        charge = Mathf.Min(charge + Time.deltaTime * 3f, maxCharge);
+        bowPowerSlider.value = charge;
+        RotateHand();
     }
 
-    private void FireBow()
+    void FireBow()
     {
-        CanFire = false;
+        canFire = false;
+        charge = Mathf.Min(charge, maxCharge);
 
-        if (BowCharge > MaxBowCharge) BowCharge = MaxBowCharge;
+        float speed = Mathf.Max(minArrowSpeed, charge * arrowSpeedMultiplier);
+        float angle = Utility.AngleTowardsMouse(transform.position);
+        Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
-        float ArrowSpeed = BowCharge + BowPower * 3f;
+        var arrow = Instantiate(arrowPrefab, transform.position, rot)
+            .GetComponent<ArrowProjectile>();
 
-        float angle = Utility.AngleTowardsMouse(gameObject.transform.position);
-        Quaternion rot = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        arrow.ArrowVelocity = speed;
+        arrow.power = charge;
 
-        ArrowProjectile arrow = Instantiate(ArrowPrehab, gameObject.transform.position, rot).GetComponent<ArrowProjectile>();
-        arrow.ArrowVelocity = ArrowSpeed;
-        arrow.power = BowCharge;
-
-        _isAttacking = false;
-        arrowSprite.SetActive(false);
-
+        ResetAfterFire();
     }
 
-    private void RotateHand()
+    void HandleCooldown()
+    {
+        charge = Mathf.Max(0f, charge - 10f * Time.deltaTime);
+        if (charge == 0f) canFire = true;
+        bowPowerSlider.value = charge;
+    }
+
+    void RotateHand()
     {
         float targetAngle = Utility.AngleTowardsMouse(playerRoot.position);
-        float currentAngle = playerRoot.gameObject.GetComponent<Rigidbody2D>().rotation;
-
-        float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, RotationSpeed);
-
-        playerRoot.gameObject.GetComponent<Rigidbody2D>().MoveRotation(smoothAngle);
+        float smoothAngle = Mathf.LerpAngle(rb.rotation, targetAngle, rotationSpeed);
+        rb.MoveRotation(smoothAngle);
     }
 
+    void ResetAfterFire()
+    {
+        isAttacking = false;
+        arrowSprite.SetActive(false);
+        bowPowerSlider.value = 0f;
+    }
 }
