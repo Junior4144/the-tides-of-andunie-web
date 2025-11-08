@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PirateHealthController : HealthController
 {
@@ -9,6 +7,8 @@ public class PirateHealthController : HealthController
         if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
 
         if (_currentHealth == 0 || damageAmount == 0) return;
+
+        Debug.Log($"[PirateHealthController] Damage taken {damageAmount}");
 
         _currentHealth -= damageAmount;
 
