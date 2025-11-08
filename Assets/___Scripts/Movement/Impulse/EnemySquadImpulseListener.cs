@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemySquadImpulseListener : MonoBehaviour
 {
     [SerializeField] private string _layerName = "Friendly";
+    [SerializeField] private float _impulseForce = 16f;
 
     private EnemySquadImpulseController _controller;
     private Rigidbody2D _rb;
@@ -52,7 +53,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
         // Ignore collisions between all enemies globally (by layer)
         Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, ignore);
 
-        // Also ignore collisions with any tagged "Enemy" (in case they’re on other layers)
+        // Also ignore collisions with any tagged "Enemy" (in case theyï¿½re on other layers)
         Collider2D myCol = GetComponent<Collider2D>();
         if (!myCol) return;
 
@@ -84,6 +85,6 @@ public class EnemySquadImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
-        _controller.InitiateSquadImpulse(closestPoint, impulseDirection, false);
+        _controller.InitiateSquadImpulse(_impulseForce, closestPoint, impulseDirection, false);
     }
 }

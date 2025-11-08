@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class PlayerAttackController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float _attackDuration = 0.5f;
     [SerializeField] float _damageDelay = 0f;
+    [SerializeField] private float _impulseStrength;
 
     [Header("Attack Arc")]
     [SerializeField] float _attackArcDegrees = 120f;
@@ -22,31 +24,33 @@ public class PlayerAttackController : MonoBehaviour
 
     private AudioSource _audioSrc;
     private Rigidbody2D _rb;
+    private PlayerSquadImpulseController _impulseController;
     private readonly HashSet<Collider2D> _hitEnemies = new();
+    bool _isAttacking;
+    
 
-    bool isAttacking;
-
-    public bool IsAttacking => isAttacking;
+    public bool IsAttacking => _isAttacking;
     public float AttackDuration => _attackDuration;
 
     void Awake()
     {
         _audioSrc = GetComponent<AudioSource>();
         _rb = GetComponentInParent<Rigidbody2D>();
-        isAttacking = false;
+        _impulseController = GetComponentInParent<PlayerSquadImpulseController>();
+        _isAttacking = false;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !_isAttacking)
             StartAttack();
 
-        _impulseCollider.SetActive(isAttacking);
+        _impulseCollider.SetActive(_isAttacking);
     }
 
     void StartAttack()
     {
-        isAttacking = true;
+        _isAttacking = true;
         PlayAttackAnimation();
     }
 
@@ -61,18 +65,18 @@ public class PlayerAttackController : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         yield return new WaitForSeconds(_attackDuration);
-        isAttacking = false;
+        _isAttacking = false;
         _hitEnemies.Clear();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (!isAttacking) return;
+        if (!_isAttacking) return;
         if (_hitEnemies.Contains(col)) return;
-
         
         if (col.TryGetComponent(out IHealthController health))
         {
+            ApplyImpulse(col);
             _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
@@ -111,5 +115,25 @@ public class PlayerAttackController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    void ApplyImpulse(Collider2D otherCollider)
+    {
+        _impulseController.InitiateSquadImpulse(
+            _impulseStrength,
+            contactPoint: otherCollider.ClosestPoint(transform.position),
+            impulseDirection: -_rb.transform.up,
+            isDashing: false
+        );
+    }
+
+    IEnumerator ImpulseRoutine(Vector2 dir, float strength, float duration)
+    {
+        PlayerManager.Instance.AllowForceChange = true;
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(dir * strength, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(duration);
+        PlayerManager.Instance.AllowForceChange = false;
     }
 }

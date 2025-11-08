@@ -65,9 +65,9 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
 
     protected abstract float GetDashMultiplier(bool isDashing);
 
-    public void InitiateSquadImpulse(Vector2 contactPoint, Vector2 impulseDirection, bool isDashing)
+    public void InitiateSquadImpulse(float impulseforce, Vector2 contactPoint, Vector2 impulseDirection, bool isDashing)
     {
-        ApplyImpulseToUnits(impulseDirection, contactPoint, isDashing);
+        ApplyImpulseToUnits(impulseforce, impulseDirection, contactPoint, isDashing);
         StartCoroutine(AdjustSquadPosition());
         SpawnParticles(contactPoint, impulseDirection);
         PlaySound();
@@ -75,7 +75,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
         _impulseTimer = _impulseDuration;
     }
 
-    private void ApplyImpulseToUnits(Vector2 impulseDirection, Vector2 contactPoint, bool isDashing)
+    private void ApplyImpulseToUnits(float impulseforce, Vector2 impulseDirection, Vector2 contactPoint, bool isDashing)
     {
         _squadMemberRigidbodies.Where(rb => rb).ToList().ForEach(rb =>
         {
@@ -89,9 +89,9 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
             float dashBonusMultiplier = GetDashMultiplier(isDashing);
 
             float finalForce =
-                CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint)) *
+                1 *
                 CalculateBehindnessBonusMultiplier(rb.position, contactPoint, impulseDirection) *
-                _squadImpulseForce *
+                impulseforce *
                 dashBonusMultiplier;
 
             rb.linearVelocity = Vector2.zero;
