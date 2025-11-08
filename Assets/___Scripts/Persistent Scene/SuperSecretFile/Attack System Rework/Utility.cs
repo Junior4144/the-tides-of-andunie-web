@@ -15,4 +15,9 @@ public class Utility : MonoBehaviour
 
         return angle;
     }
+    public static Vector2 DirectionTowardsMouse(Vector3 worldPos)
+    {
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return ((Vector2)mouseWorld - (Vector2)worldPos).normalized;
+    }
 }

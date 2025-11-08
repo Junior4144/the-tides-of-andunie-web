@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
@@ -106,6 +106,18 @@ public class PlayerBowAttackController : MonoBehaviour
 
     void FireBow()
     {
+        Vector2 aimDir = Utility.DirectionTowardsMouse(transform.position);
+        Vector2 facingDir = playerRoot.up;
+
+        float alignment = Vector2.Dot(facingDir, aimDir);
+
+        // Only allow forward-facing shots
+        if (alignment < 0.2f) // 1 = forward, 0 = perpendicular, -1 = backward
+        {
+            CancelShot();
+            return;
+        }
+
         canFire = false;
         charge = Mathf.Min(charge, maxCharge);
 
@@ -179,6 +191,28 @@ public class PlayerBowAttackController : MonoBehaviour
         arrowSprite2.SetActive(false);
         arrowSprite3.SetActive(false);
         bowPowerSlider.value = 0f;
+    }
+    void CancelShot()
+    {
+        Debug.Log("❌ Shot cancelled or invalid.");
+
+        // Reset state flags
+        isAttacking = false;
+        IsNormalAiming = false;
+        IsAbilityAiming = false;
+        canFire = true;
+        charge = 0f;
+
+        // Reset UI
+        bowPowerSlider.value = 0f;
+
+        // Hide arrow visuals
+        arrowSprite.SetActive(false);
+        arrowSprite2.SetActive(false);
+        arrowSprite3.SetActive(false);
+
+        // Optional — reset recoil state if something stopped mid-animation
+        PlayerManager.Instance.AllowForceChange = false;
     }
 
     public void ApplyImpulse(Quaternion rot)
