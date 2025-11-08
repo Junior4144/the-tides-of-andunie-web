@@ -18,6 +18,7 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] float _attackDuration = 0.5f;
     [SerializeField] float _damageDelay = 0f;
     [SerializeField] private float _impulseStrength;
+    [SerializeField] private float cooldown = 0.2f; // seconds
 
     [Header("Attack Arc")]
     [SerializeField] float _attackArcDegrees = 120f;
@@ -33,7 +34,8 @@ public class PlayerAttackController : MonoBehaviour
 
     public bool IsAttacking => _isAttacking;
     public float AttackDuration => _attackDuration;
-
+    public float force;
+    private bool isShaking;
     void Awake()
     {
         _audioSrc = GetComponent<AudioSource>();
@@ -83,8 +85,9 @@ public class PlayerAttackController : MonoBehaviour
             _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
-            HitStop.Instance.Stop(0.05f);
-            camraImpulseSource.GenerateImpulseWithForce(1f);
+            HitStopManager.Instance.Stop(0.05f);
+
+            Shake();
         } 
     }
 
@@ -127,8 +130,25 @@ public class PlayerAttackController : MonoBehaviour
         _impulseController.InitiateSquadImpulse(
             _impulseStrength,
             contactPoint: otherCollider.ClosestPoint(transform.position),
-            impulseDirection: -_rb.transform.up,
+            impulseDirection: _rb.transform.up,
             isDashing: false
         );
     }
+
+    public void Shake()
+    {
+        if (isShaking)
+            return;
+
+        StartCoroutine(DoShake(force));
+    }
+
+    private IEnumerator DoShake(float force)
+    {
+        isShaking = true;
+        camraImpulseSource.GenerateImpulseWithForce(force);
+        yield return new WaitForSeconds(cooldown);
+        isShaking = false;
+    }
+
 }

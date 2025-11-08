@@ -1020,18 +1020,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundSpawnShuffler, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7183620151734203414
 GameObject:
   m_ObjectHideFlags: 0
@@ -6904,12 +6892,20 @@ PrefabInstance:
       value: AttackPoint
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: force
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: cooldown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _animator
       value: 
       objectReference: {fileID: 3536749357788324775}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _impulseStrength
-      value: 90
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _attackArcDegrees
