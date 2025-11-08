@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (PlayerManager.Instance.IsInImpulse()) return;
-        if (PlayerManager.Instance.AllowVelocityChange) return;
+        if (PlayerManager.Instance.AllowForceChange) return;
         
         PlayerRigidBody.linearVelocity = movementInput * speed;
 

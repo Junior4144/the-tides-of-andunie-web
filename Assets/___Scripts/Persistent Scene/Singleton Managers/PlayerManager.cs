@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     //private PlayerHeroMovement _playerMovement;
     private PlayerSquadImpulseController _playerSquadImpulseController;
 
-    public bool AllowVelocityChange = false;
+    public bool AllowForceChange = false;
 
 
     private void Awake()

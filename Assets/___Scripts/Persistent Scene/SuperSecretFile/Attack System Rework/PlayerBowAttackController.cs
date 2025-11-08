@@ -13,21 +13,27 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] Slider bowPowerSlider;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject arrowSprite;
+    [SerializeField] GameObject arrowSprite2;
+    [SerializeField] GameObject arrowSprite3;
     [SerializeField] GameObject ChargeSliderUI;
     [SerializeField] GameObject crossHair;
 
     [Header("Settings")]
     [SerializeField] float arrowSpeedMultiplier = 10f;
     [SerializeField] float minArrowSpeed = 1f;
-    [SerializeField] float maxCharge = 3f;
+    [SerializeField] public float maxCharge = 3f;
     [SerializeField] float chargeRate = 3f;
     [SerializeField] float chargeDecreaseRate = 10f;
+
+    public bool IsNormalAiming { get; private set; }
+    public bool IsAbilityAiming { get; private set; }
 
     AudioSource audioSrc;
     Rigidbody2D rb;
     bool isAttacking;
     bool canFire = true;
-    float charge;
+    public float charge;
+
 
     private void OnEnable()
     {
@@ -56,14 +62,44 @@ public class PlayerBowAttackController : MonoBehaviour
     void Update()
     {
         if (!canFire) HandleCooldown();
-        else if (Input.GetMouseButton(0)) StartCharging();
-        else if (Input.GetMouseButtonUp(0)) FireBow();
+
+        // Normal shot (Left Click)
+        else if (Input.GetMouseButton(0))
+        {
+            IsNormalAiming = true;
+            IsAbilityAiming = false;
+            StartCharging();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            FireBow();
+            IsNormalAiming = false;
+        }
+
+        // Ability shot (Right Click)
+        else if (Input.GetMouseButton(1))
+        {
+            IsAbilityAiming = true;
+            IsNormalAiming = false;
+            StartCharging(); // Or StartAbilityCharge()
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            FireAbilityBow();
+            IsAbilityAiming = false;
+        }
     }
 
     void StartCharging()
     {
         isAttacking = true;
-        arrowSprite.SetActive(true);
+        if(IsNormalAiming) arrowSprite.SetActive(true);
+        if (IsAbilityAiming)
+        {
+            arrowSprite.SetActive(true);
+            arrowSprite2.SetActive(true);
+            arrowSprite3.SetActive(true);
+        }
         charge = Mathf.Min(charge + Time.deltaTime * chargeRate, maxCharge);
         bowPowerSlider.value = charge;
     }
@@ -92,6 +128,43 @@ public class PlayerBowAttackController : MonoBehaviour
         ResetAfterFire();
     }
 
+    void FireAbilityBow()
+    {
+        canFire = false;
+        charge = Mathf.Min(charge, maxCharge);
+
+        float speed = Mathf.Max(minArrowSpeed, charge * arrowSpeedMultiplier);
+        float baseAngle = Utility.AngleTowardsMouse(transform.position);
+        float spreadAngle = 20f; // degrees between each arrow (adjust to taste)
+        int arrowCount = 3;
+
+        // Loop for each arrow
+        for (int i = 0; i < arrowCount; i++)
+        {
+            // Center = 0, Left = -1, Right = +1
+            int offsetIndex = i - 1;
+
+            // Calculate angle offset
+            float angle = baseAngle + offsetIndex * spreadAngle;
+            Quaternion rot = Quaternion.Euler(0f, 0f, angle);
+
+            // Spawn position slightly in front of player
+            float spawnOffset = 1f;
+            Vector3 offset = rot * Vector3.down * spawnOffset;
+            Vector3 spawnPos = transform.position + offset;
+
+            // Instantiate arrow
+            var arrow = Instantiate(arrowPrefab, spawnPos, rot)
+                .GetComponent<ArrowProjectile>();
+
+            arrow.ArrowVelocity = speed;
+            arrow.power = charge;
+        }
+
+        ApplyImpulse(Quaternion.Euler(0f, 0f, baseAngle));
+        ResetAfterFire();
+    }
+
     void HandleCooldown()
     {
         charge = Mathf.Max(0f, charge - chargeDecreaseRate * Time.deltaTime);
@@ -103,6 +176,8 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         isAttacking = false;
         arrowSprite.SetActive(false);
+        arrowSprite2.SetActive(false);
+        arrowSprite3.SetActive(false);
         bowPowerSlider.value = 0f;
     }
 
@@ -120,7 +195,7 @@ public class PlayerBowAttackController : MonoBehaviour
         float timer = 0f;
 
         // Temporarily disable movement
-        PlayerManager.Instance.AllowVelocityChange = true;
+        PlayerManager.Instance.AllowForceChange = true;
 
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(dir * strength, ForceMode2D.Impulse);
@@ -132,6 +207,6 @@ public class PlayerBowAttackController : MonoBehaviour
         }
 
         // Stop recoil, re-enable control
-        PlayerManager.Instance.AllowVelocityChange = false;
+        PlayerManager.Instance.AllowForceChange = false;
     }
 }
