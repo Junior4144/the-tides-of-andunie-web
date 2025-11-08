@@ -11,6 +11,7 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject arrowSprite;
     [SerializeField] GameObject ChargeSliderUI;
+    [SerializeField] GameObject crossHair;
 
     [Header("Settings")]
     [SerializeField] float arrowSpeedMultiplier = 10f;
@@ -28,12 +29,14 @@ public class PlayerBowAttackController : MonoBehaviour
     private void OnEnable()
     {
         ChargeSliderUI.SetActive(true);
+        crossHair.SetActive(true);
     }
     private void OnDisable()
     {
         bowPowerSlider.value = 0f;
         charge = 0f;
         ChargeSliderUI.SetActive(false);
+        crossHair.SetActive(false);
     }
 
     public bool IsAttacking => isAttacking;
@@ -44,6 +47,7 @@ public class PlayerBowAttackController : MonoBehaviour
         rb = playerRoot.GetComponent<Rigidbody2D>();
         bowPowerSlider.value = 0f;
         bowPowerSlider.maxValue = maxCharge;
+        crossHair.SetActive(false);
     }
 
     void Update()
