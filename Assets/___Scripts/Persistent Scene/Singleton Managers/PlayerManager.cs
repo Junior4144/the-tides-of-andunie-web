@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     //private PlayerHeroMovement _playerMovement;
     private PlayerSquadImpulseController _playerSquadImpulseController;
 
+    public bool AllowForceChange = false;
+
 
     private void Awake()
     {
@@ -57,7 +59,7 @@ public class PlayerManager : MonoBehaviour
     public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
     public void SetHealth(float value) => _healthController.SetCurrentHealth(value);
     public void AddHealth(float value) => _healthController.AddHealth(value);
-
+    
 
     //------TRANSFORM------//
     public Transform GetPlayerTransform() => gameObject.transform;

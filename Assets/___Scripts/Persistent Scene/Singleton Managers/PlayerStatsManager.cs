@@ -20,7 +20,6 @@ public class PlayerStatsManager : MonoBehaviour
 
     public static event Action<float, float> OnDamageChanged;
     public static event Action<float, float> OnMaxHealthChanged;
-    public static event Action<float, float> OnExplosionChanged;
 
     void Awake()
     {

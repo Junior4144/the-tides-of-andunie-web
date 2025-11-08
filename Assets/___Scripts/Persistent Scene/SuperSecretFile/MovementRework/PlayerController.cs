@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.LowLevel;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (PlayerManager.Instance.IsInImpulse()) return;
+        if (PlayerManager.Instance.AllowForceChange) return;
         
         PlayerRigidBody.linearVelocity = movementInput * speed;
 
@@ -50,6 +52,8 @@ public class PlayerController : MonoBehaviour
         {
             RotateHand();
         }
+
+        
     }
 
     private void RotatePlayerEightWay()
@@ -77,4 +81,5 @@ public class PlayerController : MonoBehaviour
         float smoothAngle = Mathf.LerpAngle(PlayerRigidBody.rotation, targetAngle, mouseRotationSpeed);
         PlayerRigidBody.MoveRotation(smoothAngle);
     }
+
 }

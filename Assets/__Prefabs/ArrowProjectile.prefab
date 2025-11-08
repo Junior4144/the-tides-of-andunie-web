@@ -115,6 +115,8 @@ MonoBehaviour:
   ArrowVelocity: 0
   _layerName: Enemy
   expo: {fileID: 3548132128928179003, guid: ad6038a9e58441947be261d3ea203446, type: 3}
+  expoSound: {fileID: 4184515136674530310, guid: aac468c6daeca9c46834bc06ff3e5752, type: 3}
+  hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
   power: 0
 --- !u!1 &7778605343423404073
 GameObject:
@@ -194,7 +196,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1440140687
   m_SortingLayer: 6
-  m_SortingOrder: 4
+  m_SortingOrder: -2
   m_Sprite: {fileID: 4396870622444339024, guid: 7075a7b99f5d97047b3741beb11a419d, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -284,7 +286,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1440140687
   m_SortingLayer: 6
-  m_SortingOrder: 5
+  m_SortingOrder: -1
   m_Sprite: {fileID: 4396870622444339024, guid: 7075a7b99f5d97047b3741beb11a419d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

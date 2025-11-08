@@ -1,0 +1,118 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class DynamicCrosshair : MonoBehaviour
+{
+    [Header("References")]
+    [SerializeField] RectTransform crosshairRoot;
+    [SerializeField] RectTransform top, bottom, left, right;
+    [SerializeField] PlayerBowAttackController bowAttackController;
+
+    [Header("Spread Settings")]
+    [SerializeField] float idleSpread = 40f;
+    [SerializeField] float aimSpread = 10f;
+    [SerializeField] float abilityMaxSpread = 100f;
+    [SerializeField] float abilityMinSpread = 20f;
+    [SerializeField] float moveSpeed = 10f;
+
+    [Header("Visual Effects")]
+    [SerializeField] Color normalColor = Color.white;
+    [SerializeField] Color abilityColor = new(1f, 0.4f, 0.2f);
+    [SerializeField] float pulseSpeed = 8f;
+    [SerializeField] float pulseAmount = 0.05f;
+    [SerializeField] float rotationSpeed = 100f;
+
+    float currentSpread;
+    Image[] crosshairParts;
+
+    // ---------------- UNITY LIFECYCLE ----------------
+    void OnEnable()
+    {
+        SetupCursor(false);
+        crosshairParts = GetComponentsInChildren<Image>();
+        currentSpread = idleSpread;
+    }
+
+    void OnDisable()
+    {
+        SetupCursor(true);
+    }
+
+    void Update()
+    {
+        UpdatePosition();
+        UpdateSpread();
+        ApplyCrosshairTransforms();
+        ApplyVisualEffects();
+    }
+
+    // ---------------- CORE BEHAVIOR ----------------
+    void UpdatePosition()
+    {
+        crosshairRoot.position = Input.mousePosition;
+    }
+
+    void UpdateSpread()
+    {
+        currentSpread = Mathf.Lerp(currentSpread, GetTargetSpread(), Time.deltaTime * moveSpeed);
+    }
+
+    float GetTargetSpread()
+    {
+        if (bowAttackController.IsNormalAiming) return aimSpread;
+        if (bowAttackController.IsAbilityAiming)
+        {
+            float chargeRatio = bowAttackController.charge / bowAttackController.maxCharge;
+            return Mathf.Lerp(abilityMaxSpread, abilityMinSpread, chargeRatio);
+        }
+        return idleSpread;
+    }
+
+    void ApplyCrosshairTransforms()
+    {
+        Vector3 up = Vector3.up * currentSpread;
+        Vector3 rightDir = Vector3.right * currentSpread;
+
+        top.localPosition = up;
+        bottom.localPosition = -up;
+        left.localPosition = -rightDir;
+        right.localPosition = rightDir;
+    }
+
+    // ---------------- VISUAL EFFECTS ----------------
+    void ApplyVisualEffects()
+    {
+        bool isAbility = bowAttackController.IsAbilityAiming;
+        UpdateColor(isAbility);
+        UpdatePulseAndRotation(isAbility);
+    }
+
+    void UpdateColor(bool isAbility)
+    {
+        Color target = isAbility ? abilityColor : normalColor;
+        foreach (var img in crosshairParts)
+            img.color = Color.Lerp(img.color, target, Time.deltaTime * 10f);
+    }
+
+    void UpdatePulseAndRotation(bool isAbility)
+    {
+        if (isAbility)
+        {
+            float pulse = Mathf.Sin(Time.time * pulseSpeed) * pulseAmount + 1f;
+            crosshairRoot.localScale = Vector3.one * pulse;
+            crosshairRoot.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            crosshairRoot.localScale = Vector3.Lerp(crosshairRoot.localScale, Vector3.one, Time.deltaTime * 8f);
+            crosshairRoot.localRotation = Quaternion.Lerp(crosshairRoot.localRotation, Quaternion.identity, Time.deltaTime * 8f);
+        }
+    }
+
+    // ---------------- HELPERS ----------------
+    void SetupCursor(bool visible)
+    {
+        Cursor.visible = visible;
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Confined;
+    }
+}
