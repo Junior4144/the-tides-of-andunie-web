@@ -70,7 +70,11 @@ public class PlayerBowAttackController : MonoBehaviour
         float angle = Utility.AngleTowardsMouse(transform.position);
         Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
-        var arrow = Instantiate(arrowPrefab, transform.position, rot)
+        float spawnOffset = 1f; // how far back you want the arrow
+        Vector3 offset = rot * Vector3.down * spawnOffset;
+        Vector3 spawnPos = transform.position + offset;
+
+        var arrow = Instantiate(arrowPrefab, spawnPos, rot)
             .GetComponent<ArrowProjectile>();
 
         arrow.ArrowVelocity = speed;
