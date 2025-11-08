@@ -126,14 +126,4 @@ public class PlayerAttackController : MonoBehaviour
             isDashing: false
         );
     }
-
-    IEnumerator ImpulseRoutine(Vector2 dir, float strength, float duration)
-    {
-        PlayerManager.Instance.AllowForceChange = true;
-        _rb.linearVelocity = Vector2.zero;
-        _rb.AddForce(dir * strength, ForceMode2D.Impulse);
-
-        yield return new WaitForSeconds(duration);
-        PlayerManager.Instance.AllowForceChange = false;
-    }
 }

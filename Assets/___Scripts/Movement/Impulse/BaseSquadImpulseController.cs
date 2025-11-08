@@ -8,7 +8,6 @@ using System.Collections;
 public abstract class BaseSquadImpulseController : MonoBehaviour
 {
     [Header("Impulse Settings")]
-    [SerializeField] private float _squadImpulseForce = 16f;
     [SerializeField] private float _impulseDuration = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float _squadDirectionWeight = 0.7f;
     [SerializeField] [Range(0f, 1f)] private float _individualDirectionWeight = 0.3f;
@@ -65,7 +64,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
 
     protected abstract float GetDashMultiplier(bool isDashing);
 
-    public void InitiateSquadImpulse(float impulseforce, Vector2 contactPoint, Vector2 impulseDirection, bool isDashing)
+    public void InitiateSquadImpulse(float impulseforce, Vector2 contactPoint, Vector2 impulseDirection, bool isDashing = false)
     {
         ApplyImpulseToUnits(impulseforce, impulseDirection, contactPoint, isDashing);
         StartCoroutine(AdjustSquadPosition());

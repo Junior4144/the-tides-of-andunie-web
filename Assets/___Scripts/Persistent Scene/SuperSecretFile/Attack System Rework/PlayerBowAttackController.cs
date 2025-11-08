@@ -15,28 +15,30 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] GameObject crossHair;
 
     [Header("Settings")]
-    [SerializeField] float arrowSpeedMultiplier = 10f;
-    [SerializeField] float minArrowSpeed = 1f;
+    [SerializeField] private float _arrowSpeedMultiplier = 25f;
+    [SerializeField] private float _minArrowSpeed = 25f;
     [SerializeField] public float maxCharge = 3f;
-    [SerializeField] float chargeRate = 3f;
-    [SerializeField] float chargeDecreaseRate = 10f;
-    [SerializeField] float minChargeRequired = 1;
-    [SerializeField] float arrowSpawnOffset = 1f;
+    [SerializeField] private float _chargeRate = 3f;
+    [SerializeField] private float _chargeDecreaseRate = 10f;
+    [SerializeField] private float _minChargeRequired = 1;
+    [SerializeField] private float _arrowSpawnOffset = 1f;
+    [SerializeField] private float _minImpulseForce = 30f;
+    [SerializeField] private float _maxImpulseForce = 100f;
+
     public bool IsNormalAiming { get; private set; }
     public bool IsAbilityAiming { get; private set; }
     public bool IsAttacking { get; private set; }
-
-    AudioSource audioSrc;
+    AudioSource _audioSource;
     Rigidbody2D rb;
     bool canFire = true;
-
-    [HideInInspector]
-    public float charge;
+    [HideInInspector] public float charge;
+    private PlayerSquadImpulseController _impulseController;
 
     void Awake()
     {
-        audioSrc = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
         rb = playerRoot.GetComponent<Rigidbody2D>();
+        _impulseController = GetComponentInParent<PlayerSquadImpulseController>();
         InitUI();
     }
 
@@ -72,7 +74,7 @@ public class PlayerBowAttackController : MonoBehaviour
         IsAttacking = true;
 
         ToggleArrowSprites(normal ? 1 : 3, true);
-        charge = Mathf.Min(charge + Time.deltaTime * chargeRate, maxCharge);
+        charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
         bowPowerSlider.value = charge;
     }
 
@@ -88,7 +90,7 @@ public class PlayerBowAttackController : MonoBehaviour
             return;
         }
 
-        if (charge < minChargeRequired)
+        if (charge < _minChargeRequired)
         {
             CancelShot();
             return;
@@ -106,7 +108,7 @@ public class PlayerBowAttackController : MonoBehaviour
     void FireSingleShot()
     {
         SpawnArrow(Utility.AngleTowardsMouse(transform.position), charge);
-        ApplyImpulse(Utility.RotationTowardsMouse(transform.position));
+        ApplyImpulse();
     }
 
     void FireSpreadShot()
@@ -121,15 +123,15 @@ public class PlayerBowAttackController : MonoBehaviour
             SpawnArrow(angle, charge);
         }
 
-        ApplyImpulse(Quaternion.Euler(0f, 0f, baseAngle));
+        ApplyImpulse();
     }
 
     // ---------------- HELPERS ----------------
     void SpawnArrow(float angle, float power)
     {
-        float speed = Mathf.Max(minArrowSpeed, power * arrowSpeedMultiplier);
+        float speed = Mathf.Max(_minArrowSpeed, power * _arrowSpeedMultiplier);
         Quaternion rot = Quaternion.Euler(0f, 0f, angle);
-        Vector3 spawnPos = transform.position + rot * Vector3.down * arrowSpawnOffset;
+        Vector3 spawnPos = transform.position + rot * Vector3.down * _arrowSpawnOffset;
 
         var arrow = Instantiate(arrowPrefab, spawnPos, rot).GetComponent<ArrowProjectile>();
         arrow.ArrowVelocity = speed;
@@ -138,28 +140,16 @@ public class PlayerBowAttackController : MonoBehaviour
 
     void HandleCooldown()
     {
-        charge = Mathf.Max(0f, charge - chargeDecreaseRate * Time.deltaTime);
+        charge = Mathf.Max(0f, charge - _chargeDecreaseRate * Time.deltaTime);
         bowPowerSlider.value = charge;
         if (charge == 0f) canFire = true;
     }
 
-    void ApplyImpulse(Quaternion rot)
+    void ApplyImpulse()
     {
-        Vector2 recoilDir = -(rot * Vector3.up);
-        float recoilStrength = Mathf.Lerp(30f, 100f, charge / maxCharge);
-        float recoilDuration = 0.1f + (charge / maxCharge) * 0.1f;
+        float recoilStrength = Mathf.Lerp(_minImpulseForce, _maxImpulseForce, charge / maxCharge);
 
-        StartCoroutine(ImpulseRoutine(recoilDir, recoilStrength, recoilDuration));
-    }
-
-    IEnumerator ImpulseRoutine(Vector2 dir, float strength, float duration)
-    {
-        PlayerManager.Instance.AllowForceChange = true;
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(dir * strength, ForceMode2D.Impulse);
-
-        yield return new WaitForSeconds(duration);
-        PlayerManager.Instance.AllowForceChange = false;
+        _impulseController.InitiateSquadImpulse(recoilStrength, transform.position, -rb.transform.up);
     }
 
     void CancelShot()
