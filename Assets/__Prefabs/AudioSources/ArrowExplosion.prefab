@@ -142,13 +142,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a00e684ac78d6e468cb700eb5efd8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundSpawnShuffler
-  clips:
+  _clips:
   - {fileID: 8300000, guid: a2c809b4331d0a14488950ff14a4d73c, type: 3}
   - {fileID: 8300000, guid: ca0d6ea13598d6f4689ef70a6a33dcef, type: 3}
   - {fileID: 8300000, guid: 3adb4c3a23cc1f94e976598bbdf2865c, type: 3}
   - {fileID: 8300000, guid: 049a0b5978f0ba44ea6ab9926b81eda4, type: 3}
   - {fileID: 8300000, guid: 50a9f558e1da54246b4ecbe1431d6d47, type: 3}
-  range: 15
-  maxVolume: 0.2
-  minPitch: 0.9
-  maxPitch: 1.1
+  _range: 20
+  _maxVolume: 0.5
+  _minPitch: 1
+  _maxPitch: 1.1
+  _playOnStart: 1

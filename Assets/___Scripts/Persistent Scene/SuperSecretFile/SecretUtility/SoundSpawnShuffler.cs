@@ -7,7 +7,6 @@ public class SoundSpawnShuffler : MonoBehaviour
     [SerializeField] AudioClip[] _clips;
     [SerializeField] float _range = 10f;
     [SerializeField] float _maxVolume = 1f;
-
     [Header("Pitch Randomization")]
     [SerializeField] float _minPitch = 1f;
     [SerializeField] float _maxPitch = 1f;
@@ -48,5 +47,6 @@ public class SoundSpawnShuffler : MonoBehaviour
         _audioSource.pitch = Random.Range(_minPitch, _maxPitch);
         _audioSource.Play();
 
+        Destroy(gameObject, _audioSource.clip.length);
     }
 }
