@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,69 +8,76 @@ using UnityEngine.UI;
 public class PlayerAttackController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Transform playerRoot;
-    [SerializeField] PlayerAnimator animator;
-    [SerializeField] AudioClip attackSound;
-    [SerializeField] GameObject hitEffectPrefab;
-    [SerializeField] GameObject impulseCollider;
+    [SerializeField] PlayerAnimator _animator;
+    [SerializeField] AudioClip _attackSound;
+    [SerializeField] GameObject _hitEffectPrefab;
+    [SerializeField] GameObject _impulseCollider;
 
     [Header("Settings")]
-    [SerializeField] float attackDuration = 0.5f;
-    [SerializeField] float damageDelay = 0f;
+    [SerializeField] float _attackDuration = 0.5f;
+    [SerializeField] float _damageDelay = 0f;
+    [SerializeField] private float _impulseStrength;
 
-    AudioSource audioSrc;
-    Rigidbody2D rb;
-    HashSet<Collider2D> hitEnemies = new();
+    [Header("Attack Arc")]
+    [SerializeField] float _attackArcDegrees = 120f;
+    [SerializeField] float _attackStartAngle = -60f;
 
-    bool isAttacking;
+    private AudioSource _audioSrc;
+    private Rigidbody2D _rb;
+    private PlayerSquadImpulseController _impulseController;
+    private readonly HashSet<Collider2D> _hitEnemies = new();
+    bool _isAttacking;
+    
 
-    public bool IsAttacking => isAttacking;
-    public float AttackDuration => attackDuration;
+    public bool IsAttacking => _isAttacking;
+    public float AttackDuration => _attackDuration;
 
     void Awake()
     {
-        audioSrc = GetComponent<AudioSource>();
-        rb = playerRoot.GetComponent<Rigidbody2D>();
-        isAttacking = false;
+        _audioSrc = GetComponent<AudioSource>();
+        _rb = GetComponentInParent<Rigidbody2D>();
+        _impulseController = GetComponentInParent<PlayerSquadImpulseController>();
+        _isAttacking = false;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !_isAttacking)
             StartAttack();
 
-        impulseCollider.SetActive(isAttacking);
+        _impulseCollider.SetActive(_isAttacking);
     }
 
     void StartAttack()
     {
-        isAttacking = true;
+        _isAttacking = true;
         PlayAttackAnimation();
     }
 
     void PlayAttackAnimation()
     {
-        animator?.TriggerAttack();
-        if (attackSound) audioSrc.PlayOneShot(attackSound, 0.4f);
+        _animator?.TriggerAttack();
+        if (_attackSound) _audioSrc.PlayOneShot(_attackSound, 0.4f);
         StartCoroutine(AttackRoutine());
+        StartCoroutine(SweepAttackCollider());
     }
 
     IEnumerator AttackRoutine()
     {
-        yield return new WaitForSeconds(attackDuration);
-        isAttacking = false;
-        hitEnemies.Clear();
+        yield return new WaitForSeconds(_attackDuration);
+        _isAttacking = false;
+        _hitEnemies.Clear();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (!isAttacking) return;
-        if (hitEnemies.Contains(col)) return;
-
+        if (!_isAttacking) return;
+        if (_hitEnemies.Contains(col)) return;
         
         if (col.TryGetComponent(out IHealthController health))
         {
-            hitEnemies.Add(col);
+            ApplyImpulse(col);
+            _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
         } 
@@ -77,16 +85,45 @@ public class PlayerAttackController : MonoBehaviour
 
     IEnumerator DealDamage(IHealthController health)
     {
-        yield return new WaitForSeconds(damageDelay);
+        yield return new WaitForSeconds(_damageDelay);
+        
         health.TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
     }
 
     void SpawnHitEffect(Vector2 enemyPos)
     {
-        Vector2 playerPos = rb.transform.position;
-        Vector2 dir = (enemyPos - playerPos).normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Vector2 playerPos = _rb.transform.position;
+        Vector2 direction = (enemyPos - playerPos).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.Euler(0f, 0f, angle + 90f);
-        Instantiate(hitEffectPrefab, enemyPos, rot);
+
+        Instantiate(_hitEffectPrefab, enemyPos, rot);
+    }
+
+    IEnumerator SweepAttackCollider()
+    {
+        float elapsed = 0f;
+
+        while (elapsed < _attackDuration)
+        {
+            float progress = elapsed / _attackDuration;
+            float angle = _attackStartAngle + (_attackArcDegrees * progress);
+
+            transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    void ApplyImpulse(Collider2D otherCollider)
+    {
+        _impulseController.InitiateSquadImpulse(
+            _impulseStrength,
+            contactPoint: otherCollider.ClosestPoint(transform.position),
+            impulseDirection: -_rb.transform.up,
+            isDashing: false
+        );
     }
 }

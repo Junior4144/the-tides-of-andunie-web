@@ -127,8 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689e2d991e880764589fbefbf01aa7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseController
-  _squadImpulseForce: 30
-  _impulseDuration: 0.5
+  _impulseDuration: 1.4
   _squadDirectionWeight: 0.7
   _individualDirectionWeight: 0.3
   _centralImpactMultiplier: 2.5
@@ -146,7 +145,7 @@ AudioSource:
   m_GameObject: {fileID: 4441501422373369235}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -242,6 +241,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7758077146234083845}
     m_Modifications:
+    - target: {fileID: 6013807941162489972, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: flashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013807941162489972, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
+      propertyPath: flashColor.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6113212806217388263, guid: 3e6e35cde72ba604aa92e8413c1f3abe, type: 3}
       propertyPath: m_Name
       value: PirateHero (1)

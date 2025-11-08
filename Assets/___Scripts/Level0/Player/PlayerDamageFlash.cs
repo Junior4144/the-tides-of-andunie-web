@@ -3,18 +3,21 @@ using System.Collections;
 
 public class FlashOnDamage : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
-    public Color flashColor = Color.red;
-    public float flashDuration = 0.2f;
+    SpriteRenderer _spriteRenderer;
+    [SerializeField] float _flashDuration = 0.2f;
+    [SerializeField] Color _flashColor = Color.white;
 
-    private Color originalColor;
+    Material _material;
+    static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
+    static readonly int FlashColor = Shader.PropertyToID("_FlashColor");
 
     void Awake()
     {
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _material = _spriteRenderer.material;
 
-        originalColor = spriteRenderer.color;
+        _material.SetFloat(FlashAmount, 0);
+        _material.SetColor(FlashColor, _flashColor);
     }
 
     public void Flash()
@@ -23,10 +26,10 @@ public class FlashOnDamage : MonoBehaviour
         StartCoroutine(FlashRoutine());
     }
 
-    private IEnumerator FlashRoutine()
+    IEnumerator FlashRoutine()
     {
-        spriteRenderer.color = flashColor;
-        yield return new WaitForSeconds(flashDuration);
-        spriteRenderer.color = originalColor;
+        _material.SetFloat(FlashAmount, 1);
+        yield return new WaitForSeconds(_flashDuration);
+        _material.SetFloat(FlashAmount, 0);
     }
 }

@@ -8,7 +8,6 @@ using System.Collections;
 public abstract class BaseSquadImpulseController : MonoBehaviour
 {
     [Header("Impulse Settings")]
-    [SerializeField] private float _squadImpulseForce = 16f;
     [SerializeField] private float _impulseDuration = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float _squadDirectionWeight = 0.7f;
     [SerializeField] [Range(0f, 1f)] private float _individualDirectionWeight = 0.3f;
@@ -65,17 +64,27 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
 
     protected abstract float GetDashMultiplier(bool isDashing);
 
-    public void InitiateSquadImpulse(Vector2 contactPoint, Vector2 impulseDirection, bool isDashing)
+    public void InitiateSquadImpulse(
+        float impulseforce,
+        Vector2 contactPoint,
+        Vector2 impulseDirection,
+        bool isDashing = false,
+        // TODO make isDashing and isAttacking better
+        bool isAttacking = false,
+        bool playSound = true,
+        bool spawnParticles = true
+    )
     {
-        ApplyImpulseToUnits(impulseDirection, contactPoint, isDashing);
+        ApplyImpulseToUnits(impulseforce, impulseDirection, contactPoint, isDashing);
         StartCoroutine(AdjustSquadPosition());
-        SpawnParticles(contactPoint, impulseDirection);
-        PlaySound();
+
+        if (spawnParticles) SpawnParticles(contactPoint, impulseDirection);
+        if (playSound) PlaySound();
 
         _impulseTimer = _impulseDuration;
     }
 
-    private void ApplyImpulseToUnits(Vector2 impulseDirection, Vector2 contactPoint, bool isDashing)
+    private void ApplyImpulseToUnits(float impulseforce, Vector2 impulseDirection, Vector2 contactPoint, bool isDashing)
     {
         _squadMemberRigidbodies.Where(rb => rb).ToList().ForEach(rb =>
         {
@@ -91,7 +100,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
             float finalForce =
                 CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint)) *
                 CalculateBehindnessBonusMultiplier(rb.position, contactPoint, impulseDirection) *
-                _squadImpulseForce *
+                impulseforce *
                 dashBonusMultiplier;
 
             rb.linearVelocity = Vector2.zero;

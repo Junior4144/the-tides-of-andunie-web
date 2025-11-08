@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerSquadImpulseListener : MonoBehaviour
 {
     [SerializeField] private string _layerName = "Enemy";
+    [SerializeField] private float _impulseForce = 16f;
 
     private PlayerSquadImpulseController _controller;
     private Rigidbody2D _rb;
@@ -66,6 +67,6 @@ public class PlayerSquadImpulseListener : MonoBehaviour
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
         Debug.Log($"[PlayerSquadImpulseListener] Initiating impulse {impulseDirection}");
-        _controller.InitiateSquadImpulse(closestPoint, impulseDirection, false);
+        _controller.InitiateSquadImpulse(_impulseForce, closestPoint, impulseDirection, false);
     }
 }

@@ -145,7 +145,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 30b5af9925016de4fbaed6e2dff4a170, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -413,9 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db5eac837b3ca843ba93240f179d71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlashOnDamage
-  spriteRenderer: {fileID: 4444451918969634893}
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.2
+  _flashDuration: 0.2
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &7689112777033820071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,3 +592,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseListener
   _layerName: Friendly
+  _impulseForce: 16

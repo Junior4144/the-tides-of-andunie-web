@@ -12,7 +12,7 @@ public class PirateHealthController : HealthController
 
         _currentHealth -= damageAmount;
 
-        OnDamaged.Invoke(); // Within Scene
+        OnDamaged?.Invoke();
 
         if (_currentHealth < 0)
             _currentHealth = 0;
