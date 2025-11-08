@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class PlayerAttackController : MonoBehaviour
     private AudioSource _audioSrc;
     private Rigidbody2D _rb;
     private PlayerSquadImpulseController _impulseController;
+    private CinemachineImpulseSource camraImpulseSource;
     private readonly HashSet<Collider2D> _hitEnemies = new();
     bool _isAttacking;
     
@@ -36,6 +38,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         _audioSrc = GetComponent<AudioSource>();
         _rb = GetComponentInParent<Rigidbody2D>();
+        camraImpulseSource = GetComponent<CinemachineImpulseSource>();
         _impulseController = GetComponentInParent<PlayerSquadImpulseController>();
         _isAttacking = false;
     }
@@ -80,6 +83,8 @@ public class PlayerAttackController : MonoBehaviour
             _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
+            HitStop.Instance.Stop(0.05f);
+            camraImpulseSource.GenerateImpulseWithForce(1f);
         } 
     }
 
