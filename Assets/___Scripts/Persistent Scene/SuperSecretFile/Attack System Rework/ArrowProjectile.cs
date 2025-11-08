@@ -28,7 +28,7 @@ public class ArrowProjectile : MonoBehaviour
     {
         SpawnExplosion();
         SpawnExplosionSound();
-        SpawnHitEffect(collision.transform.position);
+        if(collision.CompareTag("Enemy")) SpawnHitEffect(collision.transform.position);
         Destroy(gameObject);
     }
 
@@ -49,7 +49,7 @@ public class ArrowProjectile : MonoBehaviour
         Vector2 dir = (enemyPos - playerPos).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.Euler(0f, 0f, angle + 90f);
-        GameObject effect = Instantiate(hitEffectPrefab, enemyPos, rot);
+        Instantiate(hitEffectPrefab, enemyPos, rot);
     }
 
 }
