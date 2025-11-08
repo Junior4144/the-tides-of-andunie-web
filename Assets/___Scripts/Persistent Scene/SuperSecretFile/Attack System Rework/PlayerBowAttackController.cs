@@ -1,5 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class PlayerBowAttackController : MonoBehaviour
 {
@@ -84,6 +87,8 @@ public class PlayerBowAttackController : MonoBehaviour
         arrow.ArrowVelocity = speed;
         arrow.power = charge;
 
+        ApplyImpulse(rot);
+
         ResetAfterFire();
     }
 
@@ -99,5 +104,34 @@ public class PlayerBowAttackController : MonoBehaviour
         isAttacking = false;
         arrowSprite.SetActive(false);
         bowPowerSlider.value = 0f;
+    }
+
+    public void ApplyImpulse(Quaternion rot)
+    {
+        Vector2 recoilDir = -(rot * Vector3.up);
+        float recoilStrength = Mathf.Lerp(30f, 100f, charge / maxCharge);
+        float recoilDuration = 0.1f + (charge / maxCharge) * 0.1f;
+
+        StartCoroutine(ImpulseRoutine(recoilDir, recoilStrength, recoilDuration));
+    }
+
+    private IEnumerator ImpulseRoutine(Vector2 dir, float strength, float duration)
+    {
+        float timer = 0f;
+
+        // Temporarily disable movement
+        PlayerManager.Instance.AllowVelocityChange = true;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(dir * strength, ForceMode2D.Impulse);
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Stop recoil, re-enable control
+        PlayerManager.Instance.AllowVelocityChange = false;
     }
 }
