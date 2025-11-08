@@ -14473,11 +14473,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3148703720166902181, guid: 6de3c3ff1506d674dbbbf93e090f8a42, type: 3}
   m_PrefabInstance: {fileID: 1655990312}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1668480838 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2835749119694170363, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
-  m_PrefabInstance: {fileID: 157711566339350710}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1679020515
 GameObject:
   m_ObjectHideFlags: 0
@@ -15696,10 +15691,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 826962196269462061, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
-      propertyPath: ChargeSliderUI
-      value: 
-      objectReference: {fileID: 1668480838}
+    - target: {fileID: -8835309898677657402, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: _impulseDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 972147263853389966, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.21
@@ -15740,13 +15735,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1749672105243374152, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835749119694170363, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4114354065473296598, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7409650198408161721, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: m_Name
       value: PlayerHeroAldarion 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045057174674881548, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: m_Mass
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

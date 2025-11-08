@@ -7,6 +7,8 @@ public class EnemySquadImpulseListener : MonoBehaviour
     private EnemySquadImpulseController _controller;
     private Rigidbody2D _rb;
 
+
+
     void Awake()
     {
         if (transform.parent != null)
@@ -32,6 +34,43 @@ public class EnemySquadImpulseListener : MonoBehaviour
         if (_controller != null)
             _controller.UnregisterMember(_rb);
     }
+    private void Update()
+    {
+        if (_controller.IsInImpulse())
+        {
+            ToggleEnemyIgnore(true);
+            //_agent.enabled = false;
+        }
+        else
+            ToggleEnemyIgnore(false);
+    }
+
+    void IgnoreEnemies(bool ignore)
+    {
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        // Ignore collisions between all enemies globally (by layer)
+        Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, ignore);
+
+        // Also ignore collisions with any tagged "Enemy" (in case they’re on other layers)
+        Collider2D myCol = GetComponent<Collider2D>();
+        if (!myCol) return;
+
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (enemy == gameObject) continue;
+            var otherCol = enemy.GetComponent<Collider2D>();
+            if (otherCol)
+                Physics2D.IgnoreCollision(myCol, otherCol, ignore);
+        }
+    }
+
+    void ToggleEnemyIgnore(bool shouldIgnore)
+    {
+        IgnoreEnemies(shouldIgnore);
+    }
+
+
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {

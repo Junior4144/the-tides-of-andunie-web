@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour
         PlayerRigidBody.linearVelocity = movementInput * speed;
 
         //Debug.Log($"Attack: {attackScript.IsAttacking}, Bow: {bowAttackScript.IsAttacking}");
-        if (!attackScript.IsAttacking && !bowAttackScript.IsAttacking)
+        //!attackScript.IsAttacking &&
+        if ( !bowAttackScript.IsAttacking)
         {
             RotatePlayerEightWay();
         }

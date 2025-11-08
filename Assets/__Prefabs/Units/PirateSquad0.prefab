@@ -74,7 +74,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4441501422373369235}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -86,7 +86,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &4606045543428363586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689e2d991e880764589fbefbf01aa7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseController
-  _squadImpulseForce: 16
+  _squadImpulseForce: 30
   _impulseDuration: 0.5
   _squadDirectionWeight: 0.7
   _individualDirectionWeight: 0.3
