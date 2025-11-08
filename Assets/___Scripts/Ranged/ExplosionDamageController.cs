@@ -22,6 +22,7 @@ public class ExplosionDamageController : MonoBehaviour
             Debug.Log($"[ExplosionDamageController] Damage dealt {PlayerStatsManager.Instance.DefaultExplosionDamage}");
             health.TakeDamage(PlayerStatsManager.Instance.DefaultExplosionDamage);
         }
+
     }
 
 }

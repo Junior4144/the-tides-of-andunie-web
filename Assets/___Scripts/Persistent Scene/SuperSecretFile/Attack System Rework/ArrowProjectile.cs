@@ -7,6 +7,7 @@ public class ArrowProjectile : MonoBehaviour
     [SerializeField] private string _layerName;
 
     [SerializeField] GameObject expo;
+    [SerializeField] private GameObject expoSound;
 
     [HideInInspector] public float power;
 
@@ -26,6 +27,7 @@ public class ArrowProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         SpawnExplosion();
+        SpawnExplosionSound();
         Destroy(gameObject);
     }
 
@@ -33,6 +35,11 @@ public class ArrowProjectile : MonoBehaviour
     {
         GameObject expoObject = Instantiate(expo, transform.position, transform.rotation);
         expoObject.transform.localScale = Vector3.one * Mathf.Max(1f, power);
+    }
+
+    private void SpawnExplosionSound()
+    {
+        Instantiate(expoSound, transform.position, Quaternion.identity);
     }
 
 }
