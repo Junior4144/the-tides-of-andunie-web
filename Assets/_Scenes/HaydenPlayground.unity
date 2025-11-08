@@ -1544,12 +1544,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8835309898677657402, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: _impulseDuration
-      value: 0.6
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 826962196269462061, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 1379860703}
+    - target: {fileID: 826962196269462061, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: _minArrowSpeed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 826962196269462061, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
+      propertyPath: _arrowSpeedMultiplier
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 972147263853389966, guid: 08b0159823bc55a45add9be140d8f56d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.98133

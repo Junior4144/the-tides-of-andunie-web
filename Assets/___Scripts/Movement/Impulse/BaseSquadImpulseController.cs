@@ -64,12 +64,22 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
 
     protected abstract float GetDashMultiplier(bool isDashing);
 
-    public void InitiateSquadImpulse(float impulseforce, Vector2 contactPoint, Vector2 impulseDirection, bool isDashing = false)
+    public void InitiateSquadImpulse(
+        float impulseforce,
+        Vector2 contactPoint,
+        Vector2 impulseDirection,
+        bool isDashing = false,
+        // TODO make isDashing and isAttacking better
+        bool isAttacking = false,
+        bool playSound = true,
+        bool spawnParticles = true
+    )
     {
         ApplyImpulseToUnits(impulseforce, impulseDirection, contactPoint, isDashing);
         StartCoroutine(AdjustSquadPosition());
-        SpawnParticles(contactPoint, impulseDirection);
-        PlaySound();
+
+        if (spawnParticles) SpawnParticles(contactPoint, impulseDirection);
+        if (playSound) PlaySound();
 
         _impulseTimer = _impulseDuration;
     }
@@ -88,7 +98,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
             float dashBonusMultiplier = GetDashMultiplier(isDashing);
 
             float finalForce =
-                1 *
+                CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint)) *
                 CalculateBehindnessBonusMultiplier(rb.position, contactPoint, impulseDirection) *
                 impulseforce *
                 dashBonusMultiplier;
