@@ -209,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSquadImpulseListener
   _layerName: Enemy
   _impulseForce: 16
+  _impulseDuration: 0.2
 --- !u!1 &1915967654001077082
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +669,7 @@ MonoBehaviour:
   _arrowSpawnOffset: 1
   _minImpulseForce: 30
   _maxImpulseForce: 100
+  _impulseDuration: 0.2
   charge: 0
 --- !u!58 &6243997940038889242
 CircleCollider2D:
@@ -882,6 +884,8 @@ GameObject:
   - component: {fileID: 2653729124395941360}
   - component: {fileID: 7834476114726568240}
   - component: {fileID: 792821208638009140}
+  - component: {fileID: 4898830815852447295}
+  - component: {fileID: 3503703991086608001}
   m_Layer: 7
   m_Name: GenericCollider
   m_TagString: Player
@@ -1020,6 +1024,180 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4898830815852447295}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3503703991086608001}
+        m_TargetAssemblyTypeName: Unity.Cinemachine.CinemachineImpulseSource, Unity.Cinemachine
+        m_MethodName: GenerateImpulseWithForce
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.4
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!82 &4898830815852447295
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6549749987079265144}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: d0e255443dbaf0a45a2559cf82bc86a9, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3503703991086608001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6549749987079265144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 2
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &7183620151734203414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,7 +1368,6 @@ GameObject:
   - component: {fileID: 2501858800479070700}
   - component: {fileID: 42533560477664706}
   - component: {fileID: 3603910217672744378}
-  - component: {fileID: 6585815476499022404}
   - component: {fileID: -8835309898677657402}
   - component: {fileID: 2462190475280490862}
   m_Layer: 7
@@ -1431,19 +1608,6 @@ MonoBehaviour:
   _offsetY: 2.5
   _camera: {fileID: 0}
   _typeSound: {fileID: 8300000, guid: 3aed475c7c7e1b84e98a0f50c58f2b4b, type: 3}
---- !u!114 &6585815476499022404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409650198408161721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625379354be47624fa2749538faa258f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AldarionDialogueTest
-  _dialogueBubbleInfo: {fileID: 11400000, guid: c29d49fa75620e34995f40858757a6a2, type: 2}
 --- !u!114 &-8835309898677657402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,7 +1620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05bcdefb80e98845944247f7ddbce81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSquadImpulseController
-  _impulseDuration: 0.2
   _squadDirectionWeight: 0.7
   _individualDirectionWeight: 0.3
   _centralImpactMultiplier: 2.5
@@ -6905,7 +7068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: force
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: cooldown
@@ -6917,11 +7080,11 @@ PrefabInstance:
       objectReference: {fileID: 3536749357788324775}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: hitStopCooldown
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: hitStopDuration
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _impulseStrength
@@ -7046,8 +7209,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.2522323, y: 0.6004601}
-  m_Radius: 0.6318246
+  m_Offset: {x: 1.0421748, y: 0.7943941}
+  m_Radius: 0.60250914
 --- !u!114 &6373793774044761754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7062,7 +7225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
   ImpulseDefinition:
     ImpulseChannel: 1
-    ImpulseShape: 2
+    ImpulseShape: 1
     CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []

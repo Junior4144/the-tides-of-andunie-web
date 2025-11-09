@@ -21,7 +21,7 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] private float _impulseDuration = 0.1f;
     [SerializeField] private float shakeCooldown = 0.2f; // seconds
 
-    [Header("Attack Arc")]
+    [Header("Attack Arc Settings")]
     [SerializeField] float _attackArcDegrees = 120f;
     [SerializeField] float _attackStartAngle = -60f;
 
@@ -32,18 +32,18 @@ public class PlayerAttackController : MonoBehaviour
     private readonly HashSet<Collider2D> _hitEnemies = new();
     bool _isAttacking;
 
-
-
-    public bool IsAttacking => _isAttacking;
-    public float AttackDuration => _attackDuration;
+    [Header("Screen Shake Settings")]
     public float force;
-    private bool isShaking;
 
     [Header("HitStop Settings")]
     public float hitStopCooldown;
     private bool isInHitStop;
     public float hitStopDuration;
 
+    public bool IsAttacking => _isAttacking;
+    public float AttackDuration => _attackDuration;
+    
+    private bool isShaking;
 
     void Awake()
     {
