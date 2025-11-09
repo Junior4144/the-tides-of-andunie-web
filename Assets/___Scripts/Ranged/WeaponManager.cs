@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public enum WeaponType
@@ -20,9 +20,9 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager Instance { get; private set; }
 
     [SerializeField] private WeaponType currentWeapon = WeaponType.none;
+    private WeaponType? pendingWeaponRequest = null;
 
-    private bool isBusy = false;
-    public bool IsBusy => isBusy;
+    public bool IsBusy { get; private set; } = false;
 
     public float CurrentBowCharge;
     public float BowMaxCharge;
@@ -48,6 +48,7 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
     }
+
     private void Start()
     {
         HandleEquipRequest(WeaponType.Axe);
@@ -55,9 +56,10 @@ public class WeaponManager : MonoBehaviour
 
     private void HandleEquipRequest(WeaponType requestedWeapon)
     {
-        if (isBusy)
+        if (IsBusy)
         {
-            Debug.Log("Weapon switch ignored: currently busy");
+            pendingWeaponRequest = requestedWeapon;
+            Debug.Log($"Weapon switch to {requestedWeapon} queued (currently busy).");
             return;
         }
 
@@ -79,7 +81,18 @@ public class WeaponManager : MonoBehaviour
 
     public void SetBusy(bool value)
     {
-        isBusy = value;
+        bool wasBusy = IsBusy;
+        IsBusy = value;
+
+        if (wasBusy && !IsBusy)
+        {
+            if (pendingWeaponRequest.HasValue)
+            {
+                WeaponType queuedWeapon = pendingWeaponRequest.Value;
+                pendingWeaponRequest = null;
+                EquipWeapon(queuedWeapon);
+            }
+        }
     }
 
     public WeaponType GetCurrentWeapon()
