@@ -12,6 +12,7 @@ public class ArrowProjectile : MonoBehaviour
     [HideInInspector] public float power;
 
     private Rigidbody2D _rb;
+    private bool AlreadyActivated;
 
     private void Start()
     {
@@ -26,6 +27,8 @@ public class ArrowProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (AlreadyActivated) return;
+        AlreadyActivated = true;
         SpawnExplosion();
         SpawnExplosionSound();
         if(collision.CompareTag("Enemy")) SpawnHitEffect(collision.transform.position);
