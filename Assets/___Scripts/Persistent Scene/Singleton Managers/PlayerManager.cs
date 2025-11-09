@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
 
     private PlayerHealthController _healthController;
     private PlayerController _playerMovement;
+    private LSPlayerMovement _lsPlayerMovement;
     private PlayerAttackController _attackController;
     private PlayerSquadImpulseController _playerSquadImpulseController;
 
@@ -24,6 +25,7 @@ public class PlayerManager : MonoBehaviour
         Instance = this;
         _healthController = GetComponentInChildren<PlayerHealthController>();
         _playerMovement = GetComponent<PlayerController>();
+        _lsPlayerMovement = GetComponent<LSPlayerMovement>();
         _playerSquadImpulseController = GetComponentInChildren<PlayerSquadImpulseController>();
         _attackController = GetComponentInChildren<PlayerAttackController>();
     }
@@ -48,7 +50,12 @@ public class PlayerManager : MonoBehaviour
             case GameState.Menu:
             case GameState.Paused:
             case GameState.Cutscene:
-                _playerMovement.enabled = false;
+                if (_lsPlayerMovement) _lsPlayerMovement.enabled = false;
+
+                if (_playerMovement) _playerMovement.enabled = false;
+                break;
+            case GameState.LevelSelector:
+                _lsPlayerMovement.enabled = true;
                 break;
             default:
                 break;
