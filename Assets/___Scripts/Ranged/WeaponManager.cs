@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum WeaponType
 {
@@ -10,8 +11,8 @@ public enum WeaponType
 
 public static class WeaponEvents
 {
-    public static Action<WeaponType> OnEquipWeaponRequest; // Input asks for this
-    public static Action<WeaponType> OnNewWeaponEquipped;     // Broadcasted once equipped
+    public static Action<WeaponType> OnEquipWeaponRequest;
+    public static Action<WeaponType> OnNewWeaponEquipped;
     public static Action<WeaponType> OnWeaponAbilityActivation;
 }
 
@@ -20,14 +21,17 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager Instance { get; private set; }
 
     [SerializeField] private WeaponType currentWeapon = WeaponType.none;
-    private WeaponType? pendingWeaponRequest = null;
 
     public bool IsBusy { get; private set; } = false;
 
-    public float CurrentBowCharge;
-    public float BowMaxCharge;
-    public bool IsNormalAiming;
-    public bool IsAbilityAiming;
+    [HideInInspector] public float CurrentBowCharge;
+    [HideInInspector] public float BowMaxCharge;
+    [HideInInspector] public bool IsNormalAiming;
+    [HideInInspector] public bool IsAbilityAiming;
+
+    private GameState currentGameState;
+    private WeaponType? pendingWeaponRequest = null;
+    private string currentSceneName;
 
     private void Awake()
     {
@@ -42,11 +46,15 @@ public class WeaponManager : MonoBehaviour
     private void OnEnable()
     {
         WeaponEvents.OnEquipWeaponRequest += HandleEquipRequest;
+        GameManager.OnGameStateChanged += HandleGameStateChanged;
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
     private void OnDisable()
     {
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
+        GameManager.OnGameStateChanged -= HandleGameStateChanged;
+        SceneManager.activeSceneChanged -= OnSceneChanged;
     }
 
     private void Start()
@@ -56,6 +64,12 @@ public class WeaponManager : MonoBehaviour
 
     private void HandleEquipRequest(WeaponType requestedWeapon)
     {
+        if (currentGameState != GameState.Gameplay)
+        {
+            Debug.Log("Weapon logic disabled due to game state.");
+            return;
+        }
+
         if (IsBusy)
         {
             pendingWeaponRequest = requestedWeapon;
@@ -63,11 +77,6 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        if (currentWeapon == requestedWeapon)
-        {
-            Debug.Log($"Weapon {requestedWeapon} already equipped.");
-            return;
-        }
 
         EquipWeapon(requestedWeapon);
     }
@@ -77,6 +86,54 @@ public class WeaponManager : MonoBehaviour
         currentWeapon = newWeapon;
         Debug.Log($"Equipped weapon: {newWeapon}");
         WeaponEvents.OnNewWeaponEquipped?.Invoke(newWeapon);
+    }
+
+    private void HandleGameStateChanged(GameState newState)
+    {
+        currentGameState = newState;
+
+        if (newState != GameState.Gameplay || currentSceneName == "Level0Stage1")
+        {
+            IsBusy = true;
+            SetWeaponToNone();
+        }
+        else
+        {
+            IsBusy = false;
+            HandleEquipRequest(WeaponType.Axe);
+        }
+    }
+
+    private void OnSceneChanged(Scene oldScene, Scene newScene)
+    {
+        currentSceneName = newScene.name;
+
+        bool shouldDisable = currentSceneName == "Level0Stage1";
+
+        if (shouldDisable)
+        {
+            Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
+            IsBusy = true;
+            SetWeaponToNone();
+        }
+        else
+        {
+            Debug.Log($"Scene '{currentSceneName}' detected — enabling weapons if gameplay.");
+            IsBusy = false;
+
+            HandleEquipRequest(WeaponType.Axe);
+
+        }
+    }
+
+    private void SetWeaponToNone()
+    {
+        if (currentWeapon != WeaponType.none)
+        {
+            currentWeapon = WeaponType.none;
+            Debug.Log("All weapons disabled due to game state.");
+            WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
+        }
     }
 
     public void SetBusy(bool value)
