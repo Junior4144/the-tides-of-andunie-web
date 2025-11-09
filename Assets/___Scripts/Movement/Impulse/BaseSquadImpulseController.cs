@@ -8,7 +8,6 @@ using System.Collections;
 public abstract class BaseSquadImpulseController : MonoBehaviour
 {
     [Header("Impulse Settings")]
-    [SerializeField] private float _impulseDuration = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float _squadDirectionWeight = 0.7f;
     [SerializeField] [Range(0f, 1f)] private float _individualDirectionWeight = 0.3f;
     [SerializeField] private float _centralImpactMultiplier = 2.5f;
@@ -64,19 +63,21 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
 
     protected abstract float GetDashMultiplier(bool isDashing);
 
+    protected abstract float GetAttackMultiplier(bool isAttacking);
+
     public void InitiateSquadImpulse(
         float impulseforce,
+        float _impulseDuration,
         Vector2 contactPoint,
         Vector2 impulseDirection,
         bool isDashing = false,
-        // TODO make isDashing and isAttacking better
         bool isAttacking = false,
         bool playSound = true,
         bool spawnParticles = true
     )
     {
-        ApplyImpulseToUnits(impulseforce, impulseDirection, contactPoint, isDashing);
-        StartCoroutine(AdjustSquadPosition());
+        ApplyImpulseToUnits(impulseforce, impulseDirection, contactPoint, isDashing, isAttacking);
+        StartCoroutine(AdjustSquadPosition(_impulseDuration));
 
         if (spawnParticles) SpawnParticles(contactPoint, impulseDirection);
         if (playSound) PlaySound();
@@ -84,7 +85,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
         _impulseTimer = _impulseDuration;
     }
 
-    private void ApplyImpulseToUnits(float impulseforce, Vector2 impulseDirection, Vector2 contactPoint, bool isDashing)
+    private void ApplyImpulseToUnits(float impulseforce, Vector2 impulseDirection, Vector2 contactPoint, bool isDashing, bool isAttacking)
     {
         _squadMemberRigidbodies.Where(rb => rb).ToList().ForEach(rb =>
         {
@@ -96,12 +97,14 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
             ).normalized;
 
             float dashBonusMultiplier = GetDashMultiplier(isDashing);
+            float attackBonusMultiplier = GetAttackMultiplier(isAttacking);
 
             float finalForce =
                 CalcualteFallOffMultiplier(Vector2.Distance(rb.position, contactPoint)) *
                 CalculateBehindnessBonusMultiplier(rb.position, contactPoint, impulseDirection) *
                 impulseforce *
-                dashBonusMultiplier;
+                dashBonusMultiplier *
+                attackBonusMultiplier;
 
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(blendedDirection * finalForce, ForceMode2D.Impulse);
@@ -123,7 +126,7 @@ public abstract class BaseSquadImpulseController : MonoBehaviour
     private float CalcualteFallOffMultiplier(float distance) =>
         Mathf.Lerp(1f, _minFallOffMultiplier, Mathf.Clamp01(distance / _maxFallOffDistance));
 
-    private IEnumerator AdjustSquadPosition()
+    private IEnumerator AdjustSquadPosition(float _impulseDuration)
     {
         yield return new WaitForSeconds(_impulseDuration);
 

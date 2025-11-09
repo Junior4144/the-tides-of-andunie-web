@@ -4,6 +4,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
 {
     [SerializeField] private string _layerName = "Friendly";
     [SerializeField] private float _impulseForce = 16f;
+    [SerializeField] private float _impulseDuration = 0.6f;
 
     private BaseSquadImpulseController _controller;
     private Rigidbody2D _rb;
@@ -35,13 +36,6 @@ public class EnemySquadImpulseListener : MonoBehaviour
         if (_controller != null)
             _controller.UnregisterMember(_rb);
     }
-    private void Update()
-    {
-
-    }
-
-
-
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
@@ -55,6 +49,12 @@ public class EnemySquadImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
-        _controller.InitiateSquadImpulse(_impulseForce, closestPoint, impulseDirection, false);
+        _controller.InitiateSquadImpulse(
+            _impulseForce,
+            _impulseDuration,
+            closestPoint,
+            impulseDirection,
+            PlayerManager.Instance.IsAttacking()
+        );
     }
 }

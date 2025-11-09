@@ -17,7 +17,8 @@ public class PlayerAttackController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float _attackDuration = 0.5f;
     [SerializeField] float _damageDelay = 0f;
-    [SerializeField] private float _impulseStrength;
+    [SerializeField] private float _impulseStrength = 50;
+    [SerializeField] private float _impulseDuration = 0.1f;
     [SerializeField] private float shakeCooldown = 0.2f; // seconds
 
     [Header("Attack Arc")]
@@ -137,9 +138,9 @@ public class PlayerAttackController : MonoBehaviour
     {
         _impulseController.InitiateSquadImpulse(
             _impulseStrength,
+            _impulseDuration,
             contactPoint: otherCollider.ClosestPoint(transform.position),
-            impulseDirection: _rb.transform.up,
-            isDashing: false
+            impulseDirection: _rb.transform.up
         );
     }
 

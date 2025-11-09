@@ -11,4 +11,6 @@ public class PlayerSquadImpulseController : BaseSquadImpulseController
     }
 
     protected override float GetDashMultiplier(bool isDashing) => 1f;
+
+    protected override float GetAttackMultiplier(bool isAttacking) => 1f;
 }

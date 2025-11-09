@@ -24,6 +24,7 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] private float _arrowSpawnOffset = 1f;
     [SerializeField] private float _minImpulseForce = 30f;
     [SerializeField] private float _maxImpulseForce = 100f;
+    [SerializeField] private float _impulseDuration = 0.2f;
 
     public bool IsNormalAiming { get; private set; }
     public bool IsAbilityAiming { get; private set; }
@@ -149,7 +150,7 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         float recoilStrength = Mathf.Lerp(_minImpulseForce, _maxImpulseForce, charge / maxCharge);
 
-        _impulseController.InitiateSquadImpulse(recoilStrength, transform.position, -rb.transform.up);
+        _impulseController.InitiateSquadImpulse(recoilStrength, _impulseDuration, transform.position, -rb.transform.up);
     }
 
     void CancelShot()

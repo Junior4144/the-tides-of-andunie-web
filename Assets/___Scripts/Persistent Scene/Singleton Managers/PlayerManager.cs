@@ -6,7 +6,8 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
 
     private PlayerHealthController _healthController;
-    //private PlayerHeroMovement _playerMovement;
+    private PlayerController _playerMovement;
+    private PlayerAttackController _attackController;
     private PlayerSquadImpulseController _playerSquadImpulseController;
 
     public bool AllowForceChange = false;
@@ -22,8 +23,9 @@ public class PlayerManager : MonoBehaviour
 
         Instance = this;
         _healthController = GetComponentInChildren<PlayerHealthController>();
-        //_playerMovement = GetComponent<PlayerHeroMovement>();
+        _playerMovement = GetComponent<PlayerController>();
         _playerSquadImpulseController = GetComponentInChildren<PlayerSquadImpulseController>();
+        _attackController = GetComponentInChildren<PlayerAttackController>();
     }
 
     private void OnEnable() =>
@@ -40,13 +42,13 @@ public class PlayerManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Gameplay:
-                //if (!_playerMovement) return;
-                //_playerMovement.enabled = true;
+                if (!_playerMovement) return;
+                _playerMovement.enabled = true;
                 break;
             case GameState.Menu:
             case GameState.Paused:
             case GameState.Cutscene:
-                //_playerMovement.enabled = false;
+                _playerMovement.enabled = false;
                 break;
             default:
                 break;
@@ -64,6 +66,9 @@ public class PlayerManager : MonoBehaviour
     //------TRANSFORM------//
     public Transform GetPlayerTransform() => gameObject.transform;
     public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
+
+    //------TRANSFORM------//
+    public bool IsAttacking() => _attackController.IsAttacking;
 
 
     //------MOVEMENT------//
