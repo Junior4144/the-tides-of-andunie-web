@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1798436426584630464}
+  - component: {fileID: 5492775434814029235}
   m_Layer: 7
   m_Name: AxeWeaponController
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 36867604486992053}
   m_Father: {fileID: 972147263853389966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5492775434814029235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595365521511545490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb002930dec90c4897776dad8a9676f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponController
+  myType: 1
+  weapon: {fileID: 8228389641742845611}
 --- !u!1 &1217068269362161433
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9181715490754357812
 Transform:
   m_ObjectHideFlags: 0
@@ -684,14 +699,11 @@ MonoBehaviour:
   playerRoot: {fileID: 972147263853389966}
   animator: {fileID: 3536749357788324775}
   attackSound: {fileID: 0}
-  bowPowerSlider: {fileID: 3076617166225070622}
   arrowPrefab: {fileID: 2366741659865636554, guid: 5678b6d0a7760c44885b83c475476a35, type: 3}
   arrowSprites:
   - {fileID: 7799925268823888500}
   - {fileID: 1217068269362161433}
   - {fileID: 1915967654001077082}
-  ChargeSliderUI: {fileID: 2835749119694170363}
-  crossHair: {fileID: 0}
   _arrowSpeedMultiplier: 25
   _minArrowSpeed: 25
   maxCharge: 3
@@ -702,6 +714,7 @@ MonoBehaviour:
   _minImpulseForce: 30
   _maxImpulseForce: 100
   _impulseDuration: 0.2
+  abilityCooldownDuration: 5
   charge: 0
 --- !u!58 &6243997940038889242
 CircleCollider2D:
@@ -869,6 +882,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9050104815904751117}
+  - component: {fileID: 804742418044638124}
   m_Layer: 7
   m_Name: BowWeaponController
   m_TagString: Untagged
@@ -892,6 +906,20 @@ Transform:
   - {fileID: 9181715490754357812}
   m_Father: {fileID: 972147263853389966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &804742418044638124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4235481614745161230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb002930dec90c4897776dad8a9676f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponController
+  myType: 2
+  weapon: {fileID: 2468015526623088518}
 --- !u!1 &4533156573625248925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,7 +1323,7 @@ RectTransform:
   m_Father: {fileID: 2802875150013718732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -1522,9 +1550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c668b63cc4680e94cb44d3585c2c9827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponSwitcher
-  weapons:
-  - {fileID: 8228389641742845611}
-  - {fileID: 2468015526623088518}
 --- !u!114 &5365342492064239941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6942,7 +6967,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30b5af9925016de4fbaed6e2dff4a170, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7118,6 +7143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 810271255456438910, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2387069811219418395, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_Radius
       value: 0.6049841
@@ -7152,7 +7181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _impulseStrength
-      value: 50
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _attackArcDegrees
