@@ -18,7 +18,7 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] float _attackDuration = 0.5f;
     [SerializeField] float _damageDelay = 0f;
     [SerializeField] private float _impulseStrength;
-    [SerializeField] private float cooldown = 0.2f; // seconds
+    [SerializeField] private float shakeCooldown = 0.2f; // seconds
 
     [Header("Attack Arc")]
     [SerializeField] float _attackArcDegrees = 120f;
@@ -30,12 +30,20 @@ public class PlayerAttackController : MonoBehaviour
     private CinemachineImpulseSource camraImpulseSource;
     private readonly HashSet<Collider2D> _hitEnemies = new();
     bool _isAttacking;
-    
+
+
 
     public bool IsAttacking => _isAttacking;
     public float AttackDuration => _attackDuration;
     public float force;
     private bool isShaking;
+
+    [Header("HitStop Settings")]
+    public float hitStopCooldown;
+    private bool isInHitStop;
+    public float hitStopDuration;
+
+
     void Awake()
     {
         _audioSrc = GetComponent<AudioSource>();
@@ -85,7 +93,7 @@ public class PlayerAttackController : MonoBehaviour
             _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
-            HitStopManager.Instance.Stop(0.05f);
+            HandleHitStop();
 
             Shake();
         } 
@@ -147,8 +155,23 @@ public class PlayerAttackController : MonoBehaviour
     {
         isShaking = true;
         camraImpulseSource.GenerateImpulseWithForce(force);
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(shakeCooldown);
         isShaking = false;
     }
 
+    public void HandleHitStop()
+    {
+        if (isInHitStop)
+            return;
+
+        StartCoroutine(DoHitStop());
+    }
+
+    private IEnumerator DoHitStop()
+    {
+        isInHitStop = true;
+        HitStopManager.Instance.Stop(hitStopDuration);
+        yield return new WaitForSeconds(hitStopCooldown);
+        isInHitStop = false;
+    }
 }
