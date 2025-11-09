@@ -53,7 +53,13 @@ public class DynamicCrosshair : MonoBehaviour
 
     void UpdateSpread()
     {
-        currentSpread = Mathf.Lerp(currentSpread, GetTargetSpread(), Time.deltaTime * moveSpeed);
+        float targetSpread = GetTargetSpread();
+
+        // If you're not aiming or charging, instantly reset
+        if (!WeaponManager.Instance.IsNormalAiming && !WeaponManager.Instance.IsAbilityAiming)
+            currentSpread = targetSpread;
+        else
+            currentSpread = Mathf.Lerp(currentSpread, targetSpread, Time.deltaTime * moveSpeed);
     }
 
     float GetTargetSpread()

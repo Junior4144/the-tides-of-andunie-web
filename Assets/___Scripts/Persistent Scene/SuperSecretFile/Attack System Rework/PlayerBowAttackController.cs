@@ -8,10 +8,8 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] Transform playerRoot;
     [SerializeField] PlayerAnimator animator;
     [SerializeField] AudioClip attackSound;
-    [SerializeField] Slider bowPowerSlider;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject[] arrowSprites;
-    [SerializeField] GameObject ChargeSliderUI;
 
     [Header("Settings")]
     [SerializeField] private float _arrowSpeedMultiplier = 25f;
@@ -91,7 +89,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
         ToggleArrowSprites(normal ? 1 : 3, true);
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
-        bowPowerSlider.value = charge;
+        BowPowerUIManager.instance.slider.value = charge;
         WeaponManager.Instance.CurrentBowCharge = charge;
     }
 
@@ -163,7 +161,7 @@ public class PlayerBowAttackController : MonoBehaviour
     void HandleCooldown()
     {
         charge = Mathf.Max(0f, charge - _chargeDecreaseRate * Time.deltaTime);
-        bowPowerSlider.value = charge;
+        BowPowerUIManager.instance.slider.value = charge;
         WeaponManager.Instance.CurrentBowCharge = charge;
 
         if (charge == 0f) canFire = true;
@@ -220,14 +218,15 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         charge = 0f;
         WeaponManager.Instance.CurrentBowCharge = charge;
-        bowPowerSlider.value = 0f;
+        BowPowerUIManager.instance.slider.value = 0f;
     }
+
 
     // ---------------- UI ----------------
     void InitUI()
     {
-        bowPowerSlider.value = 0f;
-        bowPowerSlider.maxValue = maxCharge;
+        BowPowerUIManager.instance.slider.value = 0f;
+        BowPowerUIManager.instance.slider.maxValue = maxCharge;
         WeaponManager.Instance.BowMaxCharge = maxCharge;
     }
 

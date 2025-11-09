@@ -3,14 +3,15 @@ using UnityEngine;
 public class CrosshairUIController : MonoBehaviour
 {
     [SerializeField] GameObject crosshairUI;
+    [SerializeField] GameObject BowPowerUI;
 
     private void OnEnable()
     {
-        WeaponEvents.OnEquipWeaponRequest += HandleCrossHairUiActivation;
+        WeaponEvents.OnNewWeaponEquipped += HandleCrossHairUiActivation;
     }
     private void OnDisable()
     {
-        WeaponEvents.OnEquipWeaponRequest += HandleCrossHairUiActivation;
+        WeaponEvents.OnNewWeaponEquipped += HandleCrossHairUiActivation;
     }
 
     private void HandleCrossHairUiActivation(WeaponType weaponType)
@@ -18,10 +19,12 @@ public class CrosshairUIController : MonoBehaviour
         if(weaponType == WeaponType.Bow)
         {
             crosshairUI.SetActive(true);
+            BowPowerUI.SetActive(true);
         }
         else
         {
             crosshairUI.SetActive(false);
+            BowPowerUI.SetActive(false);
         }
     }
 }
