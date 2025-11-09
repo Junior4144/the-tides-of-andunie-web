@@ -25,6 +25,7 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] private float _minImpulseForce = 30f;
     [SerializeField] private float _maxImpulseForce = 100f;
     [SerializeField] private float _impulseDuration = 0.2f;
+    [SerializeField] private float abilityCooldownDuration = 5f;
 
     public bool IsNormalAiming { get; private set; }
     public bool IsAbilityAiming { get; private set; }
@@ -34,6 +35,9 @@ public class PlayerBowAttackController : MonoBehaviour
     bool canFire = true;
     [HideInInspector] public float charge;
     private PlayerSquadImpulseController _impulseController;
+
+    private bool isAbilityOnCooldown = false;
+    private float abilityCooldownTimer = 0f;
 
     void Awake()
     {
@@ -58,13 +62,27 @@ public class PlayerBowAttackController : MonoBehaviour
     // ---------------- UPDATE ----------------
     void Update()
     {
+        // Left-Click Attack
         if (!canFire) { HandleCooldown(); return; }
 
         if (Input.GetMouseButton(0)) HandleAiming(normal: true);
         else if (Input.GetMouseButtonUp(0)) Fire(isAbility: false);
 
-        if (Input.GetMouseButton(1)) HandleAiming(normal: false);
+
+        //Right-Click Attack
+        if (isAbilityOnCooldown)
+        {
+            HandleAbilityCooldown();
+        }
+
+        if (isAbilityOnCooldown) return;
+
+        if (Input.GetMouseButton(1))
+        {
+            HandleAiming(normal: false);
+        }
         else if (Input.GetMouseButtonUp(1)) Fire(isAbility: true);
+
     }
 
     // ---------------- CHARGING ----------------
@@ -101,7 +119,12 @@ public class PlayerBowAttackController : MonoBehaviour
         canFire = false;
         charge = Mathf.Min(charge, maxCharge);
 
-        if (isAbility) FireSpreadShot();
+        if (isAbility)
+        {
+            WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
+            StartAbilityCooldown();
+            FireSpreadShot();
+        }
         else FireSingleShot();
 
         ResetAfterFire();
@@ -145,6 +168,22 @@ public class PlayerBowAttackController : MonoBehaviour
         charge = Mathf.Max(0f, charge - _chargeDecreaseRate * Time.deltaTime);
         bowPowerSlider.value = charge;
         if (charge == 0f) canFire = true;
+    }
+    private void StartAbilityCooldown()
+    {
+        isAbilityOnCooldown = true;
+        abilityCooldownTimer = abilityCooldownDuration;
+    }
+    private void HandleAbilityCooldown()
+    {
+        abilityCooldownTimer -= Time.deltaTime;
+
+        if (abilityCooldownTimer <= 0f)
+        {
+            isAbilityOnCooldown = false;
+            abilityCooldownTimer = 0f;
+            Debug.Log("Ability ready again!");
+        }
     }
 
     void ApplyImpulse()

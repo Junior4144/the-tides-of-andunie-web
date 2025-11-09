@@ -12,6 +12,7 @@ public static class WeaponEvents
 {
     public static Action<WeaponType> OnEquipWeaponRequest; // Input asks for this
     public static Action<WeaponType> OnNewWeaponEquipped;     // Broadcasted once equipped
+    public static Action<WeaponType> OnWeaponAbilityActivation;
 }
 
 public class WeaponManager : MonoBehaviour
@@ -22,6 +23,7 @@ public class WeaponManager : MonoBehaviour
 
     private bool isBusy = false;
     public bool IsBusy => isBusy;
+
 
     private void Awake()
     {

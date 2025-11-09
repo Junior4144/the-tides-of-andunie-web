@@ -5259,9 +5259,9 @@ GameObject:
   - component: {fileID: 1635235365}
   - component: {fileID: 1635235368}
   - component: {fileID: 1635235367}
-  - component: {fileID: 1635235366}
+  - component: {fileID: 1635235369}
   m_Layer: 0
-  m_Name: Cooldown
+  m_Name: BowCooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5286,20 +5286,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.5, y: 0}
   m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1635235366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635235364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a24e2aaba9d2f4799865b0d645d923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityCooldown
-  cooldownImage: {fileID: 1635235367}
-  cooldownTime: 5
 --- !u!114 &1635235367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5338,6 +5324,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635235364}
   m_CullTransparentMesh: 1
+--- !u!114 &1635235369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635235364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a24e2aaba9d2f4799865b0d645d923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityCooldownController
+  cooldownImage: {fileID: 1635235367}
+  cooldownTime: 5
 --- !u!1 &1670557935
 GameObject:
   m_ObjectHideFlags: 0
@@ -5439,8 +5439,9 @@ GameObject:
   - component: {fileID: 1744284935}
   - component: {fileID: 1744284937}
   - component: {fileID: 1744284936}
+  - component: {fileID: 1744284938}
   m_Layer: 0
-  m_Name: Cooldown
+  m_Name: AxeCooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5503,6 +5504,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744284934}
   m_CullTransparentMesh: 1
+--- !u!114 &1744284938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744284934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a24e2aaba9d2f4799865b0d645d923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityCooldownController
+  cooldownImage: {fileID: 1744284936}
+  cooldownTime: 5
 --- !u!1 &1751460570
 GameObject:
   m_ObjectHideFlags: 0
@@ -5859,7 +5874,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2027680474}
   - component: {fileID: 2027680475}
-  - component: {fileID: 2027680476}
   m_Layer: 0
   m_Name: WeaponHUD
   m_TagString: Untagged
@@ -5895,20 +5909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de925e92a05c4854ea869ef4aa75f43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponHUDController
---- !u!114 &2027680476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2027680473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a24e2aaba9d2f4799865b0d645d923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityCooldown
-  cooldownImage: {fileID: 0}
-  cooldownTime: 5
+  AxeCoolDown: {fileID: 1744284934}
+  BowCoolDown: {fileID: 1635235364}
 --- !u!1 &2058056206
 GameObject:
   m_ObjectHideFlags: 0
