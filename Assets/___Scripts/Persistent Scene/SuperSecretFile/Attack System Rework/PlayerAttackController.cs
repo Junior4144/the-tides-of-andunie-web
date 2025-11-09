@@ -65,6 +65,7 @@ public class PlayerAttackController : MonoBehaviour
     void StartAttack()
     {
         _isAttacking = true;
+        WeaponManager.Instance.SetBusy(true);
         PlayAttackAnimation();
     }
 
@@ -80,6 +81,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         yield return new WaitForSeconds(_attackDuration);
         _isAttacking = false;
+        WeaponManager.Instance.SetBusy(false);
         _hitEnemies.Clear();
     }
 

@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &595365521511545490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1798436426584630464}
+  m_Layer: 7
+  m_Name: AxeWeaponController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1798436426584630464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595365521511545490}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 36867604486992053}
+  m_Father: {fileID: 972147263853389966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217068269362161433
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,15 +562,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2468015526623088518}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07, y: 1.31, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.06999993, y: 1.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3365316316351263282}
   - {fileID: 7632461992972775590}
   - {fileID: 4429260270311538050}
-  m_Father: {fileID: 972147263853389966}
+  m_Father: {fileID: 9050104815904751117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &3226403225070878210
 AudioSource:
@@ -826,6 +858,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4199917997071080750}
+  m_Father: {fileID: 972147263853389966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4235481614745161230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9050104815904751117}
+  m_Layer: 7
+  m_Name: BowWeaponController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9050104815904751117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4235481614745161230}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9181715490754357812}
   m_Father: {fileID: 972147263853389966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4533156573625248925
@@ -1392,8 +1456,8 @@ Transform:
   m_Children:
   - {fileID: 5832726163560954680}
   - {fileID: 6859442169218782303}
-  - {fileID: 36867604486992053}
-  - {fileID: 9181715490754357812}
+  - {fileID: 1798436426584630464}
+  - {fileID: 9050104815904751117}
   - {fileID: 8353749739833740229}
   - {fileID: 2653729124395941360}
   - {fileID: 6633546317897590661}
@@ -7048,7 +7112,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 972147263853389966}
+    m_TransformParent: {fileID: 1798436426584630464}
     m_Modifications:
     - target: {fileID: 810271255456438910, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_Name
@@ -7112,15 +7176,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758744009713413216, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8758744009713413216, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8758744009713413216, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8758744009713413216, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

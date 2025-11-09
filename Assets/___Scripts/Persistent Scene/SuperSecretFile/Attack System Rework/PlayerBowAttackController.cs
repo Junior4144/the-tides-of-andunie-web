@@ -73,6 +73,7 @@ public class PlayerBowAttackController : MonoBehaviour
         IsNormalAiming = normal;
         IsAbilityAiming = !normal;
         IsAttacking = true;
+        WeaponManager.Instance.SetBusy(true);
 
         ToggleArrowSprites(normal ? 1 : 3, true);
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
@@ -169,6 +170,7 @@ public class PlayerBowAttackController : MonoBehaviour
     void ResetState()
     {
         IsAttacking = false;
+        WeaponManager.Instance.SetBusy(false);
         IsNormalAiming = false;
         IsAbilityAiming = false;
         canFire = true;
