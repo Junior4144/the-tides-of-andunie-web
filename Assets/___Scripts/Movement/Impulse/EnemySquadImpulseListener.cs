@@ -5,7 +5,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
     [SerializeField] private string _layerName = "Friendly";
     [SerializeField] private float _impulseForce = 16f;
 
-    private EnemySquadImpulseController _controller;
+    private BaseSquadImpulseController _controller;
     private Rigidbody2D _rb;
 
 
@@ -17,7 +17,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
         else
             Debug.LogWarning($"[EnemySquadImpulseListener] Parent hierarchy incomplete! parent={transform.parent?.name}");
 
-        _controller = GetComponentInParent<EnemySquadImpulseController>();
+        _controller = GetComponentInParent<BaseSquadImpulseController>();
 
         if (_controller != null && _rb != null)
             _controller.RegisterMember(_rb);
@@ -37,39 +37,9 @@ public class EnemySquadImpulseListener : MonoBehaviour
     }
     private void Update()
     {
-        if (_controller.IsInImpulse())
-        {
-            ToggleEnemyIgnore(true);
-            //_agent.enabled = false;
-        }
-        else
-            ToggleEnemyIgnore(false);
+
     }
 
-    void IgnoreEnemies(bool ignore)
-    {
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
-
-        // Ignore collisions between all enemies globally (by layer)
-        Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, ignore);
-
-        // Also ignore collisions with any tagged "Enemy" (in case they�re on other layers)
-        Collider2D myCol = GetComponent<Collider2D>();
-        if (!myCol) return;
-
-        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            if (enemy == gameObject) continue;
-            var otherCol = enemy.GetComponent<Collider2D>();
-            if (otherCol)
-                Physics2D.IgnoreCollision(myCol, otherCol, ignore);
-        }
-    }
-
-    void ToggleEnemyIgnore(bool shouldIgnore)
-    {
-        IgnoreEnemies(shouldIgnore);
-    }
 
 
 
