@@ -18,6 +18,7 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] float _attackDuration = 0.5f;
     [SerializeField] float _damageDelay = 0f;
     [SerializeField] private float _impulseStrength;
+    [SerializeField] private float shakeCooldown = 0.2f; // seconds
 
     [Header("Attack Arc")]
     [SerializeField] float _attackArcDegrees = 120f;
@@ -29,10 +30,19 @@ public class PlayerAttackController : MonoBehaviour
     private CinemachineImpulseSource camraImpulseSource;
     private readonly HashSet<Collider2D> _hitEnemies = new();
     bool _isAttacking;
-    
+
+
 
     public bool IsAttacking => _isAttacking;
     public float AttackDuration => _attackDuration;
+    public float force;
+    private bool isShaking;
+
+    [Header("HitStop Settings")]
+    public float hitStopCooldown;
+    private bool isInHitStop;
+    public float hitStopDuration;
+
 
     void Awake()
     {
@@ -83,8 +93,9 @@ public class PlayerAttackController : MonoBehaviour
             _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
-            HitStop.Instance.Stop(0.05f);
-            camraImpulseSource.GenerateImpulseWithForce(1f);
+            HandleHitStop();
+
+            Shake();
         } 
     }
 
@@ -127,8 +138,40 @@ public class PlayerAttackController : MonoBehaviour
         _impulseController.InitiateSquadImpulse(
             _impulseStrength,
             contactPoint: otherCollider.ClosestPoint(transform.position),
-            impulseDirection: -_rb.transform.up,
+            impulseDirection: _rb.transform.up,
             isDashing: false
         );
+    }
+
+    public void Shake()
+    {
+        if (isShaking)
+            return;
+
+        StartCoroutine(DoShake(force));
+    }
+
+    private IEnumerator DoShake(float force)
+    {
+        isShaking = true;
+        camraImpulseSource.GenerateImpulseWithForce(force);
+        yield return new WaitForSeconds(shakeCooldown);
+        isShaking = false;
+    }
+
+    public void HandleHitStop()
+    {
+        if (isInHitStop)
+            return;
+
+        StartCoroutine(DoHitStop());
+    }
+
+    private IEnumerator DoHitStop()
+    {
+        isInHitStop = true;
+        HitStopManager.Instance.Stop(hitStopDuration);
+        yield return new WaitForSeconds(hitStopCooldown);
+        isInHitStop = false;
     }
 }

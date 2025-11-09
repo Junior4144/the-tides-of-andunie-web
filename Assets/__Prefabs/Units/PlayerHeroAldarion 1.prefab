@@ -1020,18 +1020,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundSpawnShuffler, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7183620151734203414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db5eac837b3ca843ba93240f179d71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDamageFlash
-  _flashDuration: 0.2
+  _flashDuration: 0.1
   _flashColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &4294235500975626157
 MonoBehaviour:
@@ -6727,7 +6715,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 30b5af9925016de4fbaed6e2dff4a170, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6903,13 +6891,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 2387069811219418395, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: m_Radius
+      value: 0.6049841
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387069811219418395, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: m_Offset.x
+      value: 1.4174793
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387069811219418395, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: force
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: cooldown
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _animator
       value: 
       objectReference: {fileID: 3536749357788324775}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: hitStopCooldown
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: hitStopDuration
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _impulseStrength
-      value: 90
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7489516100163367406, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: _attackArcDegrees
@@ -6953,6 +6969,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758744009713413216, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997724075981993489, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997724075981993489, guid: f3646538e8fbfd54bbc97c19ac6c1091, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -7022,8 +7046,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.9070296, y: 0.6004601}
-  m_Radius: 0.3761189
+  m_Offset: {x: 1.2522323, y: 0.6004601}
+  m_Radius: 0.6318246
 --- !u!114 &6373793774044761754
 MonoBehaviour:
   m_ObjectHideFlags: 0

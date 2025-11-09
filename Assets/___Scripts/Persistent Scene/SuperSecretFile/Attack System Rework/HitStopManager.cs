@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class HitStop : MonoBehaviour
+public class HitStopManager : MonoBehaviour
 {
-    public static HitStop Instance;
+    public static HitStopManager Instance;
     private bool waiting;
 
     private void Awake()
