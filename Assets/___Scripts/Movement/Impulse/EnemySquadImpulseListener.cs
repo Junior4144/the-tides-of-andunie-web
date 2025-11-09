@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySquadImpulseListener : MonoBehaviour
@@ -49,12 +50,12 @@ public class EnemySquadImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
+        Debug.Log($"_controller = {_controller}");
         _controller.InitiateSquadImpulse(
             _impulseForce,
             _impulseDuration,
             closestPoint,
-            impulseDirection,
-            PlayerManager.Instance.IsAttacking()
+            impulseDirection
         );
     }
 }
