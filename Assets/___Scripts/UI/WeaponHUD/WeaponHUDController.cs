@@ -14,12 +14,19 @@ public class WeaponHUDController : MonoBehaviour
     {
         WeaponEvents.OnWeaponAbilityActivation -= HandleAbilityRequest;
     }
+    private void Start()
+    {
+        AxeCoolDown.SetActive(false);
+        BowCoolDown.SetActive(false);
+    }
 
     private void HandleAbilityRequest(WeaponType weaponType)
     {
         if (weaponType == WeaponType.Axe){
+            AxeCoolDown.SetActive(true);
             AxeCoolDown.GetComponent<AbilityCooldownController>().ActivateAbility();}
         else if (weaponType == WeaponType.Bow){
+            BowCoolDown.SetActive(true);
             BowCoolDown.GetComponent<AbilityCooldownController>().ActivateAbility();}
     }
 }

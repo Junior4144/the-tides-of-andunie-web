@@ -19,7 +19,8 @@ public class AbilityCooldownController : MonoBehaviour
             if (timer <= 0f)
             {
                 isCoolingDown = false;
-                cooldownImage.fillAmount = 0f; // reset or hide
+                cooldownImage.fillAmount = 0f;
+                gameObject.SetActive(true);
             }
         }
     }
