@@ -30,6 +30,8 @@ public class InventoryDebugger : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
             AddCoins();
+        //if (Input.GetKeyDown(KeyCode.Q))
+            //AbilityCooldownMan.instance.ActivateAbility();
     }
 
     private void DebugAddItem()
