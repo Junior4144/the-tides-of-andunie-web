@@ -24,6 +24,10 @@ public class WeaponManager : MonoBehaviour
     private bool isBusy = false;
     public bool IsBusy => isBusy;
 
+    public float CurrentBowCharge;
+    public float BowMaxCharge;
+    public bool IsNormalAiming;
+    public bool IsAbilityAiming;
 
     private void Awake()
     {
@@ -70,7 +74,6 @@ public class WeaponManager : MonoBehaviour
     {
         currentWeapon = newWeapon;
         Debug.Log($"Equipped weapon: {newWeapon}");
-
         WeaponEvents.OnNewWeaponEquipped?.Invoke(newWeapon);
     }
 

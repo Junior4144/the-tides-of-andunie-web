@@ -6,7 +6,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
     [SerializeField] private float _impulseForce = 16f;
     [SerializeField] private float _impulseDuration = 0.6f;
 
-    private BaseSquadImpulseController _controller;
+    private EnemySquadImpulseController _controller;
     private Rigidbody2D _rb;
 
 
@@ -18,7 +18,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
         else
             Debug.LogWarning($"[EnemySquadImpulseListener] Parent hierarchy incomplete! parent={transform.parent?.name}");
 
-        _controller = GetComponentInParent<BaseSquadImpulseController>();
+        _controller = GetComponentInParent<EnemySquadImpulseController>();
 
         if (_controller != null && _rb != null)
             _controller.RegisterMember(_rb);

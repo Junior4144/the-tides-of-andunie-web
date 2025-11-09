@@ -12,7 +12,6 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject[] arrowSprites;
     [SerializeField] GameObject ChargeSliderUI;
-    [SerializeField] GameObject crossHair;
 
     [Header("Settings")]
     [SerializeField] private float _arrowSpeedMultiplier = 25f;
@@ -47,16 +46,10 @@ public class PlayerBowAttackController : MonoBehaviour
         InitUI();
     }
 
-    private void OnEnable()
-    {
-        SetUIActive(true);
-    }
-
     private void OnDisable()
     {
         ResetCharge();
         CancelShot();
-        SetUIActive(false);
     }
 
     // ---------------- UPDATE ----------------
@@ -89,13 +82,17 @@ public class PlayerBowAttackController : MonoBehaviour
     void HandleAiming(bool normal)
     {
         IsNormalAiming = normal;
+        WeaponManager.Instance.IsNormalAiming = normal;
+
         IsAbilityAiming = !normal;
+        WeaponManager.Instance.IsAbilityAiming = !normal;
         IsAttacking = true;
         WeaponManager.Instance.SetBusy(true);
 
         ToggleArrowSprites(normal ? 1 : 3, true);
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
         bowPowerSlider.value = charge;
+        WeaponManager.Instance.CurrentBowCharge = charge;
     }
 
     // ---------------- FIRING ----------------
@@ -118,7 +115,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
         canFire = false;
         charge = Mathf.Min(charge, maxCharge);
-
+        WeaponManager.Instance.CurrentBowCharge = charge;
         if (isAbility)
         {
             WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
@@ -167,6 +164,8 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         charge = Mathf.Max(0f, charge - _chargeDecreaseRate * Time.deltaTime);
         bowPowerSlider.value = charge;
+        WeaponManager.Instance.CurrentBowCharge = charge;
+
         if (charge == 0f) canFire = true;
     }
     private void StartAbilityCooldown()
@@ -211,13 +210,16 @@ public class PlayerBowAttackController : MonoBehaviour
         IsAttacking = false;
         WeaponManager.Instance.SetBusy(false);
         IsNormalAiming = false;
+        WeaponManager.Instance.IsNormalAiming = false;
         IsAbilityAiming = false;
+        WeaponManager.Instance.IsAbilityAiming = false;
         canFire = true;
     }
 
     void ResetCharge()
     {
         charge = 0f;
+        WeaponManager.Instance.CurrentBowCharge = charge;
         bowPowerSlider.value = 0f;
     }
 
@@ -226,13 +228,7 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         bowPowerSlider.value = 0f;
         bowPowerSlider.maxValue = maxCharge;
-        crossHair.SetActive(false);
-    }
-
-    void SetUIActive(bool active)
-    {
-        ChargeSliderUI.SetActive(active);
-        if (crossHair) crossHair.SetActive(active);
+        WeaponManager.Instance.BowMaxCharge = maxCharge;
     }
 
     void ToggleArrowSprites(int count, bool active)
