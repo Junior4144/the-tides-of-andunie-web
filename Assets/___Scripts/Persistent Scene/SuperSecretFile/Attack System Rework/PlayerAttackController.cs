@@ -19,11 +19,15 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] float _damageDelay = 0f;
     [SerializeField] private float _impulseStrength = 50;
     [SerializeField] private float _impulseDuration = 0.1f;
-    [SerializeField] private float shakeCooldown = 0.2f; // seconds
+    [SerializeField] private float shakeCooldown = 0.2f;
 
     [Header("Attack Arc Settings")]
     [SerializeField] float _attackArcDegrees = 120f;
     [SerializeField] float _attackStartAngle = -60f;
+
+    [Header("Sweep Attack Settings")]
+    [SerializeField] float _sweepRotations = 3f;
+    [SerializeField] float _sweepDuration = 0.3f;
 
     private AudioSource _audioSrc;
     private Rigidbody2D _rb;
@@ -31,6 +35,7 @@ public class PlayerAttackController : MonoBehaviour
     private CinemachineImpulseSource camraImpulseSource;
     private readonly HashSet<Collider2D> _hitEnemies = new();
     bool _isAttacking;
+    bool _isSweepAttacking;
 
     [Header("Screen Shake Settings")]
     public float force;
@@ -58,6 +63,9 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !_isAttacking)
             StartAttack();
+
+        if (Input.GetMouseButtonDown(1) && !_isAttacking)
+            StartSweepAttack();
 
         _impulseCollider.SetActive(_isAttacking);
     }
@@ -87,17 +95,19 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (!_isAttacking) return;
         if (_hitEnemies.Contains(col)) return;
-        
+
         if (col.TryGetComponent(out IHealthController health))
         {
-            ApplyImpulse(col);
+            if (!_isSweepAttacking)
+                ApplyImpulse(col);
+
             _hitEnemies.Add(col);
             StartCoroutine(DealDamage(health));
             SpawnHitEffect(col.transform.position);
             HandleHitStop();
 
             Shake();
-        } 
+        }
     }
 
     IEnumerator DealDamage(IHealthController health)
@@ -126,6 +136,47 @@ public class PlayerAttackController : MonoBehaviour
         {
             float progress = elapsed / _attackDuration;
             float angle = _attackStartAngle + (_attackArcDegrees * progress);
+
+            transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    void StartSweepAttack()
+    {
+        _isAttacking = true;
+        _isSweepAttacking = true;
+        PlaySweepAttackAnimation();
+    }
+
+    void PlaySweepAttackAnimation()
+    {
+        _animator?.TriggerAttack();
+        if (_attackSound) _audioSrc.PlayOneShot(_attackSound, 0.4f);
+        StartCoroutine(SweepAttackRoutine());
+        StartCoroutine(Sweep360Collider());
+    }
+
+    IEnumerator SweepAttackRoutine()
+    {
+        yield return new WaitForSeconds(_sweepDuration);
+        _isAttacking = false;
+        _isSweepAttacking = false;
+        _hitEnemies.Clear();
+    }
+
+    IEnumerator Sweep360Collider()
+    {
+        float elapsed = 0f;
+        float startAngle = transform.localRotation.eulerAngles.z;
+        float totalAngle = _sweepRotations * 360f;
+
+        while (elapsed < _sweepDuration)
+        {
+            float progress = elapsed / _sweepDuration;
+            float angle = startAngle + (totalAngle * progress);
 
             transform.localRotation = Quaternion.Euler(0, 0, angle);
 
