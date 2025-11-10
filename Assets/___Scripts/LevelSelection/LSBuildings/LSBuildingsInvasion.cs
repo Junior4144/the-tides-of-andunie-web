@@ -17,6 +17,7 @@ public class LSBuildingsInvasion : MonoBehaviour
 
     [Header("Village Settings")]
     [SerializeField] private string villageId;
+    public string VillageId => villageId;
 
     private SpriteRenderer spriteRenderer;
 
@@ -29,7 +30,7 @@ public class LSBuildingsInvasion : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i).gameObject;
-            if (child.name == "VillagerSpawner")
+            if (child.name == "VillagerSpawner" || child.name == "Particle")
                 continue;
 
             list.Add(child);
