@@ -33,6 +33,7 @@ public class WeaponManager : MonoBehaviour
     private WeaponType? pendingWeaponRequest = null;
     private string currentSceneName;
 
+
     private void Awake()
     {
         if (Instance != null)
