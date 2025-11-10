@@ -8,6 +8,7 @@ public class PirateMeleeController : MonoBehaviour
 
     [SerializeField] private float _damageDelay = 0;
     [SerializeField] private float _animDuration;
+    [SerializeField] private float _damageRange = 2f;
 
     private bool _isAttacking = false;
 
@@ -34,7 +35,12 @@ public class PirateMeleeController : MonoBehaviour
         yield return new WaitForSeconds(_damageDelay);
 
         if (enemyObject)
-            enemyObject.GetComponent<IHealthController>().TakeDamage(_pirateAttributes.DamageAmount);
+        {
+            float distance = Vector2.Distance(transform.position, enemyObject.transform.position);
+            
+            if (distance <= _damageRange)
+                enemyObject.GetComponent<IHealthController>().TakeDamage(_pirateAttributes.DamageAmount);
+        }
     }
 
     private void PlayAttackAnimation()

@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -13,9 +14,10 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private float _idleWindDuration = 1f;
 
     private Animator _anim;
-    private PlayerHeroMovement _playerMovement;
+    private PlayerController _playerMovement;
     private float _lockedTill;
     private bool _attacked;
+    private bool _bowAttack;
     private float _nextIdleCheckTime;
     private bool _playingSpecialIdle;
     private float _specialIdleEndTime;
@@ -24,13 +26,14 @@ public class PlayerAnimator : MonoBehaviour
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-        _playerMovement = GetComponentInParent<PlayerHeroMovement>();
+        _playerMovement = GetComponentInParent<PlayerController>();
         _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
     }
     
     public void TriggerAttack()
     {
         _attacked = true;
+        _bowAttack = false;
     }
 
     private void Update()
@@ -48,23 +51,26 @@ public class PlayerAnimator : MonoBehaviour
     
     private void HandleSpecialIdle()
     {
+        if (_bowAttack) return;
+
         if (_playingSpecialIdle && Time.time >= _specialIdleEndTime)
             _playingSpecialIdle = false;
 
-        if (
-            Time.time >= _nextIdleCheckTime &&
-            Time.time >= _lockedTill &&
-            !_playingSpecialIdle &&
-            (_playerMovement == null || !_playerMovement.IsWalking)
-        )
-        {
-            if (UnityEngine.Random.value <= _specialIdleChance)
-            {
-                _playingSpecialIdle = true;
-                _currentSpecialIdleState = PickRandomSpecialIdle();
-            }
-            _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
-        }
+        // TODO add IsWalking to new PlayerController
+        // if (
+        //     Time.time >= _nextIdleCheckTime &&
+        //     Time.time >= _lockedTill &&
+        //     !_playingSpecialIdle &&
+        //     (_playerMovement == null || !_playerMovement.IsWalking)
+        // )
+        // {
+        //     if (UnityEngine.Random.value <= _specialIdleChance)
+        //     {
+        //         _playingSpecialIdle = true;
+        //         _currentSpecialIdleState = PickRandomSpecialIdle();
+        //     }
+        //     _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
+        // }
     }
     
     private int GetState()
@@ -119,5 +125,28 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
     private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
     private static readonly int Attack = Animator.StringToHash("AldarionSlash");
+    private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
+    private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
+    private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");
     #endregion
+
+    public void PlayBowHandleIdle()
+    {
+        _bowAttack = true;
+        _anim.CrossFade(BowHandleIdle, 0f);
+    }
+
+    public void PlayBowCharge()
+    {
+        _bowAttack = true;
+        _anim.CrossFade(BowCharge, 0f);
+    }
+        
+    public void PlayBowChargeIdle() => _anim.CrossFade(BowChargeIdle, 0f);
+
+    public void ReturnToDefaultIdle()
+    {
+        _bowAttack = false;              // allow special idles again
+        _anim.CrossFade(IdleDefault, 0f); // play the normal idle animation
+    }
 }

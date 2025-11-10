@@ -8,12 +8,15 @@ public class PlayerStatsManager : MonoBehaviour
 
     public float MaxHealth { get; private set; }
     public float MeleeDamage { get; private set; }
+    public float ExplosionDamage { get; private set; }
 
     [SerializeField] private float _defaultMaxHealth;
     [SerializeField] private float _defaultMeleeDamage;
+    [SerializeField] private float _defaultExplosionDamage;
 
     public float DefaultMaxHealth => _defaultMaxHealth;
     public float DefaultMeleeDamage => _defaultMeleeDamage;
+    public float DefaultExplosionDamage => _defaultExplosionDamage;
 
     public static event Action<float, float> OnDamageChanged;
     public static event Action<float, float> OnMaxHealthChanged;

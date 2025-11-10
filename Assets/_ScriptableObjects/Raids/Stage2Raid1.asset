@@ -14,28 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaidConfig
   Waves:
   - enemies:
-    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 2
-    countdown: 5
-    spawnInterval: 1
+    - prefab: {fileID: 6804035405117204289, guid: c3f963107a2bfd142ab750423f27102b, type: 3}
+      count: 10
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 5
+    countdown: 3
+    spawnInterval: 0.25
     countDownText: Enemies observed in the distance!
     waveStartText: Enemies are here! Fight!
   - enemies:
-    - prefab: {fileID: 4441501422373369235, guid: 704afb18bdea7324689dabf2ebd7e945, type: 3}
-      count: 1
-    - prefab: {fileID: 7777853474901196750, guid: 60ce51ed4adafac4aa5aa10c128cc421, type: 3}
-      count: 1
-    countdown: 20
-    spawnInterval: 1
+    - prefab: {fileID: 6804035405117204289, guid: c3f963107a2bfd142ab750423f27102b, type: 3}
+      count: 10
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 6
+    countdown: 7
+    spawnInterval: 0.25
     countDownText: 
     waveStartText: 
   - enemies:
-    - prefab: {fileID: 7159113859293338447, guid: 87c0aae70bb75a04d93cd4c8a0b3e711, type: 3}
-      count: 1
-    - prefab: {fileID: 3636506273057607973, guid: c2f7dcd935a67d84c894330eaacd7f36, type: 3}
-      count: 1
-    countdown: 20
-    spawnInterval: 1
+    - prefab: {fileID: 6804035405117204289, guid: c3f963107a2bfd142ab750423f27102b, type: 3}
+      count: 15
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 5
+    countdown: 10
+    spawnInterval: 0.25
     countDownText: 
     waveStartText: 
   RaidCompletionRewards: {fileID: 11400000, guid: 49b5120c6c6d93c408fe80268432cfaf, type: 2}
