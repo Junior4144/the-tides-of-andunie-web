@@ -5696,7 +5696,6 @@ MonoBehaviour:
   _minImpulseForce: 30
   _maxImpulseForce: 100
   _impulseDuration: 0.2
-  abilityCooldownDuration: 5
   charge: 0
 --- !u!58 &3961174666011142760
 CircleCollider2D:
@@ -5744,6 +5743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2059276219016998254}
   - component: {fileID: 6207334754615920825}
+  - component: {fileID: 2851902867757680145}
   m_Layer: 7
   m_Name: AxeWeaponController
   m_TagString: Untagged
@@ -5781,6 +5781,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   myType: 1
   weapon: {fileID: 8529623427114425704}
+--- !u!114 &2851902867757680145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5017984629624715750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b49849cb6a2bc4449bfde95c3fad1c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponCooldownHandler
+  abilityCooldownDuration: 5
 --- !u!1 &5051202716831153992
 GameObject:
   m_ObjectHideFlags: 0
@@ -6270,6 +6283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6046498253770114695}
   - component: {fileID: 5929630057262574595}
+  - component: {fileID: 1927303711966463800}
   m_Layer: 7
   m_Name: BowWeaponController
   m_TagString: Untagged
@@ -6307,6 +6321,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   myType: 2
   weapon: {fileID: 4953174308568767268}
+--- !u!114 &1927303711966463800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6825560847005784108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b49849cb6a2bc4449bfde95c3fad1c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponCooldownHandler
+  abilityCooldownDuration: 5
 --- !u!1 &7727062384500332437
 GameObject:
   m_ObjectHideFlags: 0
