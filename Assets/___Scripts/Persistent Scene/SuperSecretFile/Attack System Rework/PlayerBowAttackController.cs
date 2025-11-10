@@ -50,8 +50,11 @@ public class PlayerBowAttackController : MonoBehaviour
 
     private void OnDisable()
     {
+        StopAllCoroutines();
+        ToggleArrowSprites(3, false);
         ResetCharge();
         CancelShot();
+        ResetState();
         animator.ReturnToDefaultIdle();
     }
     private void OnEnable()
@@ -90,6 +93,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
         IsAbilityAiming = !normal;
         WeaponManager.Instance.IsAbilityAiming = !normal;
+
         IsAttacking = true;
         WeaponManager.Instance.SetBusy(true);
 
@@ -216,6 +220,7 @@ public class PlayerBowAttackController : MonoBehaviour
         animator.PlayBowHandleIdle(); // ← return to holding bow pose
         ResetState();
         ResetCharge();
+        ToggleArrowSprites(3, false);
         isChargingAnimPlayed = false;
         isChargeIdlePlayed = false;
     }
@@ -235,10 +240,13 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         IsAttacking = false;
         WeaponManager.Instance.SetBusy(false);
+
         IsNormalAiming = false;
         WeaponManager.Instance.IsNormalAiming = false;
+
         IsAbilityAiming = false;
         WeaponManager.Instance.IsAbilityAiming = false;
+
         canFire = true;
     }
 

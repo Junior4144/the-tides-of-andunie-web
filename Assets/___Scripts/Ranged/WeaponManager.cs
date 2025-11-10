@@ -77,7 +77,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        if (IsBusy)
+        if (IsBusy && !IsAbilityAiming && !IsNormalAiming)
         {
             pendingWeaponRequest = requestedWeapon;
             Debug.Log($"Weapon switch to {requestedWeapon} queued (currently busy).");
