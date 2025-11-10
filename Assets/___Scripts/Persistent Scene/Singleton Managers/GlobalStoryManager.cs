@@ -17,6 +17,7 @@ public class GlobalStoryManager : MonoBehaviour
 
     #region LevelSelector
     public bool playLSInvasionCutscene = false;
+    public bool Village1Liberated = false;
     #endregion
 }
 

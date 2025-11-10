@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class PlayerBowAttackController : MonoBehaviour
 {
+
     [Header("References")]
     [SerializeField] Transform playerRoot;
     [SerializeField] PlayerAnimator animator;
     [SerializeField] AudioClip attackSound;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject[] arrowSprites;
+    private WeaponCooldownHandler _cooldownHandler;
 
     [Header("Settings")]
     [SerializeField] private float _arrowSpeedMultiplier = 25f;
@@ -22,7 +24,6 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] private float _minImpulseForce = 30f;
     [SerializeField] private float _maxImpulseForce = 100f;
     [SerializeField] private float _impulseDuration = 0.2f;
-    [SerializeField] private float abilityCooldownDuration = 5f;
 
     public bool IsNormalAiming { get; private set; }
     public bool IsAbilityAiming { get; private set; }
@@ -33,14 +34,14 @@ public class PlayerBowAttackController : MonoBehaviour
     [HideInInspector] public float charge;
     private ImpulseController _impulseController;
 
-    private bool isAbilityOnCooldown = false;
-    private float abilityCooldownTimer = 0f;
 
     private bool isChargingAnimPlayed = false;
     private bool isChargeIdlePlayed = false;
 
+
     void Awake()
     {
+        _cooldownHandler = GetComponentInParent<WeaponCooldownHandler>();
         _audioSource = GetComponent<AudioSource>();
         rb = playerRoot.GetComponent<Rigidbody2D>();
         _impulseController = GetComponentInParent<ImpulseController>();
@@ -68,20 +69,17 @@ public class PlayerBowAttackController : MonoBehaviour
         else if (Input.GetMouseButtonUp(0)) Fire(isAbility: false);
 
 
-        //Right-Click Attack
-        if (isAbilityOnCooldown)
-        {
-            HandleAbilityCooldown();
-        }
-
-        if (isAbilityOnCooldown) return;
+        if (_cooldownHandler.IsAbilityOnCooldown)
+            return;
 
         if (Input.GetMouseButton(1))
         {
             HandleAiming(normal: false);
         }
-        else if (Input.GetMouseButtonUp(1)) Fire(isAbility: true);
-
+        else if (Input.GetMouseButtonUp(1))
+        {
+            Fire(isAbility: true);
+        }
     }
 
     // ---------------- CHARGING ----------------
@@ -144,7 +142,7 @@ public class PlayerBowAttackController : MonoBehaviour
         if (isAbility)
         {
             WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
-            StartAbilityCooldown();
+            _cooldownHandler.StartAbilityCooldown();
             FireSpreadShot();
         }
         else FireSingleShot();
@@ -195,22 +193,6 @@ public class PlayerBowAttackController : MonoBehaviour
         WeaponManager.Instance.CurrentBowCharge = charge;
 
         if (charge == 0f) canFire = true;
-    }
-    private void StartAbilityCooldown()
-    {
-        isAbilityOnCooldown = true;
-        abilityCooldownTimer = abilityCooldownDuration;
-    }
-    private void HandleAbilityCooldown()
-    {
-        abilityCooldownTimer -= Time.deltaTime;
-
-        if (abilityCooldownTimer <= 0f)
-        {
-            isAbilityOnCooldown = false;
-            abilityCooldownTimer = 0f;
-            Debug.Log("Ability ready again!");
-        }
     }
 
     void ApplyImpulse()
@@ -266,7 +248,6 @@ public class PlayerBowAttackController : MonoBehaviour
         WeaponManager.Instance.CurrentBowCharge = charge;
         BowPowerUIManager.instance.slider.value = 0f;
     }
-
 
     // ---------------- UI ----------------
     void InitUI()
