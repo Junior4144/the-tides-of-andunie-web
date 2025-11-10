@@ -52,7 +52,6 @@ public class RaidController : MonoBehaviour
     [SerializeField] private bool waitForExternalSignal = false;
 
 
-    private float _sliderSmoothSpeed = 5f;
     private float _sliderEnemySpawnCap = 0f;
 
     void Awake()
