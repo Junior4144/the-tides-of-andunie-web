@@ -12,6 +12,9 @@ public static class UIEvents
     public static Action OnInventoryActive;
     public static Action OnInventoryDeactivated;
 
+    public static Action OnRewardActive;
+    public static Action OnRewardDeactivated;
+
 }
 
 public class UIManager : MonoBehaviour

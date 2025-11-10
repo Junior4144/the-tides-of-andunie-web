@@ -59,6 +59,21 @@ public class PlayerAttackController : MonoBehaviour
         _isAttacking = false;
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+
+        _isAttacking = false;
+        _isSweepAttacking = false;
+        isShaking = false;
+        isInHitStop = false;
+
+        _hitEnemies.Clear();
+        WeaponManager.Instance?.SetBusy(false);
+        _impulseCollider.SetActive(false);
+        transform.localRotation = Quaternion.identity;
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && !_isAttacking)

@@ -50,8 +50,11 @@ public class WeaponManager : MonoBehaviour
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         SceneManager.activeSceneChanged += OnSceneChanged;
 
-        UIEvents.OnInventoryActive += HandleInventoryActive;
-        UIEvents.OnInventoryDeactivated += OnInventoryDeactived;
+        UIEvents.OnInventoryActive += HandlePopUpUIActive;
+        UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
+
+        UIEvents.OnRewardActive += HandlePopUpUIActive;
+        UIEvents.OnRewardDeactivated += OnPopUpUIDeactivated;
     }
 
     private void OnDisable()
@@ -60,8 +63,11 @@ public class WeaponManager : MonoBehaviour
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
         SceneManager.activeSceneChanged -= OnSceneChanged;
 
-        UIEvents.OnInventoryActive -= HandleInventoryActive;
-        UIEvents.OnInventoryDeactivated -= OnInventoryDeactived;
+        UIEvents.OnInventoryActive -= HandlePopUpUIActive;
+        UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
+
+        UIEvents.OnRewardActive -= HandlePopUpUIActive;
+        UIEvents.OnRewardDeactivated -= OnPopUpUIDeactivated;
     }
 
     private void Start()
@@ -148,12 +154,12 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    private void HandleInventoryActive()
+    private void HandlePopUpUIActive()
     {
         SetWeaponToNone();
     }
     
-    private void OnInventoryDeactived()
+    private void OnPopUpUIDeactivated()
     {
         HandleEquipRequest(WeaponType.Axe);
     }
