@@ -209,7 +209,6 @@ public class RaidController : MonoBehaviour
     {
         _currentState = RaidState.RaidComplete;
         DisplayTextThenFadeOut(_postRaidTextController);
-        RemoveEnemiesCountText();
         _timerTextController.SetTextInvisible();
         OnRaidComplete?.Invoke();
         DisableEnemyBar();
@@ -245,8 +244,6 @@ public class RaidController : MonoBehaviour
         SliderGameObject.SetActive(false);
     }
 
-
-    private void RemoveEnemiesCountText() => StartCoroutine(_enemiesRemainingTextController.FadeOut(1f));
 
     private IEnumerator SpawnWaveEnemiesOverIntervals(WaveConfig wave)
     {
