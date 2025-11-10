@@ -68,12 +68,25 @@ public class SquadFollower : MonoBehaviour
 
         if (distanceToFormation > navMeshEngageDistance)
         {
-            if (!usingNavMesh)
+            if (navAgent.isOnNavMesh)
             {
-                EnableNavMesh();
+                navAgent.SetDestination(targetPositionInFormation);
+                RotateTowardsMovementDirection();
             }
-            navAgent.SetDestination(targetPositionInFormation);
-            RotateTowardsMovementDirection();
+            else
+            {
+                // try projecting back onto the NavMesh
+                if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+                {
+                    transform.position = hit.position;
+                    navAgent.Warp(hit.position); // snap agent back to navmesh
+                    navAgent.SetDestination(targetPositionInFormation);
+                }
+                else
+                {
+                    Debug.LogWarning($"{name} not on NavMesh and cannot find valid nearby NavMesh position!");
+                }
+            }
         }
         else
         {
