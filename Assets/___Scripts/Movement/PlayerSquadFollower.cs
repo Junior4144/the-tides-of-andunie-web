@@ -19,12 +19,12 @@ public class PlayerSquadFollower : MonoBehaviour
     private Rigidbody2D _rb;
     private Rigidbody2D _playerRb;
     private NavMeshAgent _navAgent;
-    private PlayerHeroMovement _playerHeroMovement;
+    private PlayerController _playerHeroMovement;
 
     private Vector3 _formationOffsetLocal;
     private float _formationAngleLocal;
     private Vector3 _targetPositionInFormation;
-    private PlayerSquadImpulseController _squadImpulseController;
+    private ImpulseController _ImpulseController;
     private bool _usingNavMesh = false;
     private bool _isInFormation = false;
     private bool _isDashing = false;
@@ -59,16 +59,17 @@ public class PlayerSquadFollower : MonoBehaviour
     }
 
     void OnDestroy()
-    {
-        if (_playerHeroMovement != null)
-            _playerHeroMovement.OnPlayerDash -= HandlePlayerDash;
+    {   
+        // TODO clean up or keep for later
+        // if (_playerHeroMovement != null)
+        //     _playerHeroMovement.OnPlayerDash -= HandlePlayerDash;
     }
 
     void Update()
     {
         if (!_player) return;
         if (_isDashing) return;
-        if (_squadImpulseController.IsInImpulse()) return;
+        if (_ImpulseController.IsInImpulse()) return;
 
         UpdateFormationTarget();
         HandleMovement();
@@ -83,11 +84,12 @@ public class PlayerSquadFollower : MonoBehaviour
         {
             _player = playerObj.transform;
             _playerRb = playerObj.GetComponent<Rigidbody2D>();
-            _playerHeroMovement = playerObj.GetComponent<PlayerHeroMovement>();
-            _squadImpulseController = playerObj.GetComponent<PlayerSquadImpulseController>();
-
-            if (_playerHeroMovement != null)
-                _playerHeroMovement.OnPlayerDash += HandlePlayerDash;
+            _playerHeroMovement = playerObj.GetComponent<PlayerController>();
+            _ImpulseController = playerObj.GetComponent<ImpulseController>();
+            
+            // TODO clean up or keep for later
+            // if (_playerHeroMovement != null)
+            //     _playerHeroMovement.OnPlayerDash += HandlePlayerDash;
         }
 
         _rb = GetComponent<Rigidbody2D>();

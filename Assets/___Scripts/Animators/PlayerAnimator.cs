@@ -14,7 +14,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private float _idleWindDuration = 1f;
 
     private Animator _anim;
-    private PlayerHeroMovement _playerMovement;
+    private PlayerController _playerMovement;
     private float _lockedTill;
     private bool _attacked;
     private bool _bowAttack;
@@ -26,7 +26,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-        _playerMovement = GetComponentInParent<PlayerHeroMovement>();
+        _playerMovement = GetComponentInParent<PlayerController>();
         _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
     }
     
@@ -56,20 +56,21 @@ public class PlayerAnimator : MonoBehaviour
         if (_playingSpecialIdle && Time.time >= _specialIdleEndTime)
             _playingSpecialIdle = false;
 
-        if (
-            Time.time >= _nextIdleCheckTime &&
-            Time.time >= _lockedTill &&
-            !_playingSpecialIdle &&
-            (_playerMovement == null || !_playerMovement.IsWalking)
-        )
-        {
-            if (UnityEngine.Random.value <= _specialIdleChance)
-            {
-                _playingSpecialIdle = true;
-                _currentSpecialIdleState = PickRandomSpecialIdle();
-            }
-            _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
-        }
+        // TODO add IsWalking to new PlayerController
+        // if (
+        //     Time.time >= _nextIdleCheckTime &&
+        //     Time.time >= _lockedTill &&
+        //     !_playingSpecialIdle &&
+        //     (_playerMovement == null || !_playerMovement.IsWalking)
+        // )
+        // {
+        //     if (UnityEngine.Random.value <= _specialIdleChance)
+        //     {
+        //         _playingSpecialIdle = true;
+        //         _currentSpecialIdleState = PickRandomSpecialIdle();
+        //     }
+        //     _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
+        // }
     }
     
     private int GetState()

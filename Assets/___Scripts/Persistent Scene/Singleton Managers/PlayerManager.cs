@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     private PlayerController _playerMovement;
     private LSPlayerMovement _lsPlayerMovement;
     private PlayerAttackController _attackController;
-    private PlayerSquadImpulseController _playerSquadImpulseController;
+    private ImpulseController _impulseController;
 
     public bool AllowForceChange = false;
 
@@ -23,10 +23,11 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
+
         _healthController = GetComponentInChildren<PlayerHealthController>();
         _playerMovement = GetComponent<PlayerController>();
         _lsPlayerMovement = GetComponent<LSPlayerMovement>();
-        _playerSquadImpulseController = GetComponentInChildren<PlayerSquadImpulseController>();
+        _impulseController = GetComponent<ImpulseController>();
         _attackController = GetComponentInChildren<PlayerAttackController>();
     }
 
@@ -80,7 +81,7 @@ public class PlayerManager : MonoBehaviour
 
     //------MOVEMENT------//
     //public bool IsInDash() => _playerMovement.IsInDash();
-    public bool IsInImpulse() => _playerSquadImpulseController.IsInImpulse();
+    public bool IsInImpulse() => _impulseController.IsInImpulse();
     
     
     //------DESTROY------//

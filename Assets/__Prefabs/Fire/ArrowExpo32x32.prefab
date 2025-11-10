@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 337009606831609746}
   - component: {fileID: 2257470487426158694}
   - component: {fileID: 5636825131655199288}
-  - component: {fileID: 386077510257090456}
+  - component: {fileID: 3178518890717017906}
   m_Layer: 7
   m_Name: ImpulseCollider
-  m_TagString: Untagged
+  m_TagString: ImpulseSource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
   startSize: {x: 2, y: 2, z: 2}
   endSize: {x: 0, y: 0, z: 0}
   duration: 0.1
---- !u!114 &386077510257090456
+--- !u!114 &3178518890717017906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2167132523319534326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3392328c846a2240a787cdce925d066, type: 3}
+  m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
+  _impulseforce: 50
+  impulseDuration: 0.7
+  playSound: 1
+  spawnParticles: 1
 --- !u!1 &3548132128928179003
 GameObject:
   m_ObjectHideFlags: 0

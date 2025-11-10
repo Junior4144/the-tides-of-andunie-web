@@ -31,7 +31,7 @@ public class PlayerBowAttackController : MonoBehaviour
     Rigidbody2D rb;
     bool canFire = true;
     [HideInInspector] public float charge;
-    private PlayerSquadImpulseController _impulseController;
+    private ImpulseController _impulseController;
 
     private bool isAbilityOnCooldown = false;
     private float abilityCooldownTimer = 0f;
@@ -43,7 +43,7 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         rb = playerRoot.GetComponent<Rigidbody2D>();
-        _impulseController = GetComponentInParent<PlayerSquadImpulseController>();
+        _impulseController = GetComponentInParent<ImpulseController>();
         InitUI();
     }
 
@@ -217,7 +217,15 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         float recoilStrength = Mathf.Lerp(_minImpulseForce, _maxImpulseForce, charge / maxCharge);
 
-        _impulseController.InitiateSquadImpulse(recoilStrength, _impulseDuration, transform.position, -rb.transform.up);
+        var impulseSettings = new ImpulseSettings
+        {
+            Force = recoilStrength,
+            Duration = _impulseDuration,
+            PlaySound = true,
+            SpawnParticles = true
+        };
+
+        _impulseController.InitiateSquadImpulse(transform.position, -rb.transform.up, impulseSettings);
     }
 
 

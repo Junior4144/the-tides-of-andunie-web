@@ -31,7 +31,7 @@ public class PlayerAttackController : MonoBehaviour
 
     private AudioSource _audioSrc;
     private Rigidbody2D _rb;
-    private PlayerSquadImpulseController _impulseController;
+    private ImpulseController _impulseController;
     private CinemachineImpulseSource camraImpulseSource;
     private readonly HashSet<Collider2D> _hitEnemies = new();
     bool _isAttacking;
@@ -55,7 +55,7 @@ public class PlayerAttackController : MonoBehaviour
         _audioSrc = GetComponent<AudioSource>();
         _rb = GetComponentInParent<Rigidbody2D>();
         camraImpulseSource = GetComponent<CinemachineImpulseSource>();
-        _impulseController = GetComponentInParent<PlayerSquadImpulseController>();
+        _impulseController = GetComponentInParent<ImpulseController>();
         _isAttacking = false;
     }
 
@@ -189,11 +189,18 @@ public class PlayerAttackController : MonoBehaviour
 
     void ApplyImpulse(Collider2D otherCollider)
     {
+        var impulseSettings = new ImpulseSettings
+        {
+            Force = _impulseStrength,
+            Duration = _impulseDuration,
+            PlaySound = true,
+            SpawnParticles = true
+        };
+
         _impulseController.InitiateSquadImpulse(
-            _impulseStrength,
-            _impulseDuration,
             contactPoint: otherCollider.ClosestPoint(transform.position),
-            impulseDirection: _rb.transform.up
+            impulseDirection: _rb.transform.up,
+            impulseSettings
         );
     }
 
