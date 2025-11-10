@@ -8,6 +8,10 @@ public static class UIEvents
     public static Action OnRequestInventoryToggle;
     public static Action OnRequestShopToggle;
     public static Action OnRequestPauseToggle;
+
+    public static Action OnInventoryActive;
+    public static Action OnInventoryDeactivated;
+
 }
 
 public class UIManager : MonoBehaviour
@@ -42,10 +46,12 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.activeSceneChanged += OnSceneChanged;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
+
         UIEvents.OnRequestInventoryToggle += ToggleInventory;
         UIEvents.OnRequestShopToggle += ToggleShop;
         UIEvents.OnRequestPauseToggle += TogglePause;
-    }
+
+}
 
     private IEnumerator Start()
     {
@@ -136,11 +142,13 @@ public class UIManager : MonoBehaviour
         if (_inventoryUI.activeInHierarchy)
         {
             _inventoryUI.SetActive(false);
+            UIEvents.OnInventoryDeactivated.Invoke();
             return;
         }
 
         HideAll();
         _inventoryUI.SetActive(true);
+        UIEvents.OnInventoryActive.Invoke();
     }
 
     private void ToggleShop()

@@ -48,6 +48,9 @@ public class WeaponManager : MonoBehaviour
         WeaponEvents.OnEquipWeaponRequest += HandleEquipRequest;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         SceneManager.activeSceneChanged += OnSceneChanged;
+
+        UIEvents.OnInventoryActive += HandleInventoryActive;
+        UIEvents.OnInventoryDeactivated += OnInventoryDeactived;
     }
 
     private void OnDisable()
@@ -55,6 +58,9 @@ public class WeaponManager : MonoBehaviour
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
         SceneManager.activeSceneChanged -= OnSceneChanged;
+
+        UIEvents.OnInventoryActive -= HandleInventoryActive;
+        UIEvents.OnInventoryDeactivated -= OnInventoryDeactived;
     }
 
     private void Start()
@@ -93,7 +99,7 @@ public class WeaponManager : MonoBehaviour
         currentGameState = newState;
 
         currentSceneName = SceneManager.GetActiveScene().name;
-        
+
 
         if (newState != GameState.Gameplay || currentSceneName == "Level0Stage1" || currentSceneName == "Level1")
         {
@@ -139,6 +145,16 @@ public class WeaponManager : MonoBehaviour
             Debug.Log("All weapons disabled due to game state.");
             WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
         }
+    }
+
+    private void HandleInventoryActive()
+    {
+        SetWeaponToNone();
+    }
+    
+    private void OnInventoryDeactived()
+    {
+        HandleEquipRequest(WeaponType.Axe);
     }
 
     public void SetBusy(bool value)
