@@ -93,6 +93,9 @@ public class ParticleController : MonoBehaviour
             return;
         }
 
+        smokeChildren[0].SetActive(true);
+        smokeChildren[0].GetComponent<ParticleSystem>().Play();
+
         if (LSManager.Instance == null)
         {
             Debug.LogWarning("LSManager.Instance not found!");
