@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayerAnimator : MonoBehaviour
     private PlayerHeroMovement _playerMovement;
     private float _lockedTill;
     private bool _attacked;
+    private bool _bowAttack;
     private float _nextIdleCheckTime;
     private bool _playingSpecialIdle;
     private float _specialIdleEndTime;
@@ -31,6 +33,7 @@ public class PlayerAnimator : MonoBehaviour
     public void TriggerAttack()
     {
         _attacked = true;
+        _bowAttack = false;
     }
 
     private void Update()
@@ -48,6 +51,8 @@ public class PlayerAnimator : MonoBehaviour
     
     private void HandleSpecialIdle()
     {
+        if (_bowAttack) return;
+
         if (_playingSpecialIdle && Time.time >= _specialIdleEndTime)
             _playingSpecialIdle = false;
 
@@ -119,5 +124,30 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
     private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
     private static readonly int Attack = Animator.StringToHash("AldarionSlash");
+    private static readonly int BowInHandIdle = Animator.StringToHash("AldarionBowInHandIdle");
+    private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
+    private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
+    private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");
     #endregion
+
+    public void PlayBowHandleIdle()
+    {
+        _bowAttack = true;
+        _anim.CrossFade(BowHandleIdle, 0f);
+    }
+
+    public void PlayBowCharge()
+    {
+        _bowAttack = true;
+        _anim.CrossFade(BowCharge, 0f);
+    }
+        
+    public void PlayBowChargeIdle() => _anim.CrossFade(BowChargeIdle, 0f);
+    public void PlayBowInHandIdle() => _anim.CrossFade(BowInHandIdle, 0f);
+
+    public void ReturnToDefaultIdle()
+    {
+        _bowAttack = false;              // allow special idles again
+        _anim.CrossFade(IdleDefault, 0f); // play the normal idle animation
+    }
 }

@@ -36,6 +36,9 @@ public class PlayerBowAttackController : MonoBehaviour
     private bool isAbilityOnCooldown = false;
     private float abilityCooldownTimer = 0f;
 
+    private bool isChargingAnimPlayed = false;
+    private bool isChargeIdlePlayed = false;
+
     void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -48,6 +51,11 @@ public class PlayerBowAttackController : MonoBehaviour
     {
         ResetCharge();
         CancelShot();
+        animator.ReturnToDefaultIdle();
+    }
+    private void OnEnable()
+    {
+        animator.PlayBowHandleIdle();
     }
 
     // ---------------- UPDATE ----------------
@@ -91,6 +99,24 @@ public class PlayerBowAttackController : MonoBehaviour
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
         BowPowerUIManager.instance.slider.value = charge;
         WeaponManager.Instance.CurrentBowCharge = charge;
+
+        if (!isChargingAnimPlayed)
+        {
+            isChargingAnimPlayed = true;
+            isChargeIdlePlayed = false;
+            animator.PlayBowCharge();  // play 0.45s draw animation
+            StartCoroutine(TransitionToChargeIdleAfter(0.45f)); // hold pose after
+        }
+    }
+
+    IEnumerator TransitionToChargeIdleAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (IsAttacking && !isChargeIdlePlayed)
+        {
+            isChargeIdlePlayed = true;
+            animator.PlayBowChargeIdle();  // now holding the bow drawn
+        }
     }
 
     // ---------------- FIRING ----------------
@@ -114,6 +140,7 @@ public class PlayerBowAttackController : MonoBehaviour
         canFire = false;
         charge = Mathf.Min(charge, maxCharge);
         WeaponManager.Instance.CurrentBowCharge = charge;
+
         if (isAbility)
         {
             WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
@@ -122,7 +149,10 @@ public class PlayerBowAttackController : MonoBehaviour
         }
         else FireSingleShot();
 
+        animator.PlayBowHandleIdle(); // ← return to idle bow pose after firing
         ResetAfterFire();
+        isChargingAnimPlayed = false;
+        isChargeIdlePlayed = false;
     }
 
     void FireSingleShot()
@@ -190,17 +220,25 @@ public class PlayerBowAttackController : MonoBehaviour
         _impulseController.InitiateSquadImpulse(recoilStrength, _impulseDuration, transform.position, -rb.transform.up);
     }
 
+
     void CancelShot()
     {
+        animator.PlayBowHandleIdle(); // ← return to holding bow pose
         ResetState();
         ResetCharge();
+        isChargingAnimPlayed = false;
+        isChargeIdlePlayed = false;
     }
+
 
     void ResetAfterFire()
     {
+        animator.PlayBowHandleIdle();
         ResetState();
         ResetCharge();
         ToggleArrowSprites(3, false);
+        isChargingAnimPlayed = false;
+        isChargeIdlePlayed = false;
     }
 
     void ResetState()
