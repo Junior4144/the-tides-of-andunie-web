@@ -124,7 +124,6 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
     private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
     private static readonly int Attack = Animator.StringToHash("AldarionSlash");
-    private static readonly int BowInHandIdle = Animator.StringToHash("AldarionBowInHandIdle");
     private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
     private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
     private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");
@@ -143,7 +142,6 @@ public class PlayerAnimator : MonoBehaviour
     }
         
     public void PlayBowChargeIdle() => _anim.CrossFade(BowChargeIdle, 0f);
-    public void PlayBowInHandIdle() => _anim.CrossFade(BowInHandIdle, 0f);
 
     public void ReturnToDefaultIdle()
     {
