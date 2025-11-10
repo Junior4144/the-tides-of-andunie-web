@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &910241008468920471
 Transform:
   m_ObjectHideFlags: 0
@@ -6164,7 +6164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a57ba999b40304b8063b5e39035e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  footstepSounds:
+  _footstepSounds:
   - {fileID: 8300000, guid: e5e77f00b3ca6bf45b3c438c63f8d48f, type: 3}
   - {fileID: 8300000, guid: 3d54ee86f2217c74db7b5f43bf2239af, type: 3}
   - {fileID: 8300000, guid: e07ea0d1cd5d48d4680b5a9d696f131d, type: 3}
@@ -6175,7 +6175,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 59401afbb3fdb4c4fa62c82145f420c9, type: 3}
   - {fileID: 8300000, guid: 3e729b759d00e824d9806d14c4d347f4, type: 3}
   - {fileID: 8300000, guid: e129e12ed082af143a382d7d9e22b760, type: 3}
-  audioSource: {fileID: 7323354128613839931}
+  _audioSource: {fileID: 7323354128613839931}
+  _footstepInterval: 0.35
 --- !u!82 &7323354128613839931
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7096,7 +7097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6587740963676477273
 Transform:
   m_ObjectHideFlags: 0
