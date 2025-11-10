@@ -8,11 +8,8 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] Transform playerRoot;
     [SerializeField] PlayerAnimator animator;
     [SerializeField] AudioClip attackSound;
-    [SerializeField] Slider bowPowerSlider;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject[] arrowSprites;
-    [SerializeField] GameObject ChargeSliderUI;
-    [SerializeField] GameObject crossHair;
 
     [Header("Settings")]
     [SerializeField] private float _arrowSpeedMultiplier = 25f;
@@ -25,6 +22,7 @@ public class PlayerBowAttackController : MonoBehaviour
     [SerializeField] private float _minImpulseForce = 30f;
     [SerializeField] private float _maxImpulseForce = 100f;
     [SerializeField] private float _impulseDuration = 0.2f;
+    [SerializeField] private float abilityCooldownDuration = 5f;
 
     public bool IsNormalAiming { get; private set; }
     public bool IsAbilityAiming { get; private set; }
@@ -35,6 +33,12 @@ public class PlayerBowAttackController : MonoBehaviour
     [HideInInspector] public float charge;
     private PlayerSquadImpulseController _impulseController;
 
+    private bool isAbilityOnCooldown = false;
+    private float abilityCooldownTimer = 0f;
+
+    private bool isChargingAnimPlayed = false;
+    private bool isChargeIdlePlayed = false;
+
     void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -43,40 +47,76 @@ public class PlayerBowAttackController : MonoBehaviour
         InitUI();
     }
 
-    private void OnEnable()
-    {
-        SetUIActive(true);
-    }
-
     private void OnDisable()
     {
         ResetCharge();
         CancelShot();
-        SetUIActive(false);
+        animator.ReturnToDefaultIdle();
+    }
+    private void OnEnable()
+    {
+        animator.PlayBowHandleIdle();
     }
 
     // ---------------- UPDATE ----------------
     void Update()
     {
+        // Left-Click Attack
         if (!canFire) { HandleCooldown(); return; }
 
         if (Input.GetMouseButton(0)) HandleAiming(normal: true);
         else if (Input.GetMouseButtonUp(0)) Fire(isAbility: false);
 
-        if (Input.GetMouseButton(1)) HandleAiming(normal: false);
+
+        //Right-Click Attack
+        if (isAbilityOnCooldown)
+        {
+            HandleAbilityCooldown();
+        }
+
+        if (isAbilityOnCooldown) return;
+
+        if (Input.GetMouseButton(1))
+        {
+            HandleAiming(normal: false);
+        }
         else if (Input.GetMouseButtonUp(1)) Fire(isAbility: true);
+
     }
 
     // ---------------- CHARGING ----------------
     void HandleAiming(bool normal)
     {
         IsNormalAiming = normal;
+        WeaponManager.Instance.IsNormalAiming = normal;
+
         IsAbilityAiming = !normal;
+        WeaponManager.Instance.IsAbilityAiming = !normal;
         IsAttacking = true;
+        WeaponManager.Instance.SetBusy(true);
 
         ToggleArrowSprites(normal ? 1 : 3, true);
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
-        bowPowerSlider.value = charge;
+        BowPowerUIManager.instance.slider.value = charge;
+        WeaponManager.Instance.CurrentBowCharge = charge;
+
+        if (!isChargingAnimPlayed)
+        {
+            isChargingAnimPlayed = true;
+            isChargeIdlePlayed = false;
+            animator.PlayBowCharge();  // play 0.45s draw animation
+            StartCoroutine(TransitionToChargeIdleAfter(0.45f)); // hold pose after
+        }
+    }
+
+    IEnumerator TransitionToChargeIdleAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (IsAttacking && !isChargeIdlePlayed)
+        {
+            isChargeIdlePlayed = true;
+            animator.PlayBowChargeIdle();  // now holding the bow drawn
+        }
     }
 
     // ---------------- FIRING ----------------
@@ -99,11 +139,20 @@ public class PlayerBowAttackController : MonoBehaviour
 
         canFire = false;
         charge = Mathf.Min(charge, maxCharge);
+        WeaponManager.Instance.CurrentBowCharge = charge;
 
-        if (isAbility) FireSpreadShot();
+        if (isAbility)
+        {
+            WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
+            StartAbilityCooldown();
+            FireSpreadShot();
+        }
         else FireSingleShot();
 
+        animator.PlayBowHandleIdle(); // ← return to idle bow pose after firing
         ResetAfterFire();
+        isChargingAnimPlayed = false;
+        isChargeIdlePlayed = false;
     }
 
     void FireSingleShot()
@@ -142,8 +191,26 @@ public class PlayerBowAttackController : MonoBehaviour
     void HandleCooldown()
     {
         charge = Mathf.Max(0f, charge - _chargeDecreaseRate * Time.deltaTime);
-        bowPowerSlider.value = charge;
+        BowPowerUIManager.instance.slider.value = charge;
+        WeaponManager.Instance.CurrentBowCharge = charge;
+
         if (charge == 0f) canFire = true;
+    }
+    private void StartAbilityCooldown()
+    {
+        isAbilityOnCooldown = true;
+        abilityCooldownTimer = abilityCooldownDuration;
+    }
+    private void HandleAbilityCooldown()
+    {
+        abilityCooldownTimer -= Time.deltaTime;
+
+        if (abilityCooldownTimer <= 0f)
+        {
+            isAbilityOnCooldown = false;
+            abilityCooldownTimer = 0f;
+            Debug.Log("Ability ready again!");
+        }
     }
 
     void ApplyImpulse()
@@ -153,45 +220,52 @@ public class PlayerBowAttackController : MonoBehaviour
         _impulseController.InitiateSquadImpulse(recoilStrength, _impulseDuration, transform.position, -rb.transform.up);
     }
 
+
     void CancelShot()
     {
+        animator.PlayBowHandleIdle(); // ← return to holding bow pose
         ResetState();
         ResetCharge();
+        isChargingAnimPlayed = false;
+        isChargeIdlePlayed = false;
     }
+
 
     void ResetAfterFire()
     {
+        animator.PlayBowHandleIdle();
         ResetState();
         ResetCharge();
         ToggleArrowSprites(3, false);
+        isChargingAnimPlayed = false;
+        isChargeIdlePlayed = false;
     }
 
     void ResetState()
     {
         IsAttacking = false;
+        WeaponManager.Instance.SetBusy(false);
         IsNormalAiming = false;
+        WeaponManager.Instance.IsNormalAiming = false;
         IsAbilityAiming = false;
+        WeaponManager.Instance.IsAbilityAiming = false;
         canFire = true;
     }
 
     void ResetCharge()
     {
         charge = 0f;
-        bowPowerSlider.value = 0f;
+        WeaponManager.Instance.CurrentBowCharge = charge;
+        BowPowerUIManager.instance.slider.value = 0f;
     }
+
 
     // ---------------- UI ----------------
     void InitUI()
     {
-        bowPowerSlider.value = 0f;
-        bowPowerSlider.maxValue = maxCharge;
-        crossHair.SetActive(false);
-    }
-
-    void SetUIActive(bool active)
-    {
-        ChargeSliderUI.SetActive(active);
-        if (crossHair) crossHair.SetActive(active);
+        BowPowerUIManager.instance.slider.value = 0f;
+        BowPowerUIManager.instance.slider.maxValue = maxCharge;
+        WeaponManager.Instance.BowMaxCharge = maxCharge;
     }
 
     void ToggleArrowSprites(int count, bool active)

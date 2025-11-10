@@ -68,12 +68,12 @@ public class SquadFollower : MonoBehaviour
 
         if (distanceToFormation > navMeshEngageDistance)
         {
-            if (!usingNavMesh)
+            if (navAgent.isOnNavMesh)
             {
-                EnableNavMesh();
+                navAgent.SetDestination(targetPositionInFormation);
+                RotateTowardsMovementDirection();
             }
-            navAgent.SetDestination(targetPositionInFormation);
-            RotateTowardsMovementDirection();
+
         }
         else
         {

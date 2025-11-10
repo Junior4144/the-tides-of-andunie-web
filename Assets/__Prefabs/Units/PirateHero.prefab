@@ -86,6 +86,7 @@ MonoBehaviour:
   _animator: {fileID: 3734088870959768593}
   _damageDelay: 0.3
   _animDuration: 0.35
+  _damageRange: 2
 --- !u!1 &1098415364812090444
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,3 +594,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseListener
   _layerName: Friendly
   _impulseForce: 16
+  _impulseDuration: 0.6

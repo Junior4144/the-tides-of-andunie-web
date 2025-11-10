@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySquadImpulseListener : MonoBehaviour
@@ -6,7 +7,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
     [SerializeField] private float _impulseForce = 16f;
     [SerializeField] private float _impulseDuration = 0.6f;
 
-    private BaseSquadImpulseController _controller;
+    private EnemySquadImpulseController _controller;
     private Rigidbody2D _rb;
 
 
@@ -18,7 +19,7 @@ public class EnemySquadImpulseListener : MonoBehaviour
         else
             Debug.LogWarning($"[EnemySquadImpulseListener] Parent hierarchy incomplete! parent={transform.parent?.name}");
 
-        _controller = GetComponentInParent<BaseSquadImpulseController>();
+        _controller = GetComponentInParent<EnemySquadImpulseController>();
 
         if (_controller != null && _rb != null)
             _controller.RegisterMember(_rb);
@@ -49,12 +50,12 @@ public class EnemySquadImpulseListener : MonoBehaviour
         Vector2 closestPoint = otherCollider.ClosestPoint(transform.position);
         Vector2 impulseDirection = (transform.position - otherCollider.transform.position).normalized;
 
+        Debug.Log($"_controller = {_controller}");
         _controller.InitiateSquadImpulse(
             _impulseForce,
             _impulseDuration,
             closestPoint,
-            impulseDirection,
-            PlayerManager.Instance.IsAttacking()
+            impulseDirection
         );
     }
 }

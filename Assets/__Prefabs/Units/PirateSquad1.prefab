@@ -87,7 +87,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &6384534058425379843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,8 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689e2d991e880764589fbefbf01aa7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySquadImpulseController
-  _squadImpulseForce: 16
-  _impulseDuration: 0.5
   _squadDirectionWeight: 0.7
   _individualDirectionWeight: 0.3
   _centralImpactMultiplier: 2.5
@@ -138,6 +136,7 @@ MonoBehaviour:
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
   _dashMultiplier: 2
+  _attackMultiplier: 3
 --- !u!82 &959091769177682771
 AudioSource:
   m_ObjectHideFlags: 0

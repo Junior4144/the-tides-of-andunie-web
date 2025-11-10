@@ -6,7 +6,6 @@ public class DynamicCrosshair : MonoBehaviour
     [Header("References")]
     [SerializeField] RectTransform crosshairRoot;
     [SerializeField] RectTransform top, bottom, left, right;
-    [SerializeField] PlayerBowAttackController bowAttackController;
 
     [Header("Spread Settings")]
     [SerializeField] float idleSpread = 40f;
@@ -54,15 +53,21 @@ public class DynamicCrosshair : MonoBehaviour
 
     void UpdateSpread()
     {
-        currentSpread = Mathf.Lerp(currentSpread, GetTargetSpread(), Time.deltaTime * moveSpeed);
+        float targetSpread = GetTargetSpread();
+
+        // If you're not aiming or charging, instantly reset
+        if (!WeaponManager.Instance.IsNormalAiming && !WeaponManager.Instance.IsAbilityAiming)
+            currentSpread = targetSpread;
+        else
+            currentSpread = Mathf.Lerp(currentSpread, targetSpread, Time.deltaTime * moveSpeed);
     }
 
     float GetTargetSpread()
     {
-        if (bowAttackController.IsNormalAiming) return aimSpread;
-        if (bowAttackController.IsAbilityAiming)
+        if (WeaponManager.Instance.IsNormalAiming) return aimSpread;
+        if (WeaponManager.Instance.IsAbilityAiming)
         {
-            float chargeRatio = bowAttackController.charge / bowAttackController.maxCharge;
+            float chargeRatio = WeaponManager.Instance.CurrentBowCharge / WeaponManager.Instance.BowMaxCharge;
             return Mathf.Lerp(abilityMaxSpread, abilityMinSpread, chargeRatio);
         }
         return idleSpread;
@@ -82,7 +87,7 @@ public class DynamicCrosshair : MonoBehaviour
     // ---------------- VISUAL EFFECTS ----------------
     void ApplyVisualEffects()
     {
-        bool isAbility = bowAttackController.IsAbilityAiming;
+        bool isAbility = WeaponManager.Instance.IsAbilityAiming;
         UpdateColor(isAbility);
         UpdatePulseAndRotation(isAbility);
     }
