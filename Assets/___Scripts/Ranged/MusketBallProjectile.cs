@@ -10,6 +10,8 @@ public class MusketBallProjectile : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    private bool hasDamage = false;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();   
@@ -26,8 +28,10 @@ public class MusketBallProjectile : MonoBehaviour
 
         if (collision.TryGetComponent(out IHealthController health))
         {
+            if (hasDamage) return;
             Debug.Log($"[MusketBallProjectile] Damage dealt {_pirateAttributes.DamageAmount}");
             health.TakeDamage(_pirateAttributes.DamageAmount);
+            hasDamage = true;
             SpawnHitEffect(collision.transform.position);
             Destroy(gameObject);
         }
