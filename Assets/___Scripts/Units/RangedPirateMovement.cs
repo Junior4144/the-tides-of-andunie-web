@@ -6,7 +6,8 @@ using UnityEngine.Audio;
 public class RangedPirateMovement : MonoBehaviour
 {
 
-    [SerializeField] private float _attackAnimDuration = .67f;
+    [SerializeField] private float _attackAnimDuration = .9f;
+    [SerializeField] private float _holdFireAnimDuration = 0.5f;
     [SerializeField] private RangedPirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
@@ -19,10 +20,13 @@ public class RangedPirateMovement : MonoBehaviour
     private AudioSource _audioSource;
     private ImpulseController _impulseController;
     private bool canFire = true;
+    private bool ifStillInRange = false;
     public float fireCooldown = 1f;
+    public float HoldFireCooldown = 1f;
 
     public float impulseForce = 10f;
     public float impulseDuration = 0;
+    
 
     void Awake()
     {
@@ -46,13 +50,26 @@ public class RangedPirateMovement : MonoBehaviour
 
         if (distance <= _attributes.ReadyDistance && canFire)
         {
+            if(ifStillInRange)
+            {
+                StartCoroutine(initiateHoldFiringSequence());
+                PlayHoldFireAnimation();
+                return;
+            }
+
+            ifStillInRange = true;
             StartCoroutine(initiateFiringSequence());
             PlayAttackAnimation();
             return;
         }
 
-        RotateTowardsMovementDirection();
-        agent.SetDestination(player.position);
+        if (distance > _attributes.ReadyDistance)
+        {
+            ifStillInRange = false;
+            _animator.SetPlayerInRange(false); // <-- Turn off FireHold when player leaves range
+            RotateTowardsMovementDirection();
+            agent.SetDestination(player.position);
+        }
     }
 
     private IEnumerator initiateFiringSequence()
@@ -71,6 +88,22 @@ public class RangedPirateMovement : MonoBehaviour
         canFire = true;
     }
 
+    private IEnumerator initiateHoldFiringSequence() //TODO USE VARIABLES INSTEAD OF REDOING CODE
+    {
+        canFire = false;
+        agent.isStopped = true;
+
+        yield return new WaitForSeconds(HoldFireCooldown);
+
+        Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
+        ApplyImpulse();
+
+        _audioSource.PlayOneShot(fireShotSound);
+        yield return new WaitForSeconds(HoldFireCooldown);
+        agent.isStopped = false;
+        canFire = true;
+    }
+
     private void PlayAttackAnimation()
     {
         if (_animator)
@@ -85,6 +118,23 @@ public class RangedPirateMovement : MonoBehaviour
     private IEnumerator ResetAttackAnimation()
     {
         yield return new WaitForSeconds(_attackAnimDuration);
+    }
+
+    private void PlayHoldFireAnimation()
+    {
+        if (_animator)
+        {
+            _animator.SetPlayerInRange(true);
+        }
+            
+        else
+            Debug.LogWarning("Animator is Null. Playing no Animation");
+    }
+
+    private IEnumerator ResetHoldFireAnimation()
+    {
+        yield return new WaitForSeconds(_holdFireAnimDuration);
+        _animator.SetPlayerInRange(false);
     }
 
     private void RotateTowardsMovementDirection()
