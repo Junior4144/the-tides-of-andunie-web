@@ -69,7 +69,7 @@ public class SaveManager : MonoBehaviour
             Debug.LogWarning("[SaveManager] No save data to restore!");
             return;
         }
-        PlayerManager.Instance.SetHealth(CurrentSave.health);
+        PlayerManager.Instance.SetHealth(PlayerStatsManager.Instance.MaxHealth);
         Debug.Log($"[SaveManager] Restored player  health at {CurrentSave.health}");
     }
 

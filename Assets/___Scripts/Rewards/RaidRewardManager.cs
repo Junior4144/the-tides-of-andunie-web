@@ -13,7 +13,7 @@ public class RaidRewardManager : MonoBehaviour
     [SerializeField] private GameObject RewardItemUIPrefab;
     [SerializeField] private float showRewardsDelay = 0.5f;
     [SerializeField] private AudioClip rewardSound;
-    public event Action OnRewardCollected;
+    public static event Action OnRewardCollected;
 
     private AudioSource _audioSource;
 
