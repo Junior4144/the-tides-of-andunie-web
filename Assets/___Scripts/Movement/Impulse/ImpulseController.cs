@@ -106,6 +106,8 @@ public class ImpulseController : MonoBehaviour
             return;
         }
 
+        if (_audioSource == null || !_audioSource.enabled) return;
+
         _audioSource.PlayOneShot(_impulseSound);
     }
 }

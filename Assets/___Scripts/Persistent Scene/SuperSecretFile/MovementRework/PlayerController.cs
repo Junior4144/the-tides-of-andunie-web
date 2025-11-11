@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.LowLevel;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -13,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D PlayerRigidBody;
     private Vector2 movementInput;
+
+    public bool IsWalking { get; private set; }
 
     void Awake()
     {
@@ -39,8 +39,9 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerManager.Instance.IsInImpulse()) return;
         if (PlayerManager.Instance.AllowForceChange) return;
-        
+
         PlayerRigidBody.linearVelocity = movementInput * speed;
+        IsWalking = movementInput.magnitude > 0f;
 
         if (!bowAttackScript.IsAttacking)
         {

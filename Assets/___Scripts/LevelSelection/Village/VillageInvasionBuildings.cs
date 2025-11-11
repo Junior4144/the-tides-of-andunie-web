@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VillageInvasionBuildings : MonoBehaviour
 {
@@ -25,22 +26,25 @@ public class VillageInvasionBuildings : MonoBehaviour
             firePositions[i] = transform.GetChild(i).gameObject;
     }
 
-    private void OnEnable()
-    {
-        LSManager.UpdateVillageInvasionStatus += HandleInvasion;
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
-    }
-    private void OnDisable()
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        LSManager.UpdateVillageInvasionStatus -= HandleInvasion;
+        StartCoroutine(CheckAfterLoading(newScene));
     }
-    private void Start()
-    {
-        StartCoroutine(ApplyCurrentState());
-    }
-    private IEnumerator ApplyCurrentState()
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
     {
         yield return null;
+
+        if (newScene == gameObject.scene)
+            ApplyCurrentState();
+    }
+
+    private void ApplyCurrentState()
+    {
         if (LSManager.Instance.HasInvasionStarted)
             HandleInvasion();
     }
