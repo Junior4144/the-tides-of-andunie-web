@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FireZoomToggle : MonoBehaviour
 {
@@ -8,14 +9,24 @@ public class FireZoomToggle : MonoBehaviour
 
     GameObject[] fireObjects;
     bool lastState = true;
-    private void OnEnable()
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        InSceneActivationManager.OnSceneActivated += CacheAnimation;
+        StartCoroutine(CheckAfterLoading(newScene));
     }
 
-    private void OnDisable()
+    private IEnumerator CheckAfterLoading(Scene newScene)
     {
-        InSceneActivationManager.OnSceneActivated -= CacheAnimation;
+        yield return null;
+
+        if (newScene == gameObject.scene)
+        {
+            CacheAnimation();
+        }
+
     }
     private void Start()
     {

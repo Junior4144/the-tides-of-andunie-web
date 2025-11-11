@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LSImageInvasion : MonoBehaviour
@@ -13,13 +15,24 @@ public class LSImageInvasion : MonoBehaviour
         uiImage = GetComponent<Image>();
     }
 
-    private void OnEnable()
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        LSManager.UpdateVillageInvasionStatus += HandleInvasion;
+        StartCoroutine(CheckAfterLoading(newScene));
     }
-    private void OnDisable()
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
     {
-        LSManager.UpdateVillageInvasionStatus -= HandleInvasion;
+        yield return null;
+
+        if (newScene == gameObject.scene)
+        {
+            HandleInvasion();
+        }
+
     }
 
     private void HandleInvasion()

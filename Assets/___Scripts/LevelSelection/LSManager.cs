@@ -30,7 +30,6 @@ public class LSManager : MonoBehaviour
     public bool startGlobalInvasion = false;
 
     public event Action<string, VillageState> OnVillageStateChanged;
-    public static event Action UpdateVillageInvasionStatus;
 
     public bool HasInvasionStarted => invasionStarted;
 
@@ -41,26 +40,20 @@ public class LSManager : MonoBehaviour
         Instance = this;
 
     }
-    private void OnEnable() => InSceneActivationManager.OnSceneActivated += LevelSelectorActive;
 
     private void Start()
     {
         if (startGlobalInvasion)
         {
             TriggerGlobalInvasion();
-            LevelSelectorActive();
         }
         else if (SceneManager.GetActiveScene().name == "LevelSelector")
         {
             Debug.Log("[LS Manager] LSManager started inside LevelSelector — manual invoke");
-            LevelSelectorActive();
         }
 
     }
-    private void LevelSelectorActive()
-    {
-        UpdateVillageInvasionStatus?.Invoke();
-    }
+
     public void SetVillageState(string villageId, VillageState newState)
     {
         for (int i = 0; i < villages.Count; i++)

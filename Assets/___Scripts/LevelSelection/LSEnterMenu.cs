@@ -13,4 +13,16 @@ public class LSEnterMenu : MonoBehaviour
 
         LSUIManager.Instance.ButtonClicked();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (Clicked) return;
+
+            Clicked = true;
+            Debug.Log("[LevelSelectionMenu] Button Clicked");
+
+            LSUIManager.Instance.ButtonClicked();
+        }
+    }
 }
