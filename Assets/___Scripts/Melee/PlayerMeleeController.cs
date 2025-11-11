@@ -11,7 +11,7 @@ public class PlayerMeleeController : MonoBehaviour
     [SerializeField] private AudioClip _attackSound;
 
     private bool _isAttacking = false;
-
+    public float AttackDuration => _animDuration; // exposes animation time
     [SerializeField] private PlayerAnimator _animator;
     private AudioSource _audioSource;
 
@@ -82,5 +82,10 @@ public class PlayerMeleeController : MonoBehaviour
     {
         yield return new WaitForSeconds(_animDuration);
         _isAttacking = false;
+    }
+
+    public void TriggerAttackExternal()
+    {
+        PlayAttackAnimation();
     }
 }
