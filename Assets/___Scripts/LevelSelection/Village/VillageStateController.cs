@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VillageStateController : MonoBehaviour
 {
@@ -11,18 +12,27 @@ public class VillageStateController : MonoBehaviour
     [SerializeField] private GameObject invadedObjects;
     [SerializeField] private GameObject liberatedObjects;
 
-    private void OnDisable() => LSManager.Instance.OnVillageStateChanged -= HandleVillageStateChanged;
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
-    private void Start()
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        LSManager.Instance.OnVillageStateChanged += HandleVillageStateChanged;
-        StartCoroutine(HandleVillageStateChanged());
+        StartCoroutine(CheckAfterLoading(newScene));
+    }
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
+    {
+        yield return null;
+
+        if (newScene == gameObject.scene)
+            StartCoroutine(HandleVillageStateChanged());
     }
 
     private IEnumerator HandleVillageStateChanged()
     {
         yield return null;
-        ApplyCurrentState(); // Hydrate when scene loads
+        ApplyCurrentState();
     }
 
     private void ApplyCurrentState()
@@ -31,13 +41,6 @@ public class VillageStateController : MonoBehaviour
         ApplyState(state);
     }
 
-    private void HandleVillageStateChanged(string id, VillageState newState)
-    {
-        if (id != villageId)
-            return;
-
-        ApplyState(newState);
-    }
 
     private void ApplyState(VillageState state)
     {
