@@ -145,13 +145,13 @@ public class UIManager : MonoBehaviour
         if (_inventoryUI.activeInHierarchy)
         {
             _inventoryUI.SetActive(false);
-            UIEvents.OnInventoryDeactivated.Invoke();
+            UIEvents.OnInventoryDeactivated?.Invoke();
             return;
         }
 
         HideAll();
         _inventoryUI.SetActive(true);
-        UIEvents.OnInventoryActive.Invoke();
+        UIEvents.OnInventoryActive?.Invoke();
     }
 
     private void ToggleShop()
