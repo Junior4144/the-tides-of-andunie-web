@@ -24,8 +24,6 @@ public class MusketBallProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (!collision.CompareTag("Player")) return;
-
         if (collision.TryGetComponent(out IHealthController health))
         {
             Debug.Log($"[MusketBallProjectile] Damage dealt {_pirateAttributes.DamageAmount}");
@@ -33,6 +31,9 @@ public class MusketBallProjectile : MonoBehaviour
             SpawnHitEffect(collision.transform.position);
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Environment"))
+            Destroy(gameObject);
     }
 
     void SpawnHitEffect(Vector2 enemyPos)
