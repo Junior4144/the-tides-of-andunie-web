@@ -233,8 +233,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.183, y: -0.139}
-  m_Radius: 0.5250422
+  m_Offset: {x: 0.3493824, y: -0.139}
+  m_Radius: 0.44347954
 --- !u!114 &8173482558996013957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +416,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
+  _impulseResistance: 0
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!82 &2353178238684322129
@@ -543,7 +544,7 @@ Transform:
   m_GameObject: {fileID: 7167166922215077084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalPosition: {x: 0.3493824, y: -0.139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -584,7 +585,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5250422
+  m_Radius: 0.4434795
 --- !u!114 &492306473968912052
 MonoBehaviour:
   m_ObjectHideFlags: 0
