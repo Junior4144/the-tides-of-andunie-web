@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _healthBarHUD;
     [SerializeField] private GameObject _coinHUD;
     [SerializeField] private GameObject _CombatHUD;
-
+    [SerializeField] private GameObject _PerkHUD;
 
     [Header("UI Groups")]
     [SerializeField] private GameObject _inventoryUI;
@@ -92,6 +92,7 @@ public class UIManager : MonoBehaviour
         _healthBarHUD.SetActive(true);
         _coinHUD.SetActive(!IsLevel0Stage1);
         _CombatHUD.SetActive(!IsLevel0Stage1);
+        _PerkHUD.SetActive(true);
 
         if (_shopUIPrefab)
             _shopUIPrefab.SetActive(true);
@@ -114,6 +115,7 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
         _UIPrefab.SetActive(false);
+        _PerkHUD.SetActive(false);
 
         if (_shopUIPrefab)
             _shopUIPrefab.SetActive(false);
@@ -125,6 +127,7 @@ public class UIManager : MonoBehaviour
         _healthBarHUD.SetActive(false);
         _coinHUD.SetActive(true);
         _CombatHUD.SetActive(false);
+        _PerkHUD.SetActive(true);
 
         if (_shopUIPrefab)
             _shopUIPrefab.SetActive(false);
@@ -145,13 +148,13 @@ public class UIManager : MonoBehaviour
         if (_inventoryUI.activeInHierarchy)
         {
             _inventoryUI.SetActive(false);
-            UIEvents.OnInventoryDeactivated.Invoke();
+            UIEvents.OnInventoryDeactivated?.Invoke();
             return;
         }
 
         HideAll();
         _inventoryUI.SetActive(true);
-        UIEvents.OnInventoryActive.Invoke();
+        UIEvents.OnInventoryActive?.Invoke();
     }
 
     private void ToggleShop()
