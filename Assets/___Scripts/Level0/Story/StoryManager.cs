@@ -10,11 +10,8 @@ public class StoryManager : MonoBehaviour
     [SerializeField] private GameObject playerHero;
     [SerializeField] private CameraTarget target;
 
-    [SerializeField]
     public CinemachineCamera playerCam;
-    [SerializeField]
     public CinemachineCamera cutsceneCam;
-    [SerializeField]
     public float cutsceneDuration = 3f;
 
     void Start() =>
