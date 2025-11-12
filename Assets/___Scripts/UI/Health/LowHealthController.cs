@@ -33,6 +33,13 @@ public class LowHealthController : MonoBehaviour
     {
         if (health == null) return;
 
+        if(!PlayerManager.Instance || health.GetPercentHealth() <= 0)
+        {
+            HideUI();
+            return;
+        }
+
+
         float hpPct = health.GetPercentHealth();
         if (hpPct <= lowHealthThreshold)
         {

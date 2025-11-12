@@ -28,6 +28,8 @@ public class PausedMenu : MonoBehaviour
         GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
         if (obj.TryGetComponent(out EndCurrentScene ecs))
             ecs.NextStage();
+        PlayerManager.Instance.HandleDestroy();
+        UIEvents.OnRequestPauseToggle?.Invoke();
     }
 
     public void HandleQuit() => Application.Quit();
