@@ -3,10 +3,9 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private PlayerAttributes _playerAttributes;
     [SerializeField] private PlayerAttackController attackScript;
     [SerializeField] private PlayerBowAttackController bowAttackScript;
-    [SerializeField] private float rotationSpeed = 8f;
     [SerializeField] private float mouseRotationSpeed = .25f;
 
     private Rigidbody2D PlayerRigidBody;
@@ -40,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (PlayerManager.Instance.IsInImpulse()) return;
         if (PlayerManager.Instance.AllowForceChange) return;
 
-        PlayerRigidBody.linearVelocity = movementInput * speed;
+        PlayerRigidBody.linearVelocity = movementInput * _playerAttributes.MovementSpeed;
         IsWalking = movementInput.magnitude > 0f;
 
         if (!bowAttackScript.IsAttacking)
@@ -57,21 +56,19 @@ public class PlayerController : MonoBehaviour
     {
         if (movementInput == Vector2.zero) return;
 
-        // Calculate angle based on input
         float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
 
-        // Snap to nearest 45° for 8-direction rotation
         float snappedAngle = Mathf.Round(angle / 45f) * 45f;
 
-        // Smoothly interpolate between current and target rotation
         float currentAngle = PlayerRigidBody.rotation;
         float targetAngle = snappedAngle - 90f;
 
         bool isDiagonal = Mathf.Abs(movementInput.x) > 0 && Mathf.Abs(movementInput.y) > 0;
-        float adjustedRotationSpeed = isDiagonal ? rotationSpeed * 2f : rotationSpeed;
+        float adjustedRotationSpeed = isDiagonal ? _playerAttributes.RotationSpeed * 2f : _playerAttributes.RotationSpeed;
         float newAngle = Mathf.LerpAngle(currentAngle, targetAngle, adjustedRotationSpeed * Time.fixedDeltaTime);
         PlayerRigidBody.MoveRotation(newAngle);
     }
+
     void RotateHand()
     {
         float targetAngle = Utility.AngleTowardsMouse(transform.position);
