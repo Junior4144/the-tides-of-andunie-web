@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4062567661424980138}
   - component: {fileID: 8291384871968475307}
   - component: {fileID: 4373427025894550049}
-  - component: {fileID: 5872225934990423343}
+  - component: {fileID: 3921766265262778496}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: -1736753453
   m_SortingLayer: 5
   m_SortingOrder: 2
-  m_Sprite: {fileID: -7759195891731154242, guid: a78bf8922e16d6a42a3e8711c726116d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5939ef1144acaa8448a9c2e517be5496, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ Animator:
   m_GameObject: {fileID: 1144046938482481253}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0737446479554cd4396ac4c8029de332, type: 2}
+  m_Controller: {fileID: 9100000, guid: 587c0fb5dfa15c043bf0fb3d79e52f1c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -114,7 +114,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5872225934990423343
+--- !u!114 &3921766265262778496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,11 +123,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1144046938482481253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da9780426e8796459628c651fff03e5, type: 3}
+  m_Script: {fileID: 11500000, guid: f8755567ce3d01f448dd9551edc39ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   _attackAnimDuration: 0.8
-  _holdFireAnimDuration: 0.5
 --- !u!1 &2414929219598591556
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +138,7 @@ GameObject:
   - component: {fileID: 9023802815190566812}
   - component: {fileID: 1679375051026600605}
   - component: {fileID: 4282633334358945477}
-  - component: {fileID: 5808740301656882158}
+  - component: {fileID: 8173482558996013957}
   - component: {fileID: 4437606236323662381}
   - component: {fileID: 3078299891360862109}
   - component: {fileID: 2932266778712435343}
@@ -149,7 +148,7 @@ GameObject:
   - component: {fileID: 2056593289033230119}
   - component: {fileID: 2353178238684322129}
   m_Layer: 6
-  m_Name: RangedPirate
+  m_Name: ArcherPirate
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +235,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.183, y: -0.139}
   m_Radius: 0.5250422
---- !u!114 &5808740301656882158
+--- !u!114 &8173482558996013957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,17 +244,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2414929219598591556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dc21cd0e25b8a44c83e22bdc0f98c09, type: 3}
+  m_Script: {fileID: 11500000, guid: 522bb9712a08fe24b976c682c9998685, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::ArcherPirateMovement
   _attackAnimDuration: 0.9
-  _holdFireAnimDuration: 0.5
   _attributes: {fileID: 11400000, guid: f20cf1ef13a1b2d448e71639a1b36a3c, type: 2}
-  ProjectilePrefab: {fileID: 8293163787298628046, guid: 39cb029e64427e74191d3ebfa3a764fc, type: 3}
+  ProjectilePrefab: {fileID: 8293163787298628046, guid: 949c9345bf9a37d47aa4a6502fda81ae, type: 3}
   firePoint: {fileID: 7461889038036150525}
-  fireShotSound: {fileID: 8300000, guid: 3719a491393b7cb45a0c5eb9c704d83c, type: 3}
+  fireShotSound: {fileID: 0}
   fireCooldown: 1
-  HoldFireCooldown: 0.4
   impulseForce: 10
   impulseDuration: 0
 --- !u!114 &4437606236323662381

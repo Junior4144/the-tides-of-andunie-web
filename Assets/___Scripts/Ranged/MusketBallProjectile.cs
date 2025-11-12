@@ -6,7 +6,7 @@ public class MusketBallProjectile : MonoBehaviour
 
     [SerializeField] GameObject hitEffectPrefab;
 
-    [SerializeField] private RangedPirateAttributes _pirateAttributes;
+    [SerializeField] private PirateAttributes _pirateAttributes;
 
     private Rigidbody2D _rb;
 
@@ -25,7 +25,7 @@ public class MusketBallProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        Debug.Log($"Projectile hit {collision.name}");
         if (collision.TryGetComponent(out IHealthController health))
         {
             if (hasDamage) return;
