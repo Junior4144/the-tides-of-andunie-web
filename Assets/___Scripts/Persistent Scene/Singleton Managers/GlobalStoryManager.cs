@@ -19,5 +19,9 @@ public class GlobalStoryManager : MonoBehaviour
     public bool playLSInvasionCutscene = false;
     public bool Village1Liberated = false;
     #endregion
+
+    #region WayPoint
+    public bool showWaypoints = false;
+    #endregion
 }
 
