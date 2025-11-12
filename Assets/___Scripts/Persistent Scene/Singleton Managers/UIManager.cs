@@ -15,6 +15,9 @@ public static class UIEvents
     public static Action OnRewardActive;
     public static Action OnRewardDeactivated;
 
+    public static Action OnPauseMenuActive;
+    public static Action OnPauseMenuDeactivated;
+
 }
 
 public class UIManager : MonoBehaviour
@@ -193,9 +196,15 @@ public class UIManager : MonoBehaviour
     private void TogglePause()
     {
         if (_isPaused)
+        {
+            UIEvents.OnPauseMenuDeactivated.Invoke();
             Resume();
+        }
         else
+        {
+            UIEvents.OnPauseMenuActive.Invoke();
             Pause();
+        }
     }
 
     private void Pause()
