@@ -208,7 +208,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6115477345102268318}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
   m_Name: 
@@ -264,9 +264,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2978445155208571297}
   - component: {fileID: 8478277885483609049}
+  - component: {fileID: 3138905990582460080}
   m_Layer: 6
   m_Name: ImpulseCollider
-  m_TagString: CannonBall
+  m_TagString: ImpulseSource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,3 +323,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.0999999, y: -0.001681507}
   m_Radius: 0.4402797
+--- !u!114 &3138905990582460080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093640348601350042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
+  _impulseforce: 30
+  impulseDuration: 0.5
+  playSound: 1
+  spawnParticles: 1
