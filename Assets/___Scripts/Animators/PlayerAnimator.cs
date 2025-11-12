@@ -8,7 +8,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private float _attackAnimDuration = 0.5f;
     [SerializeField] private float _minIdleInterval = 5f;
     [SerializeField] private float _maxIdleInterval = 15f;
-    [SerializeField] [Range(0f, 1f)] private float _specialIdleChance = 0.3f;
+    //[SerializeField] [Range(0f, 1f)] private float _specialIdleChance = 0.3f;
     [SerializeField] private float _idleAngryDuration = 1f;
     [SerializeField] private float _idleAxeDuration = 1f;
     [SerializeField] private float _idleWindDuration = 1f;
