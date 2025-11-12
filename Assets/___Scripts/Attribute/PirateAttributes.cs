@@ -8,13 +8,10 @@ public class PirateAttributes : ScriptableObject
     public float RotationSpeed { get; private set; }
     
     [field: SerializeField]
-    public float Speed { get; private set; }
+    public float MovementSpeed { get; private set; }
 
     [field: SerializeField]
     public float Health { get; private set; }
-
-    [field: SerializeField]
-    public float PlayerAwarenessDistance { get; private set; }
 
     [field: SerializeField]
     public float DamageAmount { get; private set; }
@@ -22,6 +19,4 @@ public class PirateAttributes : ScriptableObject
     [field: SerializeField]
     [field: Range(0, 1)]
     public float ChanceOfCollectableDrop { get; private set; }
-
-
 }

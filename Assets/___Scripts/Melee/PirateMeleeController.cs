@@ -6,7 +6,7 @@ public class PirateMeleeController : MonoBehaviour
     [SerializeField] private PirateAttributes _pirateAttributes;
     [SerializeField] private MeleeEnemyAnimator _animator;
 
-    [SerializeField] private float _damageDelay = 0;
+    [SerializeField] private float _damageDelay = 0f;
     [SerializeField] private float _animDuration;
     [SerializeField] private float _damageRange = 2f;
 

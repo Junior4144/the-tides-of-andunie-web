@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 public abstract class HealthController : MonoBehaviour, IHealthController
 {
-    [SerializeField] protected float _currentHealth = 100;
-    [SerializeField] protected float _maxHealth = 100;
+    [HideInInspector] protected float _currentHealth = 100f;
+    [HideInInspector] protected float _maxHealth = 100f;
 
     public UnityEvent OnDied;
     public UnityEvent OnDamaged;
