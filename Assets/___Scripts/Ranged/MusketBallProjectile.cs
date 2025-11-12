@@ -25,7 +25,7 @@ public class MusketBallProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        Debug.Log($"Projectile hit {collision.name}");
         if (collision.TryGetComponent(out IHealthController health))
         {
             if (hasDamage) return;
