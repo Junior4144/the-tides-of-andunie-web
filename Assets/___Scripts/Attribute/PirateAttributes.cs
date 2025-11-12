@@ -17,6 +17,9 @@ public class PirateAttributes : ScriptableObject
     public float DamageAmount { get; private set; }
 
     [field: SerializeField]
+    public float ReadyDistance { get; private set; }
+
+    [field: SerializeField]
     [field: Range(0, 1)]
     public float ChanceOfCollectableDrop { get; private set; }
 }

@@ -6,7 +6,7 @@ public class MusketBallProjectile : MonoBehaviour
 
     [SerializeField] GameObject hitEffectPrefab;
 
-    [SerializeField] private RangedPirateAttributes _pirateAttributes;
+    [SerializeField] private PirateAttributes _pirateAttributes;
 
     private Rigidbody2D _rb;
 

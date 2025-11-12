@@ -8,7 +8,7 @@ public class RangedPirateMovement : MonoBehaviour
 
     [SerializeField] private float _attackAnimDuration = .9f;
     [SerializeField] private float _holdFireAnimDuration = 0.5f;
-    [SerializeField] private RangedPirateAttributes _attributes;
+    [SerializeField] private PirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;
@@ -129,12 +129,6 @@ public class RangedPirateMovement : MonoBehaviour
             
         else
             Debug.LogWarning("Animator is Null. Playing no Animation");
-    }
-
-    private IEnumerator ResetHoldFireAnimation()
-    {
-        yield return new WaitForSeconds(_holdFireAnimDuration);
-        _animator.SetPlayerInRange(false);
     }
 
     private void RotateTowardsMovementDirection()
