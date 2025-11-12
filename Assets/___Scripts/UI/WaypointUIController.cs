@@ -7,6 +7,12 @@ public class WaypointUIController : MonoBehaviour
 
     void Update()
     {
+        if (GlobalStoryManager.Instance != null && !GlobalStoryManager.Instance.showWaypoints)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         if (_target == null || Camera.main == null)
             return;
 
