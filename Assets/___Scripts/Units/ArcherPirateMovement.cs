@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
 
-public class RangedPirateMovement : MonoBehaviour
+public class ArcherPirateMovement : MonoBehaviour
 {
 
     [SerializeField] private float _attackAnimDuration = .9f;
@@ -15,23 +15,22 @@ public class RangedPirateMovement : MonoBehaviour
     private Transform player;
     private NavMeshAgent agent;
     private Rigidbody2D _rigidbody;
-    private RangedPirateAnimator _animator;
+    private ArcherPirateAnimator _animator;
     private AudioSource _audioSource;
     private ImpulseController _impulseController;
     private bool canFire = true;
-    private bool ifStillInRange = false;
+    //private bool ifStillInRange = false;
     public float fireCooldown = 1f;
-    public float HoldFireCooldown = 1f;
 
     public float impulseForce = 10f;
     public float impulseDuration = 0;
-    
+
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _animator = GetComponentInChildren<RangedPirateAnimator>();
+        _animator = GetComponentInChildren<ArcherPirateAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _impulseController = GetComponentInChildren<ImpulseController>();
         agent.updateRotation = false;
@@ -44,61 +43,41 @@ public class RangedPirateMovement : MonoBehaviour
 
         player = PlayerManager.Instance.transform;
         RotateTowardsPlayer();
-        
+
         float distance = Vector2.Distance(transform.position, player.position);
 
         if (distance <= _attributes.ReadyDistance && canFire)
         {
-            if(ifStillInRange)
-            {
-                StartCoroutine(initiateHoldFiringSequence());
-                PlayHoldFireAnimation();
-                return;
-            }
-
-            ifStillInRange = true;
-            StartCoroutine(initiateFiringSequence());
+            //ifStillInRange = true;
+            StartCoroutine(FireSequence());
             PlayAttackAnimation();
             return;
         }
 
         if (distance > _attributes.ReadyDistance)
         {
-            ifStillInRange = false;
-            _animator.SetPlayerInRange(false); // <-- Turn off FireHold when player leaves range
+            //ifStillInRange = false;
             RotateTowardsMovementDirection();
             agent.SetDestination(player.position);
         }
     }
 
-    private IEnumerator initiateFiringSequence()
+    private IEnumerator FireSequence()
     {
         canFire = false;
         agent.isStopped = true;
 
+        // Small delay for aim/animation sync
         yield return new WaitForSeconds(0.67f);
 
         Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
         ApplyImpulse();
 
-        _audioSource.PlayOneShot(fireShotSound);
+        if(fireShotSound)
+            _audioSource.PlayOneShot(fireShotSound);
+
         yield return new WaitForSeconds(fireCooldown);
-        agent.isStopped = false;
-        canFire = true;
-    }
 
-    private IEnumerator initiateHoldFiringSequence() //TODO USE VARIABLES INSTEAD OF REDOING CODE
-    {
-        canFire = false;
-        agent.isStopped = true;
-
-        yield return new WaitForSeconds(HoldFireCooldown);
-
-        Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
-        ApplyImpulse();
-
-        _audioSource.PlayOneShot(fireShotSound);
-        yield return new WaitForSeconds(HoldFireCooldown);
         agent.isStopped = false;
         canFire = true;
     }
@@ -111,7 +90,9 @@ public class RangedPirateMovement : MonoBehaviour
             StartCoroutine(ResetAttackAnimation());
         }
         else
+        {
             Debug.LogWarning("Animator is Null. Playing no Animation");
+        }
     }
 
     private IEnumerator ResetAttackAnimation()
@@ -119,16 +100,6 @@ public class RangedPirateMovement : MonoBehaviour
         yield return new WaitForSeconds(_attackAnimDuration);
     }
 
-    private void PlayHoldFireAnimation()
-    {
-        if (_animator)
-        {
-            _animator.SetPlayerInRange(true);
-        }
-            
-        else
-            Debug.LogWarning("Animator is Null. Playing no Animation");
-    }
 
     private void RotateTowardsMovementDirection()
     {

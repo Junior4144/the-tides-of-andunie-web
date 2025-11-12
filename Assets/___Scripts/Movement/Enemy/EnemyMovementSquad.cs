@@ -8,9 +8,6 @@ public class EnemyMovementSquad : MonoBehaviour
     private PlayerAwarenessController _playerAwarenessController;
     private Vector2 _targetDirection;
 
-    [SerializeField]
-    private PirateAttributes _pirateAttributes;
-
     private void Awake()
     {
         InitializeLeaderReferences();
@@ -57,8 +54,7 @@ public class EnemyMovementSquad : MonoBehaviour
 
     private void UpdateTargetDirection()
     {
-        if (_playerAwarenessController.AwareOfPlayer)
-            _targetDirection = _playerAwarenessController.DirectionToPlayer;
+        //REMOVED AWARENESS DISTANCE
     }
 
     private void RotateTowardsTarget()
@@ -66,13 +62,13 @@ public class EnemyMovementSquad : MonoBehaviour
         if (_targetDirection == Vector2.zero) return;
 
         Quaternion targetRotation = Quaternion.LookRotation(_leaderTransform.forward, _targetDirection);
-        Quaternion rotation = Quaternion.RotateTowards(_leaderTransform.rotation, targetRotation, _pirateAttributes.RotationSpeed * Time.deltaTime);
+        Quaternion rotation = Quaternion.RotateTowards(_leaderTransform.rotation, targetRotation,Time.deltaTime); // REMOVED PIRATE ATTRIBUTE
 
         _leaderRigidbody.SetRotation(rotation);
     }
 
     private void SetVelocity()
     {
-        _leaderRigidbody.linearVelocity = _leaderTransform.up * _pirateAttributes.Speed;
+        _leaderRigidbody.linearVelocity = _leaderTransform.up; // REMOVED PIRATE ATTRIBUTE
     }
 }

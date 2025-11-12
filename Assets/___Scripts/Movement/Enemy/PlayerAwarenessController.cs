@@ -20,6 +20,5 @@ public class PlayerAwarenessController : MonoBehaviour
 
     Vector2 _vectorToPlayer => _playerTransform.position - transform.position;
     public Vector2 DirectionToPlayer => _vectorToPlayer.normalized;
-    public bool AwareOfPlayer => _vectorToPlayer.magnitude <= _pirateAttributes.PlayerAwarenessDistance;
     
 }
