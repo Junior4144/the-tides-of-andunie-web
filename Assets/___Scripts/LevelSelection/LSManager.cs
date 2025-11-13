@@ -19,7 +19,7 @@ public class VillageData
     public VillageState state = VillageState.PreInvasion;
     public string SceneName;
     public int diffculty;
-    public RaidConfig raidConfig;
+    public RewardsConfig rewardConfig;
 }
 
 public class LSManager : MonoBehaviour
