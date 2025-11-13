@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +18,8 @@ public class VillageData
     public string id;
     public VillageState state = VillageState.PreInvasion;
     public string SceneName;
-
+    public int diffculty;
+    public RaidConfig raidConfig;
 }
 
 public class LSManager : MonoBehaviour
@@ -56,30 +58,30 @@ public class LSManager : MonoBehaviour
 
     public void SetVillageState(string villageId, VillageState newState)
     {
-        for (int i = 0; i < villages.Count; i++)
-        {
-            if (villages[i].id == villageId)
-            {
-                if (villages[i].state == newState)
-                    return;
+        var village = villages.Find(village => villageId == village.id);
 
-                villages[i].state = newState;
-                OnVillageStateChanged?.Invoke(villageId, newState);
-                return;
-            }
+        if (village == null)
+        {
+            Debug.LogError($"Village ID not found: {villageId}");
+            return;
         }
-        Debug.LogError($"Village ID not found: {villageId}");
+
+        village.state = newState;
+        OnVillageStateChanged?.Invoke(villageId, newState);
+        return;
     }
 
     public VillageState GetVillageState(string villageId)
     {
-        for (int i = 0; i < villages.Count; i++)
+        var village = villages.Find(village => village.id == villageId);
+
+        if (village == null)
         {
-            if (villages[i].id == villageId)
-                return villages[i].state;
+            Debug.LogError($"Village ID not found: {villageId}");
+            return VillageState.PreInvasion;
         }
-        Debug.LogError($"Village ID not found: {villageId}");
-        return VillageState.PreInvasion;
+
+        return village.state;
     }
 
     public void TriggerGlobalInvasion()
@@ -88,12 +90,10 @@ public class LSManager : MonoBehaviour
         invasionStarted = true;
 
         Debug.Log("Global Invasion Starting");
-        for (int i = 0; i < villages.Count; i++)
+        foreach (var village in villages)
         {
-            if (villages[i].id == "Village7") continue;
-
-            villages[i].state = VillageState.Invaded;
-            OnVillageStateChanged?.Invoke(villages[i].id, VillageState.Invaded);
+            village.state = VillageState.Invaded;
+            OnVillageStateChanged?.Invoke(village.id, VillageState.Invaded);
         }
     }
 

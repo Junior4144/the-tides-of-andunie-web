@@ -14,7 +14,7 @@ public class LevelSelection : MonoBehaviour
     public static event Action OnPlayerExitSelectionZone;
     public static event Action EnterLeaveVillageZone;
     public static event Action ExitLeaveVillageZone;
-    public static event Action<string, string> PlayerActivatedMenu;
+    public static event Action<string, string, bool> PlayerActivatedMenu;
 
     public string location = "DefaultSpawn";
 
@@ -56,9 +56,9 @@ public class LevelSelection : MonoBehaviour
     private void ProceedToNextStage()
     {
         if (isExit)
-            PlayerActivatedMenu?.Invoke("EXIT", location);
+            PlayerActivatedMenu?.Invoke("", location, isExit);
         else
-            PlayerActivatedMenu?.Invoke(villageId, location);
+            PlayerActivatedMenu?.Invoke(villageId, location, isExit);
     }
 
 }
