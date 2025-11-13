@@ -3396,13 +3396,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1742924750}
   m_HandleRect: {fileID: 219197717}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1845024321}
+        m_TargetAssemblyTypeName: AudioController, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &916903511
 GameObject:
   m_ObjectHideFlags: 0
@@ -6280,6 +6292,7 @@ GameObject:
   - component: {fileID: 1845024318}
   - component: {fileID: 1845024320}
   - component: {fileID: 1845024319}
+  - component: {fileID: 1845024321}
   m_Layer: 5
   m_Name: VolumePanel
   m_TagString: Untagged
@@ -6346,6 +6359,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845024317}
   m_CullTransparentMesh: 1
+--- !u!114 &1845024321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845024317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad97d44af991ae84cb8e54d421e8dcb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioController
+  audioMixer: {fileID: 24100000, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
+  masterSlider: {fileID: 844554185}
+  musicSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
 --- !u!1 &1868690663
 GameObject:
   m_ObjectHideFlags: 0
