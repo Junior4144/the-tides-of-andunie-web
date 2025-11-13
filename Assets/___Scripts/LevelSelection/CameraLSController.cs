@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-enum MouseButton { Left = 0, Right = 1, Middle = 2 }
+enum MouseButton { Left = 1, Right = 0, Middle = 2 }
 
 public class CameraLSController : MonoBehaviour
 {
