@@ -2519,7 +2519,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.1851892, y: 2.28889, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4220,6 +4220,7 @@ MonoBehaviour:
   _healthBarHUD: {fileID: 1196949929}
   _coinHUD: {fileID: 1391784849}
   _CombatHUD: {fileID: 2027680473}
+  _PerkHUD: {fileID: 1293513845}
   _inventoryUI: {fileID: 1233555071}
   _pauseUI: {fileID: 952897575}
 --- !u!1 &1196949929
@@ -4419,6 +4420,7 @@ MonoBehaviour:
   playTownhallCutscene: 1
   playLSInvasionCutscene: 0
   Village1Liberated: 0
+  showWaypoints: 1
 --- !u!1 &1291431289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4555,11 +4557,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7505792376748114536, guid: fcf624685f9c404488f58734a0503e36, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcf624685f9c404488f58734a0503e36, type: 3}
+--- !u!1 &1293513845 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7505792376748114536, guid: fcf624685f9c404488f58734a0503e36, type: 3}
+  m_PrefabInstance: {fileID: 1293513844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1329781675
 GameObject:
   m_ObjectHideFlags: 0
@@ -6735,7 +6746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2130455193380620311
 MonoBehaviour:
   m_ObjectHideFlags: 0

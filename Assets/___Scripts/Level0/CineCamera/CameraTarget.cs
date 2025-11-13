@@ -2,54 +2,49 @@ using UnityEngine;
 
 public class CameraTarget : MonoBehaviour
 {
+    private Transform playerTransform;
 
-    [SerializeField] private float baseScrollSpeed = 5f;
-    [SerializeField] private float yInfluence = 0.5f;
-    [SerializeField] private float catchupMultiplier = 2f;
-    [SerializeField] private float maxDistanceBeforeBoost = 3f;
+    [Header("Horizontal Auto-Scroll Settings")]
+    public float baseScrollSpeed = 5f;
+    public float slowdownRange = 5f;
+    public float minScrollSpeed = 1f;
 
-    private Transform player;
-    private Rigidbody2D playerRb;
-    private float currentX;
+    [Header("Vertical Follow Settings")]
+    public float yFollowSpeed = 3f;
+    public bool smoothFollow = true;
 
     void Start()
     {
-        player = PlayerManager.Instance.GetPlayerTransform();
-        playerRb = player.GetComponent<Rigidbody2D>();
-        currentX = transform.position.x;
+        playerTransform = PlayerManager.Instance.GetPlayerTransform();
     }
 
     void Update()
     {
-        if (player == null || playerRb == null) return;
+        if (playerTransform == null) return;
 
-        float adjustedSpeed = CalculateXAxisMovement();
-        currentX += -adjustedSpeed * Time.deltaTime;
-        HandleYAxisMovement();
-    }
+        Vector3 targetPosition = transform.position;
 
-    private float CalculateXAxisMovement()
-    {
-        player = PlayerManager.Instance.GetPlayerTransform();
-        // Base scrolling speed (decreased by vertical movement)
-        float adjustedSpeed = baseScrollSpeed - Mathf.Abs(playerRb.linearVelocity.y) * yInfluence;
-        adjustedSpeed = Mathf.Max(0f, adjustedSpeed);
+        float distanceBehind = playerTransform.position.x - transform.position.x;
+        float speed = baseScrollSpeed;
 
-        // Calculate distance between camera target and player
-        float distance = player.position.x - transform.position.x;
-
-        // If the player is close to overtaking (ahead), speed up scrolling
-        if (distance > 0)
+        if (distanceBehind > 0)
         {
-            float boostFactor = Mathf.Clamp01(distance / maxDistanceBeforeBoost);
-            adjustedSpeed += boostFactor * catchupMultiplier;
+            float t = Mathf.Clamp01(distanceBehind / slowdownRange);
+            speed = Mathf.Lerp(baseScrollSpeed, minScrollSpeed, t);
         }
 
-        return adjustedSpeed;
-    }
+        targetPosition.x -= speed * Time.deltaTime;
 
-    private void HandleYAxisMovement()
-    {
-        transform.position = new Vector3(currentX, player.position.y, transform.position.z);
+
+        if (smoothFollow)
+        {
+            targetPosition.y = Mathf.Lerp(transform.position.y, playerTransform.position.y, Time.deltaTime * yFollowSpeed);
+        }
+        else
+        {
+            targetPosition.y = playerTransform.position.y;
+        }
+
+        transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
     }
 }

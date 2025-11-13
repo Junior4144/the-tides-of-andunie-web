@@ -9,6 +9,7 @@ public class RewardUIController : MonoBehaviour
     public GameObject rewardsPage;
     [SerializeField] private float hideDelay = 0.35f;
 
+
     void Start()
     {
         rewardsCanvas.SetActive(false);
@@ -21,7 +22,7 @@ public class RewardUIController : MonoBehaviour
             Debug.LogWarning("ShowRewards called, but no rewards were provided.");
             return;
         }
-
+        UIEvents.OnRewardActive.Invoke();
         rewardsCanvas.SetActive(true);
     }
 
@@ -38,6 +39,7 @@ public class RewardUIController : MonoBehaviour
 
     public void HideRewards()
     {
+        UIEvents.OnRewardDeactivated?.Invoke();
         StartCoroutine(HideRewardsAfterDelay());
     }
 
@@ -47,6 +49,7 @@ public class RewardUIController : MonoBehaviour
         rt.DOScale(0f, hideDelay).SetEase(Ease.InBack);
 
         yield return new WaitForSeconds(hideDelay);
+
 
         rewardsCanvas.SetActive(false);
     }

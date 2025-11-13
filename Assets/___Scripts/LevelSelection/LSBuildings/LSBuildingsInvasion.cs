@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LSBuildingsInvasion : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class LSBuildingsInvasion : MonoBehaviour
 
     [Header("Village Settings")]
     [SerializeField] private string villageId;
+    public string VillageId => villageId;
 
     private SpriteRenderer spriteRenderer;
 
@@ -29,7 +31,7 @@ public class LSBuildingsInvasion : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i).gameObject;
-            if (child.name == "VillagerSpawner")
+            if (child.name == "VillagerSpawner" || child.name == "Particle")
                 continue;
 
             list.Add(child);
@@ -38,13 +40,21 @@ public class LSBuildingsInvasion : MonoBehaviour
         firePositions = list.ToArray();
     }
 
-    private void OnEnable()
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        LSManager.UpdateVillageInvasionStatus += HandleInvasion;
+        StartCoroutine(CheckAfterLoading(newScene));
     }
-    private void OnDisable()
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
     {
-        LSManager.UpdateVillageInvasionStatus -= HandleInvasion;
+        yield return null;
+
+        if (newScene == gameObject.scene)
+            HandleInvasion();
     }
 
     private void HandleInvasion()

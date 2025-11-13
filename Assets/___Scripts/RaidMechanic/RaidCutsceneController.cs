@@ -26,7 +26,7 @@ public class RaidCutsceneController : MonoBehaviour
         }
         raidController.OnRaidTriggered += HandleRaidTriggered;
         if (RewardsExist())
-            RaidRewardManager.Instance.OnRewardCollected += PlayOutroCutscene;
+            RaidRewardManager.OnRewardCollected += PlayOutroCutscene;
         else
             raidController.OnRaidComplete += PlayOutroCutscene;
         
@@ -41,7 +41,7 @@ public class RaidCutsceneController : MonoBehaviour
         {
             raidController.OnRaidTriggered -= HandleRaidTriggered;
             if (RewardsExist())
-                RaidRewardManager.Instance.OnRewardCollected -= PlayOutroCutscene;
+                RaidRewardManager.OnRewardCollected -= PlayOutroCutscene;
             else
                 raidController.OnRaidComplete -= PlayOutroCutscene;
             

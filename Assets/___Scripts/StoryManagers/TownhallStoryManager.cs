@@ -61,6 +61,7 @@ public class TownhallStoryManager : MonoBehaviour
         {
             LSManager.Instance.TriggerGlobalInvasion();
             GlobalStoryManager.Instance.playLSInvasionCutscene = true;
+            GlobalStoryManager.Instance.showWaypoints = false;
             StartCutscene();
         }
         else
