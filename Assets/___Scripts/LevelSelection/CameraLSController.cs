@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-enum MouseButton { Left = 1, Right = 0, Middle = 2 }
+enum MouseButton { Left = 0, Right = 1, Middle = 2 }
 
 public class CameraLSController : MonoBehaviour
 {
@@ -35,10 +35,12 @@ public class CameraLSController : MonoBehaviour
 
     void Update()
     {
-        HandleDrag(MouseButton.Left);
+        HandleDrag(MouseButton.Right);
         HandleDrag(MouseButton.Middle);
-        HandleRightClickNav();
+        HandleLeftClick();
     }
+
+
     void HandleDrag(MouseButton button)
     {
         if (Input.GetMouseButtonDown((int)button))
@@ -74,14 +76,14 @@ public class CameraLSController : MonoBehaviour
         }
     }
 
-    void HandleRightClickNav()
+    void HandleLeftClick()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
             bool valid = NavMesh.SamplePosition(mouseWorld, out _, 0.3f, NavMesh.AllAreas);
 
-            if (valid)
+            if (valid || CameraManager.Instance.GetCamera().orthographicSize > 100)
             {
                 Cursor.SetCursor(validClickCursor, hotspot, CursorMode.Auto);
             }
@@ -91,7 +93,7 @@ public class CameraLSController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
         }
