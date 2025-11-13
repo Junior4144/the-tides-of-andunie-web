@@ -33,6 +33,7 @@ public class RegionOutlineController : MonoBehaviour
     {
         Outline.enabled = true;
         onClickOutline.enabled = true;
+        
     }
 
 }
