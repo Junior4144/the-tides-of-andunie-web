@@ -16,10 +16,13 @@ public enum VillageState
 public class VillageData
 {
     public string id;
-    public VillageState state = VillageState.PreInvasion;
+    public string villageName;
     public string SceneName;
     public int diffculty;
+    public VillageState state = VillageState.PreInvasion;
+    public Region region;
     public RewardsConfig rewardConfig;
+    
 }
 
 public class LSManager : MonoBehaviour
@@ -113,4 +116,11 @@ public class LSManager : MonoBehaviour
         Debug.LogError($"Village not found: {villageId}");
         return null;
     }
- }
+
+    public List<VillageData> GetVillagesByRegion(Region region)
+    {
+        return villages
+            .Where(village => village.region == region)
+            .ToList();
+    }
+}

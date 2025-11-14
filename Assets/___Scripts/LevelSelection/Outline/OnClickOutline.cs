@@ -9,6 +9,7 @@ public enum Region
     Hyarnustar,
     Andustar,
     Forostar,
+    None,
 }
 
 public class OnClickOutline : MonoBehaviour
