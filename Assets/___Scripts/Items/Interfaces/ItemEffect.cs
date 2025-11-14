@@ -6,7 +6,7 @@ public class ItemEffect : MonoBehaviour
 {
     [SerializeField] private StatType statType;
     [SerializeField] private float amount;
-    [SerializeField] private bool isPercentage;
+    public bool IsPercentage {get; private set; }
 
     public void Apply()
     {
@@ -30,7 +30,7 @@ public class ItemEffect : MonoBehaviour
     }
 
     private float CalculateNewValue(float currentValue) =>
-        isPercentage
+        IsPercentage
             ? currentValue * (1 + amount / 100f)
             : currentValue + amount;
 
@@ -70,7 +70,7 @@ public class ItemEffect : MonoBehaviour
     private string FormatEffectDescription(string statName)
     {
         var sign = amount >= 0 ? "+" : "";
-        var suffix = isPercentage ? "%" : "";
+        var suffix = IsPercentage ? "%" : "";
 
         return $"{sign}{amount}{suffix} {statName}";
     }
