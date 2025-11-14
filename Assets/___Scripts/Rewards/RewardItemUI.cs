@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class RewardItemUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text nameText;
+    [SerializeField] private Transform effectsContainer;
+    [SerializeField] private TMP_FontAsset effectFont;
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text ErrorText;
 
@@ -22,11 +25,76 @@ public class RewardItemUI : MonoBehaviour
         reward_listing = reward;
         rewardUIController = controller;
 
-        nameText.text = reward_listing.Item.ItemName;
-        icon.sprite = reward_listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
+        SetItemName();
+        SetItemIcon();
+        SetItemEffects();
 
         buyButton.onClick.AddListener(HandleRewardClick);
     }
+
+    private void SetItemName() =>
+        nameText.text = reward_listing.Item.ItemName;
+
+    private void SetItemIcon() =>
+        icon.sprite = reward_listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
+
+    private void SetItemEffects()
+    {
+        ClearExistingEffects();
+
+        var effects = reward_listing.Item.GetEffects();
+        if (effects == null || effects.Length == 0) return;
+
+        var sortedEffects = SortEffectsBySign(effects);
+        sortedEffects.ForEach(CreateEffectText);
+    }
+
+    private void ClearExistingEffects()
+    {
+        var existingEffects = effectsContainer.Cast<Transform>().ToList();
+        existingEffects.ForEach(child => Destroy(child.gameObject));
+    }
+
+    private System.Collections.Generic.List<ItemEffect> SortEffectsBySign(ItemEffect[] effects)
+    {
+        var positiveEffects = effects.Where(IsPositiveEffect).ToList();
+        var negativeEffects = effects.Where(effect => !IsPositiveEffect(effect)).ToList();
+
+        positiveEffects.AddRange(negativeEffects);
+        return positiveEffects;
+    }
+
+    private bool IsPositiveEffect(ItemEffect effect) =>
+        effect.ToString().StartsWith("+");
+
+    private void CreateEffectText(ItemEffect effect)
+    {
+        var textObject = new GameObject("EffectText");
+        textObject.transform.SetParent(effectsContainer, false);
+
+        var rectTransform = textObject.AddComponent<RectTransform>();
+        SetTextHeight(rectTransform);
+
+        var textComponent = textObject.AddComponent<TextMeshProUGUI>();
+        ConfigureTextComponent(textComponent, effect);
+    }
+
+    private void SetTextHeight(RectTransform rectTransform)
+    {
+        rectTransform.sizeDelta = new Vector2(125, 25);
+    }
+
+    private void ConfigureTextComponent(TextMeshProUGUI textComponent, ItemEffect effect)
+    {
+        textComponent.text = effect.ToString();
+        textComponent.font = effectFont;
+        textComponent.fontSize = 18;
+        textComponent.alignment = TextAlignmentOptions.Left;
+        textComponent.color = GetEffectColor(effect);
+    }
+
+    private Color GetEffectColor(ItemEffect effect) =>
+        IsPositiveEffect(effect) ? Color.green : Color.red;
 
     void HandleRewardClick()
     {
