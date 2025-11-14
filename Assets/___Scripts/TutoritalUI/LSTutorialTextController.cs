@@ -5,29 +5,38 @@ using UnityEngine;
 
 public class LSTutorialTextController : MonoBehaviour
 {
-    [SerializeField] GameObject Panel;
+    [Header("Panels (CanvasGroups)")]
+    [SerializeField] private List<CanvasGroup> panels = new List<CanvasGroup>();
+
+    [Header("Activate These Objects on Awake")]
+    [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
+
     [Header("Timings")]
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private float waitDuration = 2f;
 
-    [Header("Tutorial Steps")]
-    [SerializeField] private List<string> tutorialLines = new List<string>();
-
-    private TMP_Text tmp;
-
     private void Awake()
     {
-        Panel.SetActive(true);
-        tmp = GetComponentInChildren<TMP_Text>();
-        if (tmp == null)
-            Debug.LogError("No TMP_Text found in children!", this);
+        foreach (GameObject go in objectsToActivate)
+        {
+            if (go != null)
+                go.SetActive(true);
+        }
+
+        // Make all panels transparent immediately at startup
+        foreach (CanvasGroup cg in panels)
+        {
+            if (cg != null)
+                cg.alpha = 0f;
+        }
     }
 
     private void Start()
     {
-        if (GlobalStoryManager.Instance.enterLevelSelectorFirstTime == true)
+        if (GlobalStoryManager.Instance.enterLevelSelectorFirstTime)
         {
-            Panel.SetActive(false);
+            foreach (CanvasGroup cg in panels)
+                cg.alpha = 0f;
             return;
         }
 
@@ -38,34 +47,35 @@ public class LSTutorialTextController : MonoBehaviour
 
     private IEnumerator PlayTutorial()
     {
-        foreach (string line in tutorialLines)
+        // fade each panel one after another
+        foreach (CanvasGroup panel in panels)
         {
-            tmp.text = line;
+            // ensure it starts invisible
+            panel.alpha = 0f;
 
-            yield return Fade(0f, 1f);                // fade in
+            // fade in
+            yield return Fade(panel, 0f, 1f);
+
+            // wait while fully visible
             yield return new WaitForSeconds(waitDuration);
-            yield return Fade(1f, 0f);                // fade out
+
+            // fade out
+            yield return Fade(panel, 1f, 0f);
         }
     }
 
-    private IEnumerator Fade(float startAlpha, float endAlpha)
+    private IEnumerator Fade(CanvasGroup cg, float start, float end)
     {
         float t = 0f;
-        Color c = tmp.color;
-
-        c.a = startAlpha;
-        tmp.color = c;
 
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
             float blend = t / fadeDuration;
 
-            c.a = Mathf.Lerp(startAlpha, endAlpha, blend);
-            tmp.color = c;
+            cg.alpha = Mathf.Lerp(start, end, blend);
 
             yield return null;
         }
     }
 }
-
