@@ -6,7 +6,9 @@ public class ItemEffect : MonoBehaviour
 {
     [SerializeField] private StatType statType;
     [SerializeField] private float amount;
-    public bool IsPercentage {get; private set; }
+    [SerializeField] private bool _isPercentage;
+
+    public bool IsPercentage => _isPercentage;
 
     public void Apply()
     {
