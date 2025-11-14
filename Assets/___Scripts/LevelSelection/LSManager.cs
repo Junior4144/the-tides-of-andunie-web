@@ -95,6 +95,7 @@ public class LSManager : MonoBehaviour
         Debug.Log("Global Invasion Starting");
         foreach (var village in villages)
         {
+            if (village.id == "Level1") return;
             village.state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(village.id, VillageState.Invaded);
         }

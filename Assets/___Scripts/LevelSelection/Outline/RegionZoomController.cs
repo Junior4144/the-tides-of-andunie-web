@@ -20,12 +20,14 @@ public class RegionZoomController : MonoBehaviour
     {
         if (cam.orthographicSize <= 100f)
         {
+            if (playerMovement == null) return;
             playerMovement.enabled = true;
             ZoomBelow100?.Invoke();
         }
 
         if (cam.orthographicSize > 100f)
         {
+            if (playerMovement == null) return;
             playerMovement.enabled = false;
             ZoomAbove100?.Invoke();
         }
