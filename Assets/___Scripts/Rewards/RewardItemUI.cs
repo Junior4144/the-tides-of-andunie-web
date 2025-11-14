@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,16 +9,19 @@ public class RewardItemUI : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text ErrorText;
-    
+
     private RewardListing reward_listing;
+    private RewardUIController rewardUIController;
 
     private void Start() => ErrorText.gameObject.SetActive(false);
 
     private void OnDisable() => ErrorText.gameObject.SetActive(false);
 
-    public void SetData(RewardListing reward)
+    public void SetData(RewardListing reward, RewardUIController controller)
     {
-        this.reward_listing = reward;
+        reward_listing = reward;
+        rewardUIController = controller;
+
         nameText.text = reward_listing.Item.ItemName;
         icon.sprite = reward_listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
 
@@ -29,8 +30,8 @@ public class RewardItemUI : MonoBehaviour
 
     void HandleRewardClick()
     {
-        InventoryManager.Instance.AddItem(this.reward_listing.Item);
-        RaidRewardManager.Instance.RewardUI.HideRewards();
+        InventoryManager.Instance.AddItem(reward_listing.Item);
+        rewardUIController.HideRewards();
         RaidRewardManager.Instance.ReportRewardCollected();
     }
 
