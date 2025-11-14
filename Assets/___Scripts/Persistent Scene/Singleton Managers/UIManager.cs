@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
         UIEvents.OnRequestShopToggle += ToggleShop;
         UIEvents.OnRequestPauseToggle += TogglePause;
 
-}
+    }
 
     private IEnumerator Start()
     {
