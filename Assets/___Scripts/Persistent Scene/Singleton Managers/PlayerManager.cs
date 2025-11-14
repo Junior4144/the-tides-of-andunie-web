@@ -82,8 +82,16 @@ public class PlayerManager : MonoBehaviour
     //------MOVEMENT------//
     //public bool IsInDash() => _playerMovement.IsInDash();
     public bool IsInImpulse() => _impulseController.IsInImpulse();
-    
-    
+
+
     //------DESTROY------//
-    public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);    
+    public void HandleDestroy()
+    {
+        if (this == null) return;
+
+        if (TryGetComponent<DestroyController>(out var dc))
+        {
+            dc.Destroy(0f);
+        }
+    }
 }

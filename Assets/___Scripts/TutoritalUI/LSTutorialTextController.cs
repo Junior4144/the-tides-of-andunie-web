@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LSTutorialTextController : MonoBehaviour
 {
+    [SerializeField] private GameObject canvas;
+
     [Header("Panels (CanvasGroups)")]
     [SerializeField] private List<CanvasGroup> panels = new List<CanvasGroup>();
 
@@ -30,6 +32,15 @@ public class LSTutorialTextController : MonoBehaviour
                 cg.alpha = 0f;
         }
     }
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChanged += HandleOnGameStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= HandleOnGameStateChanged;
+    }
 
     private void Start()
     {
@@ -43,6 +54,18 @@ public class LSTutorialTextController : MonoBehaviour
         GlobalStoryManager.Instance.enterLevelSelectorFirstTime = true;
 
         StartCoroutine(PlayTutorial());
+    }
+
+    private void HandleOnGameStateChanged(GameState gameState)
+    {
+        if (gameState == GameState.Cutscene)
+        {
+            canvas.SetActive(false);
+        }
+        else if (gameState == GameState.Gameplay)
+        {
+            canvas.SetActive(true);
+        }
     }
 
     private IEnumerator PlayTutorial()
