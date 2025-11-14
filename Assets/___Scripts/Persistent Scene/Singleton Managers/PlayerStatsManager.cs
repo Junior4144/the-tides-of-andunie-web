@@ -45,10 +45,16 @@ public class PlayerStatsManager : MonoBehaviour
         OnMaxHealthChanged?.Invoke(newMaxHealth, _defaultMaxHealth);
     }
 
+    public void SetExplosionDamage(float newExplosionDamage)
+    {
+        ExplosionDamage = newExplosionDamage;
+    }
+
     public void ResetToDefaults()
     {
         MaxHealth = _defaultMaxHealth;
         MeleeDamage = _defaultMeleeDamage;
+        ExplosionDamage = _defaultExplosionDamage;
 
         OnMaxHealthChanged?.Invoke(_defaultMaxHealth, _defaultMaxHealth);
         OnDamageChanged?.Invoke(_defaultMeleeDamage, _defaultMeleeDamage);
