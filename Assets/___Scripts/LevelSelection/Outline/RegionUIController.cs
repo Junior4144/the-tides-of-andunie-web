@@ -168,17 +168,17 @@ public class RegionUIController : MonoBehaviour
             //Reward Panel
             UpdateVillageRewardIcons(i, villageData.rewardConfig);
 
-            if(villageData.state == VillageState.PreInvasion)
+            if(villageData.state == VillageState.PreInvasion 
+                || villageData.state == VillageState.Liberated_Done
+                || villageData.state == VillageState.Liberated_FirstTime)
             {
                 villageDiffPanels[i].SetActive(false);
                 villageRewardPanels[i].SetActive(false);
-
             }
             else
             {
                 villageDiffPanels[i].SetActive(true);
                 villageRewardPanels[i].SetActive(true);
-
             }
         }
     }
