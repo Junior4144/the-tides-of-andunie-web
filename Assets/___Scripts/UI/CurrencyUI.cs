@@ -13,7 +13,8 @@ public class CurrencyUI : MonoBehaviour
 
     private void OnDisable()
     {
-        CurrencyManager.Instance.OnCoinsChanged -= UpdateUI;
+        if (CurrencyManager.Instance != null)
+            CurrencyManager.Instance.OnCoinsChanged -= UpdateUI;
     }
 
     private void UpdateUI(int newAmount)

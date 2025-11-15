@@ -90,7 +90,19 @@ public class RegionUIController : MonoBehaviour
             HandleOrrostarPanel(region);
         }
 
-        RegionPanel.SetActive(!RegionPanel.activeSelf);
+        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
+
+        if (scaler.IsAnimating)
+            return;
+
+        if (RegionPanel.activeSelf)
+        {
+            scaler.HideWithScale();
+        }
+        else
+        {
+            RegionPanel.SetActive(true);
+        }
     }
     private void OnZoomBelow100()
     {
