@@ -113,7 +113,7 @@ public class WeaponManager : MonoBehaviour
         currentSceneName = SceneManager.GetActiveScene().name;
 
 
-        if (newState != GameState.Gameplay || currentSceneName == "Level0Stage1" || currentSceneName == "Level1")
+        if (newState != GameState.Gameplay)
         {
             Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
             IsBusy = true;
@@ -126,29 +126,6 @@ public class WeaponManager : MonoBehaviour
             HandleEquipRequest(WeaponType.Axe);
         }
     }
-
-    //private void OnSceneChanged(Scene oldScene, Scene newScene)
-    //{
-    //    currentSceneName = newScene.name;
-
-    //    bool shouldDisable = currentSceneName == "Level0Stage1" || currentSceneName == "Level1";
-
-    //    if (shouldDisable)
-    //    {
-    //        Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
-    //        IsBusy = true;
-    //        SetWeaponToNone();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log($"Scene '{currentSceneName}' detected — enabling weapons if gameplay.");
-    //        IsBusy = false;
-
-    //        HandleEquipRequest(WeaponType.Axe);
-
-    //    }
-    //}
-
     private void SetWeaponToNone()
     {
         if (currentWeapon != WeaponType.none)

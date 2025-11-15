@@ -79,6 +79,9 @@ public class UIManager : MonoBehaviour
             case GameState.PeacefulGameplay:
                 PeacefulGameplay();
                 break;
+            case GameState.Stage1Gameplay:
+                Stage1UI();
+                break;
             case GameState.Menu:
                 ShowMenuUI();
                 break;
@@ -102,6 +105,18 @@ public class UIManager : MonoBehaviour
 
         if (_shopUIPrefab)
             _shopUIPrefab.SetActive(true);
+    }
+
+    private void Stage1UI()
+    {
+        _UIPrefab.SetActive(false);
+        _healthBarHUD.SetActive(true);
+        _coinHUD.SetActive(false);
+        _CombatHUD.SetActive(false);
+        _PerkHUD.SetActive(false);
+
+        if (_shopUIPrefab)
+            _shopUIPrefab.SetActive(false);
     }
 
     private void PeacefulGameplay()

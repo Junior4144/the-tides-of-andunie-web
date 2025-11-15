@@ -7,7 +7,8 @@ public enum GameState
     Paused,
     Menu,
     LevelSelector,
-    PeacefulGameplay
+    PeacefulGameplay,
+    Stage1Gameplay
 }
 
 public class GameManager : MonoBehaviour
