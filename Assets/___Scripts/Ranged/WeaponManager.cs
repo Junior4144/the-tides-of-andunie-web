@@ -48,7 +48,7 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest += HandleEquipRequest;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
-        SceneManager.activeSceneChanged += OnSceneChanged;
+        //SceneManager.activeSceneChanged += OnSceneChanged;
 
         UIEvents.OnInventoryActive += HandlePopUpUIActive;
         UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
@@ -64,7 +64,7 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
-        SceneManager.activeSceneChanged -= OnSceneChanged;
+        //SceneManager.activeSceneChanged -= OnSceneChanged;
 
         UIEvents.OnInventoryActive -= HandlePopUpUIActive;
         UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
@@ -127,27 +127,27 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    private void OnSceneChanged(Scene oldScene, Scene newScene)
-    {
-        currentSceneName = newScene.name;
+    //private void OnSceneChanged(Scene oldScene, Scene newScene)
+    //{
+    //    currentSceneName = newScene.name;
 
-        bool shouldDisable = currentSceneName == "Level0Stage1" || currentSceneName == "Level1";
+    //    bool shouldDisable = currentSceneName == "Level0Stage1" || currentSceneName == "Level1";
 
-        if (shouldDisable)
-        {
-            Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
-            IsBusy = true;
-            SetWeaponToNone();
-        }
-        else
-        {
-            Debug.Log($"Scene '{currentSceneName}' detected — enabling weapons if gameplay.");
-            IsBusy = false;
+    //    if (shouldDisable)
+    //    {
+    //        Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
+    //        IsBusy = true;
+    //        SetWeaponToNone();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log($"Scene '{currentSceneName}' detected — enabling weapons if gameplay.");
+    //        IsBusy = false;
 
-            HandleEquipRequest(WeaponType.Axe);
+    //        HandleEquipRequest(WeaponType.Axe);
 
-        }
-    }
+    //    }
+    //}
 
     private void SetWeaponToNone()
     {
@@ -185,6 +185,12 @@ public class WeaponManager : MonoBehaviour
                 EquipWeapon(queuedWeapon);
             }
         }
+    }
+
+    public void DisableWeapon()
+    {
+        IsBusy = true;
+        SetWeaponToNone();
     }
 
     public WeaponType GetCurrentWeapon()

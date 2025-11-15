@@ -8,8 +8,8 @@ public enum VillageState
 {
     PreInvasion,
     Invaded,
-    Liberated_FirstTime,   // cutscene not yet played
-    Liberated_Done         // cutscene already played
+    Liberated_FirstTime,
+    Liberated_Done
 }
 
 [Serializable]
@@ -37,7 +37,6 @@ public class LSManager : MonoBehaviour
     public event Action<string, VillageState> OnVillageStateChanged;
 
     public bool HasInvasionStarted => invasionStarted;
-
 
     void Awake()
     {
@@ -95,7 +94,7 @@ public class LSManager : MonoBehaviour
         Debug.Log("Global Invasion Starting");
         foreach (var village in villages)
         {
-            if (village.id == "Level1") return;
+            if (village.id == "Level1") continue;
             village.state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(village.id, VillageState.Invaded);
         }
@@ -123,5 +122,20 @@ public class LSManager : MonoBehaviour
         return villages
             .Where(village => village.region == region)
             .ToList();
+    }
+
+    public float GetLiberatedVillageAmount()
+    {
+        return villages.Count(village =>
+            village.state == VillageState.Liberated_FirstTime ||
+            village.state == VillageState.Liberated_Done
+        );
+    }
+
+    public float GetTotalPlayerableVillage()
+    {
+        return villages.Count(village =>
+            village.state != VillageState.PreInvasion
+        );
     }
 }
