@@ -118,8 +118,22 @@ public class RegionUIController : MonoBehaviour
     }
     private void OnZoomBelow100()
     {
-        RegionPanel.SetActive(false);
-        RegionCanvas.SetActive(false);
+        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
+
+        if (scaler != null && scaler.IsAnimating)
+            return;
+
+        if (RegionPanel.activeSelf)
+        {
+            if (scaler != null)
+            {
+                scaler.HideWithScale();
+            }
+            else
+            {
+                RegionPanel.SetActive(false);
+            }
+        }
     }
 
     private void OnZoomAbove100()

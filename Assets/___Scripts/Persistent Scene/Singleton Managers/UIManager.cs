@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
                 Stage1UI();
                 break;
             case GameState.Menu:
-                ShowMenuUI();
+                ShowMainMenuUI();
                 break;
             case GameState.Paused:
             case GameState.Cutscene:
@@ -131,11 +131,11 @@ public class UIManager : MonoBehaviour
             _shopUIPrefab.SetActive(true);
     }
 
-    private void ShowMenuUI()
+    private void ShowMainMenuUI()
     {
         _UIPrefab.SetActive(true);
         _healthBarHUD.SetActive(false);
-        _coinHUD.SetActive(true);
+        _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
         _PerkHUD.SetActive(true);
 
