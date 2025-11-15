@@ -15,9 +15,13 @@ public class RegionUIController : MonoBehaviour
 
     //Status Panel
     private List<TextMeshProUGUI> villageStatusTexts = new();
+    private List<GameObject> villageStatusImages = new();
 
     //Reward Panel
     private List<List<GameObject>> villageRewardObjects = new();
+
+    private List<GameObject> villageDiffPanels = new();
+    private List<GameObject> villageRewardPanels = new();
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class RegionUIController : MonoBehaviour
 
             // ------ Skull Panel ------
             var skullPanel = panel.transform.Find("TitlePanel/SkullPanel");
+            villageDiffPanels.Add(skullPanel.gameObject);
 
             List<GameObject> skulls = new();
 
@@ -48,7 +53,11 @@ public class RegionUIController : MonoBehaviour
 
             villageDifficultyObjects.Add(skulls);
 
-            // ------ Reward Text ------
+            // ------ Status Text ------
+            var mainStatusImagePanel = panel.transform.Find("StatusPanel/ImagePanel");
+            villageStatusImages.Add(mainStatusImagePanel.gameObject);
+            
+
             var statusText = panel.transform
                 .Find("StatusPanel/Panel/Text (TMP)")
                 .GetComponent<TextMeshProUGUI>();
@@ -66,6 +75,9 @@ public class RegionUIController : MonoBehaviour
             }
 
             villageRewardObjects.Add(rewards);
+
+            var mainRewardPanel = panel.transform.Find("RewardsPanel");
+            villageRewardPanels.Add(mainRewardPanel.gameObject);
         }
     }
     private void OnEnable()
@@ -130,8 +142,30 @@ public class RegionUIController : MonoBehaviour
             //Status Panel
             villageStatusTexts[i].text = $"Status:   {GetVillageStatusText(villageData.state)}";
 
+            if (villageData.state == VillageState.Invaded)
+            {
+                villageStatusImages[i].SetActive(true);
+            }
+            else
+            {
+                villageStatusImages[i].SetActive(false);
+            }
+
             //Reward Panel
             UpdateVillageRewardIcons(i, villageData.rewardConfig);
+
+            if(villageData.state == VillageState.PreInvasion)
+            {
+                villageDiffPanels[i].SetActive(false);
+                villageRewardPanels[i].SetActive(false);
+
+            }
+            else
+            {
+                villageDiffPanels[i].SetActive(true);
+                villageRewardPanels[i].SetActive(true);
+
+            }
         }
     }
 

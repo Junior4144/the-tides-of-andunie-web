@@ -135,7 +135,7 @@ public class LSManager : MonoBehaviour
     public float GetTotalPlayerableVillage()
     {
         return villages.Count(village =>
-            village.state != VillageState.PreInvasion
+            village.region != Region.None
         );
     }
 }
