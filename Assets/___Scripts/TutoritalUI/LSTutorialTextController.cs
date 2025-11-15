@@ -51,8 +51,6 @@ public class LSTutorialTextController : MonoBehaviour
             return;
         }
 
-        GlobalStoryManager.Instance.enterLevelSelectorFirstTime = true;
-
         StartCoroutine(PlayTutorial());
     }
 

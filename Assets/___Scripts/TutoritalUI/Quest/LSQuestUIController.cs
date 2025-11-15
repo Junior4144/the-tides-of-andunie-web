@@ -31,7 +31,7 @@ public class LSQuestUIController : MonoBehaviour
         {
             canvas.SetActive(false);
         }
-        else if (gameState == GameState.Gameplay)
+        else if (gameState == GameState.LevelSelector)
         {
             canvas.SetActive(true);
         }

@@ -10,7 +10,7 @@ public class LSStoryBoolSetter : MonoBehaviour
 
     private IEnumerator SetBoolAfterDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         GlobalStoryManager.Instance.enterLevelSelectorFirstTime = true;
     }
 }
