@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
 
-    public Camera MainCamera;
-
     void Awake()
     {
         if (Instance != null && Instance != this)

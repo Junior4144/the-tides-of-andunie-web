@@ -12,35 +12,26 @@ public class LevelSelection : MonoBehaviour
 
     public static event Action OnPlayerEnterSelectionZone;
     public static event Action OnPlayerExitSelectionZone;
-    public static event Action EnterLeaveVillageZone;
-    public static event Action ExitLeaveVillageZone;
     public static event Action<string, string, bool> PlayerActivatedMenu;
-
     public string location = "DefaultSpawn";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (isExit)
-            EnterLeaveVillageZone?.Invoke();
-        else 
-            OnPlayerEnterSelectionZone?.Invoke();
+        OnPlayerEnterSelectionZone?.Invoke();
+        isPlayerInside = true;
 
         Debug.Log("[Level Selection] Player entered level zone");
-        isPlayerInside = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (isExit)
-            ExitLeaveVillageZone?.Invoke();
-        else 
-            OnPlayerExitSelectionZone?.Invoke();
-
+        OnPlayerExitSelectionZone?.Invoke();
         isPlayerInside = false;
+        
         Debug.Log("[Level Selection] Player left level zone");
     }
 
