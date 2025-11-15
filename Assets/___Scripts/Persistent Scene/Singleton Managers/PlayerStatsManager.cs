@@ -20,6 +20,7 @@ public class PlayerStatsManager : MonoBehaviour
 
     public static event Action<float, float> OnDamageChanged;
     public static event Action<float, float> OnMaxHealthChanged;
+    public static event Action<float, float> OnExplosionDamageChanged;
 
     void Awake()
     {
@@ -48,6 +49,7 @@ public class PlayerStatsManager : MonoBehaviour
     public void SetExplosionDamage(float newExplosionDamage)
     {
         ExplosionDamage = newExplosionDamage;
+        OnExplosionDamageChanged?.Invoke(newExplosionDamage, _defaultExplosionDamage);
     }
 
     public void ResetToDefaults()
@@ -58,5 +60,6 @@ public class PlayerStatsManager : MonoBehaviour
 
         OnMaxHealthChanged?.Invoke(_defaultMaxHealth, _defaultMaxHealth);
         OnDamageChanged?.Invoke(_defaultMeleeDamage, _defaultMeleeDamage);
+        OnExplosionDamageChanged?.Invoke(_defaultExplosionDamage, _defaultExplosionDamage);
     }
 }
