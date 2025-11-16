@@ -15,6 +15,9 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive += HandleCameraDeactivation;
         UIEvents.OnPauseMenuDeactivated += HandleCameraActivation;
+
+        LSEnterMenu.PreScreenUIActivation += HandleCameraDeactivation;
+        LSEnterMenu.PreScreenUIDeactivation += HandleCameraActivation;
     }
     private void OnDisable()
     {
@@ -26,6 +29,9 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive -= HandleCameraDeactivation;
         UIEvents.OnPauseMenuDeactivated -= HandleCameraActivation;
+
+        LSEnterMenu.PreScreenUIActivation -= HandleCameraDeactivation;
+        LSEnterMenu.PreScreenUIDeactivation -= HandleCameraActivation;
     }
 
     private void HandleCameraDeactivation()

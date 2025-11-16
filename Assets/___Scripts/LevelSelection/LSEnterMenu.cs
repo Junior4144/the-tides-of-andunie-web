@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LSEnterMenu : MonoBehaviour
@@ -6,6 +7,9 @@ public class LSEnterMenu : MonoBehaviour
     private GameObject Panel;
 
     private bool Clicked = false;
+
+    public static event Action PreScreenUIActivation;
+    public static event Action PreScreenUIDeactivation;
 
     private void OnEnable()
     {
@@ -18,17 +22,19 @@ public class LSEnterMenu : MonoBehaviour
         LSUIManager.DeactivatePreEntryUI -= HandleUIDeactivation;
     }
 
-    private void Start() => Panel.SetActive(true);
+    private void Start() => Panel.SetActive(false);
 
     private void HandleUIToggling()
     {
         Panel.SetActive(true);
+        PreScreenUIActivation?.Invoke();
     }
 
     public void HandleUIDeactivation()
     {
         Debug.Log("[LSEnterMenu] HandleUIDeactivation");
         Panel.SetActive(false);
+        PreScreenUIDeactivation?.Invoke();
     }
 
     public void HandleEnterVillage()
