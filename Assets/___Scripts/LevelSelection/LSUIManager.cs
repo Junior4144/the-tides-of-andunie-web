@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class LSUIManager : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class LSUIManager : MonoBehaviour
     private GameObject CurrentCanvas;
 
     public static LSUIManager Instance;
+
+    public static event Action ActivateEntryUI;
+    public static event Action DeactivatePreEntryUI;
+
 
     private void Awake()
     {
@@ -91,16 +96,14 @@ public class LSUIManager : MonoBehaviour
 
     private void OpenUI()
     {
-        LevelSelectionEnterUI.SetActive(true);
-        CurrentCanvas = LevelSelectionEnterUI;
+        ActivateEntryUI?.Invoke();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && CurrentCanvas != null)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CurrentCanvas.SetActive(false);
-            CurrentCanvas = null;
+            DeactivatePreEntryUI?.Invoke();
         }
     }
 
