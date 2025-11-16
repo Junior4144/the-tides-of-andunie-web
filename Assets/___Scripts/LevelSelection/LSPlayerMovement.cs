@@ -10,6 +10,8 @@ public class LSPlayerMovement : MonoBehaviour
     Camera cam;
     Vector3 smoothDir;
 
+    public bool disableClicking = false;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -24,7 +26,7 @@ public class LSPlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !disableClicking)
             TryMoveToMouse();
 
         RotateTowardVelocity();
@@ -42,6 +44,7 @@ public class LSPlayerMovement : MonoBehaviour
             Debug.Log("Cannot move there — no NavMesh.");
         }
     }
+
     void RotateTowardVelocity()
     {
         Vector3 vel = agent.velocity;

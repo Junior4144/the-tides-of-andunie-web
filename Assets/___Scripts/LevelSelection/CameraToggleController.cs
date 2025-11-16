@@ -34,6 +34,10 @@ public class CameraToggleController : MonoBehaviour
 
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.DisableLSPlayerMovement();
     }
 
     private void HandleCameraActivation()
@@ -42,5 +46,10 @@ public class CameraToggleController : MonoBehaviour
 
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
+
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.EnableLSPlayerMovement();
     }
 }
