@@ -67,8 +67,15 @@ public abstract class CannonBall : MonoBehaviour
         HandleDestroyObject();
     }
 
-    void HandleDamage(Collider2D collision) => 
-        collision.GetComponentInChildren<IHealthController>()?.TakeDamage(_cannonBallAttributes.DamageAmount);
+    void HandleDamage(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IHealthController health))
+        {
+            health.TakeDamage(_cannonBallAttributes.DamageAmount);
+        }
+
+    } 
+        
 
     void HandleDestroyObject() => Destroy(gameObject);
     void HandleCameraShake() => CameraShakeManager.instance.CameraShake(_impulseSource, 1f);
