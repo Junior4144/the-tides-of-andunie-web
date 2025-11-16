@@ -24,7 +24,7 @@ public class StatsUIController : MonoBehaviour
     [SerializeField] [Range(0.1f, 0.4f)] private float mainValueWidthRatio = 0.15f;
     [SerializeField] [Range(0.1f, 0.4f)] private float additiveValueWidthRatio = 0.15f;
 
-    private Dictionary<StatType, StatUIElement> statElements = new Dictionary<StatType, StatUIElement>();
+    private readonly Dictionary<StatType, StatUIElement> statElements = new();
 
     private class StatUIElement
     {
@@ -155,17 +155,17 @@ public class StatsUIController : MonoBehaviour
         layoutGroup.childAlignment = TextAnchor.MiddleLeft;
         layoutGroup.padding = new RectOffset(0, 0, 0, 0);
 
-        GameObject labelObject = new GameObject("Label");
+        GameObject labelObject = new("Label");
         labelObject.transform.SetParent(container.transform, false);
         TextMeshProUGUI labelText = labelObject.AddComponent<TextMeshProUGUI>();
         ConfigureLabelText(labelText, statType);
 
-        GameObject mainValueObject = new GameObject("MainValue");
+        GameObject mainValueObject = new("MainValue");
         mainValueObject.transform.SetParent(container.transform, false);
         TextMeshProUGUI mainText = mainValueObject.AddComponent<TextMeshProUGUI>();
         ConfigureMainText(mainText);
 
-        GameObject additiveValueObject = new GameObject("AdditiveValue");
+        GameObject additiveValueObject = new("AdditiveValue");
         additiveValueObject.transform.SetParent(container.transform, false);
         TextMeshProUGUI additiveText = additiveValueObject.AddComponent<TextMeshProUGUI>();
         ConfigureAdditiveText(additiveText);
