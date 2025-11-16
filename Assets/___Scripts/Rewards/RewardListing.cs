@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class RewardListing
 {
-    public MonoBehaviour inventoryItem; // must assign a prefab with IInventoryItem
+    public InventoryItem Item;
     public int quantity;
-    public IInventoryItem Item => (IInventoryItem)inventoryItem;
 }

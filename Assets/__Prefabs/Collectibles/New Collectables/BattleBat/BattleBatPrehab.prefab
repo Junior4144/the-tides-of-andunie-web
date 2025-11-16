@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7361892367648708929}
   - component: {fileID: 585788219599681380}
-  - component: {fileID: 5861763741894850605}
+  - component: {fileID: 4757862710834857045}
   m_Layer: 0
   m_Name: BattleBatPrehab
   m_TagString: Untagged
@@ -51,9 +51,8 @@ MonoBehaviour:
   maxStackSize: 10
   inventoryIconPrefab: {fileID: 2061766692026739118, guid: dc21eda95f555bb43b358817f2961a66, type: 3}
   _effects:
-  - {fileID: 5861763741894850605}
-  spriteIcon: {fileID: 21300000, guid: eb966d15cc2364f4d85d7f48bcf4611c, type: 3}
---- !u!114 &5861763741894850605
+  - {fileID: 4757862710834857045}
+--- !u!114 &4757862710834857045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,8 +61,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 726475722721263400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2266e0143b156f046a63eb51eff4cd14, type: 3}
+  m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeDamageEffect
-  damageIncrease: 20
+  m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
+  statType: 1
+  amount: 5
   isPercentage: 0
