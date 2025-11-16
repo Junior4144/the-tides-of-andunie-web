@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public static class UIEvents
 {
     public static Action OnRequestInventoryToggle;
+
     public static Action OnRequestShopToggle;
+
     public static Action OnRequestPauseToggle;
 
     public static Action OnInventoryActive;
@@ -17,6 +19,12 @@ public static class UIEvents
 
     public static Action OnPauseMenuActive;
     public static Action OnPauseMenuDeactivated;
+
+    public static Action OnShopConfirm;
+    public static Action OnShopDeactivated;
+
+    public static Action OnRequestCloseAllUI;
+
 
 }
 
@@ -35,11 +43,8 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Groups")]
     [SerializeField] private GameObject _inventoryUI;
-
-    private GameObject _shopUI;
-    private GameObject _shopUIPrefab;
-
     [SerializeField] private GameObject _pauseUI;
+
     private bool _isPaused;
 
     private void Awake()
@@ -50,11 +55,12 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.activeSceneChanged += OnSceneChanged;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
 
         UIEvents.OnRequestInventoryToggle += ToggleInventory;
+
         UIEvents.OnRequestShopToggle += ToggleShop;
+
         UIEvents.OnRequestPauseToggle += TogglePause;
 
     }
@@ -102,9 +108,6 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(!IsLevel0Stage1);
         _CombatHUD.SetActive(!IsLevel0Stage1);
         _PerkHUD.SetActive(true);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(true);
     }
 
     private void Stage1UI()
@@ -114,9 +117,6 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
         _PerkHUD.SetActive(false);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
     }
 
     private void PeacefulGameplay()
@@ -126,9 +126,6 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(true);
         _CombatHUD.SetActive(false);
         _PerkHUD.SetActive(true);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(true);
     }
 
     private void ShowMainMenuUI()
@@ -138,9 +135,6 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
         _PerkHUD.SetActive(true);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
     }
 
     private void ShowCutsceneUI()
@@ -150,9 +144,6 @@ public class UIManager : MonoBehaviour
         _CombatHUD.SetActive(false);
         _UIPrefab.SetActive(false);
         _PerkHUD.SetActive(false);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
     }
 
     private void ShowLevelSelectorUI()
@@ -162,23 +153,24 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(true);
         _CombatHUD.SetActive(false);
         _PerkHUD.SetActive(true);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
     }
 
     private bool IsLevel0Stage1 => SceneManager.GetActiveScene().name == "Level0Stage1";
 
     private void HideAll()
     {
-        if (_shopUI != null)
-            _shopUI.SetActive(false);
-
         _inventoryUI.SetActive(false);
     }
 
     private void ToggleInventory()
     {
+        if (GameManager.Instance.CurrentState == GameState.Paused)
+        {
+            _inventoryUI.SetActive(false);
+            UIEvents.OnInventoryDeactivated?.Invoke();
+            return;
+        }
+
         if (_inventoryUI.activeInHierarchy)
         {
             _inventoryUI.SetActive(false);
@@ -186,54 +178,47 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        HideAll();
+        UIEvents.OnRequestCloseAllUI?.Invoke();   // 🔥 close other windows first
+
         _inventoryUI.SetActive(true);
         UIEvents.OnInventoryActive?.Invoke();
     }
 
     private void ToggleShop()
     {
-        if (!TryResolveShop())
-            return;
-
-        if (_shopUI.activeInHierarchy)
+        if (GameManager.Instance.CurrentState == GameState.Paused)
         {
-            _shopUI.SetActive(false);
+            UIEvents.OnShopDeactivated?.Invoke();
             return;
         }
 
-        HideAll();
-        _shopUI.SetActive(true);
+        bool isShopOpen = ShopUIController.Instance.IsOpen;
+
+        if (isShopOpen)
+        {
+            UIEvents.OnShopDeactivated?.Invoke();
+            return;
+        }
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnShopConfirm?.Invoke();
     }
 
-    private bool TryResolveShop()
-    {
-        if (_shopUI != null) return true;
-
-        if (ShopUIController.Instance == null)
-            return false;
-
-        _shopUI = ShopUIController.Instance.canvas;
-        _shopUIPrefab = ShopUIController.Instance.gameObject;
-        return true;
-    }
-
-    private void OnSceneChanged(Scene oldScene, Scene newScene)
-    {
-        _shopUI = null;
-        _shopUIPrefab = null;
-    }
-
+    GameState lastGameState;
     private void TogglePause()
     {
         if (_isPaused)
         {
-            UIEvents.OnPauseMenuDeactivated.Invoke();
+            UIEvents.OnPauseMenuDeactivated?.Invoke();
+            GameManager.Instance.SetState(lastGameState);
             Resume();
         }
         else
         {
-            UIEvents.OnPauseMenuActive.Invoke();
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+            UIEvents.OnPauseMenuActive?.Invoke();
+            lastGameState = GameManager.Instance.CurrentState;
+            GameManager.Instance.SetState(GameState.Paused);
             Pause();
         }
     }
