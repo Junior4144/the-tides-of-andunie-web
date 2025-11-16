@@ -13,14 +13,17 @@ public class AudioController : MonoBehaviour
     {
         if (masterSlider != null)
         {
+            masterSlider.value = 100;
             SetMasterVolume();
         }
         if (musicSlider != null)
         {
+            musicSlider.value = 100;
             SetMusicVolume();
         }
         if (sfxSlider != null)
         {
+            sfxSlider.value = 100;
             SetSFXVolume();
         }
     }
