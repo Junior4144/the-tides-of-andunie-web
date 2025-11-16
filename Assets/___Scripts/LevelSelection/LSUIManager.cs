@@ -5,24 +5,20 @@ using System;
 
 public class LSUIManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject LevelSelectionEnterUI;
-
-    [SerializeField] private TMP_Text LevelSelectionEnterHeader;
-    [SerializeField] private TMP_Text LSButtonText;
+    public static LSUIManager Instance;
 
     private string VillageId;
     private string Location;
     private string NextScene;
     private bool isExit;
 
-    private GameObject CurrentCanvas;
-
-    public static LSUIManager Instance;
-
     public static event Action ActivateEntryUI;
     public static event Action DeactivatePreEntryUI;
 
+    public static event Action ActivateEnterVillageUI;
+    public static event Action DeactivateEnterVillageUI;
+
+    public static event Action ActivateVillageExitUI;
 
     private void Awake()
     {
@@ -37,7 +33,13 @@ public class LSUIManager : MonoBehaviour
     private void OnEnable() => LevelSelection.PlayerActivatedMenu += HandleMenu;
     private void OnDisable() => LevelSelection.PlayerActivatedMenu -= HandleMenu;
 
-    private void Start() => LevelSelectionEnterUI.SetActive(false);
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DeactivatePreEntryUI?.Invoke();
+        }
+    }
 
     private void HandleMenu(string id, string location, bool isExit)
     {
@@ -54,56 +56,52 @@ public class LSUIManager : MonoBehaviour
 
     private void SetupExitUI(string location)
     {
-        OpenUI();
-
-        LevelSelectionEnterHeader.text = "Leave Village";
-        LSButtonText.text = "Leave";
-
         VillageId = "EXIT";
         Location = location;
         NextScene = "LevelSelector";
+
+        OpenExitUI();
     }
 
     private void SetupVillageUI(string id, string location)
     {
-        OpenUI();
-
         VillageState state = LSManager.Instance.GetVillageState(id);
         Debug.Log($"[LS UI MANAGER] ID: {id}, Village State = {state}");
-
-        LevelSelectionEnterHeader.text = GetHeaderForState(state, id);
 
         VillageId = id;
         Location = location;
         NextScene = LSManager.Instance.DetermineNextScene(id);
-    }
 
-    private string GetHeaderForState(VillageState state, string id)
-    {
-        switch (state)
-        {
-            case VillageState.PreInvasion:
-                return "Visit Village";
-            case VillageState.Invaded:
-                return "Liberate Village";
-            case VillageState.Liberated_FirstTime:
-            case VillageState.Liberated_Done:
-                return "Visit Village";
-        }
-        Debug.LogError("State doesn't exist");
-        return null;
+        OpenUI();
     }
 
     private void OpenUI()
     {
-        ActivateEntryUI?.Invoke();
+        if (LSManager.Instance != null && LSManager.Instance.GetVillageState(VillageId) == VillageState.Invaded)
+        {
+            Debug.Log("[LS UI MANAGER] ActivateEntryUI");
+            ActivateEntryUI?.Invoke();
+        }
+        else
+        {
+            Debug.Log("[LS UI MANAGER] EnterVillageUI");
+            ActivateEnterVillageUI?.Invoke();
+        }
+        
     }
 
-    private void Update()
+    private void OpenExitUI()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        Debug.Log("[LS UI MANAGER] OpenExitUI EnterVillageUI");
+        ActivateVillageExitUI?.Invoke();
+    }
+
+    private void PerformExitOrVillageActions()
+    {
+        if (isExit)
         {
-            DeactivatePreEntryUI?.Invoke();
+            SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
+            Debug.Log("[LS UI MANAGER] Player position reset due to exit.");
         }
     }
 
@@ -122,15 +120,6 @@ public class LSUIManager : MonoBehaviour
         PlayerManager.Instance.HandleDestroy();
 
         LoadNextStage();
-    }
-
-    private void PerformExitOrVillageActions()
-    {
-        if (isExit)
-        {
-            SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
-            Debug.Log("[LS UI MANAGER] Player position reset due to exit.");
-        }
     }
 
     private void LoadNextStage()

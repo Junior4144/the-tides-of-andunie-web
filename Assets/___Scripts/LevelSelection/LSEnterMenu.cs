@@ -3,13 +3,26 @@ using UnityEngine;
 
 public class LSEnterMenu : MonoBehaviour
 {
+    //public static LSEnterMenu Instance;
+
     [SerializeField]
     private GameObject Panel;
 
     private bool Clicked = false;
+    public bool isActive = false;
 
     public static event Action PreScreenUIActivation;
     public static event Action PreScreenUIDeactivation;
+
+    //private void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
+    //    Instance = this;
+    //}
 
     private void OnEnable()
     {
@@ -27,6 +40,7 @@ public class LSEnterMenu : MonoBehaviour
     private void HandleUIToggling()
     {
         Panel.SetActive(true);
+        isActive = true;
         PreScreenUIActivation?.Invoke();
     }
 
@@ -34,6 +48,7 @@ public class LSEnterMenu : MonoBehaviour
     {
         Debug.Log("[LSEnterMenu] HandleUIDeactivation");
         Panel.SetActive(false);
+        isActive = false;
         PreScreenUIDeactivation?.Invoke();
     }
 

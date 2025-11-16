@@ -9,6 +9,10 @@ public static class UIEvents
 
     public static Action OnRequestShopToggle;
 
+    public static Action OnRequestLSEnterToggle;
+
+    public static Action OnRequestPreScreenToggle;
+
     public static Action OnRequestPauseToggle;
 
     public static Action OnInventoryActive;
@@ -22,6 +26,12 @@ public static class UIEvents
 
     public static Action OnShopConfirm;
     public static Action OnShopDeactivated;
+
+    public static Action OnLSEnterConfirm;
+    public static Action OnLSEnterDeactivated;
+
+    public static Action OnPreScreenConfirm;
+    public static Action OnPreScreenDeactivated;
 
     public static Action OnRequestCloseAllUI;
 }
@@ -46,6 +56,9 @@ public class UIManager : MonoBehaviour
     private bool _isPaused;
     private bool _inventoryOpen;
     private bool _shopOpen;
+    //private bool _lSEnterUIOpen;
+    //private bool _preScreenUIOpen;
+
     private void Awake()
     {
         if (Instance == null)
@@ -208,6 +221,46 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnRequestCloseAllUI?.Invoke();
         UIEvents.OnShopConfirm?.Invoke();
+    }
+
+    private void ToggleLSEnterUI()
+    {
+        if (_isPaused)
+        {
+            UIEvents.OnLSEnterDeactivated?.Invoke();
+            return;
+        }
+
+        ////bool _lSEnterUIOpen = LSEnterVillageUI.Instance.isActiveUI;
+
+        //if (_lSEnterUIOpen)
+        //{
+        //    UIEvents.OnLSEnterDeactivated?.Invoke();
+        //    return;
+        //}
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnLSEnterConfirm?.Invoke();
+    }
+
+    private void TogglePreScreenUI()
+    {
+        if (_isPaused)
+        {
+            UIEvents.OnPreScreenDeactivated?.Invoke();
+            return;
+        }
+
+        ////bool _PreScreenOpen = LSEnterMenu.Instance.isActive;
+
+        //if (_PreScreenOpen)
+        //{
+        //    UIEvents.OnPreScreenDeactivated?.Invoke();
+        //    return;
+        //}
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnPreScreenConfirm?.Invoke();
     }
 
     private void CloseAllUI()
