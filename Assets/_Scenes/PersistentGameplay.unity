@@ -4060,7 +4060,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5374952259413727569, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
       propertyPath: statElementWidth
-      value: 1000
+      value: 1400
+      objectReference: {fileID: 0}
+    - target: {fileID: 5374952259413727569, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
+      propertyPath: horizontalSpacing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5374952259413727569, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
       propertyPath: statElementHeight
@@ -6210,6 +6214,7 @@ MonoBehaviour:
   _defaultMaxHealth: 100
   _defaultMeleeDamage: 20
   _defaultExplosionDamage: 16
+  _defaultSpeed: 0
 --- !u!1 &1527515894
 GameObject:
   m_ObjectHideFlags: 0

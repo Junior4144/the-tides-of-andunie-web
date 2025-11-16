@@ -7,5 +7,8 @@ public enum StatType
     MeleeDamage,
 
     [StatDisplay("Explosion Damage")]
-    ExplosionDamage
+    ExplosionDamage,
+
+    [StatDisplay("Speed")]
+    Speed
 }

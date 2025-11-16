@@ -40,23 +40,82 @@ public class StatsUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerStatsManager.OnDamageChanged += (current, defaultVal) => UpdateStat(StatType.MeleeDamage, current, defaultVal);
-        PlayerStatsManager.OnMaxHealthChanged += (current, defaultVal) => UpdateStat(StatType.MaxHealth, current, defaultVal);
-        PlayerStatsManager.OnExplosionDamageChanged += (current, defaultVal) => UpdateStat(StatType.ExplosionDamage, current, defaultVal);
-
-        if (PlayerStatsManager.Instance != null)
-        {
-            UpdateStat(StatType.MaxHealth, PlayerStatsManager.Instance.MaxHealth, PlayerStatsManager.Instance.DefaultMaxHealth);
-            UpdateStat(StatType.MeleeDamage, PlayerStatsManager.Instance.MeleeDamage, PlayerStatsManager.Instance.DefaultMeleeDamage);
-            UpdateStat(StatType.ExplosionDamage, PlayerStatsManager.Instance.ExplosionDamage, PlayerStatsManager.Instance.DefaultExplosionDamage);
-        }
+        SubscribeToAllStatEvents();
+        InitializeAllStats();
     }
 
     private void OnDisable()
     {
-        PlayerStatsManager.OnDamageChanged -= (current, defaultVal) => UpdateStat(StatType.MeleeDamage, current, defaultVal);
-        PlayerStatsManager.OnMaxHealthChanged -= (current, defaultVal) => UpdateStat(StatType.MaxHealth, current, defaultVal);
-        PlayerStatsManager.OnExplosionDamageChanged -= (current, defaultVal) => UpdateStat(StatType.ExplosionDamage, current, defaultVal);
+        UnsubscribeFromAllStatEvents();
+    }
+
+    private void SubscribeToAllStatEvents()
+    {
+        foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+        {
+            string eventName = GetEventNameForStat(statType);
+            SubscribeToStatEvent(statType, eventName);
+        }
+    }
+
+    private void UnsubscribeFromAllStatEvents()
+    {
+        foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+        {
+            string eventName = GetEventNameForStat(statType);
+            UnsubscribeFromStatEvent(statType, eventName);
+        }
+    }
+
+    private string GetEventNameForStat(StatType statType)
+    {
+        return $"On{statType}Changed";
+    }
+
+    private void SubscribeToStatEvent(StatType statType, string eventName)
+    {
+        EventInfo eventInfo = typeof(PlayerStatsManager).GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
+        if (eventInfo != null)
+        {
+            Action<float, float> handler = (current, defaultVal) => UpdateStat(statType, current, defaultVal);
+            Delegate delegateHandler = Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Target, handler.Method);
+            eventInfo.AddEventHandler(null, delegateHandler);
+        }
+    }
+
+    private void UnsubscribeFromStatEvent(StatType statType, string eventName)
+    {
+        EventInfo eventInfo = typeof(PlayerStatsManager).GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
+        if (eventInfo != null)
+        {
+            Action<float, float> handler = (current, defaultVal) => UpdateStat(statType, current, defaultVal);
+            Delegate delegateHandler = Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Target, handler.Method);
+            eventInfo.RemoveEventHandler(null, delegateHandler);
+        }
+    }
+
+    private void InitializeAllStats()
+    {
+        if (PlayerStatsManager.Instance == null) return;
+
+        foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+        {
+            float currentValue = GetStatValue(statType);
+            float defaultValue = GetDefaultStatValue(statType);
+            UpdateStat(statType, currentValue, defaultValue);
+        }
+    }
+
+    private float GetStatValue(StatType statType)
+    {
+        PropertyInfo property = typeof(PlayerStatsManager).GetProperty(statType.ToString());
+        return property != null ? (float)property.GetValue(PlayerStatsManager.Instance) : 0f;
+    }
+
+    private float GetDefaultStatValue(StatType statType)
+    {
+        PropertyInfo property = typeof(PlayerStatsManager).GetProperty($"Default{statType}");
+        return property != null ? (float)property.GetValue(PlayerStatsManager.Instance) : 0f;
     }
 
     private void GenerateAllStatElements()
