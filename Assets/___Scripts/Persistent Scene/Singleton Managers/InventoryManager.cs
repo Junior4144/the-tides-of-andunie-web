@@ -141,9 +141,19 @@ public class InventoryManager : MonoBehaviour
         _equippedItems.Values.ToList().ForEach(ApplySlotEffects);
     }
 
-    private void ApplySlotEffects(InventorySlot slot) =>
-        Enumerable.Range(0, slot.Quantity).ToList()
-            .ForEach(_ => slot.Item.GetEffects()?.ToList().ForEach(effect => effect?.Apply()));
+    private void ApplySlotEffects(InventorySlot slot)
+    {
+        var effects = slot.Item.GetEffects();
+        if (effects == null || effects.Length == 0) return;
+
+        var sortedEffects = effects
+            .OrderBy(e => e.IsPercentage)
+            .ToList();
+
+        sortedEffects.ForEach(effect =>
+            Enumerable.Range(0, slot.Quantity).ToList().
+                ForEach(_ => effect.Apply()));
+    }
 
     private void UnequipAllOfItem(string itemId)
     {
