@@ -16,7 +16,6 @@ public class LSUIManager : MonoBehaviour
     public static event Action DeactivatePreEntryUI;
 
     public static event Action ActivateEnterVillageUI;
-    public static event Action DeactivateEnterVillageUI;
 
     public static event Action ActivateVillageExitUI;
 
@@ -80,12 +79,14 @@ public class LSUIManager : MonoBehaviour
         if (LSManager.Instance != null && LSManager.Instance.GetVillageState(VillageId) == VillageState.Invaded)
         {
             Debug.Log("[LS UI MANAGER] ActivateEntryUI");
-            ActivateEntryUI?.Invoke();
+            //ActivateEntryUI?.Invoke();
+            UIEvents.OnRequestPreScreenToggle?.Invoke();
         }
         else
         {
             Debug.Log("[LS UI MANAGER] EnterVillageUI");
-            ActivateEnterVillageUI?.Invoke();
+            UIEvents.OnRequestLSEnterToggle?.Invoke(isExit);
+            
         }
         
     }
@@ -93,7 +94,7 @@ public class LSUIManager : MonoBehaviour
     private void OpenExitUI()
     {
         Debug.Log("[LS UI MANAGER] OpenExitUI EnterVillageUI");
-        ActivateVillageExitUI?.Invoke();
+        UIEvents.OnRequestLSEnterToggle?.Invoke(isExit);
     }
 
     private void PerformExitOrVillageActions()
