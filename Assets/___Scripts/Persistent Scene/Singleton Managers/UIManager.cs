@@ -44,7 +44,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _pauseUI;
 
     private bool _isPaused;
-
+    private bool _inventoryOpen;
+    private bool _shopOpen;
     private void Awake()
     {
         if (Instance == null)
@@ -61,6 +62,13 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnRequestPauseToggle += TogglePause;
 
+        UIEvents.OnInventoryActive += () => _inventoryOpen = true;
+        UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
+
+        UIEvents.OnShopConfirm += () => _shopOpen = true;
+        UIEvents.OnShopDeactivated += () => _shopOpen = false;
+
+        UIEvents.OnRequestCloseAllUI += CloseAllUI;
     }
 
     private IEnumerator Start()
@@ -202,8 +210,30 @@ public class UIManager : MonoBehaviour
         UIEvents.OnShopConfirm?.Invoke();
     }
 
+    private void CloseAllUI()
+    {
+        if (_inventoryOpen)
+        {
+            _inventoryUI.SetActive(false);
+            UIEvents.OnInventoryDeactivated?.Invoke();
+        }
+
+        if (_shopOpen)
+        {
+            UIEvents.OnShopDeactivated?.Invoke();
+        }
+    }
+
     private void TogglePause()
     {
+        // 1. If ANY UI popup is open, close it and STOP pause from happening
+        if (_inventoryOpen || _shopOpen)
+        {
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+            return;
+        }
+
+        // 2. If no popups are open, proceed with pause logic
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();
