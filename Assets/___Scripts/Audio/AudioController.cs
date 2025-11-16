@@ -13,14 +13,17 @@ public class AudioController : MonoBehaviour
     {
         if (masterSlider != null)
         {
+            masterSlider.value = 100;
             SetMasterVolume();
         }
         if (musicSlider != null)
         {
+            musicSlider.value = 100;
             SetMusicVolume();
         }
         if (sfxSlider != null)
         {
+            sfxSlider.value = 100;
             SetSFXVolume();
         }
     }
@@ -28,18 +31,18 @@ public class AudioController : MonoBehaviour
     public void SetMasterVolume()
     {
         float volume = masterSlider.value;
-        audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+        AudioManager.Instance.MasterAudioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
     }
 
     public void SetMusicVolume()
     {
         float volume = musicSlider.value;
-        audioMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
+        AudioManager.Instance.MasterAudioMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
     }
 
     public void SetSFXVolume()
     {
         float volume = sfxSlider.value;
-        audioMixer.SetFloat("Sfx", Mathf.Log10(volume) * 20);
+        AudioManager.Instance.MasterAudioMixer.SetFloat("Sfx", Mathf.Log10(volume) * 20);
     }
 }
