@@ -8,12 +8,6 @@ public class CameraZoomController : MonoBehaviour
     [SerializeField] private float minZoom = 10f;
     [SerializeField] private float maxZoom = 400f;
 
-    [Header("Auto Zoom")]
-    [SerializeField] private float autoZoomSpeed = 1.5f;     // 1–3 recommended
-    [SerializeField] private float largeZoomThreshold = 100f;
-    [SerializeField] private float thresholdBuffer = 10f;
-    [SerializeField] private bool autoZoomEnabled = true;
-
     [Header("Bounds")]
     [SerializeField] private BoxCollider2D boundary;
 
