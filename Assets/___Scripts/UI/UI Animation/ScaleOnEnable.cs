@@ -3,10 +3,34 @@ using UnityEngine;
 
 public class ScaleOnEnable : MonoBehaviour
 {
-    void OnEnable()
+    private RectTransform rt;
+    public bool IsAnimating { get; private set; }
+
+    private void Awake()
     {
-        RectTransform rt = GetComponent<RectTransform>();
+        rt = GetComponent<RectTransform>();
+    }
+
+    private void OnEnable()
+    {
+        IsAnimating = true;
         rt.localScale = Vector3.zero;
-        rt.DOScale(1f, 0.35f).SetEase(Ease.OutBack);
+
+        rt.DOScale(1f, 0.35f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() => IsAnimating = false);
+    }
+
+    public void HideWithScale()
+    {
+        IsAnimating = true;
+
+        rt.DOScale(0f, 0.25f)
+            .SetEase(Ease.InBack)
+            .OnComplete(() =>
+            {
+                IsAnimating = false;
+                gameObject.SetActive(false);
+            });
     }
 }

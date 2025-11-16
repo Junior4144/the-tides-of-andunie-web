@@ -5,10 +5,12 @@ public class CameraShakeManager : MonoBehaviour
     public static CameraShakeManager instance;
     [SerializeField]
     private AudioClip shakeImpactSound;
+    private AudioSource audioSource;
 
     private void Start()
     {
         if (instance == null) instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void CameraShake(CinemachineImpulseSource impulseSource, float shakeForce)
@@ -19,7 +21,7 @@ public class CameraShakeManager : MonoBehaviour
     private void PlayImpactSound()
     {
         if (shakeImpactSound != null)
-            AudioSource.PlayClipAtPoint(shakeImpactSound, transform.position, 0.1f);
+            audioSource.PlayOneShot(shakeImpactSound, 0.1f);
         else
             Debug.LogError("ShakeImpactSound is Null. Playing no Sound");
     }

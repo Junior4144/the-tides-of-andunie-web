@@ -6,7 +6,9 @@ public enum GameState
     Cutscene,
     Paused,
     Menu,
-    LevelSelector
+    LevelSelector,
+    PeacefulGameplay,
+    Stage1Gameplay
 }
 
 public class GameManager : MonoBehaviour
@@ -14,8 +16,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
-
-    public Camera MainCamera;
 
     void Awake()
     {

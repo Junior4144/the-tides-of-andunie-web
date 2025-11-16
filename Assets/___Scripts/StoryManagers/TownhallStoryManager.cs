@@ -77,7 +77,7 @@ public class TownhallStoryManager : MonoBehaviour
 
     private void StartGameplay()
     {
-        GameManager.Instance.SetState(GameState.Gameplay);
+        GameManager.Instance.SetState(GameState.PeacefulGameplay);
         SetGameplayElementsActive(true);
     }
 
@@ -91,7 +91,7 @@ public class TownhallStoryManager : MonoBehaviour
 
     private void OnCutsceneStopped(PlayableDirector director)
     {
-        GameManager.Instance.SetState(GameState.Gameplay);
+        GameManager.Instance.SetState(GameState.PeacefulGameplay);
         SetCutsceneCameraPriority(DEFAULT_CAMERA_PRIORITY);
         SetGameplayElementsActive(true);
         Debug.Log("[TownhallStoryManager] Cutscene stopped");

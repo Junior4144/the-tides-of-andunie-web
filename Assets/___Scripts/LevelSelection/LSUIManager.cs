@@ -13,6 +13,7 @@ public class LSUIManager : MonoBehaviour
     private string VillageId;
     private string Location;
     private string NextScene;
+    private bool isExit;
 
     private GameObject CurrentCanvas;
 
@@ -29,52 +30,69 @@ public class LSUIManager : MonoBehaviour
     }
 
     private void OnEnable() => LevelSelection.PlayerActivatedMenu += HandleMenu;
-
     private void OnDisable() => LevelSelection.PlayerActivatedMenu -= HandleMenu;
 
-    void Start() => LevelSelectionEnterUI.SetActive(false);
+    private void Start() => LevelSelectionEnterUI.SetActive(false);
 
-    private void HandleMenu(string id, string location)
+    private void HandleMenu(string id, string location, bool isExit)
     {
-        if (id == "EXIT")
+        this.isExit = isExit;
+
+        if (isExit)
         {
-            LevelSelectionEnterUI.SetActive(true);
-            CurrentCanvas = LevelSelectionEnterUI;
-            LevelSelectionEnterHeader.text = "Leave Village";
-            LSButtonText.text = "Leave";
-
-            SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
-
-            VillageId = id;
-            Location = location;
+            SetupExitUI(location);
             return;
         }
 
-        VillageState currentVillageState = LSManager.Instance.GetVillageState(id);
-        Debug.Log($"[LS UI MANAGER] ID: {id} and Village State = {currentVillageState}");
+        SetupVillageUI(id, location);
+    }
 
-        LevelSelectionEnterUI.SetActive(true);
-        CurrentCanvas = LevelSelectionEnterUI;
+    private void SetupExitUI(string location)
+    {
+        OpenUI();
 
-        switch (currentVillageState)
-        {
-            case VillageState.PreInvasion:
-                LevelSelectionEnterHeader.text = "Visit Village";
-                break;
+        LevelSelectionEnterHeader.text = "Leave Village";
+        LSButtonText.text = "Leave";
 
-            case VillageState.Invaded:
-                if (id == "Village7") LevelSelectionEnterHeader.text = "Visit Village";
-                else LevelSelectionEnterHeader.text = "Liberate Village";
-                break;
+        VillageId = "EXIT";
+        Location = location;
+        NextScene = "LevelSelector";
+    }
 
-            case VillageState.Liberated_FirstTime:
-            case VillageState.Liberated_Done:
-                LevelSelectionEnterHeader.text = "Visit Village";
-                break;
-        }
+    private void SetupVillageUI(string id, string location)
+    {
+        OpenUI();
+
+        VillageState state = LSManager.Instance.GetVillageState(id);
+        Debug.Log($"[LS UI MANAGER] ID: {id}, Village State = {state}");
+
+        LevelSelectionEnterHeader.text = GetHeaderForState(state, id);
 
         VillageId = id;
         Location = location;
+        NextScene = LSManager.Instance.DetermineNextScene(id);
+    }
+
+    private string GetHeaderForState(VillageState state, string id)
+    {
+        switch (state)
+        {
+            case VillageState.PreInvasion:
+                return "Visit Village";
+            case VillageState.Invaded:
+                return "Liberate Village";
+            case VillageState.Liberated_FirstTime:
+            case VillageState.Liberated_Done:
+                return "Visit Village";
+        }
+        Debug.LogError("State doesn't exist");
+        return null;
+    }
+
+    private void OpenUI()
+    {
+        LevelSelectionEnterUI.SetActive(true);
+        CurrentCanvas = LevelSelectionEnterUI;
     }
 
     private void Update()
@@ -86,20 +104,15 @@ public class LSUIManager : MonoBehaviour
         }
     }
 
-    public void ButtonClicked() =>
-        ProceedToNextStage();
+    public void ButtonClicked() => ProceedToNextStage();
 
     private void ProceedToNextStage()
     {
-        NextScene = LSManager.Instance.DetermineNextScene(VillageId);
-        Debug.Log($"[LS UI MANAGER] Next scene : {NextScene}");
-
         SaveManager.Instance.SaveLastLocation(Location);
 
-        Debug.Log($"[EndCurrentScene] Next Village: {NextScene} and Location: {Location}");
+        Debug.Log($"[LS UI MANAGER] Proceeding: NextScene={NextScene}, Location={Location}");
 
-        GameObject _player = PlayerManager.Instance.gameObject;
-        Debug.Log($"Player: {_player.name} and saving data");
+        PerformExitOrVillageActions();
 
         AudioManager.Instance.FadeAudio();
         SaveManager.Instance.SavePlayerStats();
@@ -108,6 +121,18 @@ public class LSUIManager : MonoBehaviour
         LoadNextStage();
     }
 
-    private void LoadNextStage() =>
-        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, NextScene);
+    private void PerformExitOrVillageActions()
+    {
+        if (isExit)
+        {
+            SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
+            Debug.Log("[LS UI MANAGER] Player position reset due to exit.");
+        }
+    }
+
+    private void LoadNextStage()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneControllerManager.Instance.LoadNextStage(currentScene, NextScene);
+    }
 }

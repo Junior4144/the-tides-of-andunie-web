@@ -6,5 +6,6 @@ public interface IInventoryItem
     GameObject InventoryIconPrefab { get; }
     bool IsStackable { get; }
     int MaxStackSize { get; }
+    Sprite SpriteIcon { get; }
     ItemEffect[] GetEffects();
 }

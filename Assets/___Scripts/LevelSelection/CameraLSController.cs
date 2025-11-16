@@ -35,10 +35,12 @@ public class CameraLSController : MonoBehaviour
 
     void Update()
     {
-        HandleDrag(MouseButton.Left);
+        HandleDrag(MouseButton.Right);
         HandleDrag(MouseButton.Middle);
-        HandleRightClickNav();
+        HandleLeftClick();
     }
+
+
     void HandleDrag(MouseButton button)
     {
         if (Input.GetMouseButtonDown((int)button))
@@ -56,7 +58,6 @@ public class CameraLSController : MonoBehaviour
             float camHeight = cam.orthographicSize;
             float camWidth = camHeight * cam.aspect;
 
-            // Clamp using edge-aware logic
             newPos.x = Mathf.Clamp(newPos.x,
                 bounds.min.x + camWidth,
                 bounds.max.x - camWidth);
@@ -74,14 +75,14 @@ public class CameraLSController : MonoBehaviour
         }
     }
 
-    void HandleRightClickNav()
+    void HandleLeftClick()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
             bool valid = NavMesh.SamplePosition(mouseWorld, out _, 0.3f, NavMesh.AllAreas);
 
-            if (valid)
+            if (valid || CameraManager.Instance.GetCamera().orthographicSize > 100)
             {
                 Cursor.SetCursor(validClickCursor, hotspot, CursorMode.Auto);
             }
@@ -91,7 +92,7 @@ public class CameraLSController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
         }

@@ -7,20 +7,38 @@ public class CameraToggleController : MonoBehaviour
 
     private void OnEnable()
     {
-        UIEvents.OnRequestShopToggle += HandleCameraToggle;
-        UIEvents.OnRequestInventoryToggle += HandleCameraToggle;
-        UIEvents.OnRequestPauseToggle += HandleCameraToggle;
+        ShopUIController.ShopActivated += HandleCameraDeactivation;
+        ShopUIController.ShopDeactivated += HandleCameraActivation;
+
+        UIEvents.OnInventoryActive += HandleCameraDeactivation;
+        UIEvents.OnInventoryDeactivated += HandleCameraActivation;
+
+        UIEvents.OnPauseMenuActive += HandleCameraDeactivation;
+        UIEvents.OnPauseMenuDeactivated += HandleCameraActivation;
     }
     private void OnDisable()
     {
-        UIEvents.OnRequestShopToggle -= HandleCameraToggle;
-        UIEvents.OnRequestInventoryToggle -= HandleCameraToggle;
-        UIEvents.OnRequestPauseToggle -= HandleCameraToggle;
+        ShopUIController.ShopActivated -= HandleCameraDeactivation;
+        ShopUIController.ShopDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnInventoryActive -= HandleCameraDeactivation;
+        UIEvents.OnInventoryDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnPauseMenuActive -= HandleCameraDeactivation;
+        UIEvents.OnPauseMenuDeactivated -= HandleCameraActivation;
     }
 
-    private void HandleCameraToggle()
+    private void HandleCameraDeactivation()
     {
-        bool newState = !zoomScript.enabled;
+        bool newState = false;
+
+        zoomScript.enabled = newState;
+        mouseScript.enabled = newState;
+    }
+
+    private void HandleCameraActivation()
+    {
+        bool newState = true;
 
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;

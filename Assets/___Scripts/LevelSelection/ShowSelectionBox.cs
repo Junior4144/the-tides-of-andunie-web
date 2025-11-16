@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,47 +7,72 @@ public class ShowSelectionBox : MonoBehaviour
     [SerializeField] private GameObject _BoxPrefab;
     [SerializeField] private float _offsetX;
     [SerializeField] private float _offsetY;
-    [SerializeField] private Camera _camera;
 
     private GameObject _boxInstance;
-
-    public static ShowSelectionBox Instance;
+    private Camera _camera;
+    private Canvas canvas;
 
     private void OnEnable()
     {
         LevelSelection.OnPlayerEnterSelectionZone += ShowBox;
         LevelSelection.OnPlayerExitSelectionZone += HideBox;
-        SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
+
+        LSShopController.OnPlayerEnterSelectionZone += ShowBox;
+        LSShopController.OnPlayerExitSelectionZone += HideBox;
+
+
+        SceneManager.activeSceneChanged += HandleCheck;
     }
 
     private void OnDisable()
     {
         LevelSelection.OnPlayerEnterSelectionZone -= ShowBox;
         LevelSelection.OnPlayerExitSelectionZone -= HideBox;
-        SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
+
+        LSShopController.OnPlayerEnterSelectionZone -= ShowBox;
+        LSShopController.OnPlayerExitSelectionZone -= HideBox;
+
+
+        SceneManager.activeSceneChanged -= HandleCheck;
     }
-
-    private void Start()
-    {
-        if (_camera == null)
-            _camera = GameManager.Instance.MainCamera;
-
-        _boxInstance = Instantiate(_BoxPrefab, GetNewBubblePosition(), Quaternion.identity);
-        _boxInstance.SetActive(false);
-
-        Debug.Log("STARTING SHOW SELECTION BOX");
-        Canvas canvas = _boxInstance.GetComponentInChildren<Canvas>();
-        if (canvas != null && _camera != null)
-            canvas.worldCamera = _camera;
-    }
-
-
-    private Vector3 GetNewBubblePosition() => new Vector3(PlayerManager.Instance.GetPlayerTransform().position.x + _offsetX, PlayerManager.Instance.GetPlayerTransform().position.y + _offsetY, 0f);
 
     private void Update()
     {
-        if (_boxInstance.activeSelf)
+        if (_boxInstance != null && _boxInstance.activeSelf && PlayerManager.Instance != null)
             _boxInstance.transform.position = GetNewBubblePosition();
+    }
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
+    {
+        StartCoroutine(CheckAfterLoading(newScene));
+    }
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
+    {
+        yield return null;
+
+        if (newScene == gameObject.scene)
+        {
+            HandleBoxSetup();
+        }
+    }
+
+    private void HandleBoxSetup()
+    {
+        _camera = CameraManager.Instance.GetCamera();
+        _boxInstance = Instantiate(_BoxPrefab, GetNewBubblePosition(), Quaternion.identity);
+        _boxInstance.SetActive(false);
+
+        Debug.Log("[ShowSelectionBox] Handling Show Selection Box");
+        canvas = _boxInstance.GetComponentInChildren<Canvas>();
+        canvas.worldCamera = _camera;
+    }
+
+    private Vector3 GetNewBubblePosition()
+    {
+        return new Vector3(PlayerManager.Instance.GetPlayerTransform().position.x +
+            _offsetX, PlayerManager.Instance.GetPlayerTransform().position.y +
+            _offsetY, 0f);
     }
 
     public void ShowBox()
@@ -62,6 +88,4 @@ public class ShowSelectionBox : MonoBehaviour
         _boxInstance.SetActive(false);
         Debug.Log("Hiding box above player.");
     }
-
-    private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }
