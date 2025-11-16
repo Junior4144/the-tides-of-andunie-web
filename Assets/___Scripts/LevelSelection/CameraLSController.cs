@@ -58,7 +58,6 @@ public class CameraLSController : MonoBehaviour
             float camHeight = cam.orthographicSize;
             float camWidth = camHeight * cam.aspect;
 
-            // Clamp using edge-aware logic
             newPos.x = Mathf.Clamp(newPos.x,
                 bounds.min.x + camWidth,
                 bounds.max.x - camWidth);

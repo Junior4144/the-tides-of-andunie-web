@@ -23,6 +23,7 @@ public class BowPowerUIManager : MonoBehaviour
     void Update()
     {
         if (sliderRoot == null) return;
+        if(WeaponManager.Instance == null) return;
 
         if (WeaponManager.Instance.IsAbilityAiming)
         {
