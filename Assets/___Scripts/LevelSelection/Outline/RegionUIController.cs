@@ -210,7 +210,7 @@ public class RegionUIController : MonoBehaviour
         var rewards = config.RewardItems;
         for (int i = 0; i < rewards.Count && i < rewardSlots.Count; i++)
         {
-            var iconSprite = rewards[i].Item.SpriteIcon;
+            var iconSprite = rewards[i].Item?.SpriteIcon;
 
             var img = rewardSlots[i].GetComponent<UnityEngine.UI.Image>();
             img.sprite = iconSprite;
