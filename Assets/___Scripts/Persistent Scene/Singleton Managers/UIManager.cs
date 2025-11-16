@@ -24,8 +24,6 @@ public static class UIEvents
     public static Action OnShopDeactivated;
 
     public static Action OnRequestCloseAllUI;
-
-
 }
 
 public class UIManager : MonoBehaviour
@@ -164,7 +162,7 @@ public class UIManager : MonoBehaviour
 
     private void ToggleInventory()
     {
-        if (GameManager.Instance.CurrentState == GameState.Paused)
+        if (_isPaused)
         {
             _inventoryUI.SetActive(false);
             UIEvents.OnInventoryDeactivated?.Invoke();
@@ -178,7 +176,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        UIEvents.OnRequestCloseAllUI?.Invoke();   // 🔥 close other windows first
+        UIEvents.OnRequestCloseAllUI?.Invoke();
 
         _inventoryUI.SetActive(true);
         UIEvents.OnInventoryActive?.Invoke();
@@ -186,7 +184,7 @@ public class UIManager : MonoBehaviour
 
     private void ToggleShop()
     {
-        if (GameManager.Instance.CurrentState == GameState.Paused)
+        if (_isPaused)
         {
             UIEvents.OnShopDeactivated?.Invoke();
             return;
@@ -204,21 +202,16 @@ public class UIManager : MonoBehaviour
         UIEvents.OnShopConfirm?.Invoke();
     }
 
-    GameState lastGameState;
     private void TogglePause()
     {
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();
-            GameManager.Instance.SetState(lastGameState);
             Resume();
         }
         else
         {
-            UIEvents.OnRequestCloseAllUI?.Invoke();
             UIEvents.OnPauseMenuActive?.Invoke();
-            lastGameState = GameManager.Instance.CurrentState;
-            GameManager.Instance.SetState(GameState.Paused);
             Pause();
         }
     }

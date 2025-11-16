@@ -67,22 +67,31 @@ public class ShopUIController : MonoBehaviour
 
     public void HandleShopToggling()
     {
-        if (mainShopPanel.activeInHierarchy)
+        var scaler = mainShopPanel.GetComponent<ScaleOnEnable>();
+
+        if (scaler.IsAnimating)
+            return;
+
+        if (IsOpen)
         {
             HandleShopDeactivation();
         }
-            
         else
         {
             ShopActivated?.Invoke();
             mainShopPanel.SetActive(true);
         }
-            
     }
 
     public void HandleShopDeactivation()
     {
+        var scaler = mainShopPanel.GetComponent<ScaleOnEnable>();
+
+        if (mainShopPanel.activeInHierarchy && !scaler.IsAnimating)
+        {
+            scaler.HideWithScale();
+        }
+
         ShopDeactivated?.Invoke();
-        mainShopPanel.SetActive(false);
     }
 }
