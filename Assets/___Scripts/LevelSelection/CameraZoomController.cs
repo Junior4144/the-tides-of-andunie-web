@@ -4,25 +4,22 @@ using UnityEngine;
 public class CameraZoomController : MonoBehaviour
 {
     [Header("Zoom")]
-    [SerializeField] private float zoomSpeedSmall = 4f;
-    [SerializeField] private float zoomSpeedLarge = 10f;
-    [SerializeField] private float largeZoomThreshold = 100f;
+    [SerializeField] private float zoomFactor = 0.15f;      // Controls normalized zoom strength
     [SerializeField] private float minZoom = 10f;
     [SerializeField] private float maxZoom = 400f;
 
     [Header("Auto Zoom")]
-    [SerializeField] private float autoZoomOutSpeed = 20f;
-    [SerializeField] private float autoZoomInSpeed = 20f;
-    [SerializeField] private bool autoZoomEnabled = true;
+    [SerializeField] private float autoZoomSpeed = 1.5f;     // 1–3 recommended
+    [SerializeField] private float largeZoomThreshold = 100f;
     [SerializeField] private float thresholdBuffer = 10f;
+    [SerializeField] private bool autoZoomEnabled = true;
 
     [Header("Bounds")]
     [SerializeField] private BoxCollider2D boundary;
 
     private CinemachineCamera cam;
     private Bounds bounds;
-    private bool isAutoZoomingOut = false;
-    private bool isAutoZoomingIn = false;
+
 
     void Start()
     {
@@ -34,7 +31,8 @@ public class CameraZoomController : MonoBehaviour
             return;
         }
 
-        bounds = boundary.bounds;
+        if (boundary != null)
+            bounds = boundary.bounds;
     }
 
     void Update()
@@ -42,83 +40,46 @@ public class CameraZoomController : MonoBehaviour
         float current = cam.Lens.OrthographicSize;
         float scroll = Input.mouseScrollDelta.y;
 
-        // --------------------------------------------------------------------
-        // AUTO ZOOM IN MODE
-        // --------------------------------------------------------------------
-        if (isAutoZoomingIn)
-        {
-            float target = Mathf.MoveTowards(current, largeZoomThreshold, autoZoomInSpeed * Time.deltaTime);
-            cam.Lens.OrthographicSize = target;
-
-            // Stop auto zoom-in when we reach the threshold
-            if (target <= largeZoomThreshold)
-            {
-                isAutoZoomingIn = false;
-            }
-
-            return; // user cannot zoom right now
-        }
-
-        // --------------------------------------------------------------------
-        // AUTO ZOOM OUT MODE
-        // --------------------------------------------------------------------
-        if (isAutoZoomingOut)
-        {
-            float target = Mathf.MoveTowards(current, maxZoom, autoZoomOutSpeed * Time.deltaTime);
-            cam.Lens.OrthographicSize = target;
-
-            // Stop auto zoom-out when maxZoom reached
-            if (Mathf.Abs(target - maxZoom) < 0.01f)
-            {
-                isAutoZoomingOut = false;
-            }
-
-            return; // user cannot zoom right now
-        }
-
-        // --------------------------------------------------------------------
-        // START AUTO ZOOM IN (scroll inward while above threshold+buffer)
-        // --------------------------------------------------------------------
-        if (autoZoomEnabled && scroll > 0 && current > largeZoomThreshold + thresholdBuffer)
-        {
-            isAutoZoomingIn = true;
-            return;
-        }
-
-        // --------------------------------------------------------------------
-        // START AUTO ZOOM OUT (no scroll, above threshold+buffer)
-        // --------------------------------------------------------------------
-        if (autoZoomEnabled && Mathf.Abs(scroll) < 0.01f
-            && current >= largeZoomThreshold + thresholdBuffer
-            && current < maxZoom)
-        {
-            isAutoZoomingOut = true;
-            return;
-        }
-
-        // --------------------------------------------------------------------
-        // NORMAL MANUAL ZOOM (only if no auto zoom is active)
-        // --------------------------------------------------------------------
+        // ------------------------------------------------------------
+        // MANUAL ZOOM (normalized)
+        // ------------------------------------------------------------
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            float speed = current > largeZoomThreshold ? zoomSpeedLarge : zoomSpeedSmall;
-            float targetManual = Mathf.Clamp(current - scroll * speed, minZoom, maxZoom);
+            float delta = NormalizedZoomDelta(-scroll);
+            float target = Mathf.Clamp(current + delta, minZoom, maxZoom);
 
-            // Bound checks
-            float camH = current;
-            float camW = camH * cam.Lens.Aspect;
-            Vector3 pos = cam.transform.position;
-
-            bool touching =
-                pos.x - camW <= bounds.min.x ||
-                pos.x + camW >= bounds.max.x ||
-                pos.y - camH <= bounds.min.y ||
-                pos.y + camH >= bounds.max.y;
-
-            if (scroll < 0 && touching)
+            if (scroll < 0 && IsTouchingBounds(target))
                 return;
 
-            cam.Lens.OrthographicSize = targetManual;
+            cam.Lens.OrthographicSize = target;
         }
+    }
+
+    // ------------------------------------------------------------
+    // NORMALIZED ZOOM DELTA (consistent zoom everywhere)
+    // ------------------------------------------------------------
+    float NormalizedZoomDelta(float input)
+    {
+        float scale = cam.Lens.OrthographicSize;
+        return input * (scale * zoomFactor);
+    }
+
+
+    // ------------------------------------------------------------
+    // BOUNDARY CHECK
+    // ------------------------------------------------------------
+    bool IsTouchingBounds(float ortho)
+    {
+        if (boundary == null) return false;
+
+        float camH = ortho;
+        float camW = camH * cam.Lens.Aspect;
+        Vector3 pos = cam.transform.position;
+
+        return
+            pos.x - camW <= bounds.min.x ||
+            pos.x + camW >= bounds.max.x ||
+            pos.y - camH <= bounds.min.y ||
+            pos.y + camH >= bounds.max.y;
     }
 }
