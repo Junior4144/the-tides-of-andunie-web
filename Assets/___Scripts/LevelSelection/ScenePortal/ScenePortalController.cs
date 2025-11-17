@@ -11,15 +11,11 @@ public class ScenePortalController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player")) return;    
-
-        AudioManager.Instance.FadeAudio();
-
-        SaveManager.Instance.SavePlayerStats();
+        if (!collision.CompareTag("Player")) return;
 
         SceneSavePositionManager.Instance.SavePlayerPosition(gameObject.scene.name, lastPosition.transform.position, lastPosition.transform.rotation);
 
-        PlayerManager.Instance.HandleDestroy();
+        Utility.PreSceneChangeSetup();
 
         LoadNextStage();
     }

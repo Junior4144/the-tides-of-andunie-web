@@ -13,26 +13,15 @@ public class EndCurrentScene : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        Debug.Log("[EndCurrentScene] Next Scene is starting");
-        GameObject _player = PlayerManager.Instance.gameObject;
-        Debug.Log($"Player: {_player.name} and saving data");
-
-        AudioManager.Instance.FadeAudio();
-
-        SaveManager.Instance.SavePlayerStats();
-
-        PlayerManager.Instance.HandleDestroy();
+        Utility.PreSceneChangeSetup();
 
         LoadNextStage();
     }
 
     public void SkipStage()
     {
-        Debug.Log("[EndCurrentScene] SKIP � jumping to next scene");
+        Utility.PreSceneChangeSetup();
 
-        AudioManager.Instance.FadeAudio();
-        SaveManager.Instance.SavePlayerStats();
-        PlayerManager.Instance.HandleDestroy();
         LoadNextStage();
     }
 

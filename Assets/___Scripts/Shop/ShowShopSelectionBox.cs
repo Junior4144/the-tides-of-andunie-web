@@ -16,7 +16,6 @@ public class ShowShopSelectionBox : MonoBehaviour
     {
         LSShopController.OnPlayerEnterSelectionZone += ShowBox;
         LSShopController.OnPlayerExitSelectionZone += HideBox;
-        SceneStateManager.OnNonPersistentSceneActivated += HandleSceneLocationChange;
 
         SceneManager.activeSceneChanged += HandleCheck;
     }
@@ -25,7 +24,6 @@ public class ShowShopSelectionBox : MonoBehaviour
     {
         LSShopController.OnPlayerEnterSelectionZone -= ShowBox;
         LSShopController.OnPlayerExitSelectionZone -= HideBox;
-        SceneStateManager.OnNonPersistentSceneActivated -= HandleSceneLocationChange;
 
         SceneManager.activeSceneChanged -= HandleCheck;
     }
@@ -82,6 +80,4 @@ public class ShowShopSelectionBox : MonoBehaviour
         _boxInstance.SetActive(false);
         Debug.Log("Hiding box above player.");
     }
-
-    private void HandleSceneLocationChange() => SceneManager.MoveGameObjectToScene(_boxInstance, SceneManager.GetActiveScene());
 }

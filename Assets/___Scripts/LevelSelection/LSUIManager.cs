@@ -12,12 +12,8 @@ public class LSUIManager : MonoBehaviour
     private string NextScene;
     private bool isExit;
 
-    public static event Action ActivateEntryUI;
     public static event Action DeactivatePreEntryUI;
 
-    public static event Action ActivateEnterVillageUI;
-
-    public static event Action ActivateVillageExitUI;
 
     private void Awake()
     {

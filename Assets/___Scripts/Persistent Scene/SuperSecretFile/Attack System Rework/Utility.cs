@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class Utility : MonoBehaviour
 {
@@ -25,5 +26,21 @@ public class Utility : MonoBehaviour
     {
         float angle = AngleTowardsMouse(fromPosition);
         return Quaternion.Euler(0f, 0f, angle);
+    }
+
+    public static void PreSceneChangeSetup()
+    {
+        AudioManager.Instance.FadeAudio();
+        SaveManager.Instance.SavePlayerStats();
+        PlayerManager.Instance.HandleDestroy();
+    }
+
+    public static void ResetGameSceneSetup()
+    {
+        SaveManager.Instance.ResetSaveData();
+
+        AudioManager.Instance.FadeAudio();
+
+        PlayerManager.Instance.HandleDestroy();
     }
 }
