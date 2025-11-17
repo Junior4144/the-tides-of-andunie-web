@@ -14,8 +14,8 @@ public class ShowSelectionBox : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelSelection.OnPlayerEnterSelectionZone += ShowBox;
-        LevelSelection.OnPlayerExitSelectionZone += HideBox;
+        LevelSelectionController.OnPlayerEnterSelectionZone += ShowBox;
+        LevelSelectionController.OnPlayerExitSelectionZone += HideBox;
 
         LSShopController.OnPlayerEnterSelectionZone += ShowBox;
         LSShopController.OnPlayerExitSelectionZone += HideBox;
@@ -26,8 +26,8 @@ public class ShowSelectionBox : MonoBehaviour
 
     private void OnDisable()
     {
-        LevelSelection.OnPlayerEnterSelectionZone -= ShowBox;
-        LevelSelection.OnPlayerExitSelectionZone -= HideBox;
+        LevelSelectionController.OnPlayerEnterSelectionZone -= ShowBox;
+        LevelSelectionController.OnPlayerExitSelectionZone -= HideBox;
 
         LSShopController.OnPlayerEnterSelectionZone -= ShowBox;
         LSShopController.OnPlayerExitSelectionZone -= HideBox;

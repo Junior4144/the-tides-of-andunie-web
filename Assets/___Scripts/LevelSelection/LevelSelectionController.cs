@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelSelection : MonoBehaviour
+public class LevelSelectionController : MonoBehaviour
 {
     [SerializeField] private string villageId;
     [SerializeField] bool isExit;
@@ -12,6 +12,7 @@ public class LevelSelection : MonoBehaviour
 
     public static event Action OnPlayerEnterSelectionZone;
     public static event Action OnPlayerExitSelectionZone;
+
     public static event Action<string, string, bool> PlayerActivatedMenu;
     public string location = "DefaultSpawn";
 

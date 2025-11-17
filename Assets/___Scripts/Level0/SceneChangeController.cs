@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndCurrentScene : MonoBehaviour
+public class SceneChangeController : MonoBehaviour
 {
     [SerializeField]
     private string nextScene;

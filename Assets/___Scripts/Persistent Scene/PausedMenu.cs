@@ -42,10 +42,12 @@ public class PausedMenu : MonoBehaviour
         Debug.Log("SKIP pressed � handling all transitions");
 
         GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
-        if (obj.TryGetComponent(out EndCurrentScene ecs))
+        if (obj.TryGetComponent(out SceneChangeController ecs))
             ecs.NextStage();
+
         if(PlayerManager.Instance)
             PlayerManager.Instance.HandleDestroy();
+
         UIEvents.OnRequestPauseToggle?.Invoke();
     }
 

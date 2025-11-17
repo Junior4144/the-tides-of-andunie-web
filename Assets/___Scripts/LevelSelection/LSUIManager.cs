@@ -14,7 +14,6 @@ public class LSUIManager : MonoBehaviour
 
     public static event Action DeactivatePreEntryUI;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,8 +24,8 @@ public class LSUIManager : MonoBehaviour
         Instance = this;
     }
 
-    private void OnEnable() => LevelSelection.PlayerActivatedMenu += HandleMenu;
-    private void OnDisable() => LevelSelection.PlayerActivatedMenu -= HandleMenu;
+    private void OnEnable() => LevelSelectionController.PlayerActivatedMenu += HandleMenu;
+    private void OnDisable() => LevelSelectionController.PlayerActivatedMenu -= HandleMenu;
 
     private void Update()
     {
