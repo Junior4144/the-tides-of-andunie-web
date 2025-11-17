@@ -6,6 +6,11 @@ public class CurrencyUI : MonoBehaviour
     [SerializeField] private RectTransform coinContainer;
     [SerializeField] private TMP_Text coinText;
 
+    private void OnEnable()
+    {
+        UpdateUI(CurrencyManager.Instance.Coins);
+    }
+
     private void Start()
     {
         CurrencyManager.Instance.OnCoinsChanged += UpdateUI;
