@@ -8,12 +8,14 @@ public class MainMenu : MonoBehaviour
     public GameObject optionsPanel;
     public GameObject MainPanel;
 
-    public void play()
+    public void Play()
     {
         if (isStarting) return;
 
         Debug.Log("Clicked Play");
         isStarting = true;
+
+        AudioManager.Instance.FadeAudio();
         SceneControllerManager.Instance.LoadNextStage("Main Menu", "Level0Cutscene");
     }
 
