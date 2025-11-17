@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RegionOutlineController : MonoBehaviour
 {
@@ -12,6 +12,10 @@ public class RegionOutlineController : MonoBehaviour
     public float maxCamSize = 450f;
     public float minLineWidth = 1f;
     public float maxLineWidth = 10f;
+
+    [Header("Line Transparency Settings")]
+    public float minAlpha = 0.1f;
+    public float maxAlpha = 1f;
 
     private void Awake()
     {
@@ -45,15 +49,35 @@ public class RegionOutlineController : MonoBehaviour
 
         float camSize = cam.orthographicSize;
 
-        // Normalize camera size into 0�1 range
+        // Normalize camera size into 0–1 range
         float t = Mathf.InverseLerp(minCamSize, maxCamSize, camSize);
 
         // Lerp line width between your values
         float width = Mathf.Lerp(minLineWidth, maxLineWidth, t);
-
-        // Apply to LineRenderer
         Outline.startWidth = width;
         Outline.endWidth = width;
+
+        // --- UPDATED ALPHA LOGIC ---
+        float alpha;
+
+        // If camera size is below the threshold → keep alpha fixed at 0.1
+        if (camSize <= minCamSize)
+        {
+            alpha = minAlpha;
+        }
+        else
+        {
+            // Remap camera size only for values ABOVE 200
+            float tAlpha = Mathf.InverseLerp(minCamSize, maxCamSize, camSize);
+
+            alpha = Mathf.Lerp(minAlpha, maxAlpha, tAlpha);
+        }
+
+        // Apply alpha
+        Color c = Outline.startColor;
+        c.a = alpha;
+        Outline.startColor = c;
+        Outline.endColor = c;
     }
 
     private void ZoomBelowThreshold()
