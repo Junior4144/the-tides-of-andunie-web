@@ -8,7 +8,8 @@ public class CurrencyUI : MonoBehaviour
 
     private void OnEnable()
     {
-        UpdateUI(CurrencyManager.Instance.Coins);
+        if (CurrencyManager.Instance != null)
+            UpdateUI(CurrencyManager.Instance.Coins);
     }
 
     private void Start()
