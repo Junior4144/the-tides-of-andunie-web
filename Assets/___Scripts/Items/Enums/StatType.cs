@@ -10,5 +10,14 @@ public enum StatType
     ExplosionDamage,
 
     [StatDisplay("Speed")]
-    Speed
+    Speed,
+
+    [StatDisplay("Melee Resistance")]
+    MeleeResistance,
+
+    [StatDisplay("Ranged Resistance")]
+    RangedResistance,
+
+    [StatDisplay("Explosion Resistance")]
+    ExplosionResistance,
 }

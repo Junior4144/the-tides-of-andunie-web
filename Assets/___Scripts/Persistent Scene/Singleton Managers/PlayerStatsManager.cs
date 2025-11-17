@@ -43,27 +43,58 @@ public class PlayerStatsManager : MonoBehaviour
 
     public static PlayerStatsManager Instance { get; private set; }
 
+    // =============================
+    //  STAT PROPERTIES
+    // =============================
     public float MaxHealth { get; private set; }
     public float MeleeDamage { get; private set; }
     public float ExplosionDamage { get; private set; }
     public float Speed { get; private set; }
 
+    public float MeleeResistance { get; private set; }
+    public float RangedResistance { get; private set; }
+    public float ExplosionResistance { get; private set; }
+
+    // =============================
+    //  DEFAULT VALUES (serialized)
+    // =============================
     [SerializeField] private float _defaultMaxHealth;
     [SerializeField] private float _defaultMeleeDamage;
     [SerializeField] private float _defaultExplosionDamage;
     [SerializeField] private float _defaultSpeed;
-    
+
+    [SerializeField] private float _defaultMeleeResistance;
+    [SerializeField] private float _defaultRangedResistance;
+    [SerializeField] private float _defaultExplosionResistance;
+
+    // =============================
+    //  DEFAULT GETTERS
+    // =============================
     public float DefaultMaxHealth => _defaultMaxHealth;
     public float DefaultMeleeDamage => _defaultMeleeDamage;
     public float DefaultExplosionDamage => _defaultExplosionDamage;
     public float DefaultSpeed => _defaultSpeed;
 
-    public static event Action<float, float> OnMeleeDamageChanged;
+    public float DefaultMeleeResistance => _defaultMeleeResistance;
+    public float DefaultRangedResistance => _defaultRangedResistance;
+    public float DefaultExplosionResistance => _defaultExplosionResistance;
+
+    // =============================
+    //  EVENTS
+    // =============================
     public static event Action<float, float> OnMaxHealthChanged;
+    public static event Action<float, float> OnMeleeDamageChanged;
     public static event Action<float, float> OnExplosionDamageChanged;
     public static event Action<float, float> OnSpeedChanged;
 
-    void Awake()
+    public static event Action<float, float> OnMeleeResistanceChanged;
+    public static event Action<float, float> OnRangedResistanceChanged;
+    public static event Action<float, float> OnExplosionResistanceChanged;
+
+    // =============================
+    //  UNITY LIFECYCLE
+    // =============================
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -75,30 +106,54 @@ public class PlayerStatsManager : MonoBehaviour
         ResetToDefaults();
     }
 
-    public void SetMeleeDamage(float newMeleeDamage)
+    // =============================
+    //  SETTERS
+    // =============================
+    public void SetMaxHealth(float value)
     {
-        MeleeDamage = newMeleeDamage;
-        OnMeleeDamageChanged?.Invoke(newMeleeDamage, _defaultMeleeDamage);
+        MaxHealth = value;
+        OnMaxHealthChanged?.Invoke(value, _defaultMaxHealth);
     }
 
-    public void SetMaxHealth(float newMaxHealth)
+    public void SetMeleeDamage(float value)
     {
-        MaxHealth = newMaxHealth;
-        OnMaxHealthChanged?.Invoke(newMaxHealth, _defaultMaxHealth);
+        MeleeDamage = value;
+        OnMeleeDamageChanged?.Invoke(value, _defaultMeleeDamage);
     }
 
-    public void SetExplosionDamage(float newExplosionDamage)
+    public void SetExplosionDamage(float value)
     {
-        ExplosionDamage = newExplosionDamage;
-        OnExplosionDamageChanged?.Invoke(newExplosionDamage, _defaultExplosionDamage);
+        ExplosionDamage = value;
+        OnExplosionDamageChanged?.Invoke(value, _defaultExplosionDamage);
     }
 
-    public void SetSpeed(float newSpeed)
+    public void SetSpeed(float value)
     {
-        Speed = newSpeed;
-        OnSpeedChanged?.Invoke(newSpeed, _defaultSpeed);
+        Speed = value;
+        OnSpeedChanged?.Invoke(value, _defaultSpeed);
     }
 
+    public void SetMeleeResistance(float value)
+    {
+        MeleeResistance = value;
+        OnMeleeResistanceChanged?.Invoke(value, _defaultMeleeResistance);
+    }
+
+    public void SetRangedResistance(float value)
+    {
+        RangedResistance = value;
+        OnRangedResistanceChanged?.Invoke(value, _defaultRangedResistance);
+    }
+
+    public void SetExplosionResistance(float value)
+    {
+        ExplosionResistance = value;
+        OnExplosionResistanceChanged?.Invoke(value, _defaultExplosionResistance);
+    }
+
+    // =============================
+    //  RESETTER
+    // =============================
     public void ResetToDefaults()
     {
         MaxHealth = _defaultMaxHealth;
@@ -106,9 +161,17 @@ public class PlayerStatsManager : MonoBehaviour
         ExplosionDamage = _defaultExplosionDamage;
         Speed = _defaultSpeed;
 
+        MeleeResistance = _defaultMeleeResistance;
+        RangedResistance = _defaultRangedResistance;
+        ExplosionResistance = _defaultExplosionResistance;
+
         OnMaxHealthChanged?.Invoke(_defaultMaxHealth, _defaultMaxHealth);
         OnMeleeDamageChanged?.Invoke(_defaultMeleeDamage, _defaultMeleeDamage);
         OnExplosionDamageChanged?.Invoke(_defaultExplosionDamage, _defaultExplosionDamage);
         OnSpeedChanged?.Invoke(_defaultSpeed, _defaultSpeed);
+
+        OnMeleeResistanceChanged?.Invoke(_defaultMeleeResistance, _defaultMeleeResistance);
+        OnRangedResistanceChanged?.Invoke(_defaultRangedResistance, _defaultRangedResistance);
+        OnExplosionResistanceChanged?.Invoke(_defaultExplosionResistance, _defaultExplosionResistance);
     }
 }
