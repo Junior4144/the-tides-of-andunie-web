@@ -82,4 +82,13 @@ public class OnClickOutline : MonoBehaviour
             lineRenderer.widthMultiplier = 1f;
         }
     }
+
+    public void ResetColor()
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.startColor = normalColor;
+            lineRenderer.endColor = normalColor;
+        }
+    }
 }
