@@ -13,23 +13,23 @@ public class RegionOutlineController : MonoBehaviour
 
     private void OnEnable()
     {
-        RegionZoomController.ZoomAboveThreshold += OnZoomAbove100;
-        RegionZoomController.ZoomBelowThreshold += OnZoomBelow100;
+        RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
+        RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
     }
 
     private void OnDisable()
     {
-        RegionZoomController.ZoomAboveThreshold -= OnZoomAbove100;
-        RegionZoomController.ZoomBelowThreshold -= OnZoomBelow100;
+        RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
+        RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
     }
 
-    private void OnZoomBelow100()
+    private void ZoomBelowThreshold()
     {
         Outline.enabled = false;
         onClickOutline.enabled = false;
     }
 
-    private void OnZoomAbove100()
+    private void ZoomAboveThreshold()
     {
         Outline.enabled = true;
         onClickOutline.enabled = true;
