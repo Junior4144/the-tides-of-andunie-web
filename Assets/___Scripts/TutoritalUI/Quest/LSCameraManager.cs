@@ -29,6 +29,10 @@ public class LSCameraManager : MonoBehaviour
         CameraZoomController.enabled = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        if (PlayerManager.Instance == null) yield return null;
+
+        PlayerManager.Instance.EnableLSPlayerMovement();
     }
 
     public void DisableCamera()
@@ -37,5 +41,9 @@ public class LSCameraManager : MonoBehaviour
         CameraZoomController.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.DisableLSPlayerMovement();
     }
 }

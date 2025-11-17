@@ -15,7 +15,14 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive += HandleCameraDeactivation;
         UIEvents.OnPauseMenuDeactivated += HandleCameraActivation;
+
+        UIEvents.OnPreScreenConfirm += HandleCameraDeactivation;
+        UIEvents.OnPreScreenDeactivated += HandleCameraActivation;
+
+        UIEvents.OnLSEnterConfirm += HandleCameraDeactivation;
+        UIEvents.OnLSEnterDeactivated += HandleCameraActivation;
     }
+
     private void OnDisable()
     {
         ShopUIController.ShopActivated -= HandleCameraDeactivation;
@@ -26,6 +33,12 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive -= HandleCameraDeactivation;
         UIEvents.OnPauseMenuDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnPreScreenConfirm -= HandleCameraDeactivation;
+        UIEvents.OnPreScreenDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnLSEnterConfirm -= HandleCameraDeactivation;
+        UIEvents.OnLSEnterDeactivated -= HandleCameraActivation;
     }
 
     private void HandleCameraDeactivation()
@@ -34,7 +47,23 @@ public class CameraToggleController : MonoBehaviour
 
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.DisableLSPlayerMovement();
     }
+    private void HandleCameraDeactivation(bool isExit)
+    {
+        bool newState = false;
+
+        zoomScript.enabled = newState;
+        mouseScript.enabled = newState;
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.DisableLSPlayerMovement();
+    }
+
 
     private void HandleCameraActivation()
     {
@@ -42,5 +71,10 @@ public class CameraToggleController : MonoBehaviour
 
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
+
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.EnableLSPlayerMovement();
     }
 }

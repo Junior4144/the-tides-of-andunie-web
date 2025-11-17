@@ -9,6 +9,10 @@ public static class UIEvents
 
     public static Action OnRequestShopToggle;
 
+    public static Action<bool> OnRequestLSEnterToggle;
+
+    public static Action OnRequestPreScreenToggle;
+
     public static Action OnRequestPauseToggle;
 
     public static Action OnInventoryActive;
@@ -22,6 +26,12 @@ public static class UIEvents
 
     public static Action OnShopConfirm;
     public static Action OnShopDeactivated;
+
+    public static Action<bool> OnLSEnterConfirm;
+    public static Action OnLSEnterDeactivated;
+
+    public static Action OnPreScreenConfirm;
+    public static Action OnPreScreenDeactivated;
 
     public static Action OnRequestCloseAllUI;
 }
@@ -44,6 +54,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _pauseUI;
 
     private bool _isPaused;
+    private bool _inventoryOpen;
+    private bool _shopOpen;
+    private bool _lSEnterUIOpen;
+    private bool _preScreenUIOpen;
 
     private void Awake()
     {
@@ -61,6 +75,23 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnRequestPauseToggle += TogglePause;
 
+        UIEvents.OnRequestPreScreenToggle += TogglePreScreenUI;
+
+        UIEvents.OnRequestLSEnterToggle += ToggleLSEnterUI;
+
+        UIEvents.OnInventoryActive += () => _inventoryOpen = true;
+        UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
+
+        UIEvents.OnShopConfirm += () => _shopOpen = true;
+        UIEvents.OnShopDeactivated += () => _shopOpen = false;
+
+        UIEvents.OnLSEnterConfirm += isExit => _lSEnterUIOpen = true;
+        UIEvents.OnLSEnterDeactivated += () => _lSEnterUIOpen = false;
+
+        UIEvents.OnPreScreenConfirm += () => _preScreenUIOpen = true;
+        UIEvents.OnPreScreenDeactivated += () => _preScreenUIOpen = false;
+
+        UIEvents.OnRequestCloseAllUI += CloseAllUI;
     }
 
     private IEnumerator Start()
@@ -202,8 +233,68 @@ public class UIManager : MonoBehaviour
         UIEvents.OnShopConfirm?.Invoke();
     }
 
+    private void ToggleLSEnterUI(bool isExit)
+    {
+        if (_isPaused)
+        {
+            return;
+        }
+
+        if (!_lSEnterUIOpen)
+        {
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+        }
+
+        
+        UIEvents.OnLSEnterConfirm?.Invoke(isExit);
+    }
+
+
+    private void TogglePreScreenUI()
+    {
+        if (_isPaused)
+        {
+            return;
+        }
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnPreScreenConfirm?.Invoke();
+    }
+
+    private void CloseAllUI()
+    {
+        if (_inventoryOpen)
+        {
+            _inventoryUI.SetActive(false);
+            UIEvents.OnInventoryDeactivated?.Invoke();
+        }
+
+        if (_shopOpen)
+        {
+            UIEvents.OnShopDeactivated?.Invoke();
+        }
+
+        if (_preScreenUIOpen)
+        {
+            UIEvents.OnPreScreenDeactivated?.Invoke();
+        }
+
+        if (_lSEnterUIOpen)
+        {
+            UIEvents.OnLSEnterDeactivated?.Invoke();
+        }
+    }
+
     private void TogglePause()
     {
+        // 1. If ANY UI popup is open, close it and STOP pause from happening
+        if (_inventoryOpen || _shopOpen || _preScreenUIOpen || _lSEnterUIOpen)
+        {
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+            return;
+        }
+
+        // 2. If no popups are open, proceed with pause logic
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();

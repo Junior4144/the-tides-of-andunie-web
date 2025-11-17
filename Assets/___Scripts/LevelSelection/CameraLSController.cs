@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 enum MouseButton { Left = 0, Right = 1, Middle = 2 }
@@ -82,7 +83,19 @@ public class CameraLSController : MonoBehaviour
             Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
             bool valid = NavMesh.SamplePosition(mouseWorld, out _, 0.3f, NavMesh.AllAreas);
 
-            if (valid || CameraManager.Instance.GetCamera().orthographicSize > 100)
+            Collider2D[] hits = Physics2D.OverlapPointAll(mouseWorld);
+
+            foreach (var h in hits)
+            {
+                if (h.CompareTag("LSVillagePointerTarget"))
+                {
+                    valid = true;
+                    Debug.Log("Hit the correct Village Pointer Target!");
+                    break;
+                }
+            }
+
+            if (valid)
             {
                 Cursor.SetCursor(validClickCursor, hotspot, CursorMode.Auto);
             }

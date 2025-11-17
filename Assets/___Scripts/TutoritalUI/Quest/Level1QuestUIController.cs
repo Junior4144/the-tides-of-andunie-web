@@ -27,5 +27,10 @@ public class Level1QuestUIController : MonoBehaviour
             Panel1.SetActive(false);
             Panel2.SetActive(true);
         }
+        else
+        {
+            Panel1.SetActive(false);
+            Panel2.SetActive(false);
+        }
     }
 }

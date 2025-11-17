@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class RegionZoomController : MonoBehaviour
 {
+    [SerializeField]
+    public float threshold = 200f;
+
     private Camera cam;
 
-    public static event Action ZoomBelow100;
-    public static event Action ZoomAbove100;
+    public static event Action ZoomBelowThreshold;
+    public static event Action ZoomAboveThreshold;
 
     private LSPlayerMovement playerMovement;
 
@@ -18,18 +21,18 @@ public class RegionZoomController : MonoBehaviour
 
     private void Update()
     {
-        if (cam.orthographicSize <= 100f)
+        if (cam.orthographicSize <= threshold)
         {
             if (playerMovement == null) return;
             playerMovement.enabled = true;
-            ZoomBelow100?.Invoke();
+            ZoomBelowThreshold?.Invoke();
         }
 
-        if (cam.orthographicSize > 100f)
+        if (cam.orthographicSize > threshold)
         {
             if (playerMovement == null) return;
             playerMovement.enabled = false;
-            ZoomAbove100?.Invoke();
+            ZoomAboveThreshold?.Invoke();
         }
     }
 }
