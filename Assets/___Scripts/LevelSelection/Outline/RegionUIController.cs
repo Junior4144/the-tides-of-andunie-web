@@ -83,15 +83,15 @@ public class RegionUIController : MonoBehaviour
     private void OnEnable()
     {
         OnClickOutline.RegionClicked += HandleRegionClicked;
-        RegionZoomController.ZoomAbove100 += OnZoomAbove100;
-        RegionZoomController.ZoomBelow100 += OnZoomBelow100;
+        RegionZoomController.ZoomAboveThreshold += OnZoomAbove100;
+        RegionZoomController.ZoomBelowThreshold += OnZoomBelow100;
     }
 
     private void OnDisable()
     {
         OnClickOutline.RegionClicked -= HandleRegionClicked;
-        RegionZoomController.ZoomAbove100 -= OnZoomAbove100;
-        RegionZoomController.ZoomBelow100 -= OnZoomBelow100;
+        RegionZoomController.ZoomAboveThreshold -= OnZoomAbove100;
+        RegionZoomController.ZoomBelowThreshold -= OnZoomBelow100;
     }
 
     private void HandleRegionClicked(Region region)
