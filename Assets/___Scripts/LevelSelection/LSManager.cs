@@ -124,12 +124,12 @@ public class LSManager : MonoBehaviour
             .ToList();
     }
 
-    public float GetLiberatedVillageAmount()
+    public string GetLiberatedVillageAmount()
     {
         return villages.Count(village =>
             village.state == VillageState.Liberated_FirstTime ||
             village.state == VillageState.Liberated_Done
-        );
+        ).ToString();
     }
 
     public float GetTotalPlayerableVillage()
