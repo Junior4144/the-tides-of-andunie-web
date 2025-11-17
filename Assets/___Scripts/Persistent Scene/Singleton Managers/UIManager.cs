@@ -257,6 +257,11 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        if (_preScreenUIOpen)
+        {
+            return;
+        }
+
         UIEvents.OnRequestCloseAllUI?.Invoke();
         UIEvents.OnPreScreenConfirm?.Invoke();
     }
