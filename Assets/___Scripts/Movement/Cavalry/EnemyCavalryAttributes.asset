@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00214df442a6064082448d0bfcaa41d, type: 3}
   m_Name: EnemyCavalryAttributes
   m_EditorClassIdentifier: Assembly-CSharp::CavalryAttributes
-  RotationSpeed: 120
+  TurningSpeed: 150
   Health: 300
   DamageAmount: 50
   ReadyDistance: 0
-  MinSpeedForTurning: 2
-  MaxSpeedForTurning: 23
-  ChargeSpeed: 25
-  TurnSpeed: 1.5
-  ChargeAngle: 15
-  Acceleration: 25
+  MinSpeedForTurning: 5
+  MaxSpeedForTurning: 45
+  ChargeSpeed: 50
+  PatrollingSpeed: 12.5
+  ChargeAngle: 20
+  Acceleration: 5
+  ChargeAcceleration: 25
+  Deceleration: 150
+  MinPathStraightnessToAttack: 0.9
+  AttackCoolDown: 5
   ChanceOfCollectableDrop: 0.3
