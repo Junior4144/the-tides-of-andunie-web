@@ -5,7 +5,6 @@ public class ExplosionDamageController : MonoBehaviour
 {
     private readonly HashSet<GameObject> hitEnemies = new();
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject target = collision.gameObject;

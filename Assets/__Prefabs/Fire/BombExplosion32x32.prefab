@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2257470487426158694}
   - component: {fileID: 5636825131655199288}
   - component: {fileID: 3178518890717017906}
-  - component: {fileID: 2039044098054964225}
   - component: {fileID: 7040645166731934736}
   m_Layer: 0
   m_Name: ImpulseCollider
@@ -103,18 +102,6 @@ MonoBehaviour:
   impulseDuration: 0.7
   playSound: 1
   spawnParticles: 1
---- !u!114 &2039044098054964225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2167132523319534326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3392328c846a2240a787cdce925d066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ExplosionDamageController
 --- !u!114 &7040645166731934736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8b1369032c5644f93f3a51caae7251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  pirateAttribute: {fileID: 11400000, guid: 793e0aec6053585459ae0ce819779f6c, type: 2}
 --- !u!1 &3548132128928179003
 GameObject:
   m_ObjectHideFlags: 0

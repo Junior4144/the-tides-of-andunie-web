@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BombProjectile : MonoBehaviour
@@ -7,22 +8,38 @@ public class BombProjectile : MonoBehaviour
     [SerializeField] GameObject hitEffectPrefab;
     [SerializeField] private GameObject expoSound;
     [SerializeField] private PirateAttributes _pirateAttributes;
+    [SerializeField] private float travelDistance = 5f;
+    [SerializeField] private float _attackAnimDuration = .9f;
     [HideInInspector] public float power;
 
     private Rigidbody2D _rb;
-
+    private Vector2 startPos;
     private bool hasDamage = false;
-
+    private BombAnimator _animator;
+    private void Awake()
+    {
+        _animator = GetComponentInChildren<BombAnimator>();
+    }
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        Destroy(gameObject, 4f);
+        startPos = transform.position;
     }
 
     private void FixedUpdate()
     {
-        _rb.linearVelocity = transform.up * ArrowVelocity;
+        if (Vector2.Distance(startPos, transform.position) < travelDistance)
+        {
+            _rb.linearVelocity = transform.up * ArrowVelocity;
+        }
+        else
+        {
+            _rb.linearVelocity = Vector2.zero;
+            _animator.TriggerAttack();
+            StartCoroutine(HandleBombSequence());
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,13 +48,20 @@ public class BombProjectile : MonoBehaviour
         {
             if (hasDamage) return;
             hasDamage = true;
-            Debug.Log($"[BombProjectile] Damage dealt {_pirateAttributes.DamageAmount}");
-            health.TakeDamage(_pirateAttributes.DamageAmount);
             SpawnHitEffect(collision.transform.position);
         }
+
         SpawnExplosion();
         SpawnExplosionSound();
 
+        Destroy(gameObject);
+    }
+
+    private IEnumerator HandleBombSequence()
+    {
+        yield return new WaitForSeconds(_attackAnimDuration);
+        SpawnExplosion();
+        SpawnExplosionSound();
         Destroy(gameObject);
     }
 
