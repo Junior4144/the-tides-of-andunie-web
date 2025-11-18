@@ -3,8 +3,6 @@ using UnityEngine;
 public class ArrowProjectile : MonoBehaviour
 {
     [HideInInspector] public float ArrowVelocity;
-
-    [SerializeField] private string _layerName;
     [SerializeField] GameObject expo;
     [SerializeField] private GameObject expoSound;
     [SerializeField] GameObject hitEffectPrefab;
