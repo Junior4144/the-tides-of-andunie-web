@@ -18035,13 +18035,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7608130283365355476}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74, y: 1.32, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.061667997, w: 0.99809676}
+  m_LocalPosition: {x: 0.89, y: 1.3800001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8296345732307116213}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7.071}
 --- !u!4 &8296345732307116213
 Transform:
   m_ObjectHideFlags: 0
@@ -18072,13 +18072,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a4b76653d46d74f9ccdd522ffa5fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _attackAnimDuration: 0.9
-  _attributes: {fileID: 11400000, guid: f20cf1ef13a1b2d448e71639a1b36a3c, type: 2}
+  _attackAnimDuration: 1
+  _attributes: {fileID: 11400000, guid: 793e0aec6053585459ae0ce819779f6c, type: 2}
   ProjectilePrefab: {fileID: 2366741659865636554, guid: 1803e8de19bb2984eb790a9c0c729402, type: 3}
   firePoint: {fileID: 7608130283365355476}
-  fireShotSound: {fileID: 8300000, guid: 3719a491393b7cb45a0c5eb9c704d83c, type: 3}
-  fireCooldown: 1
-  HoldFireCooldown: 0.4
+  fireShotSound: {fileID: 0}
+  fireCooldown: 2
+  HoldFireCooldown: 2
   impulseForce: 10
   impulseDuration: 0
 --- !u!212 &9009622827424182146
@@ -18151,7 +18151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8755567ce3d01f448dd9551edc39ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherPirateAnimator
-  _attackAnimDuration: 0.8
+  _attackAnimDuration: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

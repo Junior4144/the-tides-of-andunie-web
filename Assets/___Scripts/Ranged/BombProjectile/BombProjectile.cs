@@ -26,13 +26,7 @@ public class BombProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        //check everything
-
         Debug.Log($"Projectile hit {collision.name}");
-        SpawnExplosion();
-        SpawnExplosionSound();
-
         if (collision.TryGetComponent(out IHealthController health))
         {
             if (hasDamage) return;
@@ -41,6 +35,9 @@ public class BombProjectile : MonoBehaviour
             health.TakeDamage(_pirateAttributes.DamageAmount);
             SpawnHitEffect(collision.transform.position);
         }
+        SpawnExplosion();
+        SpawnExplosionSound();
+
         Destroy(gameObject);
     }
 
@@ -55,8 +52,7 @@ public class BombProjectile : MonoBehaviour
 
     private void SpawnExplosion()
     {
-        GameObject expoObject = Instantiate(expo, transform.position, transform.rotation);
-        expoObject.transform.localScale = Vector3.one * Mathf.Max(1f, power);
+        Instantiate(expo, transform.position, transform.rotation);
     }
 
     private void SpawnExplosionSound()

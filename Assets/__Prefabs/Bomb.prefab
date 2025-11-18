@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5082514012366048139}
   - component: {fileID: 2542717773612401938}
   - component: {fileID: 1521024564847062885}
-  - component: {fileID: 728865210768559346}
   - component: {fileID: 8798484458222207414}
   m_Layer: 14
   m_Name: Bomb
@@ -167,21 +166,6 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -1, z: 0}
---- !u!114 &728865210768559346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2366741659865636554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fb63a4a3bd99004889fede982398f10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  ArrowVelocity: 10
-  hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
-  _pirateAttributes: {fileID: 11400000, guid: f20cf1ef13a1b2d448e71639a1b36a3c, type: 2}
 --- !u!114 &8798484458222207414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +182,7 @@ MonoBehaviour:
   expo: {fileID: 3548132128928179003, guid: ad6038a9e58441947be261d3ea203446, type: 3}
   hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
   expoSound: {fileID: 4184515136674530310, guid: aac468c6daeca9c46834bc06ff3e5752, type: 3}
-  _pirateAttributes: {fileID: 11400000, guid: f20cf1ef13a1b2d448e71639a1b36a3c, type: 2}
+  _pirateAttributes: {fileID: 11400000, guid: 793e0aec6053585459ae0ce819779f6c, type: 2}
   power: 0
 --- !u!1 &7778605343423404073
 GameObject:
