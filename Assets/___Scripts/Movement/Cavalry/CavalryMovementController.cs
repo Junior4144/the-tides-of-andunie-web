@@ -28,27 +28,24 @@ public class CavalryMovementController : MonoBehaviour
     {
         if (!agent.enabled) return;
         
-        agent.nextPosition = _rigidbody.position;
-        float desiredSpeed = agent.desiredVelocity.magnitude;
-
-        _rigidbody.linearVelocity = transform.up * desiredSpeed;
-        RotateTowardsSteeringTarget();
+        SyncAgentToRigidbody();
+        ApplyForwardMovement();
+        ApplySpeedBasedSteering();
     }
+
+    void SyncAgentToRigidbody() => agent.nextPosition = _rigidbody.position;
+    void ApplyForwardMovement() => _rigidbody.linearVelocity = transform.up * agent.desiredVelocity.magnitude;
+
     void Update()
     {
         if (!agent.enabled || Player == null) return;
         agent.SetDestination(Player.position);
-        AdjustSpeed();
+        UpdateTargetSpeed();
     }
 
-    private void AdjustSpeed()
+    private void UpdateTargetSpeed()
     {
-        Vector3 directionToTarget = (agent.steeringTarget - (Vector3)_rigidbody.position).normalized;
-        Vector3 currentForward = transform.up;
-
-        float angleToSteer = Vector3.Angle(currentForward, directionToTarget);
-
-        float targetSpeed = angleToSteer <= _attributes.ChargeAngle ? _attributes.ChargeSpeed : _attributes.TurnSpeed;
+        float targetSpeed = IsLinedUpForCharge() ? _attributes.ChargeSpeed : _attributes.TurnSpeed;
 
         agent.speed = Mathf.MoveTowards(
             agent.speed,
@@ -57,14 +54,23 @@ public class CavalryMovementController : MonoBehaviour
         );
     }
 
-    private void RotateTowardsSteeringTarget()
+    private bool IsLinedUpForCharge()
+    {
+        Vector3 directionToTarget = (agent.steeringTarget - (Vector3)_rigidbody.position).normalized;
+        Vector3 currentForward = transform.up;
+        float angleToSteer = Vector3.Angle(currentForward, directionToTarget);
+        return angleToSteer <= _attributes.ChargeAngle;
+    }
+
+    
+
+    private void ApplySpeedBasedSteering()
     {
         Vector3 steeringDirection = (agent.steeringTarget - (Vector3)_rigidbody.position).normalized;
 
         if (steeringDirection.sqrMagnitude < 0.01f) return;
 
-        float rawSteeringAngle = Mathf.Atan2(steeringDirection.y, steeringDirection.x) * Mathf.Rad2Deg;
-        float desiredRotation = rawSteeringAngle - 90f;
+        float desiredRotationAngle = AngleOfVectorInDegrees(steeringDirection) - 90f;
 
         float currentSpeed = _rigidbody.linearVelocity.magnitude;
 
@@ -72,13 +78,16 @@ public class CavalryMovementController : MonoBehaviour
 
         float effectiveTurnSpeed = _attributes.RotationSpeed * turnAbility;
 
-
         _rigidbody.SetRotation(
             Mathf.MoveTowardsAngle(
                 _rigidbody.rotation,
-                desiredRotation,
+                desiredRotationAngle,
                 effectiveTurnSpeed * Time.fixedDeltaTime 
             )
         );
     }
+
+    private float AngleOfVectorInDegrees(Vector3 vector)
+     => Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+
 }

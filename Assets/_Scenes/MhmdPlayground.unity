@@ -15420,8 +15420,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 30
-  impulseDuration: 0.2
+  _impulseforce: 150
+  impulseDuration: 0.9
   playSound: 1
   spawnParticles: 1
 --- !u!1001 &1544533016981831375
@@ -15490,10 +15490,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9134396811027938939}
-  - component: {fileID: 9134396811027938940}
-  - component: {fileID: 6470337851103651596}
-  - component: {fileID: 6095378921663549435}
   - component: {fileID: 1457672407408637305}
+  - component: {fileID: 9134396811027938940}
   m_Layer: 6
   m_Name: ImpulseCollider
   m_TagString: ImpulseSource
@@ -15580,7 +15578,7 @@ AudioSource:
   m_GameObject: {fileID: 6883433267360681993}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -15675,7 +15673,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6883433267360681993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
   m_Name: 
@@ -15771,74 +15769,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
   deathAnimation: {fileID: 3706533600887995784, guid: a6eb5691c0c264807910e50cd9638545, type: 3}
---- !u!114 &5130794515997706610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6883433267360681993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8c06f06e5da8e44392cf7186f45e8b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ImpulseController
-  _squadDirectionWeight: 0.7
-  _individualDirectionWeight: 0.3
-  _centralImpactMultiplier: 2.5
-  _minFallOffMultiplier: 0.2
-  _maxFallOffDistance: 10
-  _impulseResistance: 0
-  _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
-  _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
---- !u!114 &6095378921663549435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590730475729560449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a09ff32bad1e6d843af430d1a3031ef2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
---- !u!58 &6470337851103651596
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590730475729560449}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.40967506, y: 0.043712307}
-  m_Radius: 0.9370427
 --- !u!1 &6883433267360681993
 GameObject:
   m_ObjectHideFlags: 0
@@ -15855,7 +15785,6 @@ GameObject:
   - component: {fileID: 2637531578746699705}
   - component: {fileID: 1305894279999077884}
   - component: {fileID: 3428379437816757934}
-  - component: {fileID: 5130794515997706610}
   - component: {fileID: 2424215125308572759}
   - component: {fileID: 7172148230761278257}
   - component: {fileID: 4997564117718416439}
@@ -16048,14 +15977,14 @@ Transform:
   m_GameObject: {fileID: 1590730475729560449}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalPosition: {x: 0.18, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3185696866835870825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &9134396811027938940
-CapsuleCollider2D:
+--- !u!60 &9134396811027938940
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16070,7 +15999,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -16088,9 +16017,24 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.40802333, y: 0.8146904}
-  m_Size: {x: 1.2337211, y: 3.3570912}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.51204, y: 1.5173869}
+      - {x: -0.013190497, y: 1.8719835}
+      - {x: -0.59946823, y: 1.3990064}
+      - {x: 0.8168687, y: -1.2771813}
+      - {x: 1.1181352, y: 0.28206173}
+  m_UseDelaunayMesh: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
