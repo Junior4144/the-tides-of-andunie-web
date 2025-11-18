@@ -34,13 +34,6 @@ public class LSManager : MonoBehaviour
 
     private bool invasionStarted = false;
 
-    [Header("Region Locks")]
-    public bool _orrostarLocked = false;
-    public bool _hyarrostarLocked = true;
-    public bool _hyarnustarLocked = true;
-    public bool _andustarLocked = true;
-    public bool _forostarLocked = true;
-
     [Header("Global Invasion Trigger")]
     public bool startGlobalInvasion = false;
     public bool HasInvasionStarted => invasionStarted;
@@ -148,16 +141,18 @@ public class LSManager : MonoBehaviour
         );
     }
 
-    public bool IsRegionLocked(Region region)
+    public bool IsRegionFullyLiberated(Region region)
     {
-        return region switch
-        {
-            Region.Orrostar => _orrostarLocked,
-            Region.Hyarrostar => _hyarrostarLocked,
-            Region.Hyarnustar => _hyarnustarLocked,
-            Region.Andustar => _andustarLocked,
-            Region.Forostar => _forostarLocked,
-            _ => true,
-        };
+        var regionVillages = villages.Where(v => v.region == region);
+
+        // Safety: If no villages exist in region (bad data case), treat as NOT complete
+        if (!regionVillages.Any())
+            return false;
+
+        // TRUE only if EVERY village is liberated
+        return regionVillages.All(v =>
+            v.state == VillageState.Liberated_FirstTime ||
+            v.state == VillageState.Liberated_Done
+        );
     }
 }
