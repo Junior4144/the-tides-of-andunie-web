@@ -32,7 +32,7 @@ public class CavalryMovementController : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         _pathPlaceholder = new NavMeshPath();
-        _currentPatrolPointIndex = 0;
+        SetNearestPatrolPoint();
         TransitionToPatrollingState();
         _hasHitThePlayer = false;
         _lastAttackTime = -_attributes.AttackCoolDown;
