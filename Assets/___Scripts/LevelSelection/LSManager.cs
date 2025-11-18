@@ -29,14 +29,23 @@ public class LSManager : MonoBehaviour
 {
     public static LSManager Instance;
 
+    [Header("Village Data")]
     [SerializeField] private List<VillageData> villages = new List<VillageData>();
 
     private bool invasionStarted = false;
+
+    [Header("Region Locks")]
+    public bool _orrostarLocked = false;
+    public bool _hyarrostarLocked = true;
+    public bool _hyarnustarLocked = true;
+    public bool _andustarLocked = true;
+    public bool _forostarLocked = true;
+
+    [Header("Global Invasion Trigger")]
     public bool startGlobalInvasion = false;
+    public bool HasInvasionStarted => invasionStarted;
 
     public event Action<string, VillageState> OnVillageStateChanged;
-
-    public bool HasInvasionStarted => invasionStarted;
 
     void Awake()
     {
@@ -132,10 +141,23 @@ public class LSManager : MonoBehaviour
         ).ToString();
     }
 
-    public float GetTotalPlayerableVillage()
+    public float GetTotalPlayableVillage()
     {
         return villages.Count(village =>
             village.region != Region.None
         );
+    }
+
+    public bool IsRegionLocked(Region region)
+    {
+        return region switch
+        {
+            Region.Orrostar => _orrostarLocked,
+            Region.Hyarrostar => _hyarrostarLocked,
+            Region.Hyarnustar => _hyarnustarLocked,
+            Region.Andustar => _andustarLocked,
+            Region.Forostar => _forostarLocked,
+            _ => true,
+        };
     }
 }
