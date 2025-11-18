@@ -19,6 +19,9 @@ public class CameraToggleController : MonoBehaviour
         UIEvents.OnPreScreenConfirm += HandleCameraDeactivation;
         UIEvents.OnPreScreenDeactivated += HandleCameraActivation;
 
+        UIEvents.OnTutorialActive += HandleCameraDeactivation;
+        UIEvents.OnTutorialDeactivated += HandleCameraActivation;
+
         UIEvents.OnLSEnterConfirm += HandleCameraDeactivation;
         UIEvents.OnLSEnterDeactivated += HandleCameraActivation;
     }
@@ -36,6 +39,9 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnPreScreenConfirm -= HandleCameraDeactivation;
         UIEvents.OnPreScreenDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnTutorialActive -= HandleCameraDeactivation;
+        UIEvents.OnTutorialDeactivated -= HandleCameraActivation;
 
         UIEvents.OnLSEnterConfirm -= HandleCameraDeactivation;
         UIEvents.OnLSEnterDeactivated -= HandleCameraActivation;

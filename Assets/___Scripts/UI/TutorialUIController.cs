@@ -1,35 +1,64 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class TutorialUIController : MonoBehaviour
 {
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private float _deactivationDelay = 0.06f;
     [SerializeField] private GameObject _tutorialPrefab;
     [SerializeField] private Transform _prefabPanel;
+    [SerializeField] private float initialDelay = 0.4f;
+
+    private ScaleOnEnable _scaleOnEnable;
+
+    private void Awake()
+    {
+        _scaleOnEnable = GetComponentInChildren<ScaleOnEnable>(true);
+    }
+
+    private void OnEnable()
+    {
+        UIEvents.OnTutorialDeactivated += DeactivateCanvas;
+    }
+
+    private void OnDisable()
+    {
+        UIEvents.OnTutorialDeactivated -= DeactivateCanvas;
+    }
 
     private void Start()
     {
-        InstantiateTutorialPrefab();
+        StartCoroutine(InitalSetup());
     }
 
-    private void InstantiateTutorialPrefab()
+    private IEnumerator InitalSetup()
     {
-        if (_tutorialPrefab != null)
-            Instantiate(_tutorialPrefab, _prefabPanel);
-        else
-            Debug.Log("TutorialUIController could not find either Tutorial Prefab");
+        yield return new WaitForSeconds(initialDelay);
+
+        _canvas.SetActive(true);
+        Instantiate(_tutorialPrefab, _prefabPanel);
+        yield return new WaitForSeconds(initialDelay);
+
+        Time.timeScale = 0f;
+
+        UIEvents.OnTutorialActive?.Invoke();
+    }
+
+    public void OnOkayPressed()
+    {
+        UIEvents.OnTutorialDeactivated?.Invoke();
     }
 
     public void DeactivateCanvas()
     {
-        StartCoroutine(DeactivateAfterDelay(_deactivationDelay));
+        StartCoroutine(CloseTutorial());
     }
 
-    private IEnumerator DeactivateAfterDelay(float deactivationDelay)
+    private IEnumerator CloseTutorial()
     {
-        yield return new WaitForSeconds(deactivationDelay);
+        Time.timeScale = 1f;
+
+        _scaleOnEnable.HideWithScale();
+        yield return new WaitForSeconds(.8f);
 
         _canvas.SetActive(false);
     }
