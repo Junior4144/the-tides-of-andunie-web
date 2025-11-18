@@ -33,6 +33,13 @@ public class LowHealthController : MonoBehaviour
     {
         if (health == null) return;
 
+        if(!PlayerManager.Instance || health.GetPercentHealth() <= 0)
+        {
+            HideUI();
+            return;
+        }
+
+
         float hpPct = health.GetPercentHealth();
         if (hpPct <= lowHealthThreshold)
         {
@@ -41,11 +48,6 @@ public class LowHealthController : MonoBehaviour
         }
         else if (uiActive) HideUI();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("Force low health for test");
-            health.SetCurrentHealth(health.GetMaxHealth() * 0.3f);
-        }
 
     }
 

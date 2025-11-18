@@ -3,15 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class RewardListener : MonoBehaviour
 {
-    [SerializeField] private RaidRewardManager raidRewardManager;
-
     public string VillageLiberationID;
     public string Location;
     public string NextScene;
 
-    private void OnEnable() => raidRewardManager.OnRewardCollected += HandleRewardCollected;
+    private void OnEnable() => RaidRewardManager.OnRewardCollected += HandleRewardCollected;
 
-    private void OnDisable() => raidRewardManager.OnRewardCollected -= HandleRewardCollected;
+    private void OnDisable() => RaidRewardManager.OnRewardCollected -= HandleRewardCollected;
 
     private void HandleRewardCollected()
     {

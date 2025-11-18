@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class TreeFire : MonoBehaviour
 {
@@ -12,29 +14,32 @@ public abstract class TreeFire : MonoBehaviour
     [SerializeField]
     private GameObject fireSprite_1;
 
-    private bool _isLevelSelectorScene;
+    private bool _isLevelSelectorScene = false;
 
-    private void OnEnable()
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        InSceneActivationManager.OnSceneActivated += StartLevelSelectorFire;
+        StartCoroutine(CheckAfterLoading(newScene));
     }
-    private void OnDisable()
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
     {
-        InSceneActivationManager.OnSceneActivated -= StartLevelSelectorFire;
+        yield return null;
+
+        if (newScene == gameObject.scene)
+        {
+            if(gameObject.scene.name == "LevelSelector") _isLevelSelectorScene = true;
+            SpawnFire();
+        }
+            
     }
 
     private void Awake()
     {
-        CacheFirePoints();
-
-        _isLevelSelectorScene = gameObject.scene.name == "LevelSelector";
-
-        if (!_isLevelSelectorScene)
-        {
-            SpawnFire();
-            SpawnFireSound();
-        }
-            
+        CacheFirePoints();    
     }
 
     private void CacheFirePoints()
@@ -58,16 +63,11 @@ public abstract class TreeFire : MonoBehaviour
             if (_isLevelSelectorScene) break;
         }
     }
-    private void SpawnFireSound()
-    {
-        if (fireSound != null)
-            Instantiate(fireSound, transform.position, Quaternion.identity, transform);
-    }
+    //private void SpawnFireSound()
+    //{
+    //    if (fireSound != null)
+    //        Instantiate(fireSound, transform.position, Quaternion.identity, transform);
+    //}
 
-    private void StartLevelSelectorFire()
-    {
-        if (_isLevelSelectorScene)
-            SpawnFire();
-    }
 }
 

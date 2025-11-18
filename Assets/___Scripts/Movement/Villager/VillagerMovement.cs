@@ -7,7 +7,7 @@ public class VillagerMovement : MonoBehaviour
 
     NavMeshAgent agent;
 
-    [SerializeField] VillagerAttributes _attributes;
+    [SerializeField] private float rotationSpeed;
     private Rigidbody2D _rigidbody;
 
     private void Awake()
@@ -35,7 +35,7 @@ public class VillagerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90f);
 
         _rigidbody.SetRotation(
-            Mathf.MoveTowardsAngle(_rigidbody.rotation, targetRotation.eulerAngles.z, _attributes.RotationSpeed * Time.deltaTime)
+            Mathf.MoveTowardsAngle(_rigidbody.rotation, targetRotation.eulerAngles.z, rotationSpeed * Time.deltaTime)
         );
     }
 

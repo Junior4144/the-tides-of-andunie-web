@@ -10,6 +10,9 @@ public class LSPlayerMovement : MonoBehaviour
     Camera cam;
     Vector3 smoothDir;
 
+    [HideInInspector]
+    public bool disableClicking = false;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -24,7 +27,7 @@ public class LSPlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0) && !disableClicking)
             TryMoveToMouse();
 
         RotateTowardVelocity();
@@ -33,15 +36,38 @@ public class LSPlayerMovement : MonoBehaviour
     void TryMoveToMouse()
     {
         Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
-        if (NavMesh.SamplePosition(mouseWorld, out NavMeshHit hit, 0.5f, NavMesh.AllAreas))
+        bool validNavMesh = NavMesh.SamplePosition(mouseWorld, out NavMeshHit hit, 0.5f, NavMesh.AllAreas);
+
+        bool validCollider = false;
+
+        Collider2D[] hits = Physics2D.OverlapPointAll(mouseWorld);
+        Collider2D currentColldier = null;
+        foreach (var h in hits)
+        {
+            if (h.CompareTag("LSVillagePointerTarget"))
+            {
+                validCollider = true;
+                currentColldier = h;
+                Debug.Log("Hit the correct Village Pointer Target!");
+                break;
+            }
+        }
+
+        if (validNavMesh)
         {
             agent.SetDestination(hit.position);
+        }
+        else if (validCollider)
+        {
+            var curr = currentColldier.GetComponent<VillagePointerTargetController>().navigationTarget;
+            agent.SetDestination(curr.transform.position);
         }
         else
         {
             Debug.Log("Cannot move there — no NavMesh.");
         }
     }
+
     void RotateTowardVelocity()
     {
         Vector3 vel = agent.velocity;

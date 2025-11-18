@@ -9,20 +9,23 @@ public class PlayerHealthController : HealthController
 
     public override void TakeDamage(float damageAmount)
     {
-        if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
+        if(GameManager.Instance.CurrentState == GameState.Gameplay ||
+           GameManager.Instance.CurrentState == GameState.Stage1Gameplay)
+        {
+            if (_currentHealth == 0 || damageAmount == 0) return;
 
-        if (_currentHealth == 0 || damageAmount == 0) return;
+            _currentHealth -= damageAmount;
 
-        _currentHealth -= damageAmount;
+            OnDamaged.Invoke();
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-        OnDamaged.Invoke(); 
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+            if (_currentHealth < 0)
+                _currentHealth = 0;
 
-        if (_currentHealth < 0)
-            _currentHealth = 0;
+            if (_currentHealth == 0)
+                OnDied.Invoke();
+        }
 
-        if (_currentHealth == 0)
-            OnDied.Invoke();
     }
 
     public override void AddHealth(float amount)

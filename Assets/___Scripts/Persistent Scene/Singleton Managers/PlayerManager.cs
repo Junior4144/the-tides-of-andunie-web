@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(DestroyController))]
 public class PlayerManager : MonoBehaviour
@@ -78,12 +79,25 @@ public class PlayerManager : MonoBehaviour
     //------TRANSFORM------//
     public bool IsAttacking() => _attackController.IsAttacking;
 
+    //------LS PLAYER------//
+    public NavMeshAgent GetPlayerAgent() => GetComponent<NavMeshAgent>();
 
     //------MOVEMENT------//
     //public bool IsInDash() => _playerMovement.IsInDash();
     public bool IsInImpulse() => _impulseController.IsInImpulse();
-    
-    
+
+    public bool DisableLSPlayerMovement() => _lsPlayerMovement.disableClicking = true;
+    public bool EnableLSPlayerMovement() => _lsPlayerMovement.disableClicking = false;
+
+
     //------DESTROY------//
-    public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);    
+    public void HandleDestroy()
+    {
+        if (this == null) return;
+
+        if (TryGetComponent<DestroyController>(out var dc))
+        {
+            dc.Destroy(0f);
+        }
+    }
 }

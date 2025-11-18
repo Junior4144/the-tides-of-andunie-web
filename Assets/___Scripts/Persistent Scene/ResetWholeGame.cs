@@ -17,11 +17,7 @@ public class EndWholeGame : MonoBehaviour
     {
         Debug.Log("[EndWholeGame] Reseting Whole Game");
 
-        SaveManager.Instance.ResetSaveData();
-
-        AudioManager.Instance.FadeAudio();
-
-        PlayerManager.Instance.HandleDestroy();
+        Utility.ResetGameSceneSetup();
 
         LoadNextStage();
     }

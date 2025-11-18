@@ -62,7 +62,10 @@ public class LSStoryManager : MonoBehaviour
             StartCutscene();
         }
         else
+        {
             StartGameplay();
+        }
+            
     }
 
     private void StartCutscene()
@@ -78,6 +81,9 @@ public class LSStoryManager : MonoBehaviour
 
     private void OnCutsceneStarted(PlayableDirector director)
     {
+
+        LSCameraManager.Instance.DisableCamera();
+
         GameManager.Instance.SetState(GameState.Cutscene);
         SetCutsceneCameraPriority(CUTSCENE_CAMERA_PRIORITY);
         Debug.Log("[LSStoryManager] Cutscene started");
@@ -88,6 +94,9 @@ public class LSStoryManager : MonoBehaviour
         GameManager.Instance.SetState(GameState.LevelSelector);
         SetCutsceneCameraPriority(DEFAULT_CAMERA_PRIORITY);
         Debug.Log("[LSStoryManager] Cutscene stopped");
+
+        LSCameraManager.Instance.EnableCamera();
+
     }
 
     private void SetCutsceneCameraPriority(int priority)

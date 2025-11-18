@@ -1,43 +1,43 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VillageStateController : MonoBehaviour
 {
-    [Header("Village Identifier")]
-    [SerializeField] private string villageId;
-
     [Header("Objects for States")]
     [SerializeField] private GameObject preInvasionObjects;
     [SerializeField] private GameObject invadedObjects;
     [SerializeField] private GameObject liberatedObjects;
 
-    private void OnDisable() => LSManager.Instance.OnVillageStateChanged -= HandleVillageStateChanged;
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
-    private void Start()
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
     {
-        LSManager.Instance.OnVillageStateChanged += HandleVillageStateChanged;
-        StartCoroutine(HandleVillageStateChanged());
+        StartCoroutine(CheckAfterLoading(newScene));
+    }
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
+    {
+        yield return null;
+
+        if (newScene == gameObject.scene)
+            StartCoroutine(HandleVillageStateChanged());
     }
 
     private IEnumerator HandleVillageStateChanged()
     {
         yield return null;
-        ApplyCurrentState(); // Hydrate when scene loads
+        ApplyCurrentState();
     }
 
     private void ApplyCurrentState()
     {
-        VillageState state = LSManager.Instance.GetVillageState(villageId);
+        VillageState state = LSManager.Instance.GetVillageState(VillageIDManager.Instance.villageId);
         ApplyState(state);
     }
 
-    private void HandleVillageStateChanged(string id, VillageState newState)
-    {
-        if (id != villageId)
-            return;
-
-        ApplyState(newState);
-    }
 
     private void ApplyState(VillageState state)
     {

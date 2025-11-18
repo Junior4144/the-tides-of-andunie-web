@@ -11,6 +11,17 @@ public class HealthBarUI : MonoBehaviour
 
     private Coroutine _damageRoutine;
 
+    private void OnEnable()
+    {
+        StartCoroutine(DelayStart());
+    }
+
+    private IEnumerator DelayStart()
+    {
+        yield return null;
+        UpdateHealthBar(PlayerManager.Instance.GetCurrentHealth(), PlayerStatsManager.Instance.MaxHealth);
+    }
+
     public void UpdateHealthBar(float _currentHealth, float _maxHealth)
     {
         if (!gameObject.activeSelf) return;

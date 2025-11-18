@@ -22,7 +22,7 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private WeaponType currentWeapon = WeaponType.none;
 
-    public bool IsBusy { get; private set; } = false;
+    public bool IsBusy { get; private set; } = true;
 
     [HideInInspector] public float CurrentBowCharge;
     [HideInInspector] public float BowMaxCharge;
@@ -48,20 +48,32 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest += HandleEquipRequest;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
-        SceneManager.activeSceneChanged += OnSceneChanged;
+        //SceneManager.activeSceneChanged += OnSceneChanged;
 
-        UIEvents.OnInventoryActive += HandleInventoryActive;
-        UIEvents.OnInventoryDeactivated += OnInventoryDeactived;
+        UIEvents.OnInventoryActive += HandlePopUpUIActive;
+        UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
+
+        UIEvents.OnRewardActive += HandlePopUpUIActive;
+        UIEvents.OnRewardDeactivated += OnPopUpUIDeactivated;
+
+        UIEvents.OnPauseMenuActive += HandlePopUpUIActive;
+        UIEvents.OnPauseMenuDeactivated += OnPopUpUIDeactivated;
     }
 
     private void OnDisable()
     {
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
-        SceneManager.activeSceneChanged -= OnSceneChanged;
+        //SceneManager.activeSceneChanged -= OnSceneChanged;
 
-        UIEvents.OnInventoryActive -= HandleInventoryActive;
-        UIEvents.OnInventoryDeactivated -= OnInventoryDeactived;
+        UIEvents.OnInventoryActive -= HandlePopUpUIActive;
+        UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
+
+        UIEvents.OnRewardActive -= HandlePopUpUIActive;
+        UIEvents.OnRewardDeactivated -= OnPopUpUIDeactivated;
+
+        UIEvents.OnPauseMenuActive -= HandlePopUpUIActive;
+        UIEvents.OnPauseMenuDeactivated -= OnPopUpUIDeactivated;
     }
 
     private void Start()
@@ -77,13 +89,12 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        if (IsBusy)
+        if (IsBusy || IsAbilityAiming || IsNormalAiming)
         {
             pendingWeaponRequest = requestedWeapon;
             Debug.Log($"Weapon switch to {requestedWeapon} queued (currently busy).");
             return;
         }
-
 
         EquipWeapon(requestedWeapon);
     }
@@ -102,7 +113,7 @@ public class WeaponManager : MonoBehaviour
         currentSceneName = SceneManager.GetActiveScene().name;
 
 
-        if (newState != GameState.Gameplay || currentSceneName == "Level0Stage1" || currentSceneName == "Level1")
+        if (newState != GameState.Gameplay)
         {
             Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
             IsBusy = true;
@@ -115,46 +126,25 @@ public class WeaponManager : MonoBehaviour
             HandleEquipRequest(WeaponType.Axe);
         }
     }
-
-    private void OnSceneChanged(Scene oldScene, Scene newScene)
-    {
-        currentSceneName = newScene.name;
-
-        bool shouldDisable = currentSceneName == "Level0Stage1" || currentSceneName == "Level1";
-
-        if (shouldDisable)
-        {
-            Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
-            IsBusy = true;
-            SetWeaponToNone();
-        }
-        else
-        {
-            Debug.Log($"Scene '{currentSceneName}' detected — enabling weapons if gameplay.");
-            IsBusy = false;
-
-            HandleEquipRequest(WeaponType.Axe);
-
-        }
-    }
-
     private void SetWeaponToNone()
     {
         if (currentWeapon != WeaponType.none)
         {
             currentWeapon = WeaponType.none;
-            Debug.Log("All weapons disabled due to game state.");
             WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
         }
     }
 
-    private void HandleInventoryActive()
+    private void HandlePopUpUIActive()
     {
-        SetWeaponToNone();
+        WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
+        IsBusy = true;
     }
     
-    private void OnInventoryDeactived()
+    private void OnPopUpUIDeactivated()
     {
+        Debug.Log("OnPopUpUIDeactivated is called");
+        IsBusy = false;
         HandleEquipRequest(WeaponType.Axe);
     }
 
@@ -172,6 +162,12 @@ public class WeaponManager : MonoBehaviour
                 EquipWeapon(queuedWeapon);
             }
         }
+    }
+
+    public void DisableWeapon()
+    {
+        IsBusy = true;
+        SetWeaponToNone();
     }
 
     public WeaponType GetCurrentWeapon()

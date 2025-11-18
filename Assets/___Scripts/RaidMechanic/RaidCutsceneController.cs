@@ -24,9 +24,9 @@ public class RaidCutsceneController : MonoBehaviour
             Debug.LogWarning("RaidCutsceneController has no RaidController assigned!", this);
             return;
         }
-        raidController.OnRaidTriggered += HandleRaidTriggered;
+        RaidController.OnRaidTriggered += HandleRaidTriggered;
         if (RewardsExist())
-            RaidRewardManager.Instance.OnRewardCollected += PlayOutroCutscene;
+            RaidRewardManager.OnRewardCollected += PlayOutroCutscene;
         else
             raidController.OnRaidComplete += PlayOutroCutscene;
         
@@ -39,9 +39,9 @@ public class RaidCutsceneController : MonoBehaviour
     {
         if (raidController != null)
         {
-            raidController.OnRaidTriggered -= HandleRaidTriggered;
+            RaidController.OnRaidTriggered -= HandleRaidTriggered;
             if (RewardsExist())
-                RaidRewardManager.Instance.OnRewardCollected -= PlayOutroCutscene;
+                RaidRewardManager.OnRewardCollected -= PlayOutroCutscene;
             else
                 raidController.OnRaidComplete -= PlayOutroCutscene;
             

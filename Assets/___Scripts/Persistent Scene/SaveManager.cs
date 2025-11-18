@@ -49,8 +49,11 @@ public class SaveManager : MonoBehaviour
             lastLocation = "DefaultSpawn"
 
         };
-        Debug.Log($"[SaveManager] No Player Instance -> Default values -> Health:{CurrentSave.health}, Damage:{CurrentSave.damageAmount},");
-        Debug.Log($"[SaveManager] No Player Instance -> Default values -> LastLocation:{CurrentSave.lastLocation}");
+        string currHealth = CurrentSave.health.ToString();
+        string currDamage = CurrentSave.damageAmount.ToString();
+        string currSave = CurrentSave.lastLocation.ToString();
+        Debug.Log($"[SaveManager] No Player Instance -> Default values -> Health:{currHealth}, Damage:{currDamage},");
+        Debug.Log($"[SaveManager] No Player Instance -> Default values -> LastLocation:{currSave}");
     }
 
     public void SavePlayerStats()
@@ -69,7 +72,7 @@ public class SaveManager : MonoBehaviour
             Debug.LogWarning("[SaveManager] No save data to restore!");
             return;
         }
-        PlayerManager.Instance.SetHealth(CurrentSave.health);
+        PlayerManager.Instance.SetHealth(PlayerStatsManager.Instance.MaxHealth);
         Debug.Log($"[SaveManager] Restored player  health at {CurrentSave.health}");
     }
 

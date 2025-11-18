@@ -8,8 +8,6 @@ public class SceneFade : MonoBehaviour
 {
     private Image _sceneFadeImage;
 
-    public static SceneFade Instance;
-
     private void Awake()
     {
         _sceneFadeImage = GetComponent<Image>();

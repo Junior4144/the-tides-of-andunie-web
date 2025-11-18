@@ -6,8 +6,11 @@ public class MusketBallProjectile : MonoBehaviour
 
     [SerializeField] GameObject hitEffectPrefab;
 
+    [SerializeField] private PirateAttributes _pirateAttributes;
+
     private Rigidbody2D _rb;
-    private bool AlreadyActivated;
+
+    private bool hasDamage = false;
 
     private void Start()
     {
@@ -22,7 +25,19 @@ public class MusketBallProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-    
+        Debug.Log($"Projectile hit {collision.name}");
+        if (collision.TryGetComponent(out IHealthController health))
+        {
+            if (hasDamage) return;
+            Debug.Log($"[MusketBallProjectile] Damage dealt {_pirateAttributes.DamageAmount}");
+            health.TakeDamage(_pirateAttributes.DamageAmount);
+            hasDamage = true;
+            SpawnHitEffect(collision.transform.position);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Environment"))
+            Destroy(gameObject);
     }
 
     void SpawnHitEffect(Vector2 enemyPos)
@@ -33,5 +48,4 @@ public class MusketBallProjectile : MonoBehaviour
         Quaternion rot = Quaternion.Euler(0f, 0f, angle + 90f);
         Instantiate(hitEffectPrefab, enemyPos, rot);
     }
-
 }

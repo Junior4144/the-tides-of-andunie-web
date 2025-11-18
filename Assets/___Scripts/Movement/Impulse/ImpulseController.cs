@@ -10,6 +10,7 @@ public class ImpulseController : MonoBehaviour
     [SerializeField] private float _centralImpactMultiplier = 2.5f;
     [SerializeField] private float _minFallOffMultiplier = 0.2f;
     [SerializeField] private float _maxFallOffDistance = 10f;
+    [SerializeField] [Range(0f, 1f)] private float _impulseResistance = 0f;
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem _impulseParticlePrefab;
@@ -63,7 +64,8 @@ public class ImpulseController : MonoBehaviour
         float finalForce =
             CalcualteFallOffMultiplier(Vector2.Distance(_rb.position, contactPoint)) *
             CalculateBehindnessBonusMultiplier(_rb.position, contactPoint, impulseDirection) *
-            impulseforce;
+            impulseforce *
+            (1f - _impulseResistance);
 
         _rb.linearVelocity = Vector2.zero;
         _rb.AddForce(blendedDirection * finalForce, ForceMode2D.Impulse);
@@ -105,6 +107,8 @@ public class ImpulseController : MonoBehaviour
             Debug.LogWarning("[BaseImpulseController] No impulse audio found. Playing nothing.");
             return;
         }
+
+        if (_audioSource == null || !_audioSource.enabled) return;
 
         _audioSource.PlayOneShot(_impulseSound);
     }

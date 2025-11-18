@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider2D))]
 public class RaidController : MonoBehaviour
@@ -15,7 +16,8 @@ public class RaidController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI alertText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI postRaidText;
-    [SerializeField] private TextMeshProUGUI enemiesRemainingText;
+    public Slider enemySlider;
+    public GameObject SliderGameObject;
 
     private TextController _alertTextController;
     private TextController _timerTextController;
@@ -40,7 +42,7 @@ public class RaidController : MonoBehaviour
     private RaidState _currentState;
 
     // ------- PUBLIC EVENTS -------
-    public event Action OnRaidTriggered;
+    public static event Action OnRaidTriggered;
     public event Action OnRaidStart;
     public event Action OnRaidComplete;
     public event Action OnRaidFailed;
@@ -49,14 +51,17 @@ public class RaidController : MonoBehaviour
     [Tooltip("If checked, the raid will NOT start automatically. It must be started by an external script (like a cutscene) calling BeginRaidSequence().")]
     [SerializeField] private bool waitForExternalSignal = false;
 
+
+    private float _sliderEnemySpawnCap = 0f;
+
     void Awake()
     {
         _alertTextController = new TextController(alertText);
         _timerTextController = new TextController(timerText);
         _postRaidTextController = new TextController(postRaidText);
-        _enemiesRemainingTextController = new TextController(enemiesRemainingText);
         _totalNumberOfEnemies = _raidConfig.Waves.Sum(wave => wave.enemies.Sum(enemyData => enemyData.count));
         TransitionToPreRaidState();
+        DisableEnemyBar();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -118,7 +123,6 @@ public class RaidController : MonoBehaviour
         if (_currentState == RaidState.RaidInProgress)
         {
             TickMasterTimer();
-            ShowEnemiesCount();
             bool allEnemiesWereSpawned = AllEnemiesWereSpawned;
             bool allSpawnedEnemiesAreDead = AllSpawnedEnemiesAreDead;
             
@@ -145,6 +149,12 @@ public class RaidController : MonoBehaviour
                 }
                 ShowTimer(timeTillNextSpawn);
             }
+        }
+
+        if (_currentState == RaidState.RaidInProgress)
+        {
+            int deadEnemies = _spawnedEnemies.Count(e => e == null);
+            enemySlider.value = _totalNumberOfEnemies - deadEnemies;
         }
     }
 
@@ -185,8 +195,12 @@ public class RaidController : MonoBehaviour
     {
         _masterTimer = 0f;
         _currentState = RaidState.RaidInProgress;
-        UpdateEnemiesCountText();
-        ShowEnemiesCount();
+
+        ShowEnemiesBar();
+
+        enemySlider.maxValue = _totalNumberOfEnemies;
+        enemySlider.value = _totalNumberOfEnemies;
+
         OnRaidStart?.Invoke();
     }
 
@@ -194,9 +208,9 @@ public class RaidController : MonoBehaviour
     {
         _currentState = RaidState.RaidComplete;
         DisplayTextThenFadeOut(_postRaidTextController);
-        RemoveEnemiesCountText();
         _timerTextController.SetTextInvisible();
         OnRaidComplete?.Invoke();
+        DisableEnemyBar();
     }
 
     private void TransitionToRaidFailedState()
@@ -220,31 +234,15 @@ public class RaidController : MonoBehaviour
         StartCoroutine(Utils.ExecuteCoroutineAfterDelay(duration, controller.FadeOut(1f), this));
     }
 
-    private void ShowEnemiesCount()
+    private void ShowEnemiesBar()
     {
-        UpdateEnemiesCountText();
-        _enemiesRemainingTextController.SetTextVisible();
+        SliderGameObject.SetActive(true);
+    }
+    private void DisableEnemyBar()
+    {
+        SliderGameObject.SetActive(false);
     }
 
-    private void UpdateEnemiesCountText()
-    {
-        // 1. Get current enemy count (Inefficient, but simple)
-        int currentEnemies = _spawnedEnemies.Count(e => e != null);
-
-        if (currentEnemies == 0)
-        {
-            _enemiesRemainingTextController.SetText(""); // Show nothing if no enemies
-            return;
-        }
-
-        // --- THIS IS THE FIX ---
-        // 2. Create a collection of 💀 strings and join them
-        string skullText = string.Concat(Enumerable.Repeat("💀", currentEnemies));
-
-        // 3. Set the text
-        _enemiesRemainingTextController.SetText(skullText);
-    }
-    private void RemoveEnemiesCountText() => StartCoroutine(_enemiesRemainingTextController.FadeOut(1f));
 
     private IEnumerator SpawnWaveEnemiesOverIntervals(WaveConfig wave)
     {
@@ -269,6 +267,7 @@ public class RaidController : MonoBehaviour
             Transform chosenSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
             GameObject newEnemy = Instantiate(enemyPrefab, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
             _spawnedEnemies.Add(newEnemy);
+            _sliderEnemySpawnCap++;
             yield return new WaitForSeconds(wave.spawnInterval);
         }
 

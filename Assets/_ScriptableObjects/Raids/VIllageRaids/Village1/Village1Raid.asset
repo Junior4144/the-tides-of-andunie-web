@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426be3247e6dad342b860d70d6f41aa0, type: 3}
+  m_Name: Village1Raid
+  m_EditorClassIdentifier: Assembly-CSharp::RaidConfig
+  Waves:
+  - enemies:
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 20
+    - prefab: {fileID: 2414929219598591556, guid: 4539833b58b52614c91bb7675450598a, type: 3}
+      count: 3
+    countdown: 5
+    spawnInterval: 0.25
+    countDownText: 
+    waveStartText: 
+  - enemies:
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 15
+    - prefab: {fileID: 6804035405117204289, guid: c3f963107a2bfd142ab750423f27102b, type: 3}
+      count: 10
+    - prefab: {fileID: 2414929219598591556, guid: 4539833b58b52614c91bb7675450598a, type: 3}
+      count: 5
+    countdown: 12
+    spawnInterval: 0.25
+    countDownText: 
+    waveStartText: 
+  - enemies:
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 15
+    - prefab: {fileID: 6804035405117204289, guid: c3f963107a2bfd142ab750423f27102b, type: 3}
+      count: 10
+    countdown: 10
+    spawnInterval: 0.25
+    countDownText: 
+    waveStartText: 
+  - enemies:
+    - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 10
+    - prefab: {fileID: 6804035405117204289, guid: c3f963107a2bfd142ab750423f27102b, type: 3}
+      count: 10
+    - prefab: {fileID: 2414929219598591556, guid: 4539833b58b52614c91bb7675450598a, type: 3}
+      count: 3
+    countdown: 10
+    spawnInterval: 0.25
+    countDownText: 
+    waveStartText: 
+  RaidCompletionRewards: {fileID: 11400000, guid: 2301a9c7965e1004c994af09b7cc5868, type: 2}
