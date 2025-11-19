@@ -20,7 +20,11 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
         {
             hitEnemies.Add(target);
             Debug.Log($"[ExplosionDamageController] Damage dealt {pirateAttribute.DamageAmount}");
-            health.TakeDamage(pirateAttribute.DamageAmount);
+
+            if (collision.CompareTag("Enemy"))
+                health.TakeDamage(pirateAttribute.DamageAmount * 0.5f);
+            else
+                health.TakeDamage(pirateAttribute.DamageAmount);
         }
 
     }
