@@ -96,11 +96,7 @@ public class RegionUIController : MonoBehaviour
 
     private void HandleRegionClicked(Region region)
     {
-
-        if(region == Region.Orrostar)
-        {
-            HandleOrrostarPanel(region);
-        }
+        HandleOrrostarPanel(region);
 
         var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
 
@@ -145,41 +141,64 @@ public class RegionUIController : MonoBehaviour
     {
         var listOfVillages = LSManager.Instance.GetVillagesByRegion(region);
 
+        Debug.Log($"Region: {region}");
+
+        //Resetting panel
+        for (int i = 0; i < villagePanels.Count; i++)
+        {
+            // Hide the panel entirely
+            villagePanels[i].SetActive(false);
+
+            // Clear title
+            villageTitleTexts[i].text = "";
+
+            // Turn off all skulls
+            foreach (var skull in villageDifficultyObjects[i])
+                skull.SetActive(false);
+
+            // Clear status
+            villageStatusTexts[i].text = "";
+
+            villageStatusImages[i].SetActive(false);
+
+            // Clear rewards
+            foreach (var rewardSlot in villageRewardObjects[i])
+            {
+                var img = rewardSlot.GetComponent<UnityEngine.UI.Image>();
+                img.sprite = null;
+            }
+
+            // Hide difficulty + reward panels
+            villageDiffPanels[i].SetActive(false);
+            villageRewardPanels[i].SetActive(false);
+        }
+
+
+
         for (int i = 0; i < listOfVillages.Count; i++)
         {
             var villageData = listOfVillages[i];
 
-            //Text Panel
+            villagePanels[i].SetActive(true);
+
+            // Title + difficulty
             villageTitleTexts[i].text = villageData.villageName;
             DisplayDifficultySkulls(i, villageData.diffculty);
 
-            //Status Panel
-            villageStatusTexts[i].text = $"Status:   {GetVillageStatusText(villageData.state)}";
+            // Status
+            villageStatusTexts[i].text = $"Status: {GetVillageStatusText(villageData.state)}";
+            villageStatusImages[i].SetActive(villageData.state == VillageState.Invaded);
 
-            if (villageData.state == VillageState.Invaded)
-            {
-                villageStatusImages[i].SetActive(true);
-            }
-            else
-            {
-                villageStatusImages[i].SetActive(false);
-            }
-
-            //Reward Panel
+            // Rewards
             UpdateVillageRewardIcons(i, villageData.rewardConfig);
 
-            if(villageData.state == VillageState.PreInvasion 
-                || villageData.state == VillageState.Liberated_Done
-                || villageData.state == VillageState.Liberated_FirstTime)
-            {
-                villageDiffPanels[i].SetActive(false);
-                villageRewardPanels[i].SetActive(false);
-            }
-            else
-            {
-                villageDiffPanels[i].SetActive(true);
-                villageRewardPanels[i].SetActive(true);
-            }
+            bool hideExtraPanels =
+                villageData.state == VillageState.PreInvasion ||
+                villageData.state == VillageState.Liberated_Done ||
+                villageData.state == VillageState.Liberated_FirstTime;
+
+            villageDiffPanels[i].SetActive(!hideExtraPanels);
+            villageRewardPanels[i].SetActive(!hideExtraPanels);
         }
     }
 

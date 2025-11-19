@@ -40,6 +40,8 @@ public class LSManager : MonoBehaviour
 
     public event Action<string, VillageState> OnVillageStateChanged;
 
+    public static event Action GlobalInvasionTriggered;
+
     void Awake()
     {
         if (Instance != null && Instance != this) {Destroy(gameObject); return;}
@@ -100,6 +102,8 @@ public class LSManager : MonoBehaviour
             village.state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(village.id, VillageState.Invaded);
         }
+
+        GlobalInvasionTriggered?.Invoke();
     }
 
     public string DetermineNextScene(string villageId)

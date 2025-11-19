@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,9 +10,24 @@ public class RegionLockController : MonoBehaviour
     [SerializeField] private GameObject Andustar_Region3;
     [SerializeField] private GameObject Forostar_Region4;
 
-    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+    private bool invasionStarted = false;
 
-    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+    private void OnEnable()
+    {
+        SceneManager.activeSceneChanged += HandleCheck;
+        LSManager.GlobalInvasionTriggered += HandleGlobalInvasion;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.activeSceneChanged -= HandleCheck;
+        LSManager.GlobalInvasionTriggered -= HandleGlobalInvasion;
+    }
+
+    private void HandleGlobalInvasion()
+    {
+        invasionStarted = true;
+    }
 
     private void HandleCheck(Scene oldScene, Scene newScene)
     {
@@ -33,6 +49,8 @@ public class RegionLockController : MonoBehaviour
 
     private void HandleCheckingRegions()
     {
+        if (!invasionStarted) return;
+
         if (LSRegionLockManager.Instance._hyarrostarLocked)
         {
             Hyarrorstar_Region1.SetActive(true);
