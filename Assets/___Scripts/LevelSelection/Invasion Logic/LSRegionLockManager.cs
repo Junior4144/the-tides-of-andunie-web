@@ -1,4 +1,27 @@
+using System.Collections.Generic;
 using UnityEngine;
+public enum Region
+{
+    Orrostar,
+    Hyarrostar,
+    Hyarnustar,
+    Andustar,
+    Forostar,
+    None,
+}
+
+[CreateAssetMenu(menuName = "GameData/RegionProgression")]
+public class RegionProgression : ScriptableObject
+{
+    public List<RegionNode> regionNodes;
+}
+
+[System.Serializable]
+public class RegionNode
+{
+    public Region region;
+    public List<Region> prerequisites; // all regions required before unlocking this one
+}
 
 public class LSRegionLockManager : MonoBehaviour
 {
@@ -10,6 +33,7 @@ public class LSRegionLockManager : MonoBehaviour
     public bool _hyarnustarLocked = true;
     public bool _andustarLocked = true;
     public bool _forostarLocked = true;
+    public RegionProgression progressionData;
 
     private void Awake()
     {
@@ -44,5 +68,27 @@ public class LSRegionLockManager : MonoBehaviour
         _forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Forostar);
 
         Debug.Log("[Region Lock Manager] Region lock states updated.");
+    }
+
+    public List<Region> GetPrerequisiteRegions(Region region)
+    {
+        HashSet<Region> result = new HashSet<Region>();
+        CollectPrerequisites(region, result);
+        return new List<Region>(result);
+    }
+
+    private void CollectPrerequisites(Region region, HashSet<Region> result)
+    {
+        // Find the region node
+        RegionNode node = progressionData.regionNodes.Find(n => n.region == region);
+        if (node == null)
+            return;
+
+        foreach (var prereq in node.prerequisites)
+        {
+            // Add prereq and recursively collect its prereqs
+            if (result.Add(prereq))
+                CollectPrerequisites(prereq, result);
+        }
     }
 }

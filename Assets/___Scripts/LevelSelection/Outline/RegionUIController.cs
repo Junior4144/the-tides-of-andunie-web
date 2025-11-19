@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RegionUIController : MonoBehaviour
 {
@@ -95,6 +96,8 @@ public class RegionUIController : MonoBehaviour
 
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
+
+        CameraZoomController.OnMaxZoom += HandleMaxZoom;
     }
 
     private void OnDisable()
@@ -102,6 +105,13 @@ public class RegionUIController : MonoBehaviour
         OnClickOutline.RegionClicked -= HandleRegionClicked;
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
+
+        CameraZoomController.OnMaxZoom -= HandleMaxZoom;
+    }
+
+    private void HandleMaxZoom()
+    {
+        RegionPanel.SetActive(false);
     }
 
     private Region lastRegion;

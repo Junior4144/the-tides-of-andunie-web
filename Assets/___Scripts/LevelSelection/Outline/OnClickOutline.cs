@@ -2,16 +2,6 @@
 using UnityEngine.EventSystems;
 using System;
 
-public enum Region
-{
-    Orrostar,
-    Hyarrostar,
-    Hyarnustar,
-    Andustar,
-    Forostar,
-    None,
-}
-
 public class OnClickOutline : MonoBehaviour
 {
     [SerializeField] private Region region;
