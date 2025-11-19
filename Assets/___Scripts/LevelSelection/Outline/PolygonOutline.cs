@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshRenderer))]
 public class PolygonOutline : MonoBehaviour
 {
     public Color fillColor = new Color(1f, 1f, 1f, 0.25f); // transparent white
