@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class HealthController : MonoBehaviour, IHealthController
+public abstract class HealthController : MonoBehaviour
 {
     [HideInInspector] protected float _currentHealth = 100f;
     [HideInInspector] protected float _maxHealth = 100f;
 
     public UnityEvent OnDied;
     public UnityEvent OnDamaged;
-    private bool _isShielded;
 
     public abstract void TakeDamage(float damageAmount);
+    
     public abstract void AddHealth(float amount);
 
     public float GetCurrentHealth() => _currentHealth;

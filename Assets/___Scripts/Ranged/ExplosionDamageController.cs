@@ -16,7 +16,7 @@ public class ExplosionDamageController : MonoBehaviour
             return;
         }
 
-        if (collision.TryGetComponent(out IHealthController health))
+        if (collision.TryGetComponent(out HealthController health))
         {
             hitEnemies.Add(target);
             Debug.Log($"[ExplosionDamageController] Damage dealt {PlayerStatsManager.Instance.DefaultExplosionDamage}");
