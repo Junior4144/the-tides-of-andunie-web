@@ -56,7 +56,7 @@ public class VillageInvasionBuildings : MonoBehaviour
         if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
-        //ReplaceSprite();
+        ReplaceSprite();
 
         HandleFireBuilding();
     }
