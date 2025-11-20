@@ -30,7 +30,7 @@ public class PlayerMeleeController : MonoBehaviour
     {
         if (
             IsEnemy(otherCollider) &&
-            otherCollider.GetComponent(typeof(IHealthController)) is IHealthController &&
+            otherCollider.GetComponent(typeof(HealthController)) is HealthController &&
             !_isAttacking
         )
         {
@@ -54,7 +54,7 @@ public class PlayerMeleeController : MonoBehaviour
         yield return new WaitForSeconds(damageDelay);
 
         if (enemyObject)
-            enemyObject.GetComponent<IHealthController>().TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
+            enemyObject.GetComponent<HealthController>().TakeDamage(PlayerStatsManager.Instance.MeleeDamage);
     }
 
     private void PlayAttackAnimation()

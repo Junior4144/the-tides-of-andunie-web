@@ -13,6 +13,8 @@ public static class UIEvents
 
     public static Action OnRequestPreScreenToggle;
 
+    public static Action OnRequestTutorialToggle;
+
     public static Action OnRequestPauseToggle;
 
     public static Action OnInventoryActive;
@@ -34,6 +36,9 @@ public static class UIEvents
     public static Action OnPreScreenDeactivated;
 
     public static Action OnRequestCloseAllUI;
+
+    public static Action OnTutorialActive;
+    public static Action OnTutorialDeactivated;
 }
 
 public class UIManager : MonoBehaviour
@@ -58,6 +63,7 @@ public class UIManager : MonoBehaviour
     private bool _shopOpen;
     private bool _lSEnterUIOpen;
     private bool _preScreenUIOpen;
+    private bool _tutorialOpen;
 
     private void Awake()
     {
@@ -79,6 +85,8 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnRequestLSEnterToggle += ToggleLSEnterUI;
 
+        UIEvents.OnRequestTutorialToggle += ToggleTutorialUI;
+
         UIEvents.OnInventoryActive += () => _inventoryOpen = true;
         UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
 
@@ -90,6 +98,9 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnPreScreenConfirm += () => _preScreenUIOpen = true;
         UIEvents.OnPreScreenDeactivated += () => _preScreenUIOpen = false;
+
+        UIEvents.OnTutorialActive += () => _tutorialOpen = true;
+        UIEvents.OnTutorialDeactivated += () => _tutorialOpen = false;
 
         UIEvents.OnRequestCloseAllUI += CloseAllUI;
     }
@@ -215,9 +226,9 @@ public class UIManager : MonoBehaviour
 
     private void ToggleShop()
     {
-        if (_isPaused)
+        if (_isPaused) // already paused
         {
-            UIEvents.OnShopDeactivated?.Invoke();
+            UIEvents.OnShopDeactivated?.Invoke(); // consider removing
             return;
         }
 
@@ -257,8 +268,24 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        if (_preScreenUIOpen)
+        {
+            return;
+        }
+
         UIEvents.OnRequestCloseAllUI?.Invoke();
         UIEvents.OnPreScreenConfirm?.Invoke();
+    }
+
+    private void ToggleTutorialUI()
+    {
+        if (_tutorialOpen)
+        {
+            return;
+        }
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnTutorialActive?.Invoke();
     }
 
     private void CloseAllUI()
@@ -283,12 +310,17 @@ public class UIManager : MonoBehaviour
         {
             UIEvents.OnLSEnterDeactivated?.Invoke();
         }
+
+        if (_tutorialOpen)
+        {
+            UIEvents.OnTutorialDeactivated?.Invoke();
+        }
     }
 
     private void TogglePause()
     {
         // 1. If ANY UI popup is open, close it and STOP pause from happening
-        if (_inventoryOpen || _shopOpen || _preScreenUIOpen || _lSEnterUIOpen)
+        if (_inventoryOpen || _shopOpen || _preScreenUIOpen || _lSEnterUIOpen || _tutorialOpen)
         {
             UIEvents.OnRequestCloseAllUI?.Invoke();
             return;

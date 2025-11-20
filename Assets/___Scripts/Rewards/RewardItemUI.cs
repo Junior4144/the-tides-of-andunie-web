@@ -33,10 +33,14 @@ public class RewardItemUI : MonoBehaviour
     }
 
     private void SetItemName() =>
-        nameText.text = reward_listing.Item.ItemName;
+        nameText.text = reward_listing.Item.ItemName.Replace(" ", "   ");
 
-    private void SetItemIcon() =>
-        icon.sprite = reward_listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
+    private void SetItemIcon()
+    {
+        icon.sprite = reward_listing.Item.SpriteIcon;
+        icon.rectTransform.sizeDelta = new Vector2(200, 200);
+        icon.preserveAspect = true;
+    }
 
     private void SetItemEffects()
     {
@@ -45,7 +49,7 @@ public class RewardItemUI : MonoBehaviour
         var effects = reward_listing.Item.GetEffects();
         if (effects == null || effects.Length == 0) return;
 
-        var sortedEffects = SortEffectsBySign(effects);
+        var sortedEffects = SortEffectsBySign(effects.Where(effect => effect != null).ToArray());
         sortedEffects.ForEach(CreateEffectText);
     }
 
@@ -81,7 +85,7 @@ public class RewardItemUI : MonoBehaviour
 
     private void SetTextHeight(RectTransform rectTransform)
     {
-        rectTransform.sizeDelta = new Vector2(125, 25);
+        rectTransform.sizeDelta = new Vector2(0, 25);
     }
 
     private void ConfigureTextComponent(TextMeshProUGUI textComponent, ItemEffect effect)

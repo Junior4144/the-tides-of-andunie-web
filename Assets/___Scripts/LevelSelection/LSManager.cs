@@ -29,14 +29,18 @@ public class LSManager : MonoBehaviour
 {
     public static LSManager Instance;
 
+    [Header("Village Data")]
     [SerializeField] private List<VillageData> villages = new List<VillageData>();
 
     private bool invasionStarted = false;
+
+    [Header("Global Invasion Trigger")]
     public bool startGlobalInvasion = false;
+    public bool HasInvasionStarted => invasionStarted;
 
     public event Action<string, VillageState> OnVillageStateChanged;
 
-    public bool HasInvasionStarted => invasionStarted;
+    public static event Action GlobalInvasionTriggered;
 
     void Awake()
     {
@@ -98,6 +102,8 @@ public class LSManager : MonoBehaviour
             village.state = VillageState.Invaded;
             OnVillageStateChanged?.Invoke(village.id, VillageState.Invaded);
         }
+
+        GlobalInvasionTriggered?.Invoke();
     }
 
     public string DetermineNextScene(string villageId)
@@ -132,10 +138,25 @@ public class LSManager : MonoBehaviour
         ).ToString();
     }
 
-    public float GetTotalPlayerableVillage()
+    public float GetTotalPlayableVillage()
     {
         return villages.Count(village =>
             village.region != Region.None
+        );
+    }
+
+    public bool IsRegionFullyLiberated(Region region)
+    {
+        var regionVillages = villages.Where(v => v.region == region);
+
+        // Safety: If no villages exist in region (bad data case), treat as NOT complete
+        if (!regionVillages.Any())
+            return false;
+
+        // TRUE only if EVERY village is liberated
+        return regionVillages.All(v =>
+            v.state == VillageState.Liberated_FirstTime ||
+            v.state == VillageState.Liberated_Done
         );
     }
 }

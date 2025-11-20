@@ -113,7 +113,7 @@ public class PlayerAttackController : MonoBehaviour
         if (!_isAttacking) return;
         if (_hitEnemies.Contains(col)) return;
 
-        if (col.TryGetComponent(out IHealthController health))
+        if (col.TryGetComponent(out HealthController health))
         {
             if (!_isSweepAttacking)
                 ApplyImpulse(col);
@@ -127,7 +127,7 @@ public class PlayerAttackController : MonoBehaviour
         }
     }
 
-    IEnumerator DealDamage(IHealthController health)
+    IEnumerator DealDamage(HealthController health)
     {
         yield return new WaitForSeconds(_damageDelay);
         

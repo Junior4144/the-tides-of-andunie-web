@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelSelectionController : MonoBehaviour
 {
@@ -41,11 +40,11 @@ public class LevelSelectionController : MonoBehaviour
         if (isPlayerInside && Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("[Level Selection] Enter key pressed inside zone");
-            ProceedToNextStage();
+            OpenVillageEntryUI();
         }
     }
 
-    private void ProceedToNextStage()
+    private void OpenVillageEntryUI()
     {
         if (isExit)
             PlayerActivatedMenu?.Invoke("", location, isExit);

@@ -2,16 +2,6 @@
 using UnityEngine.EventSystems;
 using System;
 
-public enum Region
-{
-    Orrostar,
-    Hyarrostar,
-    Hyarnustar,
-    Andustar,
-    Forostar,
-    None,
-}
-
 public class OnClickOutline : MonoBehaviour
 {
     [SerializeField] private Region region;
@@ -80,6 +70,15 @@ public class OnClickOutline : MonoBehaviour
             lineRenderer.startColor = normalColor;
             lineRenderer.endColor = normalColor;
             lineRenderer.widthMultiplier = 1f;
+        }
+    }
+
+    public void ResetColor()
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.startColor = normalColor;
+            lineRenderer.endColor = normalColor;
         }
     }
 }
