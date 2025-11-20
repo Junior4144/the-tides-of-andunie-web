@@ -28,7 +28,7 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
     }
 
-    public bool AddItem(IInventoryItem item, int quantity = 1)
+    public bool AddItem(InventoryItem item, int quantity = 1)
     {
         if (!IsValidAddition(item, quantity)) return false;
         if (HasItem(item.ItemId))
@@ -83,7 +83,7 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    private bool IsValidAddition(IInventoryItem item, int quantity) =>
+    private bool IsValidAddition(InventoryItem item, int quantity) =>
         item != null && quantity > 0;
 
     private bool AddToExistingSlot(string itemId, int quantity)
@@ -92,7 +92,7 @@ public class InventoryManager : MonoBehaviour
         return slot.CanAddQuantity(quantity) && slot.AddQuantity(quantity);
     }
 
-    private bool CreateNewSlot(IInventoryItem item, int quantity)
+    private bool CreateNewSlot(InventoryItem item, int quantity)
     {
         if (quantity > item.MaxStackSize) return false;
         

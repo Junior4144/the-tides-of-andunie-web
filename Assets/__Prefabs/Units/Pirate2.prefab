@@ -379,6 +379,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
+  _impulseResistance: 0
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!1 &7708467887532988269
@@ -467,7 +468,7 @@ MonoBehaviour:
   _animator: {fileID: 2444882722245418866}
   _damageDelay: 0.3
   _animDuration: 0.4111
-  _damageRange: 2
+  _damageRange: 3.5
 --- !u!1 &8460700670812131224
 GameObject:
   m_ObjectHideFlags: 0

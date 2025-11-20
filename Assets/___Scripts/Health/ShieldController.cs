@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System;
 using System.Collections;
 
-[RequireComponent(typeof(IHealthController), typeof(CircleCollider2D))]
+[RequireComponent(typeof(HealthController), typeof(CircleCollider2D))]
 public class ShieldController : MonoBehaviour
 {
     //private Coroutine _activateShield = null;

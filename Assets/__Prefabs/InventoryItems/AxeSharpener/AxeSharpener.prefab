@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7411192712462462758
+--- !u!1 &9209008617287612894
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,96 +8,81 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4294389301115459722}
-  - component: {fileID: -4127132681348763777}
-  - component: {fileID: 6742664244802088054}
-  - component: {fileID: 836979035408088165}
-  - component: {fileID: 5888963684007619119}
+  - component: {fileID: 21912188501299752}
+  - component: {fileID: 7732579921296629318}
+  - component: {fileID: 4674568726070850332}
+  - component: {fileID: 373705474690167989}
   m_Layer: 0
-  m_Name: BannerOfTurin
+  m_Name: AxeSharpener
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4294389301115459722
+--- !u!4 &21912188501299752
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411192712462462758}
+  m_GameObject: {fileID: 9209008617287612894}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 726.3877, y: 1261.253, z: 0}
+  m_LocalPosition: {x: 479.4, y: 212.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4127132681348763777
+--- !u!114 &7732579921296629318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411192712462462758}
+  m_GameObject: {fileID: 9209008617287612894}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71ad3612ffe903f44941c66c601f4b84, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BannerOfTurin
-  itemId: BannerOfTurin
-  itemName: Banner Of Turin
-  stackable: 0
-  maxStackSize: 1
-  inventoryIconPrefab: {fileID: 891255100769462917, guid: 927b41e80907e4f48b0627d3d1f29436, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  itemId: AxeSharpener
+  itemName: Axe Sharpener
+  stackable: 1
+  maxStackSize: 5
+  sellAmount: 1
+  inventoryIconPrefab: {fileID: 5630505359120256208, guid: 3d9079520f1ae4e4782e3f0a52bf2e79, type: 3}
+  spriteIcon: {fileID: 1376333080670624626, guid: 77decabfcddd4874ab0ea36bcc047b07, type: 3}
   _effects:
-  - {fileID: 6742664244802088054}
-  - {fileID: 5888963684007619119}
-  spriteIcon: {fileID: 21300000, guid: 6e5f0bab89d7c45478e7ce0833dcaeac, type: 3}
---- !u!114 &6742664244802088054
+  - {fileID: 4674568726070850332}
+  - {fileID: 373705474690167989}
+--- !u!114 &4674568726070850332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411192712462462758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
-  statType: 0
-  amount: 25
-  _isPercentage: 0
---- !u!114 &836979035408088165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411192712462462758}
+  m_GameObject: {fileID: 9209008617287612894}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 1
-  amount: 12
+  amount: 2
   _isPercentage: 0
---- !u!114 &5888963684007619119
+--- !u!114 &373705474690167989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411192712462462758}
+  m_GameObject: {fileID: 9209008617287612894}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 1
-  amount: 10
+  amount: 5
   _isPercentage: 1

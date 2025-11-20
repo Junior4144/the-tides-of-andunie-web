@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class SellSlot : MonoBehaviour
 {
-    public IInventoryItem currentItem;
+    public InventoryItem currentItem;
     public AudioClip sellSound;
     private AudioSource audioSource;
 

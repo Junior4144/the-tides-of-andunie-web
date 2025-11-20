@@ -3,7 +3,7 @@ using UnityEngine;
 public class UnequipSlot : MonoBehaviour
 {
 
-    public IInventoryItem currentItem;
+    public InventoryItem currentItem;
 
     public void HandlesUnequip()
     {

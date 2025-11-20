@@ -5,6 +5,6 @@ public class VillageKillPlayer : MonoBehaviour
     
     public void HandleResettingVillageLevel()
     {
-        PlayerManager.Instance.gameObject.GetComponentInChildren<IHealthController>().TakeDamage(999);
+        PlayerManager.Instance.gameObject.GetComponentInChildren<HealthController>().TakeDamage(999);
     }
 }
