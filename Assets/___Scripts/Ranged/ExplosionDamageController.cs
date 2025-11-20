@@ -5,6 +5,8 @@ public class ExplosionDamageController : MonoBehaviour
 {
     private readonly HashSet<GameObject> hitEnemies = new();
 
+    public float Power = 0;
+    public float MaxPower = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,8 +21,12 @@ public class ExplosionDamageController : MonoBehaviour
         if (collision.TryGetComponent(out HealthController health))
         {
             hitEnemies.Add(target);
-            Debug.Log($"[ExplosionDamageController] Damage dealt {PlayerStatsManager.Instance.DefaultExplosionDamage}");
-            health.TakeDamage(PlayerStatsManager.Instance.DefaultExplosionDamage);
+
+            float chargeMultiplier = Power / MaxPower;
+            float finalDamage = PlayerStatsManager.Instance.DefaultExplosionDamage * chargeMultiplier;
+
+            Debug.Log($"[ExplosionDamageController] Damage dealt {finalDamage} (base: {PlayerStatsManager.Instance.DefaultExplosionDamage}, multiplier: {chargeMultiplier})");
+            health.TakeDamage(finalDamage);
         }
 
     }
