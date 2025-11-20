@@ -16,18 +16,16 @@ public class PlayerHealthController : HealthController
             float damageMultiplier = CalculateDamageMultiplier(resistance);
             float finalDamage = damageAmount * damageMultiplier;
 
-            _currentHealth -= finalDamage;
+            Debug.Log($"[PlayerHealthController] {damageType} damage {damageAmount} -> {finalDamage} (resist: {resistance})");
+
+            _currentHealth = Mathf.Clamp(_currentHealth - finalDamage, 0, _maxHealth);
 
             OnDamaged.Invoke();
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-            if (_currentHealth < 0)
-                _currentHealth = 0;
-
             if (_currentHealth == 0)
                 OnDied.Invoke();
         }
-
     }
 
     private float GetResistanceForDamageType(DamageType damageType)
@@ -45,15 +43,9 @@ public class PlayerHealthController : HealthController
     private float CalculateDamageMultiplier(float resistance)
     {
         if (resistance >= 0)
-        {
-            // Positive resistance: diminishing returns, asymptotically approaches 0
-            return 100f / (100f + resistance);
-        }
+            return 100f / (100f + resistance); // if resistance is positive: lim(resistance -> infinity) = 0
         else
-        {
-            // Negative resistance: linear increase in damage taken
-            return 1f - (resistance / 100f);
-        }
+            return 1f - (resistance / 100f); // if resistanace is negative: just keeps increasing negative multiplier linearly
     }
 
     public override void AddHealth(float amount)
