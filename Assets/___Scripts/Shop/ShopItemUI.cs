@@ -41,7 +41,6 @@ public class ShopItemUI : MonoBehaviour
 
         if (error == "Success") HandleSuccessfulPurchase();
         if (error == "NotEnough") HandleNotEnoughCoins();
-
         if (error == "LimitReached") HandleLimitReached();
     }
 

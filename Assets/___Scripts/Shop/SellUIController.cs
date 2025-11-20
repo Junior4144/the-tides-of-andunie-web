@@ -93,7 +93,7 @@ public class SellUIController : MonoBehaviour
             var slotTransform = InventoryPanel.transform.GetChild(index);
             var sellSlot = slotTransform.GetComponent<SellSlot>();
 
-            IInventoryItem item = entry.Item;
+            InventoryItem item = entry.Item;
 
             // Create icon UI
             var newIcon = Instantiate(item.InventoryIconPrefab, slotTransform);

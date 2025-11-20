@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3800636112409891299}
   - component: {fileID: 3579490821501638969}
   - component: {fileID: 3210427785710931700}
+  - component: {fileID: -2457527668823803201}
   m_Layer: 0
-  m_Name: Feather
+  m_Name: SailorsBoots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,10 +50,12 @@ MonoBehaviour:
   itemName: Feather
   stackable: 1
   maxStackSize: 3
+  sellAmount: 1
   inventoryIconPrefab: {fileID: 7563760531269319857, guid: 1f847935a69a1b3429e4facb49f8a2f7, type: 3}
+  spriteIcon: {fileID: 1376333080670624626, guid: 77decabfcddd4874ab0ea36bcc047b07, type: 3}
   _effects:
   - {fileID: 3210427785710931700}
-  spriteIcon: {fileID: 4396870622444339024, guid: 7075a7b99f5d97047b3741beb11a419d, type: 3}
+  - {fileID: -2457527668823803201}
 --- !u!114 &3210427785710931700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,5 +69,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 3
-  amount: 10
+  amount: 1
   _isPercentage: 1
+--- !u!114 &-2457527668823803201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5802657860812794330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
+  statType: 0
+  amount: 3
+  _isPercentage: 0

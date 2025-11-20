@@ -8,11 +8,11 @@ public class EquipUIController : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject slotPrefab;
     public int slotCount;
-    public IInventoryItem[] inventoryItems;
+    public InventoryItem[] inventoryItems;
 
     void Awake()
     {
-        inventoryItems = new IInventoryItem[slotCount];
+        inventoryItems = new InventoryItem[slotCount];
         InitializeSlots();
 
     }
@@ -114,7 +114,7 @@ public class EquipUIController : MonoBehaviour
             }
 
             // Prefab must be a UI GameObject with RectTransform (NOT a Canvas)
-            IInventoryItem item = invSlot.Item;
+            InventoryItem item = invSlot.Item;
             if (!item.InventoryIconPrefab)
             {
                 Debug.LogWarning($"[InventoryUI] Item '{invSlot.Item.ItemName}' has no InventoryIconPrefab.");

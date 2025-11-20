@@ -54,7 +54,7 @@ public class ShopManager : MonoBehaviour
         return "Success";
     }
 
-    public string TryToSell(IInventoryItem item, int quantity = 1)
+    public string TryToSell(InventoryItem item, int quantity = 1)
     {
         if (item == null)
         {
@@ -77,9 +77,9 @@ public class ShopManager : MonoBehaviour
             return "RemoveFailed";
         }
 
-        CurrencyManager.Instance.AddCoins(1);
+        CurrencyManager.Instance.AddCoins(item.SellAmount);
 
-        Debug.Log($"Sold {item.ItemName} x{quantity} for {1} coins each");
+        Debug.Log($"Sold {item.ItemName} x{quantity} for {item.SellAmount} coins each");
         return "Success";
     }
 }
