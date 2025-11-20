@@ -5,7 +5,6 @@ public class LevelSelectionController : MonoBehaviour
 {
     [SerializeField] private string villageId;
     [SerializeField] bool isExit;
-    [SerializeField] private string VillageLiberationID;
 
     private bool isPlayerInside = false;
 

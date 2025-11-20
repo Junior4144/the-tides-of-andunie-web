@@ -129,7 +129,6 @@ MonoBehaviour:
   _attackAnimDuration: 0.6
   _minIdleInterval: 5
   _maxIdleInterval: 15
-  _specialIdleChance: 0.3
   _idleAngryDuration: 1
   _idleAxeDuration: 1
   _idleWindDuration: 1
@@ -312,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LSPlayerMovement
   rotationSpeed: 460
   cursorHotSpot: {x: 0, y: 0}
+  disableClicking: 0
 --- !u!195 &5086729373901754583
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -493,7 +493,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 196607
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -525,8 +525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e0c9599914dc641be43f6ccbe38877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthController
-  _currentHealth: 100
-  _maxHealth: 100
   OnDied:
     m_PersistentCalls:
       m_Calls: []

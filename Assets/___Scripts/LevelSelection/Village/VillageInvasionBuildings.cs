@@ -9,17 +9,17 @@ public class VillageInvasionBuildings : MonoBehaviour
     [SerializeField] private GameObject[] firePositions;
     [SerializeField] private GameObject[] fireSprites;
 
-    //[Header("Sprite Settings")]
-    //[SerializeField] private Sprite destroyedSprite;
+    [Header("Sprite Settings")]
+    [SerializeField] private Sprite destroyedSprite;
 
     [Header("Village Settings")]
     [SerializeField] private string villageId;
 
-    //private SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
-        //spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         int fireCount = Mathf.Min(transform.childCount, 5);
         firePositions = new GameObject[fireCount];
         for (int i = 0; i < fireCount; i++)
@@ -80,9 +80,9 @@ public class VillageInvasionBuildings : MonoBehaviour
         if (fireSoundPrefab != null)
             Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
     }
-    //private void ReplaceSprite()
-    //{
-    //    if (spriteRenderer != null && destroyedSprite != null)
-    //        spriteRenderer.sprite = destroyedSprite;
-    //}
+    private void ReplaceSprite()
+    {
+        if (spriteRenderer != null && destroyedSprite != null)
+            spriteRenderer.sprite = destroyedSprite;
+    }
 }
