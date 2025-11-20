@@ -12,8 +12,15 @@ public class ShopItemUI : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text ErrorText;
 
-    private ShopListing listing;
+    [SerializeField] private AudioClip purchaseSound;
+    [SerializeField] private AudioClip purchaseErrorSound;
 
+    private AudioSource audioSource;
+    private ShopListing listing;
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void Start() => ErrorText.gameObject.SetActive(false);
 
     private void OnDisable() => ErrorText.gameObject.SetActive(false);
@@ -32,9 +39,15 @@ public class ShopItemUI : MonoBehaviour
     {
         string error = ShopManager.Instance.TryToBuy(listing);
 
+        if (error == "Success") HandleSuccessfulPurchase();
         if (error == "NotEnough") HandleNotEnoughCoins();
 
         if (error == "LimitReached") HandleLimitReached();
+    }
+
+    private void HandleSuccessfulPurchase()
+    {
+        audioSource.PlayOneShot(purchaseSound);
     }
 
     private void HandleNotEnoughCoins()
@@ -47,7 +60,7 @@ public class ShopItemUI : MonoBehaviour
     {
         ErrorText.text = "Not Enough Coins";
         ErrorText.gameObject.SetActive(true);
-
+        audioSource.PlayOneShot(purchaseErrorSound);
         yield return new WaitForSeconds(1f);
 
         ErrorText.gameObject.SetActive(false);

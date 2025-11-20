@@ -1,4 +1,5 @@
-﻿using Unity.Cinemachine;
+﻿using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraZoomController : MonoBehaviour
@@ -14,6 +15,8 @@ public class CameraZoomController : MonoBehaviour
     private CinemachineCamera cam;
     private Bounds bounds;
 
+    public static event Action OnMaxZoom;
+    public static event Action NoLongerMaxZoom;
 
     void Start()
     {
@@ -33,7 +36,15 @@ public class CameraZoomController : MonoBehaviour
     {
         float current = cam.Lens.OrthographicSize;
         float scroll = Input.mouseScrollDelta.y;
-
+        
+        if(current == maxZoom)
+        {
+            OnMaxZoom?.Invoke();
+        }
+        else
+        {
+            NoLongerMaxZoom?.Invoke();
+        }
         // ------------------------------------------------------------
         // MANUAL ZOOM (normalized)
         // ------------------------------------------------------------

@@ -7,6 +7,8 @@ public class LSEnterMenu : MonoBehaviour // PRE SCREEN UI
     private GameObject Panel;
 
     private bool Clicked = false;
+
+    [HideInInspector]
     public bool isActive = false;
 
 
@@ -24,6 +26,11 @@ public class LSEnterMenu : MonoBehaviour // PRE SCREEN UI
     }
 
     private void Start() => Panel.SetActive(false);
+
+    public void CancelButtonClick()
+    {
+        UIEvents.OnPreScreenDeactivated?.Invoke();
+    }
 
     private void HandleUIToggling()
     {

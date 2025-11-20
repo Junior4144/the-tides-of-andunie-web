@@ -21,6 +21,12 @@ public class ScaleOnEnable : MonoBehaviour
             .OnComplete(() => IsAnimating = false);
     }
 
+    private void OnDisable()
+    {
+        rt.DOKill();     // Prevent DOTween NULL errors
+        IsAnimating = false;
+    }
+
     public void HideWithScale()
     {
         IsAnimating = true;

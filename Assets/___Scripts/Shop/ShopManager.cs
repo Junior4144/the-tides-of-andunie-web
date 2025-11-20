@@ -53,4 +53,33 @@ public class ShopManager : MonoBehaviour
         Debug.Log($"Bought {listing.Item.ItemName} x{listing.quantity} for {listing.price} coins");
         return "Success";
     }
+
+    public string TryToSell(IInventoryItem item, int quantity = 1)
+    {
+        if (item == null)
+        {
+            Debug.LogWarning("No item provided to TryToSell.");
+            return "NoItemProvided";
+        }
+
+        // Check if inventory has enough
+        if (!InventoryManager.Instance.HasItem(item.ItemId))
+        {
+            Debug.Log("Player does not have enough to sell: " + item.ItemName);
+            return "NotEnoughItems";
+        }
+
+        // Remove item
+        bool removed = InventoryManager.Instance.RemoveItem(item.ItemId, quantity);
+        if (!removed)
+        {
+            Debug.Log("Failed to remove item from inventory.");
+            return "RemoveFailed";
+        }
+
+        CurrencyManager.Instance.AddCoins(1);
+
+        Debug.Log($"Sold {item.ItemName} x{quantity} for {1} coins each");
+        return "Success";
+    }
 }
