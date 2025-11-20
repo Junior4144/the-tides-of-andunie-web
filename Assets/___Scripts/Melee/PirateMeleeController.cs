@@ -39,7 +39,7 @@ public class PirateMeleeController : MonoBehaviour
             float distance = Vector2.Distance(transform.position, enemyObject.transform.position);
             
             if (distance <= _damageRange)
-                enemyObject.GetComponent<HealthController>().TakeDamage(_pirateAttributes.DamageAmount);
+                enemyObject.GetComponent<HealthController>().TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
         }
     }
 

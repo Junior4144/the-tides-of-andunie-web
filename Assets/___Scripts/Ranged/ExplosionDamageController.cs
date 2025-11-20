@@ -26,7 +26,7 @@ public class ExplosionDamageController : MonoBehaviour
             float finalDamage = PlayerStatsManager.Instance.DefaultExplosionDamage * chargeMultiplier;
 
             Debug.Log($"[ExplosionDamageController] Damage dealt {finalDamage} (base: {PlayerStatsManager.Instance.DefaultExplosionDamage}, multiplier: {chargeMultiplier})");
-            health.TakeDamage(finalDamage);
+            health.TakeDamage(finalDamage, DamageType.Explosion);
         }
 
     }

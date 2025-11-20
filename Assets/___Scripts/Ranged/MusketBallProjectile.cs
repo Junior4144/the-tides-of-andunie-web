@@ -30,7 +30,7 @@ public class MusketBallProjectile : MonoBehaviour
         {
             if (hasDamage) return;
             Debug.Log($"[MusketBallProjectile] Damage dealt {_pirateAttributes.DamageAmount}");
-            health.TakeDamage(_pirateAttributes.DamageAmount);
+            health.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Ranged);
             hasDamage = true;
             SpawnHitEffect(collision.transform.position);
             Destroy(gameObject);

@@ -9,9 +9,27 @@ public abstract class HealthController : MonoBehaviour
     public UnityEvent OnDied;
     public UnityEvent OnDamaged;
 
-    public abstract void TakeDamage(float damageAmount);
-    
-    public abstract void AddHealth(float amount);
+    public virtual void TakeDamage(float damageAmount, DamageType damageType = DamageType.Generic)
+    {
+        if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
+        
+        if (_currentHealth == 0 || damageAmount == 0) return;
+
+        _currentHealth -= damageAmount;
+        OnDamaged.Invoke();
+
+        _currentHealth = Mathf.Max(0, _currentHealth);
+
+        if (_currentHealth == 0)
+            OnDied.Invoke();
+    }
+
+    public virtual void AddHealth(float amount)
+    {
+        if (_currentHealth == _maxHealth || amount == 0) return;
+
+        _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, _maxHealth);
+    }
 
     public float GetCurrentHealth() => _currentHealth;
 
