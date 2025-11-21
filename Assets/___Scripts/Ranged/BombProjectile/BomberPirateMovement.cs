@@ -18,7 +18,6 @@ public class BomberPirateMovement : MonoBehaviour
     private ImpulseController _impulseController;
     private bool canFire = true;
     public float fireCooldown = 1f;
-    public float HoldFireCooldown = 1f;
 
     public float impulseForce = 10f;
     public float impulseDuration = 0;
@@ -78,6 +77,7 @@ public class BomberPirateMovement : MonoBehaviour
         agent.isStopped = false;
         canFire = true;
     }
+
 
     private void PlayAttackAnimation()
     {
@@ -140,6 +140,6 @@ public class BomberPirateMovement : MonoBehaviour
             SpawnParticles = true
         };
 
-        //_impulseController.InitiateSquadImpulse(transform.position, -_rigidbody.transform.up, impulseSettings);
+        _impulseController.InitiateSquadImpulse(transform.position, -_rigidbody.transform.up, impulseSettings);
     }
 }

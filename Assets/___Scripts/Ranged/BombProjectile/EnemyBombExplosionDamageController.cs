@@ -16,15 +16,18 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
             return;
         }
 
-        if (collision.TryGetComponent(out IHealthController health))
+        if (collision.TryGetComponent(out PlayerHealthController playerHealth))
         {
             hitEnemies.Add(target);
             Debug.Log($"[ExplosionDamageController] Damage dealt {pirateAttribute.DamageAmount}");
+            playerHealth.TakeDamage(pirateAttribute.DamageAmount);
+        }
 
-            if (collision.CompareTag("Enemy"))
-                health.TakeDamage(pirateAttribute.DamageAmount * 0.5f);
-            else
-                health.TakeDamage(pirateAttribute.DamageAmount);
+        if (collision.TryGetComponent(out PirateHealthController pirateHealth))
+        {
+            hitEnemies.Add(target);
+            Debug.Log($"[ExplosionDamageController] Damage dealt {pirateAttribute.DamageAmount}");
+            pirateHealth.TakeDamage(pirateAttribute.DamageAmount * 0.5f);
         }
 
     }
