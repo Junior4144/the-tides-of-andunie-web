@@ -111,16 +111,17 @@ public class LockedRegionUI : MonoBehaviour
 
     private void HandlePanelPopulation(Region region)
     {
-        var regionList = LSRegionLockManager.Instance.GetPrerequisiteRegions(region);
-
-        // Set region unlock/lock state
-        regionText.text = regionList.Count == 0
+        var regionLocked = LSRegionLockManager.Instance.IsRegionLocked(region);
+        regionText.text = regionLocked == false
             ? "Region Unlocked"
             : "Region Locked";
 
-        middleText.text = regionList.Count == 0
+        middleText.text = regionLocked == false
             ? ""
             : "You Must Liberate the following region";
+
+
+        var regionList = LSRegionLockManager.Instance.GetPrerequisiteRegions(region);
 
         // Set prerequisite list label
         prerequisiteText.text =
