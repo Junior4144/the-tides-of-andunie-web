@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class Utility : MonoBehaviour
 {
+    public static Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mouse = Input.mousePosition;
+        mouse.z = Mathf.Abs(Camera.main.transform.position.z);
+        return Camera.main.ScreenToWorldPoint(mouse);
+    }
+
+
     public static float AngleTowardsMouse(Vector3 pos)
     {
         Vector3 mousePos = Input.mousePosition;

@@ -2,21 +2,13 @@
 using UnityEngine.EventSystems;
 using System;
 
-public enum Region
-{
-    Orrostar,
-    Hyarrostar,
-    Hyarnustar,
-    Andustar,
-    Forostar,
-    None,
-}
-
 public class OnClickOutline : MonoBehaviour
 {
     [SerializeField] private Region region;
     [SerializeField] private Color hoverColor = Color.yellow;
     [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color invadedColor = Color.red;
+
 
     private LineRenderer lineRenderer;
     private Collider2D col;
@@ -24,6 +16,8 @@ public class OnClickOutline : MonoBehaviour
     public static event Action<Region> RegionClicked;
 
     private bool wasHovering = false;
+
+    private bool isInvaded = false;
 
     private void Awake()
     {
@@ -35,8 +29,15 @@ public class OnClickOutline : MonoBehaviour
             lineRenderer.startColor = normalColor;
             lineRenderer.endColor = normalColor;
         }
+        
     }
-
+    private void Start()
+    {
+        if (LSRegionLockManager.Instance.IsRegionLocked(region))
+        {
+            isInvaded = true;
+        }
+    }
     private void Update()
     {
         // --- CLICK ---
@@ -66,8 +67,8 @@ public class OnClickOutline : MonoBehaviour
         {
             lineRenderer.startColor = hoverColor;
             lineRenderer.endColor = hoverColor;
-
             lineRenderer.widthMultiplier = 1.5f;
+            lineRenderer.sortingOrder = 11;
         }
     }
 
@@ -75,20 +76,38 @@ public class OnClickOutline : MonoBehaviour
     {
         Debug.Log($"[OnClickOutline] Hover Exit ({region})");
 
-        if (lineRenderer != null)
+        if (lineRenderer == null) return;
+
+        if (isInvaded)
         {
-            lineRenderer.startColor = normalColor;
-            lineRenderer.endColor = normalColor;
+            lineRenderer.startColor = invadedColor;
+            lineRenderer.endColor = invadedColor;
             lineRenderer.widthMultiplier = 1f;
+            lineRenderer.sortingOrder = 1;
+            return;
         }
+
+        lineRenderer.startColor = normalColor;
+        lineRenderer.endColor = normalColor;
+        lineRenderer.sortingOrder = 3;
+
     }
 
     public void ResetColor()
     {
-        if (lineRenderer != null)
+        if (lineRenderer == null) return;
+
+        if (isInvaded)
         {
-            lineRenderer.startColor = normalColor;
-            lineRenderer.endColor = normalColor;
+            lineRenderer.startColor = invadedColor;
+            lineRenderer.endColor = invadedColor;
+            lineRenderer.widthMultiplier = 1f;
+            lineRenderer.sortingOrder = 1;
+            return;
         }
+
+        lineRenderer.startColor = normalColor;
+        lineRenderer.endColor = normalColor;
+        lineRenderer.sortingOrder = 3;
     }
 }

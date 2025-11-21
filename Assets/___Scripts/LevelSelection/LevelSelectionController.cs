@@ -1,12 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelSelectionController : MonoBehaviour
 {
     [SerializeField] private string villageId;
     [SerializeField] bool isExit;
-    [SerializeField] private string VillageLiberationID;
 
     private bool isPlayerInside = false;
 
@@ -22,7 +20,7 @@ public class LevelSelectionController : MonoBehaviour
 
         OnPlayerEnterSelectionZone?.Invoke();
         isPlayerInside = true;
-
+        OpenVillageEntryUI();
         Debug.Log("[Level Selection] Player entered level zone");
     }
 
@@ -41,11 +39,11 @@ public class LevelSelectionController : MonoBehaviour
         if (isPlayerInside && Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("[Level Selection] Enter key pressed inside zone");
-            ProceedToNextStage();
+            OpenVillageEntryUI();
         }
     }
 
-    private void ProceedToNextStage()
+    private void OpenVillageEntryUI()
     {
         if (isExit)
             PlayerActivatedMenu?.Invoke("", location, isExit);

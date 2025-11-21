@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Slot : MonoBehaviour
 {
-    public IInventoryItem currentItem;
+    public InventoryItem currentItem;
 
     public void EquipItem()
     {

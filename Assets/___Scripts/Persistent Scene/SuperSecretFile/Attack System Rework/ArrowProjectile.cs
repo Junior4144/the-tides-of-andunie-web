@@ -8,6 +8,7 @@ public class ArrowProjectile : MonoBehaviour
     [SerializeField] GameObject hitEffectPrefab;
 
     [HideInInspector] public float power;
+    [HideInInspector] public float maxPower;
 
     private Rigidbody2D _rb;
     private bool AlreadyActivated;
@@ -37,6 +38,13 @@ public class ArrowProjectile : MonoBehaviour
     {
         GameObject expoObject = Instantiate(expo, transform.position, transform.rotation);
         expoObject.transform.localScale = Vector3.one * Mathf.Max(1f, power);
+
+        ExplosionDamageController explosion = expoObject.GetComponentInChildren<ExplosionDamageController>();
+        if (explosion != null)
+        {
+            explosion.Power = power;
+            explosion.MaxPower = maxPower;
+        }
     }
 
     private void SpawnExplosionSound()

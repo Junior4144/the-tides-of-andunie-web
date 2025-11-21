@@ -28,9 +28,9 @@ public class ShopItemUI : MonoBehaviour
     public void SetData(ShopListing listing)
     {
         this.listing = listing;
-        nameText.text = listing.Item.ItemName;
-        priceText.text = $"Price: {listing.price.ToString()}";
-        icon.sprite = listing.Item.InventoryIconPrefab.GetComponentInChildren<Image>().sprite;
+        nameText.text = listing.Item.ItemName.Replace(" ", "  ");
+        priceText.text = $"Price: {listing.price}";
+        icon.sprite = listing.Item.SpriteIcon;
 
         buyButton.onClick.AddListener(OnBuyClicked);
     }
@@ -41,7 +41,6 @@ public class ShopItemUI : MonoBehaviour
 
         if (error == "Success") HandleSuccessfulPurchase();
         if (error == "NotEnough") HandleNotEnoughCoins();
-
         if (error == "LimitReached") HandleLimitReached();
     }
 

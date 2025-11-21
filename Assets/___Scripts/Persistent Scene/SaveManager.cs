@@ -59,7 +59,7 @@ public class SaveManager : MonoBehaviour
     public void SavePlayerStats()
     {
         CurrentSave.sceneName = SceneManager.GetActiveScene().name;
-        CurrentSave.health = PlayerManager.Instance.GetCurrentHealth();
+        CurrentSave.health = PlayerStatsManager.Instance.MaxHealth;
         CurrentSave.damageAmount = PlayerManager.Instance.GetDamageAmount();
         Debug.Log($"[SaveManager] Saves player health at {CurrentSave.health}");
         Debug.Log($"[SaveManager] Saves player health at {CurrentSave.lastLocation}");

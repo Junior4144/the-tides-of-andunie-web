@@ -59,7 +59,7 @@ public class QuestLiberationUIController : MonoBehaviour
     private void HandleTextChange()
     {
         if (GlobalStoryManager.Instance.HasTalkedToChief == true)
-            text.text = $"Liberated Villages: {LSManager.Instance.GetLiberatedVillageAmount()} / {LSManager.Instance.GetTotalPlayerableVillage()}";
+            text.text = $"Liberated Villages: {LSManager.Instance.GetLiberatedVillageAmount()} / {LSManager.Instance.GetTotalPlayableVillage()}";
     }
    
     private void HandleDisplayingPanel()

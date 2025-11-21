@@ -389,7 +389,7 @@ MonoBehaviour:
     SceneName: Level1
     diffculty: 0
     state: 0
-    region: 5
+    region: 0
     rewardConfig: {fileID: 0}
   - id: Village1
     villageName: Calmindon
@@ -406,34 +406,20 @@ MonoBehaviour:
     region: 0
     rewardConfig: {fileID: 11400000, guid: 397bbc20d93246640a703462ab8010de, type: 2}
   - id: Village3
-    villageName: idk
+    villageName: Armenelos
     SceneName: Village3
-    diffculty: 3
+    diffculty: 5
     state: 0
-    region: 0
+    region: 1
     rewardConfig: {fileID: 11400000, guid: 2f5a08fd322c3a046b422d7bdc6d3481, type: 2}
   - id: Village4
-    villageName: 
+    villageName: Eldalonde
     SceneName: Village4
-    diffculty: 0
+    diffculty: 3
     state: 0
-    region: 5
-    rewardConfig: {fileID: 0}
-  - id: Village5
-    villageName: 
-    SceneName: Village5
-    diffculty: 0
-    state: 0
-    region: 5
-    rewardConfig: {fileID: 0}
-  - id: Village6
-    villageName: 
-    SceneName: Village6
-    diffculty: 0
-    state: 0
-    region: 5
-    rewardConfig: {fileID: 0}
-  startGlobalInvasion: 1
+    region: 1
+    rewardConfig: {fileID: 11400000, guid: 4f6f27ca34371f24f9a6b70575ec1a42, type: 2}
+  startGlobalInvasion: 0
 --- !u!1 &163009414
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,9 +985,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3322,7 +3308,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+    m_HighlightedColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -3505,7 +3491,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 254, y: 153.3, z: 0}
+  m_LocalPosition: {x: 254.28, y: 156.93, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3630,7 +3616,7 @@ Camera:
   far clip plane: 5000
   field of view: 3
   orthographic: 1
-  orthographic size: 60
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4421,6 +4407,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952897575}
   m_CullTransparentMesh: 1
+--- !u!1 &969118117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969118118}
+  - component: {fileID: 969118119}
+  m_Layer: 0
+  m_Name: LSRegionLockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &969118118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969118117}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2126357346}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &969118119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969118117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4190ec28c0cac1f4d82d8ad3ffea956b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _orrostarLocked: 0
+  _hyarrostarLocked: 1
+  _hyarnustarLocked: 1
+  _andustarLocked: 1
+  _forostarLocked: 1
+  progressionData: {fileID: 11400000, guid: b1a8760fc409ca3469ceeef780c7390c, type: 2}
 --- !u!1 &972129257
 GameObject:
   m_ObjectHideFlags: 0
@@ -4693,7 +4729,7 @@ MonoBehaviour:
   m_text: MASTER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7819,7 +7855,7 @@ MonoBehaviour:
   m_text: Options
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8831,6 +8867,7 @@ Transform:
   - {fileID: 1273932358}
   - {fileID: 1670557936}
   - {fileID: 47240409}
+  - {fileID: 969118118}
   - {fileID: 1485340785}
   - {fileID: 1815535498}
   - {fileID: 718364271}

@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RegionUIController : MonoBehaviour
 {
     [Header("Main UI Elements")]
     [SerializeField] private GameObject RegionCanvas;
     [SerializeField] private GameObject RegionPanel;
-
+    [SerializeField] private float clickCooldown = 1f;
+    //Main Title
+    private TextMeshProUGUI mainTitleText;
     //Title Panel
     private List<GameObject> villagePanels = new();
     private List<TextMeshProUGUI> villageTitleTexts = new();
@@ -23,12 +27,18 @@ public class RegionUIController : MonoBehaviour
     private List<GameObject> villageDiffPanels = new();
     private List<GameObject> villageRewardPanels = new();
 
+    private bool isClickOnCooldown = false;
+
     private void Awake()
     {
         int childCount = RegionPanel.transform.childCount;
 
         for (int i = 1; i < childCount; i++)
         {
+            mainTitleText = RegionPanel.transform
+                .Find("TextPanel/Text (TMP)")
+                .GetComponent<TextMeshProUGUI>();
+
 
             var panel = RegionPanel.transform.GetChild(i).gameObject;
             villagePanels.Add(panel);
@@ -83,8 +93,11 @@ public class RegionUIController : MonoBehaviour
     private void OnEnable()
     {
         OnClickOutline.RegionClicked += HandleRegionClicked;
+
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
+
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
     }
 
     private void OnDisable()
@@ -92,30 +105,60 @@ public class RegionUIController : MonoBehaviour
         OnClickOutline.RegionClicked -= HandleRegionClicked;
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
+
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
     }
+
+    private void HandleDisablingOfRegionUI()
+    {
+        RegionPanel.SetActive(false);
+    }
+
+    private Region lastRegion;
 
     private void HandleRegionClicked(Region region)
     {
+        if (isClickOnCooldown)
+            return;
 
-        if(region == Region.Orrostar)
-        {
-            HandleOrrostarPanel(region);
-        }
+        StartCoroutine(ClickCooldownRoutine());
 
         var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
 
-        if (scaler.IsAnimating)
-            return;
-
-        if (RegionPanel.activeSelf)
+        if (lastRegion == region)
         {
-            scaler.HideWithScale();
+            if (RegionPanel.activeSelf)
+            {
+                if (scaler != null)
+                    scaler.HideWithScale();
+                else
+                    RegionPanel.SetActive(false);
+            }
+            else
+            {
+                HandlePanelPopulation(region);
+                RegionPanel.SetActive(true);
+            }
+
+            return;
         }
-        else
+
+        lastRegion = region;
+        HandlePanelPopulation(region);
+
+        if (!RegionPanel.activeSelf)
         {
             RegionPanel.SetActive(true);
         }
     }
+
+    private IEnumerator ClickCooldownRoutine()
+    {
+        isClickOnCooldown = true;
+        yield return new WaitForSeconds(clickCooldown);
+        isClickOnCooldown = false;
+    }
+
     private void ZoomBelowThreshold()
     {
         var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
@@ -141,45 +184,71 @@ public class RegionUIController : MonoBehaviour
         RegionCanvas.SetActive(true);
     }
 
-    private void HandleOrrostarPanel(Region region)
+    private void HandlePanelPopulation(Region region)
     {
         var listOfVillages = LSManager.Instance.GetVillagesByRegion(region);
 
+        Debug.Log($"Region: {region}");
+
+        //Resetting panel
+        for (int i = 0; i < villagePanels.Count; i++)
+        {
+            mainTitleText.text = "";
+
+            // Hide the panel entirely
+            villagePanels[i].SetActive(false);
+
+            // Clear title
+            villageTitleTexts[i].text = "";
+
+            // Turn off all skulls
+            foreach (var skull in villageDifficultyObjects[i])
+                skull.SetActive(false);
+
+            // Clear status
+            villageStatusTexts[i].text = "";
+
+            villageStatusImages[i].SetActive(false);
+
+            // Clear rewards
+            foreach (var rewardSlot in villageRewardObjects[i])
+            {
+                var img = rewardSlot.GetComponent<UnityEngine.UI.Image>();
+                img.sprite = null;
+            }
+
+            // Hide difficulty + reward panels
+            villageDiffPanels[i].SetActive(false);
+            villageRewardPanels[i].SetActive(false);
+        }
+
+        mainTitleText.text = region.ToString();
+
         for (int i = 0; i < listOfVillages.Count; i++)
         {
+
             var villageData = listOfVillages[i];
 
-            //Text Panel
+            villagePanels[i].SetActive(true);
+
+            // Title + difficulty
             villageTitleTexts[i].text = villageData.villageName;
             DisplayDifficultySkulls(i, villageData.diffculty);
 
-            //Status Panel
-            villageStatusTexts[i].text = $"Status:   {GetVillageStatusText(villageData.state)}";
+            // Status
+            villageStatusTexts[i].text = $"Status: {GetVillageStatusText(villageData.state)}";
+            villageStatusImages[i].SetActive(villageData.state == VillageState.Invaded);
 
-            if (villageData.state == VillageState.Invaded)
-            {
-                villageStatusImages[i].SetActive(true);
-            }
-            else
-            {
-                villageStatusImages[i].SetActive(false);
-            }
-
-            //Reward Panel
+            // Rewards
             UpdateVillageRewardIcons(i, villageData.rewardConfig);
 
-            if(villageData.state == VillageState.PreInvasion 
-                || villageData.state == VillageState.Liberated_Done
-                || villageData.state == VillageState.Liberated_FirstTime)
-            {
-                villageDiffPanels[i].SetActive(false);
-                villageRewardPanels[i].SetActive(false);
-            }
-            else
-            {
-                villageDiffPanels[i].SetActive(true);
-                villageRewardPanels[i].SetActive(true);
-            }
+            bool hideExtraPanels =
+                villageData.state == VillageState.PreInvasion ||
+                villageData.state == VillageState.Liberated_Done ||
+                villageData.state == VillageState.Liberated_FirstTime;
+
+            villageDiffPanels[i].SetActive(!hideExtraPanels);
+            villageRewardPanels[i].SetActive(!hideExtraPanels);
         }
     }
 

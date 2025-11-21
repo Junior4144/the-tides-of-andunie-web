@@ -69,7 +69,7 @@ public abstract class CannonBall : MonoBehaviour
 
     void HandleDamage(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IHealthController health))
+        if (collision.TryGetComponent(out HealthController health))
         {
             health.TakeDamage(_cannonBallAttributes.DamageAmount);
         }
