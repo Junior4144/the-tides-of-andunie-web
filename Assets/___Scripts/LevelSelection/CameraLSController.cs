@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +24,8 @@ public class CameraLSController : MonoBehaviour
     Vector3 lastMousePos;
     Transform PlayerTransform;
     Bounds bounds;
+
+    public static event Action<Vector2> LockedRegionClicked;
 
     void Start()
     {
@@ -93,6 +96,15 @@ public class CameraLSController : MonoBehaviour
                     Debug.Log("Hit the correct Village Pointer Target!");
                     break;
                 }
+
+                if (h.TryGetComponent<RegionInfo>(out var region))
+                {
+                    if(LSRegionLockManager.Instance.IsRegionLocked(region))
+                        LockedRegionClicked?.Invoke(mouseWorld);
+                    valid = false;
+                    break;
+                }
+
             }
 
             if (valid)

@@ -52,6 +52,10 @@ public class LSRegionLockManager : MonoBehaviour
             _ => true,
         };
     }
+    public bool IsRegionLocked(RegionInfo regionInfo)
+    {
+        return IsRegionLocked(regionInfo.region);
+    }
 
     private void HandleRegionCheck()
     {
