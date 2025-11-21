@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 21160143644641557}
-  - component: {fileID: 2759331044933926976}
+  - component: {fileID: 742356013269385107}
   - component: {fileID: 7459300132604522871}
   - component: {fileID: 7654073972644825662}
   m_Layer: 6
@@ -34,8 +34,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8225468577275486795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &2759331044933926976
-CircleCollider2D:
+--- !u!70 &742356013269385107
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -47,10 +47,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -64,12 +64,13 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.48330295, y: 0}
-  m_Radius: 1.092398
+  m_Offset: {x: 0.2905162, y: 0.15289818}
+  m_Size: {x: 6.096107, y: 3.1298993}
+  m_Direction: 1
 --- !u!114 &7459300132604522871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8225468577275486795}
   - component: {fileID: 4810601562168249464}
-  - component: {fileID: 6051585507213433402}
+  - component: {fileID: 8636014263562488927}
   - component: {fileID: 1318188630637027886}
   - component: {fileID: 6595407804366197556}
   - component: {fileID: 845200191027578643}
@@ -133,7 +134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3354042210201786904}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.01, y: 2.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -170,8 +171,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &6051585507213433402
-CircleCollider2D:
+--- !u!70 &8636014263562488927
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -186,7 +187,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -204,8 +205,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.31857717, y: -0.13900006}
-  m_Radius: 1.0993117
+  m_Offset: {x: 0.2905162, y: 0.15289818}
+  m_Size: {x: 6.096107, y: 3.1298993}
+  m_Direction: 1
 --- !u!114 &1318188630637027886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,8 +549,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.4832569, y: 0.34721988}
-  m_Size: {x: 1.146987, y: 3.3953724}
+  m_Offset: {x: 1.9204756, y: -0.42606345}
+  m_Size: {x: 1.5805117, y: 4.9419026}
   m_Direction: 0
 --- !u!114 &2932234581836478258
 MonoBehaviour:
@@ -567,6 +569,7 @@ MonoBehaviour:
   _damageDelay: 0.7
   _animDuration: 1.1
   _damageRange: 10
+  _attackCooldown: 1.5
 --- !u!1 &7291861054942345205
 GameObject:
   m_ObjectHideFlags: 0

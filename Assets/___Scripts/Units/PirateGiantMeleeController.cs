@@ -9,63 +9,77 @@ public class PirateGiantMeleeController : MonoBehaviour
     [SerializeField] private float _damageDelay = 0f;
     [SerializeField] private float _animDuration;
     [SerializeField] private float _damageRange = 2f;
+    [SerializeField] private float _attackCooldown = 1.5f;   // Add this
 
-    private bool _isAttacking = false;
+    private Coroutine _attackRoutine;
+    private GameObject _currentTarget;
 
-    public void OnTriggerEnter2D(Collider2D otherCollider)
+    private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        var health = otherCollider.GetComponent(typeof(HealthController)) as HealthController;
-        if (
-            IsFriendly(otherCollider) &&
-            health != null &&
-            !_isAttacking
-        )
+        if (IsValidTarget(otherCollider))
         {
-            Debug.Log($"[PirateMeleeController] Attack initiated {otherCollider.name}");
-            StartCoroutine(Attack(otherCollider.gameObject));
-            PlayAttackAnimation();
+            _currentTarget = otherCollider.gameObject;
+
+            if (_attackRoutine == null)
+                _attackRoutine = StartCoroutine(AttackLoop());
         }
     }
 
-    private bool IsFriendly(Collider2D otherCollider) =>
-        otherCollider.gameObject.layer == LayerMask.NameToLayer("Friendly");
-
-
-    private IEnumerator Attack(GameObject enemyObject)
+    private void OnTriggerExit2D(Collider2D otherCollider)
     {
-        yield return new WaitForSeconds(_damageDelay);
-
-        if (enemyObject)
+        if (_currentTarget == otherCollider.gameObject)
         {
-            float distance = Vector2.Distance(transform.position, enemyObject.transform.position);
+            // Stop attacking when target leaves
+            if (_attackRoutine != null)
+            {
+                StopCoroutine(_attackRoutine);
+                _attackRoutine = null;
+            }
 
-            if (distance <= _damageRange)
-            {
-                Debug.Log($"[PirateMeleeController] Dealing damage {_pirateAttributes.DamageAmount} to {enemyObject.name}");
-                enemyObject.GetComponent<HealthController>().TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
-            }
-            else
-            {
-                Debug.Log($"[PirateMeleeController] Target out of range {distance}/{_damageRange}");
-            }
+            _currentTarget = null;
+        }
+    }
+
+    private bool IsValidTarget(Collider2D c)
+    {
+        return (
+            c.gameObject.layer == LayerMask.NameToLayer("Friendly") &&
+            c.GetComponent<HealthController>() != null
+        );
+    }
+
+    private IEnumerator AttackLoop()
+    {
+        while (_currentTarget != null)
+        {
+            PlayAttackAnimation();
+            yield return new WaitForSeconds(_damageDelay);
+
+            TryDealDamage(_currentTarget);
+
+            yield return new WaitForSeconds(_attackCooldown);
+        }
+
+        _attackRoutine = null;
+    }
+
+    private void TryDealDamage(GameObject target)
+    {
+        if (!target)
+            return;
+
+        float dist = Vector2.Distance(transform.position, target.transform.position);
+
+        if (dist <= _damageRange)
+        {
+            target.GetComponent<HealthController>()
+                .TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
         }
     }
 
     private void PlayAttackAnimation()
     {
         if (_animator)
-        {
-            _isAttacking = true;
             _animator.TriggerAttack();
-            StartCoroutine(ResetAttackAnimation());
-        }
-        else
-            Debug.LogWarning("Animator is Null. Playing no Animation");
-    }
-
-    private IEnumerator ResetAttackAnimation()
-    {
-        yield return new WaitForSeconds(_animDuration);
-        _isAttacking = false;
     }
 }
