@@ -59,7 +59,7 @@ public class LSRegionLockManager : MonoBehaviour
 
     private void HandleRegionCheck()
     {
-        _orrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Orrostar);
+        _orrostarLocked = false;
         _hyarrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
         _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
         _andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
