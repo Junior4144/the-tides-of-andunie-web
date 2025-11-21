@@ -21,7 +21,7 @@ public class LockedRegionUI : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        CameraZoomController.OnMaxZoom += HandleMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
     }
 
     private void OnDisable()
@@ -30,7 +30,7 @@ public class LockedRegionUI : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        CameraZoomController.OnMaxZoom -= HandleMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
     }
 
     private void ZoomBelowThreshold()
@@ -57,7 +57,7 @@ public class LockedRegionUI : MonoBehaviour
 
     }
 
-    private void HandleMaxZoom()
+    private void HandleDisablingOfRegionUI()
     {
         panel.SetActive(false);
     }

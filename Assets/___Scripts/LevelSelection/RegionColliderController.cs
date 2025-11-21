@@ -8,16 +8,16 @@ public class RegionColliderController : MonoBehaviour
 
     private void OnEnable()
     {
-        CameraZoomController.OnMaxZoom += HandleMaxZoom;
-        CameraZoomController.NoLongerMaxZoom += HandleNoLongerMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
+        RegionZoomController.NoLongerDisableOfRegionUI += HandleNoLongerDisabledUI;
     }
     private void OnDisable()
     {
-        CameraZoomController.OnMaxZoom -= HandleMaxZoom;
-        CameraZoomController.NoLongerMaxZoom -= HandleNoLongerMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
+        RegionZoomController.NoLongerDisableOfRegionUI -= HandleNoLongerDisabledUI;
     }
 
-    private void HandleMaxZoom()
+    private void HandleDisablingOfRegionUI()
     {
         foreach (GameObject go in list)
         {
@@ -25,7 +25,7 @@ public class RegionColliderController : MonoBehaviour
         }
     }
 
-    private void HandleNoLongerMaxZoom()
+    private void HandleNoLongerDisabledUI()
     {
         foreach (GameObject go in list)
         {

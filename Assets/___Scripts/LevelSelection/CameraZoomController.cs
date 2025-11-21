@@ -15,8 +15,6 @@ public class CameraZoomController : MonoBehaviour
     private CinemachineCamera cam;
     private Bounds bounds;
 
-    public static event Action OnMaxZoom;
-    public static event Action NoLongerMaxZoom;
 
     void Start()
     {
@@ -39,11 +37,11 @@ public class CameraZoomController : MonoBehaviour
         
         if(current == maxZoom)
         {
-            OnMaxZoom?.Invoke();
+            //OnDisableOfRegionUI?.Invoke();
         }
         else
         {
-            NoLongerMaxZoom?.Invoke();
+            //NoLongerDisableOfRegionUI?.Invoke();
         }
         // ------------------------------------------------------------
         // MANUAL ZOOM (normalized)

@@ -10,12 +10,6 @@ public enum Region
     None,
 }
 
-[CreateAssetMenu(menuName = "GameData/RegionProgression")]
-public class RegionProgression : ScriptableObject
-{
-    public List<RegionNode> regionNodes;
-}
-
 [System.Serializable]
 public class RegionNode
 {
