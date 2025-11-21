@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class RegionZoomController : MonoBehaviour
 {
-    [SerializeField]
     public float threshold = 200f;
+    public float PreInvasionThreshold = 400f;
 
     private Camera cam;
     private LSPlayerMovement playerMovement;
@@ -28,6 +28,8 @@ public class RegionZoomController : MonoBehaviour
     {
         cam = CameraManager.Instance.GetCamera();
         playerMovement = PlayerManager.Instance.gameObject.GetComponent<LSPlayerMovement>();
+
+        if(!LSManager.Instance.HasInvasionStarted) threshold = PreInvasionThreshold;
     }
 
     private void Update()
