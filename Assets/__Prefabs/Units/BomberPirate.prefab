@@ -350,9 +350,8 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 2366741659865636554, guid: 1803e8de19bb2984eb790a9c0c729402, type: 3}
   firePoint: {fileID: 7886364089457476399}
   fireShotSound: {fileID: 0}
-  fireCooldown: 2
-  HoldFireCooldown: 2
-  impulseForce: 10
+  fireCooldown: 0
+  impulseForce: 20
   impulseDuration: 0
 --- !u!114 &5689746314168022886
 MonoBehaviour:
@@ -377,7 +376,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -401,7 +400,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
