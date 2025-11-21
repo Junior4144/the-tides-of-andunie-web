@@ -9,7 +9,10 @@ public class LockedRegionUI : MonoBehaviour
 {
 
     [SerializeField] private GameObject panel;
+    [SerializeField] private TMP_Text regionText;
+    [SerializeField] private TMP_Text middleText;
     [SerializeField] private TMP_Text prerequisiteText;
+
     [SerializeField] private float clickCooldown = 1f;
     private Region lastRegion;
     private bool isClickOnCooldown = false;
@@ -110,9 +113,19 @@ public class LockedRegionUI : MonoBehaviour
     {
         var regionList = LSRegionLockManager.Instance.GetPrerequisiteRegions(region);
 
+        // Set region unlock/lock state
+        regionText.text = regionList.Count == 0
+            ? "Region Unlocked"
+            : "Region Locked";
+
+        middleText.text = regionList.Count == 0
+            ? ""
+            : "You Must Liberate the following region";
+
+        // Set prerequisite list label
         prerequisiteText.text =
             regionList.Count == 0
-            ? "No prerequisites.\nRegion can be unlocked."
+            ? "No prerequisites.\nRegion can be traveled."
             : string.Join("\n", regionList.Select(r => r.ToString()));
     }
 }

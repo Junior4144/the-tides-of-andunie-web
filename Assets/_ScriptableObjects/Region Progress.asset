@@ -15,11 +15,11 @@ MonoBehaviour:
   regionNodes:
   - region: 0
     prerequisites: 
-  - region: 4
-    prerequisites: 00000000
-  - region: 3
-    prerequisites: 0000000004000000
-  - region: 2
-    prerequisites: 000000000400000003000000
   - region: 1
-    prerequisites: 00000000040000000300000002000000
+    prerequisites: 00000000
+  - region: 2
+    prerequisites: 0000000001000000
+  - region: 3
+    prerequisites: 000000000100000002000000
+  - region: 4
+    prerequisites: 00000000010000000200000003000000
