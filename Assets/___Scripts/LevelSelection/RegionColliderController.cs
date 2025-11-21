@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 public class RegionColliderController : MonoBehaviour
@@ -15,6 +14,10 @@ public class RegionColliderController : MonoBehaviour
     {
         RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
         RegionZoomController.NoLongerDisableOfRegionUI -= HandleNoLongerDisabledUI;
+    }
+    private void Start()
+    {
+        if(!LSManager.Instance.HasInvasionStarted) gameObject.SetActive(false);
     }
 
     private void HandleDisablingOfRegionUI()
