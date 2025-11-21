@@ -3,7 +3,10 @@ using UnityEngine;
 public class LockedNotificationUIController : MonoBehaviour
 {
     [SerializeField] private GameObject popupPrefab;
-    [SerializeField] private Transform worldCanvas; // World Space Canvas transform
+    [SerializeField] private Transform worldCanvas;
+    [SerializeField] private float cooldownTime = .3f;
+
+    private bool canShowPopup = true;
 
     private void OnEnable()
     {
@@ -17,10 +20,21 @@ public class LockedNotificationUIController : MonoBehaviour
 
     private void HandleLockedRegionClicked(Vector2 worldPos)
     {
-        // Spawn popup in the world
-        var popup = Instantiate(popupPrefab, worldCanvas);
+        if (!canShowPopup)
+            return;
 
-        // Set world position
+        // Spawn popup
+        var popup = Instantiate(popupPrefab, worldCanvas);
         popup.transform.position = worldPos;
+
+        // Start cooldown to prevent spam
+        StartCoroutine(PopupCooldown());
+    }
+
+    private System.Collections.IEnumerator PopupCooldown()
+    {
+        canShowPopup = false;
+        yield return new WaitForSeconds(cooldownTime);
+        canShowPopup = true;
     }
 }

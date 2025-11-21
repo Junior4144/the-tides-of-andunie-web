@@ -68,7 +68,7 @@ public class OnClickOutline : MonoBehaviour
             lineRenderer.startColor = hoverColor;
             lineRenderer.endColor = hoverColor;
             lineRenderer.widthMultiplier = 1.5f;
-            lineRenderer.sortingOrder = 3;
+            lineRenderer.sortingOrder = 11;
         }
     }
 
