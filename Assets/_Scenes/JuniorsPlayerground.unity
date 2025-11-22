@@ -143,13 +143,163 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39471997}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 13.81, y: 6.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &87900690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 87900693}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 87900691}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 87900692}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &87900691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 87900690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &87900692 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 87900690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &87900693 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 87900690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!1 &98025499
 GameObject:
   m_ObjectHideFlags: 0
@@ -3930,6 +4080,123 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1001 &310175826
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2125588374}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2125588370}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 2125588372}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
 --- !u!1 &339551410
 GameObject:
   m_ObjectHideFlags: 0
@@ -4198,7 +4465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -304.06104, y: -27.501495}
+  m_AnchoredPosition: {x: -304.06104, y: -27.501465}
   m_SizeDelta: {x: -708.1221, y: -345.003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &371587189
@@ -4216,6 +4483,7 @@ MonoBehaviour:
   InventoryPanel: {fileID: 173116036}
   slotPrefab: {fileID: 7322913947530685665, guid: 81604e1cf693f9b479134ed3b4c843c0, type: 3}
   slotCount: 16
+  inventoryItems: []
 --- !u!114 &371587190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4284,15 +4552,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5121172253854289121, guid: 0536c242530d3994d939d775d95ff59d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5121172253854289121, guid: 0536c242530d3994d939d775d95ff59d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5121172253854289121, guid: 0536c242530d3994d939d775d95ff59d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5121172253854289121, guid: 0536c242530d3994d939d775d95ff59d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4393,15 +4661,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4734975094600159188, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4734975094600159188, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4734975094600159188, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4734975094600159188, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5235,7 +5503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558544593}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.2, y: -8.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5260,7 +5528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1499692892263158683, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1499692892263158683, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5268,15 +5536,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1499692892263158683, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1499692892263158683, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1499692892263158683, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1499692892263158683, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5422,7 +5690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &569604741
@@ -5524,6 +5792,156 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569604739}
   m_CullTransparentMesh: 1
+--- !u!1001 &584255847
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 584255850}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 584255848}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 584255849}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &584255848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 584255847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &584255849 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 584255847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &584255850 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 584255847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!4 &611879142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
@@ -5599,7 +6017,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 622652122}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -15.99, y: 6.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5682,6 +6100,156 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652283317}
   m_CullTransparentMesh: 1
+--- !u!1001 &686333361
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 686333364}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 686333362}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 686333363}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &686333362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 686333361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &686333363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 686333361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &686333364 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 686333361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!1001 &692214288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6231,15 +6799,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6951,7 +7519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &894389158
 Transform:
   m_ObjectHideFlags: 0
@@ -6981,6 +7549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   panel: {fileID: 2083176191}
+  regionText: {fileID: 0}
+  middleText: {fileID: 0}
   prerequisiteText: {fileID: 1837895915}
   clickCooldown: 1
 --- !u!1 &987430037
@@ -7158,15 +7728,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 632bbf12782232f4fafaeee74b42247c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 632bbf12782232f4fafaeee74b42247c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 632bbf12782232f4fafaeee74b42247c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 632bbf12782232f4fafaeee74b42247c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7185,6 +7755,156 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 632bbf12782232f4fafaeee74b42247c, type: 3}
+--- !u!1001 &1044463304
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1044463307}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1044463305}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1044463306}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &1044463305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1044463304}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &1044463306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1044463304}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &1044463307 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1044463304}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!1 &1053266960
 GameObject:
   m_ObjectHideFlags: 0
@@ -7298,15 +8018,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9023802815190566812, guid: 4539833b58b52614c91bb7675450598a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7325,6 +8045,156 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4539833b58b52614c91bb7675450598a, type: 3}
+--- !u!1001 &1067445219
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1067445222}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1067445220}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1067445221}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &1067445220 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1067445219}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &1067445221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1067445219}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &1067445222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1067445219}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!1 &1081269640 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6454348410857976922, guid: db03723e12ee34b4f9acebec9a7501c3, type: 3}
@@ -7513,6 +8383,156 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
+--- !u!1001 &1244060598
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1244060601}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1244060599}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1244060600}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &1244060599 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1244060598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &1244060600 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1244060598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &1244060601 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1244060598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!4 &1246318575 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
@@ -7605,6 +8625,10 @@ PrefabInstance:
     - target: {fileID: 2131044812205009990, guid: 9b2bc30cd0d957947aa187e229f19fd5, type: 3}
       propertyPath: m_Name
       value: TutorialUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131044812205009990, guid: 9b2bc30cd0d957947aa187e229f19fd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8093841428511490741, guid: 9b2bc30cd0d957947aa187e229f19fd5, type: 3}
       propertyPath: _tutorialPrefab
@@ -7809,6 +8833,7 @@ MonoBehaviour:
   InventoryPanel: {fileID: 1366965229}
   slotPrefab: {fileID: 196274839697151771, guid: a993e36252f74cf45b7f173d51963e89, type: 3}
   slotCount: 3
+  inventoryItems: []
 --- !u!114 &1366965233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15407,15 +16432,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -15668,6 +16693,156 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1582599648
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1582599651}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1582599649}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1582599650}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomlyDropCollectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeathAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PirateSpawnCollectable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerDeathAnimation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: DestroyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132135899507291761, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: OnDied.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5217
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185696866050682230, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_Name
+      value: Pirate1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+--- !u!114 &1582599649 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1582599648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &1582599650 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1582599648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &1582599651 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 1582599648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!1 &1594590241
 GameObject:
   m_ObjectHideFlags: 0
@@ -17451,15 +18626,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -18146,11 +19321,101 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2125588370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4997564116866245928, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 310175826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6ec1346e1f4b5d818dcf1115137c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
+--- !u!114 &2125588372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2424215124483022152, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 310175826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c49d89376ffe4abee4d2fd8a149f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyController
+--- !u!114 &2125588374 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428379436981364657, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+  m_PrefabInstance: {fileID: 310175826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
 --- !u!4 &2134152902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8501203466140667001, guid: d1b92a39cd9e16149bd3041864e52092, type: 3}
   m_PrefabInstance: {fileID: 1139781002}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1020941231457934171
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3354042210201786904, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Name
+      value: GiantPirate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
 --- !u!1001 &1147490085036384970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18213,6 +19478,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7018312481651476176, guid: 301b8e43ad2c03d4c904f43abfc0f498, type: 3}
   m_PrefabInstance: {fileID: 1147490085036384970}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1296206861095114236
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0394
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.10677
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103409998684896751, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335120409702348075, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_Name
+      value: BomberPirate
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335120409702348075, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
 --- !u!1001 &1544533016981831375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18243,15 +19569,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7620155082467235677, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -18390,10 +19716,20 @@ SceneRoots:
   - {fileID: 558544594}
   - {fileID: 380316734}
   - {fileID: 2096234598}
-  - {fileID: 1884659100}
-  - {fileID: 1057242110}
   - {fileID: 1008656461}
-  - {fileID: 715666787}
+  - {fileID: 1020941231457934171}
   - {fileID: 858162816}
+  - {fileID: 1057242110}
+  - {fileID: 1884659100}
+  - {fileID: 715666787}
   - {fileID: 1306215051}
   - {fileID: 894389158}
+  - {fileID: 1296206861095114236}
+  - {fileID: 1244060598}
+  - {fileID: 1067445219}
+  - {fileID: 310175826}
+  - {fileID: 1582599648}
+  - {fileID: 584255847}
+  - {fileID: 686333361}
+  - {fileID: 1044463304}
+  - {fileID: 87900690}

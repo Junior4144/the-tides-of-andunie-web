@@ -26,17 +26,17 @@ public class RegionOutlineController : MonoBehaviour
     {
         cam = CameraManager.Instance.GetCamera();
     }
-    private void OnEnable()
-    {
-        RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
-        RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
-    }
+    //private void OnEnable()
+    //{
+    //    RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
+    //    RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
+    //}
 
-    private void OnDisable()
-    {
-        RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
-        RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
-    }
+    //private void OnDisable()
+    //{
+    //    RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
+    //    RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
+    //}
 
     private void Update()
     {
@@ -80,17 +80,17 @@ public class RegionOutlineController : MonoBehaviour
         Outline.endColor = c;
     }
 
-    private void ZoomBelowThreshold()
-    {
-        Outline.enabled = true;
-        onClickOutline.ResetColor();
-        onClickOutline.enabled = false;
-    }
+    //private void ZoomBelowThreshold()
+    //{
+    //    Outline.enabled = true;
+    //    onClickOutline.ResetColor();
+    //    onClickOutline.enabled = false;
+    //}
 
-    private void ZoomAboveThreshold()
-    {
-        Outline.enabled = true;
-        onClickOutline.enabled = true;
+    //private void ZoomAboveThreshold()
+    //{
+    //    Outline.enabled = true;
+    //    onClickOutline.enabled = true;
         
-    }
+    //}
 }

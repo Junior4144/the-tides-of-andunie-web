@@ -10,12 +10,6 @@ public enum Region
     None,
 }
 
-[CreateAssetMenu(menuName = "GameData/RegionProgression")]
-public class RegionProgression : ScriptableObject
-{
-    public List<RegionNode> regionNodes;
-}
-
 [System.Serializable]
 public class RegionNode
 {
@@ -58,10 +52,14 @@ public class LSRegionLockManager : MonoBehaviour
             _ => true,
         };
     }
+    public bool IsRegionLocked(RegionInfo regionInfo)
+    {
+        return IsRegionLocked(regionInfo.region);
+    }
 
     private void HandleRegionCheck()
     {
-        _orrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Orrostar);
+        _orrostarLocked = false;
         _hyarrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
         _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
         _andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);

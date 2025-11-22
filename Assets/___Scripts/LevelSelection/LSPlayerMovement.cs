@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class LSPlayerMovement : MonoBehaviour
@@ -36,19 +37,30 @@ public class LSPlayerMovement : MonoBehaviour
     void TryMoveToMouse()
     {
         Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
+
         bool validNavMesh = NavMesh.SamplePosition(mouseWorld, out NavMeshHit hit, 0.5f, NavMesh.AllAreas);
 
-        bool validCollider = false;
-
         Collider2D[] hits = Physics2D.OverlapPointAll(mouseWorld);
-        Collider2D currentColldier = null;
+
+        Collider2D pointerCollider = null;
+
+        foreach (var h in hits)
+        {
+            if (h.TryGetComponent<RegionInfo>(out var region))
+            {
+                if (LSRegionLockManager.Instance.IsRegionLocked(region))
+                {
+                    Debug.Log("Cannot move there — REGION LOCKED.");
+                    return;
+                }
+            }
+        }
+
         foreach (var h in hits)
         {
             if (h.CompareTag("LSVillagePointerTarget"))
             {
-                validCollider = true;
-                currentColldier = h;
-                Debug.Log("Hit the correct Village Pointer Target!");
+                pointerCollider = h;
                 break;
             }
         }
@@ -56,16 +68,17 @@ public class LSPlayerMovement : MonoBehaviour
         if (validNavMesh)
         {
             agent.SetDestination(hit.position);
+            return;
         }
-        else if (validCollider)
+
+        if (pointerCollider != null)
         {
-            var curr = currentColldier.GetComponent<VillagePointerTargetController>().navigationTarget;
-            agent.SetDestination(curr.transform.position);
+            var controller = pointerCollider.GetComponent<VillagePointerTargetController>();
+            agent.SetDestination(controller.navigationTarget.transform.position);
+            return;
         }
-        else
-        {
-            Debug.Log("Cannot move there — no NavMesh.");
-        }
+
+        Debug.Log("Cannot move there — no NavMesh.");
     }
 
     void RotateTowardVelocity()

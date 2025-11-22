@@ -49,7 +49,7 @@ public class LSManager : MonoBehaviour
 
     }
 
-    private void Start()
+    private void OnEnable()
     {
         if (startGlobalInvasion)
         {

@@ -97,7 +97,7 @@ public class RegionUIController : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        CameraZoomController.OnMaxZoom += HandleMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
     }
 
     private void OnDisable()
@@ -106,10 +106,10 @@ public class RegionUIController : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        CameraZoomController.OnMaxZoom -= HandleMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
     }
 
-    private void HandleMaxZoom()
+    private void HandleDisablingOfRegionUI()
     {
         RegionPanel.SetActive(false);
     }
