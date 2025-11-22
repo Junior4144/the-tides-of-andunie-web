@@ -34,9 +34,9 @@ public class MusicShuffler : MonoBehaviour
     private void HandlePlayingMusic()
     {
         _audioSource = GetComponent<AudioSource>();
+        i = 0;
         PlayNext();
     }
-
     void Update()
     {
         if (!_audioSource.isPlaying) PlayNext();
