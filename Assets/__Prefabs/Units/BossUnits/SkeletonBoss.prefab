@@ -107,6 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1517716335768925400}
+  - component: {fileID: 7560597415759412173}
   - component: {fileID: 8423115720339387655}
   - component: {fileID: 2430295385348378252}
   - component: {fileID: 7096126196759940263}
@@ -134,6 +135,33 @@ Transform:
   - {fileID: 4137852660069971585}
   m_Father: {fileID: 8600958797101312877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &7560597415759412173
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765925239877686246}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 10
+  m_AngularDamping: 10
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!60 &8423115720339387655
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -208,15 +236,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 531244e986f1cab418dbaceda22b702d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RotateArmController
-  player: {fileID: 0}
+  m_EditorClassIdentifier: '::'
+  isCommandedMode: 1
   attackRange: 5
-  windUpDistance: 0.5
-  lungeDistance: 2
-  windUpSpeed: 3
-  lungeSpeed: 10
-  retractSpeed: 5
-  lungeSound: {fileID: 8300000, guid: 68487d58a7ea4a244a543e22104db2d2, type: 3}
+  attackCooldown: 2
+  sweepMode: 1
+  sweepArcDegrees: 160
+  sweepStartAngle: 0
+  sweepDuration: 0.3
+  retractDuration: 0.6
+  spinRotations: 3
+  spinDuration: 0.5
+  attackSound: {fileID: 8300000, guid: 68487d58a7ea4a244a543e22104db2d2, type: 3}
 --- !u!114 &7096126196759940263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,12 +276,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4416435266591735682}
+  - component: {fileID: 7972984143679363125}
   - component: {fileID: 9090364429774936152}
   - component: {fileID: 3631594304087113323}
   - component: {fileID: 2527587716040308384}
   m_Layer: 6
   m_Name: LeftArm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,6 +304,33 @@ Transform:
   - {fileID: 5589800331865446044}
   m_Father: {fileID: 8600958797101312877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &7972984143679363125
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758136881612580313}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 10
+  m_AngularDamping: 10
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &9090364429774936152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,14 +343,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531244e986f1cab418dbaceda22b702d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  player: {fileID: 0}
+  isCommandedMode: 1
   attackRange: 5
-  windUpDistance: 0.5
-  lungeDistance: 2
-  windUpSpeed: 3
-  lungeSpeed: 10
-  retractSpeed: 5
-  lungeSound: {fileID: 8300000, guid: 68487d58a7ea4a244a543e22104db2d2, type: 3}
+  attackCooldown: 2
+  sweepMode: 1
+  sweepArcDegrees: -160
+  sweepStartAngle: 0
+  sweepDuration: 0.3
+  retractDuration: 0.6
+  spinRotations: 3
+  spinDuration: 0.5
+  attackSound: {fileID: 8300000, guid: 68487d58a7ea4a244a543e22104db2d2, type: 3}
 --- !u!114 &3631594304087113323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,9 +507,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1158868627
+  m_SortingLayer: 7
+  m_SortingOrder: 150
   m_Sprite: {fileID: 7255905547759068633, guid: 74a628552e74787418249718b844981c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -619,8 +681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 100
-  impulseDuration: 0.4
+  _impulseforce: 180
+  impulseDuration: 0.5
   playSound: 1
   spawnParticles: 1
 --- !u!1 &5814078191968479246
@@ -634,7 +696,6 @@ GameObject:
   - component: {fileID: 7004687805468374692}
   - component: {fileID: 8789021774272206741}
   - component: {fileID: 8083057858497309796}
-  - component: {fileID: 2923557787119669741}
   - component: {fileID: 5544741772977073909}
   - component: {fileID: 1661053446593957673}
   - component: {fileID: 5046509017107592644}
@@ -642,6 +703,7 @@ GameObject:
   - component: {fileID: 2804547222482433599}
   - component: {fileID: 3347602609823508653}
   - component: {fileID: 3397684431614564968}
+  - component: {fileID: 2998254197292985072}
   m_Layer: 6
   m_Name: SkeletonBoss
   m_TagString: Enemy
@@ -699,7 +761,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5814078191968479246}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -789,73 +851,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2923557787119669741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5814078191968479246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1f57a7f08ea0474ba1edcff5aa5965a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  OnDied:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5046509017107592644}
-        m_TargetAssemblyTypeName: PlayerDeathAnimation, Assembly-CSharp
-        m_MethodName: DeathAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
-        m_MethodName: RandomlyDropCollectable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5544741772977073909}
-        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
-        m_MethodName: Destroy
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDamaged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1661053446593957673}
-        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
-        m_MethodName: Flash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _skeletonBossAttributes: {fileID: 11400000, guid: 06834e61061f8db41ac376662962f5e3, type: 2}
 --- !u!114 &5544741772977073909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,6 +968,26 @@ MonoBehaviour:
   phase2Sound: {fileID: 0}
   spinningSound: {fileID: 0}
   loopSpinningSound: 1
+--- !u!114 &2998254197292985072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5814078191968479246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369947b8ea3cb5f43bd7cc37a1719552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkeletonBossArmController
+  arms:
+  - {fileID: 9090364429774936152}
+  - {fileID: 2430295385348378252}
+  spinCooldown: 5
+  spinDuration: 2
+  spinRotations: 5
+  triggerOnPlayerProximity: 1
+  triggerRange: 5
 --- !u!1 &6610112697021840998
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,9 +1000,10 @@ GameObject:
   - component: {fileID: 7882708842111333278}
   - component: {fileID: 8749898271394187611}
   - component: {fileID: 6180608154733492282}
+  - component: {fileID: 2589565197077391700}
   m_Layer: 6
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1089,9 +1105,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 1186725677
-  m_SortingLayer: 9
-  m_SortingOrder: 2
+  m_SortingLayerID: -1158868627
+  m_SortingLayer: 7
+  m_SortingOrder: 150
   m_Sprite: {fileID: -5123601552517418192, guid: c52dd9458902b94459a7a586c5a042df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1117,6 +1133,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spinSpeed: 500
   canSpin: 0
+--- !u!114 &2589565197077391700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610112697021840998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f57a7f08ea0474ba1edcff5aa5965a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  OnDied:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5046509017107592644}
+        m_TargetAssemblyTypeName: PlayerDeathAnimation, Assembly-CSharp
+        m_MethodName: DeathAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5544741772977073909}
+        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
+        m_MethodName: Destroy
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1661053446593957673}
+        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _skeletonBossAttributes: {fileID: 11400000, guid: 06834e61061f8db41ac376662962f5e3, type: 2}
 --- !u!1 &8547888925417403467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,9 +1264,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1158868627
+  m_SortingLayer: 7
+  m_SortingOrder: 150
   m_Sprite: {fileID: -3630614133591800338, guid: 45adb1b66407c1d4e96577d2d00ce647, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1221,7 +1292,7 @@ GameObject:
   - component: {fileID: 7299888226066005199}
   m_Layer: 6
   m_Name: LeftArmAttackPoint
-  m_TagString: Untagged
+  m_TagString: ImpulseSource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1328,8 +1399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 100
-  impulseDuration: 0.4
+  _impulseforce: 180
+  impulseDuration: 0.5
   playSound: 1
   spawnParticles: 1
 --- !u!1 &8750343091436149207
