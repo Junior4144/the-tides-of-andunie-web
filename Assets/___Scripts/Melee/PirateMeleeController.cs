@@ -26,9 +26,23 @@ public class PirateMeleeController : MonoBehaviour
             PlayAttackAnimation();
         }
     }
+    public void OnTriggerStay2D(Collider2D otherCollider)
+    {
+        var health = otherCollider.GetComponent(typeof(HealthController)) as HealthController;
+        if (
+            IsFriendly(otherCollider) &&
+            health != null &&
+            !_isAttacking
+        )
+        {
+            Debug.Log($"[PirateMeleeController] Attack initiated {otherCollider.name}");
+            StartCoroutine(Attack(otherCollider.gameObject));
+            PlayAttackAnimation();
+        }
+    }
 
-    private bool IsFriendly(Collider2D otherCollider) => 
-        otherCollider.gameObject.layer == LayerMask.NameToLayer("Friendly");
+    private bool IsFriendly(Collider2D otherCollider) =>
+        otherCollider.gameObject.CompareTag("Player");
     
 
     private IEnumerator Attack(GameObject enemyObject)
