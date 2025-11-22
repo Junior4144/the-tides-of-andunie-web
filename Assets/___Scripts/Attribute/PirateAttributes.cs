@@ -11,6 +11,9 @@ public class PirateAttributes : ScriptableObject
     public float MovementSpeed { get; private set; }
 
     [field: SerializeField]
+    public float Acceleration { get; private set; }
+
+    [field: SerializeField]
     public float Health { get; private set; }
 
     [field: SerializeField]

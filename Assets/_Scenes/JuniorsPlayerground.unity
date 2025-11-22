@@ -4819,11 +4819,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4900169842736365851, guid: ed57eb032514015499058ac84aba541f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.50873
+      value: -3.22
       objectReference: {fileID: 0}
     - target: {fileID: 4900169842736365851, guid: ed57eb032514015499058ac84aba541f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.155769
+      value: 4.21
       objectReference: {fileID: 0}
     - target: {fileID: 4900169842736365851, guid: ed57eb032514015499058ac84aba541f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19367,9 +19367,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 742356013269385107, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 845200191027578643, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 845200191027578643, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 845200191027578643, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 845200191027578643, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_BaseOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 845200191027578643, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Acceleration
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 845200191027578643, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752790062696734182, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752790062696734182, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752790062696734182, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1158868627
+      objectReference: {fileID: 0}
     - target: {fileID: 3354042210201786904, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
       propertyPath: m_Name
       value: GiantPirate
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773013938337830291, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19410,6 +19454,26 @@ PrefabInstance:
     - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Size.x
+      value: 3.5340908
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Size.y
+      value: 3.2732754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.313934
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.056378096
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

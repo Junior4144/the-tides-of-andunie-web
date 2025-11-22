@@ -41,7 +41,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756098288339873099}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -205,8 +205,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.11328484, y: 0.0255103}
-  m_Size: {x: 6.09613, y: 3.118843}
+  m_Offset: {x: 0.313934, y: 0.056378096}
+  m_Size: {x: 3.5340908, y: 3.2732754}
   m_Direction: 1
 --- !u!114 &1318188630637027886
 MonoBehaviour:
@@ -297,9 +297,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 3354042210201786904}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 2
   m_Speed: 3.5
-  m_Acceleration: 10
+  m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -307,7 +307,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1831263652495674172
@@ -835,9 +835,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1440140687
-  m_SortingLayer: 6
-  m_SortingOrder: 40
+  m_SortingLayerID: -1158868627
+  m_SortingLayer: 7
+  m_SortingOrder: 100
   m_Sprite: {fileID: -1557549184530155163, guid: 63d4ca366e64ac84dbabaece0f7f8a88, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
