@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Example parent controller that manages synchronized arm attacks for the Skeleton Boss
+/// Manages synchronized arm attacks and turn-based single sweeps for the Skeleton Boss
 /// </summary>
 public class SkeletonBossArmController : MonoBehaviour
 {
@@ -13,13 +13,19 @@ public class SkeletonBossArmController : MonoBehaviour
     [SerializeField] private float spinCooldown = 5f;
     [SerializeField] private float spinDuration = 1f;
     [SerializeField] private float spinRotations = 3f;
+    [SerializeField] [Range(0f, 1f)] private float spinChance = 0.3f; // 30% chance to do spin instead of single sweep
 
     [Header("Trigger Settings")]
     [SerializeField] private bool triggerOnPlayerProximity = true;
     [SerializeField] private float triggerRange = 3f;
 
+    [Header("Turn-Based Attack")]
+    [SerializeField] private int currentTurn = 0; // Which arm's turn it is (0 or 1)
+
     private float spinCooldownTimer = 0f;
     private bool isSpinning = false;
+    private float lastProximityCheckTime = 0f;
+    private float proximityCheckInterval = 0.5f; // Check every 0.5 seconds
 
     void Update()
     {
@@ -29,22 +35,49 @@ public class SkeletonBossArmController : MonoBehaviour
             spinCooldownTimer -= Time.deltaTime;
         }
 
-        // Check if we should trigger a spin attack
+        // Check if we should trigger a synchronized spin (randomly)
         if (triggerOnPlayerProximity && !isSpinning && spinCooldownTimer <= 0)
         {
-            if (PlayerManager.Instance)
+            if (Time.time - lastProximityCheckTime >= proximityCheckInterval)
             {
-                float distance = Vector2.Distance(transform.position, PlayerManager.Instance.transform.position);
-                if (distance <= triggerRange)
+                lastProximityCheckTime = Time.time;
+
+                if (PlayerManager.Instance)
                 {
-                    TriggerSynchronizedSpin();
+                    float distance = Vector2.Distance(transform.position, PlayerManager.Instance.transform.position);
+                    if (distance <= triggerRange)
+                    {
+                        // Random chance to do synchronized spin
+                        if (Random.value <= spinChance)
+                        {
+                            TriggerSynchronizedSpin();
+                        }
+                    }
                 }
             }
         }
     }
 
     /// <summary>
-    /// Call this to make both arms spin at the same time
+    /// Check if the specified arm can attack (is it their turn?)
+    /// </summary>
+    public bool CanArmAttack(int armIndex)
+    {
+        return armIndex == currentTurn;
+    }
+
+    /// <summary>
+    /// Called by arm when it completes an attack - switches to other arm's turn
+    /// </summary>
+    public void OnArmAttackComplete(int armIndex)
+    {
+        // Switch to the other arm's turn
+        currentTurn = (currentTurn + 1) % arms.Length;
+        Debug.Log($"[SkeletonBossArmController] Turn switched. Now arm {currentTurn}'s turn");
+    }
+
+    /// <summary>
+    /// Trigger a synchronized spin on all arms
     /// </summary>
     public void TriggerSynchronizedSpin()
     {
@@ -55,21 +88,25 @@ public class SkeletonBossArmController : MonoBehaviour
             return;
         }
 
-        // Make sure all arms are in commanded mode
-        foreach (var arm in arms)
-        {
-            if (arm != null && !arm.IsInCommandedMode)
-            {
-                Debug.LogWarning($"[SkeletonBossArmController] {arm.name} is not in commanded mode!");
-            }
-        }
-
+        Debug.Log("[SkeletonBossArmController] Triggering synchronized spin!");
         StartCoroutine(SynchronizedSpinRoutine());
     }
 
     private IEnumerator SynchronizedSpinRoutine()
     {
         isSpinning = true;
+
+        // Temporarily switch arms to commanded mode
+        foreach (var arm in arms)
+        {
+            if (arm != null)
+            {
+                arm.SetCommandedMode(true);
+            }
+        }
+
+        // Small delay to ensure mode is set
+        yield return null;
 
         // Start spin on all arms simultaneously
         foreach (var arm in arms)
@@ -83,8 +120,19 @@ public class SkeletonBossArmController : MonoBehaviour
         // Wait for spin to complete
         yield return new WaitForSeconds(spinDuration);
 
+        // Switch arms back to autonomous mode
+        foreach (var arm in arms)
+        {
+            if (arm != null)
+            {
+                arm.SetCommandedMode(false);
+            }
+        }
+
         isSpinning = false;
         spinCooldownTimer = spinCooldown;
+
+        Debug.Log("[SkeletonBossArmController] Synchronized spin complete, arms back to autonomous mode");
     }
 
     /// <summary>
@@ -105,9 +153,21 @@ public class SkeletonBossArmController : MonoBehaviour
         isSpinning = false;
     }
 
+    /// <summary>
+    /// Manually trigger a spin (for debugging or special attacks)
+    /// </summary>
+    public void ForceSpinAttack()
+    {
+        if (!isSpinning && spinCooldownTimer <= 0)
+        {
+            TriggerSynchronizedSpin();
+        }
+    }
+
     // Public properties
     public bool IsSpinning => isSpinning;
     public float SpinCooldownRemaining => spinCooldownTimer;
+    public int CurrentTurn => currentTurn;
 
     void OnDrawGizmosSelected()
     {
@@ -116,6 +176,19 @@ public class SkeletonBossArmController : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, triggerRange);
+        }
+
+        // Draw which arm's turn it is
+        if (arms != null && Application.isPlaying)
+        {
+            for (int i = 0; i < arms.Length; i++)
+            {
+                if (arms[i] != null)
+                {
+                    Gizmos.color = (i == currentTurn) ? Color.green : Color.gray;
+                    Gizmos.DrawLine(transform.position, arms[i].transform.position);
+                }
+            }
         }
     }
 }

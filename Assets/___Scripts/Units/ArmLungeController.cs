@@ -6,6 +6,12 @@ public class ArmLungeController : MonoBehaviour
     [Header("Control Mode")]
     [Tooltip("Autonomous: Acts independently. Commanded: Controlled by parent (for synchronized spins)")]
     [SerializeField] private bool isCommandedMode = false;
+    [SerializeField] private int armIndex = 0; // 0 or 1 for turn-based system
+
+    [Header("Damage Collider")]
+    [SerializeField] private PolygonCollider2D damageCollider;
+
+    private SkeletonBossArmController parentController;
 
     [Header("Player Detection (Autonomous Mode)")]
     [SerializeField] private float attackRange = 5f;
@@ -42,6 +48,7 @@ public class ArmLungeController : MonoBehaviour
     {
         originalLocalRotation = transform.localRotation;
         audioSource = GetComponent<AudioSource>();
+        parentController = GetComponentInParent<SkeletonBossArmController>();
 
         if (audioSource == null)
         {
@@ -53,6 +60,21 @@ public class ArmLungeController : MonoBehaviour
         {
             audioSource.enabled = true;
             audioSource.playOnAwake = false;
+        }
+
+        if (parentController == null && !isCommandedMode)
+        {
+            Debug.LogWarning($"[ArmLunge - {gameObject.name}] No parent SkeletonBossArmController found! Turn-based system will not work.");
+        }
+
+        if (damageCollider == null)
+        {
+            Debug.LogWarning($"[ArmLunge - {gameObject.name}] No damage collider assigned!");
+        }
+        else
+        {
+            // Disable damage collider initially (arm not attacking)
+            damageCollider.enabled = false;
         }
     }
 
@@ -71,6 +93,12 @@ public class ArmLungeController : MonoBehaviour
 
             if (d <= attackRange)
             {
+                // Check with parent controller if it's this arm's turn
+                if (parentController != null && !parentController.CanArmAttack(armIndex))
+                {
+                    return; // Not this arm's turn
+                }
+
                 Debug.Log($"[ArmLunge - {gameObject.name}] Player in range, starting attack");
                 StartAttack();
             }
@@ -87,6 +115,12 @@ public class ArmLungeController : MonoBehaviour
 
         isAttacking = true;
         state = ArmState.Attacking;
+
+        // Enable damage collider during attack
+        if (damageCollider != null)
+        {
+            damageCollider.enabled = true;
+        }
 
         // Play attack sound
         if (audioSource != null && attackSound != null)
@@ -200,6 +234,18 @@ public class ArmLungeController : MonoBehaviour
         isAttacking = false;
         attackCooldownTimer = attackCooldown;
         transform.localRotation = originalLocalRotation;
+
+        // Disable damage collider after attack
+        if (damageCollider != null)
+        {
+            damageCollider.enabled = false;
+        }
+
+        // Notify parent that attack is complete (switches turn)
+        if (parentController != null)
+        {
+            parentController.OnArmAttackComplete(armIndex);
+        }
     }
 
     #region Public Methods for Commanded Mode
@@ -228,6 +274,12 @@ public class ArmLungeController : MonoBehaviour
 
     private IEnumerator SynchronizedSpinRoutine(float duration, float rotations)
     {
+        // Enable damage collider during spin
+        if (damageCollider != null)
+        {
+            damageCollider.enabled = true;
+        }
+
         // Play attack sound
         if (audioSource != null && attackSound != null)
         {
@@ -240,6 +292,12 @@ public class ArmLungeController : MonoBehaviour
         state = ArmState.Idle;
         isAttacking = false;
         transform.localRotation = originalLocalRotation;
+
+        // Disable damage collider after spin
+        if (damageCollider != null)
+        {
+            damageCollider.enabled = false;
+        }
     }
 
     /// <summary>
@@ -256,10 +314,25 @@ public class ArmLungeController : MonoBehaviour
         state = ArmState.Idle;
         isAttacking = false;
         transform.localRotation = originalLocalRotation;
+
+        // Disable damage collider when stopping
+        if (damageCollider != null)
+        {
+            damageCollider.enabled = false;
+        }
     }
 
     #endregion
 
     public bool IsAttacking => isAttacking;
     public bool IsInCommandedMode => isCommandedMode;
+    public int ArmIndex => armIndex;
+
+    /// <summary>
+    /// Set commanded mode (called by parent controller)
+    /// </summary>
+    public void SetCommandedMode(bool commanded)
+    {
+        isCommandedMode = commanded;
+    }
 }

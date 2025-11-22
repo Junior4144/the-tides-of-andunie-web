@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 7096126196759940263}
   m_Layer: 6
   m_Name: RightArm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,7 +192,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   isCommandedMode: 1
+  armIndex: 1
+  damageCollider: {fileID: 1363022319794772106}
   attackRange: 5
   attackCooldown: 2
   sweepMode: 1
@@ -277,9 +279,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4416435266591735682}
   - component: {fileID: 7972984143679363125}
+  - component: {fileID: 2527587716040308384}
   - component: {fileID: 9090364429774936152}
   - component: {fileID: 3631594304087113323}
-  - component: {fileID: 2527587716040308384}
   m_Layer: 6
   m_Name: LeftArm
   m_TagString: Enemy
@@ -331,48 +333,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &9090364429774936152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1758136881612580313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 531244e986f1cab418dbaceda22b702d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  isCommandedMode: 1
-  attackRange: 5
-  attackCooldown: 2
-  sweepMode: 1
-  sweepArcDegrees: -160
-  sweepStartAngle: 0
-  sweepDuration: 0.3
-  retractDuration: 0.6
-  spinRotations: 3
-  spinDuration: 0.5
-  attackSound: {fileID: 8300000, guid: 68487d58a7ea4a244a543e22104db2d2, type: 3}
---- !u!114 &3631594304087113323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1758136881612580313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 484eca0143bc7f14b80ffc400813388f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Arm
-  OnDied:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDamaged:
-    m_PersistentCalls:
-      m_Calls: []
-  _attributes: {fileID: 11400000, guid: 06834e61061f8db41ac376662962f5e3, type: 2}
 --- !u!60 &2527587716040308384
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -403,7 +363,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -431,6 +391,50 @@ PolygonCollider2D:
       - {x: 1.875, y: -1.3125}
       - {x: 1.875, y: -0.125}
   m_UseDelaunayMesh: 0
+--- !u!114 &9090364429774936152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758136881612580313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531244e986f1cab418dbaceda22b702d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  isCommandedMode: 1
+  armIndex: 0
+  damageCollider: {fileID: 5812354629514676740}
+  attackRange: 5
+  attackCooldown: 2
+  sweepMode: 1
+  sweepArcDegrees: -160
+  sweepStartAngle: 0
+  sweepDuration: 0.3
+  retractDuration: 0.6
+  spinRotations: 3
+  spinDuration: 0.5
+  attackSound: {fileID: 8300000, guid: 68487d58a7ea4a244a543e22104db2d2, type: 3}
+--- !u!114 &3631594304087113323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758136881612580313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484eca0143bc7f14b80ffc400813388f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arm
+  OnDied:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  _attributes: {fileID: 11400000, guid: 06834e61061f8db41ac376662962f5e3, type: 2}
 --- !u!1 &1900447517223980179
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +573,7 @@ GameObject:
   - component: {fileID: 1219749089769472385}
   m_Layer: 6
   m_Name: RightArmAttackPoint
-  m_TagString: Untagged
+  m_TagString: ImpulseSource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -666,8 +670,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
   _pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
   _animator: {fileID: 0}
-  _damageDelay: 0.3
-  _animDuration: 0.35
+  _damageDelay: 0
+  _animDuration: 0
   _damageRange: 10
 --- !u!114 &1219749089769472385
 MonoBehaviour:
@@ -986,8 +990,10 @@ MonoBehaviour:
   spinCooldown: 5
   spinDuration: 2
   spinRotations: 5
+  spinChance: 0.3
   triggerOnPlayerProximity: 1
   triggerRange: 5
+  currentTurn: 0
 --- !u!1 &6610112697021840998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,9 +1390,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
   _pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
   _animator: {fileID: 0}
-  _damageDelay: 0.3
-  _animDuration: 0.35
-  _damageRange: 2
+  _damageDelay: 0
+  _animDuration: 0
+  _damageRange: 10
 --- !u!114 &7299888226066005199
 MonoBehaviour:
   m_ObjectHideFlags: 0
