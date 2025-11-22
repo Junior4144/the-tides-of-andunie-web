@@ -7519,7 +7519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &894389158
 Transform:
   m_ObjectHideFlags: 0
@@ -8625,6 +8625,10 @@ PrefabInstance:
     - target: {fileID: 2131044812205009990, guid: 9b2bc30cd0d957947aa187e229f19fd5, type: 3}
       propertyPath: m_Name
       value: TutorialUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131044812205009990, guid: 9b2bc30cd0d957947aa187e229f19fd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8093841428511490741, guid: 9b2bc30cd0d957947aa187e229f19fd5, type: 3}
       propertyPath: _tutorialPrefab
@@ -19367,9 +19371,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: GiantPirate
       objectReference: {fileID: 0}
-    - target: {fileID: 3817193242573741716, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
-      propertyPath: _impulseResistance
-      value: 0.5
+    - target: {fileID: 3354042210201786904, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19410,22 +19414,6 @@ PrefabInstance:
     - target: {fileID: 8225468577275486795, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
-      propertyPath: m_Size.x
-      value: 6.09613
-      objectReference: {fileID: 0}
-    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
-      propertyPath: m_Size.y
-      value: 3.118843
-      objectReference: {fileID: 0}
-    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.11328484
-      objectReference: {fileID: 0}
-    - target: {fileID: 8636014263562488927, guid: cf820247100b55340804c79fe3aa2ee5, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.0255103
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19548,7 +19536,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5335120409702348075, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843172075187527881, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: roamRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843172075187527881, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: runDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843172075187527881, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: impulseForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843172075187527881, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
+      propertyPath: runBackDistance
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

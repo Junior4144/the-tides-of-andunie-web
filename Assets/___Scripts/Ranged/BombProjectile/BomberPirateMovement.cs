@@ -4,11 +4,20 @@ using UnityEngine.AI;
 
 public class BomberPirateMovement : MonoBehaviour
 {
+    private enum PirateState { Attack, RunAway }
+    private PirateState currentState = PirateState.Attack;
+
     [SerializeField] private float _attackAnimDuration = .9f;
     [SerializeField] private PirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;
+
+
+    [Header("Runaway Settings")]
+    public float runBackDistance = 5f;
+    public float runDuration = 2f;
+    public float runBackSpeedMultiplier = 2f;
 
     private Transform player;
     private NavMeshAgent agent;
@@ -16,8 +25,12 @@ public class BomberPirateMovement : MonoBehaviour
     private ArcherPirateAnimator _animator;
     private AudioSource _audioSource;
     private ImpulseController _impulseController;
+
     private bool canFire = true;
     public float fireCooldown = 1f;
+
+    private float originalSpeed;
+    private bool isRunningAway = false;
 
     public float impulseForce = 10f;
     public float impulseDuration = 0;
@@ -29,8 +42,11 @@ public class BomberPirateMovement : MonoBehaviour
         _animator = GetComponentInChildren<ArcherPirateAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _impulseController = GetComponentInChildren<ImpulseController>();
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        originalSpeed = agent.speed;
     }
 
     void Update()
@@ -38,13 +54,25 @@ public class BomberPirateMovement : MonoBehaviour
         if (!agent.enabled || !PlayerManager.Instance) return;
 
         player = PlayerManager.Instance.transform;
+
+        // DO NOT allow attack logic while running away
+        if (isRunningAway)
+        {
+            RotateTowardsMovementDirection();
+            return;
+        }
+
+        HandleAttackState();
+    }
+
+    private void HandleAttackState()
+    {
         RotateTowardsPlayer();
 
         float distance = Vector2.Distance(transform.position, player.position);
 
         if (distance <= _attributes.ReadyDistance && canFire)
         {
-            //ifStillInRange = true;
             StartCoroutine(FireSequence());
             PlayAttackAnimation();
             return;
@@ -52,7 +80,6 @@ public class BomberPirateMovement : MonoBehaviour
 
         if (distance > _attributes.ReadyDistance)
         {
-            //ifStillInRange = false;
             RotateTowardsMovementDirection();
             agent.SetDestination(player.position);
         }
@@ -63,7 +90,6 @@ public class BomberPirateMovement : MonoBehaviour
         canFire = false;
         agent.isStopped = true;
 
-        // Small delay for aim/animation sync
         yield return new WaitForSeconds(_attackAnimDuration);
 
         Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
@@ -72,12 +98,47 @@ public class BomberPirateMovement : MonoBehaviour
         if (fireShotSound)
             _audioSource.PlayOneShot(fireShotSound);
 
-        yield return new WaitForSeconds(fireCooldown);
+        // Begin runaway immediately
+        StartCoroutine(RunAwayRoutine());
 
-        agent.isStopped = false;
+        yield return new WaitForSeconds(fireCooldown);
         canFire = true;
     }
 
+    private IEnumerator RunAwayRoutine()
+    {
+        currentState = PirateState.RunAway;
+        isRunningAway = true;
+
+        agent.isStopped = false;
+
+        // TEMP speed boost
+        agent.speed = originalSpeed * runBackSpeedMultiplier;
+
+        // Find backward + slight randomness direction
+        Vector3 backward = -transform.up;
+        float randomAngle = Random.Range(-45f, 45f);
+        backward = Quaternion.Euler(0, 0, randomAngle) * backward;
+
+        Vector3 target = transform.position + backward * runBackDistance;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(target, out hit, 2f, NavMesh.AllAreas))
+            agent.SetDestination(hit.position);
+
+        float elapsed = 0f;
+        while (elapsed < runDuration)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Reset to normal
+        agent.speed = originalSpeed;
+
+        isRunningAway = false;
+        currentState = PirateState.Attack;
+    }
 
     private void PlayAttackAnimation()
     {
@@ -86,17 +147,12 @@ public class BomberPirateMovement : MonoBehaviour
             _animator.TriggerAttack();
             StartCoroutine(ResetAttackAnimation());
         }
-        else
-        {
-            Debug.LogWarning("Animator is Null. Playing no Animation");
-        }
     }
 
     private IEnumerator ResetAttackAnimation()
     {
         yield return new WaitForSeconds(_attackAnimDuration);
     }
-
 
     private void RotateTowardsMovementDirection()
     {
@@ -117,6 +173,8 @@ public class BomberPirateMovement : MonoBehaviour
 
     private void RotateTowardsPlayer()
     {
+        if (!player) return;
+
         Vector2 direction = (player.position - transform.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90f);
