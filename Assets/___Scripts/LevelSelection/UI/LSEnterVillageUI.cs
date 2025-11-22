@@ -30,6 +30,8 @@ public class LSEnterVillageUI : MonoBehaviour
     private void HandleUIActivation(bool isExit)
     {
 
+        PlayerManager.Instance.DisablePlayerMovement();
+
         if (isActiveUI)
         {
             HandleEnterVillage();
@@ -46,6 +48,8 @@ public class LSEnterVillageUI : MonoBehaviour
 
     private void HandleUIDeactivation()
     {
+        PlayerManager.Instance.EnablePlayerMovement();
+
         UIPanel.SetActive(false);
         isActiveUI = false;
     }

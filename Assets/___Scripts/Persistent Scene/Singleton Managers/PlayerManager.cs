@@ -14,7 +14,6 @@ public class PlayerManager : MonoBehaviour
 
     public bool AllowForceChange = false;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -75,6 +74,17 @@ public class PlayerManager : MonoBehaviour
     //------TRANSFORM------//
     public Transform GetPlayerTransform() => gameObject.transform;
     public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
+
+    public void DisablePlayerMovement()
+    {
+        if (_playerMovement)
+            _playerMovement.enabled = false;
+    }
+    public void EnablePlayerMovement()
+    {
+        if (_playerMovement)
+            _playerMovement.enabled = true;
+    }
 
     //------TRANSFORM------//
     public bool IsAttacking() => _attackController.IsAttacking;

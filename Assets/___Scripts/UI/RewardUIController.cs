@@ -25,6 +25,8 @@ public class RewardUIController : MonoBehaviour
             return;
         }
 
+        PlayerManager.Instance.DisablePlayerMovement();
+
         ClearExistingRewards();
         InstantiateRewardUI(rewardsToShow);
         ActivateRewardsCanvas();
@@ -32,6 +34,7 @@ public class RewardUIController : MonoBehaviour
 
     public void HideRewards()
     {
+        PlayerManager.Instance.EnablePlayerMovement();
         UIEvents.OnRewardDeactivated?.Invoke();
         StartCoroutine(HideRewardsAfterDelay());
     }
