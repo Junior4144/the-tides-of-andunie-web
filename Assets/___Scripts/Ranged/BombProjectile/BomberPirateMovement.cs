@@ -1,18 +1,14 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class BomberPirateMovement : MonoBehaviour
 {
-    private enum PirateState { Attack, RunAway }
-    private PirateState currentState = PirateState.Attack;
-
     [SerializeField] private float _attackAnimDuration = .9f;
     [SerializeField] private PirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;
-
 
     [Header("Runaway Settings")]
     public float runBackDistance = 5f;
@@ -33,7 +29,13 @@ public class BomberPirateMovement : MonoBehaviour
     private bool isRunningAway = false;
 
     public float impulseForce = 10f;
-    public float impulseDuration = 0;
+    public float impulseDuration = 0f;
+
+    // Stuck detection
+    private GameObject runawayTargetObject;
+    private float stuckCheckTime = 0f;
+    private float stuckThreshold = 0.2f;
+    private float minVelocityThreshold = 0.05f;
 
     void Awake()
     {
@@ -51,11 +53,11 @@ public class BomberPirateMovement : MonoBehaviour
 
     void Update()
     {
-        if (!agent.enabled || !PlayerManager.Instance) return;
+        if (!agent.enabled || !PlayerManager.Instance)
+            return;
 
         player = PlayerManager.Instance.transform;
 
-        // DO NOT allow attack logic while running away
         if (isRunningAway)
         {
             RotateTowardsMovementDirection();
@@ -98,7 +100,6 @@ public class BomberPirateMovement : MonoBehaviour
         if (fireShotSound)
             _audioSource.PlayOneShot(fireShotSound);
 
-        // Begin runaway immediately
         StartCoroutine(RunAwayRoutine());
 
         yield return new WaitForSeconds(fireCooldown);
@@ -107,37 +108,59 @@ public class BomberPirateMovement : MonoBehaviour
 
     private IEnumerator RunAwayRoutine()
     {
-        currentState = PirateState.RunAway;
         isRunningAway = true;
 
         agent.isStopped = false;
-
-        // TEMP speed boost
         agent.speed = originalSpeed * runBackSpeedMultiplier;
 
-        // Find backward + slight randomness direction
+        // Compute backward direction with random angle
         Vector3 backward = -transform.up;
         float randomAngle = Random.Range(-45f, 45f);
         backward = Quaternion.Euler(0, 0, randomAngle) * backward;
+        Vector3 targetPos = transform.position + backward * runBackDistance;
 
-        Vector3 target = transform.position + backward * runBackDistance;
+        // Create temporary runaway target object
+        if (runawayTargetObject != null)
+            Destroy(runawayTargetObject);
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(target, out hit, 2f, NavMesh.AllAreas))
-            agent.SetDestination(hit.position);
+        runawayTargetObject = new GameObject("BomberRunTarget");
+        runawayTargetObject.transform.position = targetPos;
+
+        // Move toward it
+        agent.SetDestination(runawayTargetObject.transform.position);
 
         float elapsed = 0f;
+        stuckCheckTime = 0f;
+
         while (elapsed < runDuration)
         {
             elapsed += Time.deltaTime;
+
+            // STUCK DETECTION
+            if (agent.velocity.magnitude < minVelocityThreshold)
+            {
+                stuckCheckTime += Time.deltaTime;
+
+                if (stuckCheckTime > stuckThreshold)
+                {
+                    Debug.Log("Bomber stuck → aborting runaway.");
+                    break;
+                }
+            }
+            else
+            {
+                stuckCheckTime = 0f;
+            }
+
             yield return null;
         }
 
-        // Reset to normal
+        // Reset states
         agent.speed = originalSpeed;
-
         isRunningAway = false;
-        currentState = PirateState.Attack;
+
+        if (runawayTargetObject != null)
+            Destroy(runawayTargetObject);
     }
 
     private void PlayAttackAnimation()
@@ -198,6 +221,10 @@ public class BomberPirateMovement : MonoBehaviour
             SpawnParticles = true
         };
 
-        _impulseController.InitiateSquadImpulse(transform.position, -_rigidbody.transform.up, impulseSettings);
+        _impulseController.InitiateSquadImpulse(
+            transform.position,
+            -_rigidbody.transform.up,
+            impulseSettings
+        );
     }
 }
