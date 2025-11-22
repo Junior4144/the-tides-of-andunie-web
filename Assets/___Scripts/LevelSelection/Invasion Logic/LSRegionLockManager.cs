@@ -60,10 +60,13 @@ public class LSRegionLockManager : MonoBehaviour
     private void HandleRegionCheck()
     {
         _orrostarLocked = false;
-        _hyarrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
-        _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
-        _andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
-        _forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Forostar);
+        _hyarrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Orrostar);
+
+        _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
+
+        _andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
+
+        _forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
 
         Debug.Log("[Region Lock Manager] Region lock states updated.");
     }
