@@ -19,7 +19,7 @@ public class SkeletonBossHealthController : HealthController
         }
     }
 
-    public override void TakeDamage(float damageAmount)
+    public override void TakeDamage(float damageAmount, DamageType damageType = DamageType.Generic)
     {
         if (GameManager.Instance.CurrentState != GameState.Gameplay) return;
 

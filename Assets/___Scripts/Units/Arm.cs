@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Arm : MonoBehaviour, IHealthController
+public class Arm : HealthController
 {
     [Header("Arm Stats")]
     [SerializeField] private SkeletonBossAttributes _attributes;
@@ -52,17 +52,17 @@ public class Arm : MonoBehaviour, IHealthController
             BreakArm();
     }
 
-    public void AddHealth(float amount)
+    public override void AddHealth(float amount)
     {
         // Arms cannot be healed
     }
 
-    public float GetCurrentHealth()
+    public new float GetCurrentHealth()
     {
         return currentHealth;
     }
 
-    public float GetPercentHealth()
+    public override float GetPercentHealth()
     {
         return maxHealth > 0 ? currentHealth / maxHealth : 0f;
     }
