@@ -54,6 +54,9 @@ public class ImpulseController : MonoBehaviour
 
     private void ApplyImpulse(float impulseforce, Vector2 impulseDirection, Vector2 contactPoint)
     {
+        if (_agent != null)
+            _agent.enabled = false;
+
         Vector2 individualDirection = (_rb.position - contactPoint).normalized;
 
         Vector2 blendedDirection = BlendVectors(

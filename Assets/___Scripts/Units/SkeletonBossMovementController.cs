@@ -5,28 +5,30 @@ public class SkeletonBossMovementController : MonoBehaviour
 {
     [SerializeField] private SkeletonBossAttributes _attributes;
 
-    private Transform player;
-    private NavMeshAgent agent;
+    private Transform _player;
+    private NavMeshAgent _agent;
     private Rigidbody2D _rigidbody;
+    private ImpulseController _impulseController;
 
     void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _impulseController = GetComponent<ImpulseController>();
 
-        if (agent == null)
+        if (_agent == null)
         {
             Debug.LogError("NavMeshAgent component missing!");
             return;
         }
 
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
 
         if (_attributes != null)
         {
-            agent.speed = _attributes.MovementSpeed;
-            agent.acceleration = _attributes.MovementSpeed * 4f;
+            _agent.speed = _attributes.MovementSpeed;
+            _agent.acceleration = _attributes.MovementSpeed * 4f;
         }
         else
         {
@@ -36,26 +38,30 @@ public class SkeletonBossMovementController : MonoBehaviour
 
     void Update()
     {
-        if (agent == null || !agent.enabled) return;
+        if (_agent == null || !_agent.enabled) return;
         if (!PlayerManager.Instance) return;
 
-        player = PlayerManager.Instance.transform;
+        _player = PlayerManager.Instance.transform;
 
-        if (!agent.isOnNavMesh)
+        if (!_agent.isOnNavMesh)
         {
             Debug.LogError($"Agent NOT on NavMesh! Position: {transform.position}");
             return;
         }
 
-        agent.SetDestination(player.position);
-        RotateTowardsMovementDirection();
+        _agent.SetDestination(_player.position);
+
+        if (_impulseController == null || !_impulseController.IsInImpulse())
+        {
+            RotateTowardsMovementDirection();
+        }
     }
 
     private void RotateTowardsMovementDirection()
     {
         if (_attributes == null) return;
 
-        Vector3 velocity = agent.velocity;
+        Vector3 velocity = _agent.velocity;
 
         if (velocity.sqrMagnitude < 0.01f) return;
 
