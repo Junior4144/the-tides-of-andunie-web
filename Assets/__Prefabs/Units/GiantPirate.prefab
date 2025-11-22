@@ -493,7 +493,7 @@ GameObject:
   - component: {fileID: 242593571582595679}
   - component: {fileID: 4708632008520994728}
   - component: {fileID: 2932234581836478258}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +512,8 @@ Transform:
   m_LocalPosition: {x: 0.017, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7936400117629098556}
   m_Father: {fileID: 8225468577275486795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!70 &4708632008520994728
@@ -567,9 +568,94 @@ MonoBehaviour:
   _pirateAttributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
   _animator: {fileID: 4227438563414407911}
   _damageDelay: 0.7
-  _animDuration: 1.1
   _damageRange: 10
   _attackCooldown: 1.5
+--- !u!1 &5327086117480526305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7936400117629098556}
+  - component: {fileID: 831708140652290764}
+  - component: {fileID: 5205106747568641347}
+  m_Layer: 0
+  m_Name: AttackImpulseCollider
+  m_TagString: ImpulseSource
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7936400117629098556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5327086117480526305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 242593571582595679}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!70 &831708140652290764
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5327086117480526305}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 1.9204756, y: -0.42606345}
+  m_Size: {x: 1.5805117, y: 4.9419026}
+  m_Direction: 0
+--- !u!114 &5205106747568641347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5327086117480526305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
+  _impulseforce: 200
+  impulseDuration: 0.5
+  playSound: 1
+  spawnParticles: 1
 --- !u!1 &7291861054942345205
 GameObject:
   m_ObjectHideFlags: 0

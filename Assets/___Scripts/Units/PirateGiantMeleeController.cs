@@ -5,14 +5,21 @@ public class PirateGiantMeleeController : MonoBehaviour
 {
     [SerializeField] private PirateAttributes _pirateAttributes;
     [SerializeField] private GiantEnemyAnimator _animator;
+    [SerializeField] private float _animDuration;
 
     [SerializeField] private float _damageDelay = 0f;
-    [SerializeField] private float _animDuration;
     [SerializeField] private float _damageRange = 2f;
     [SerializeField] private float _attackCooldown = 1.5f;   // Add this
 
     private Coroutine _attackRoutine;
     private GameObject _currentTarget;
+
+    private CapsuleCollider2D _capsuleCollider;
+    private void Awake()
+    {
+        _capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
+        _capsuleCollider.enabled = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
@@ -54,10 +61,11 @@ public class PirateGiantMeleeController : MonoBehaviour
         {
             PlayAttackAnimation();
             yield return new WaitForSeconds(_damageDelay);
-
+            _capsuleCollider.enabled = true;
             TryDealDamage(_currentTarget);
 
             yield return new WaitForSeconds(_attackCooldown);
+            _capsuleCollider.enabled = true;
         }
 
         _attackRoutine = null;
