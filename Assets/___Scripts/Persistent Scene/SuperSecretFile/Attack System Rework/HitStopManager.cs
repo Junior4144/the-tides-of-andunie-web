@@ -21,6 +21,7 @@ public class HitStopManager : MonoBehaviour
 
         StartCoroutine(DoHitStop(duration));
     }
+
     IEnumerator Wait(float duration)
     {
         waiting = true;

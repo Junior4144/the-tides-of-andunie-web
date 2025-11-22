@@ -28,7 +28,7 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
     }
 
-    public bool AddItem(IInventoryItem item, int quantity = 1)
+    public bool AddItem(InventoryItem item, int quantity = 1)
     {
         if (!IsValidAddition(item, quantity)) return false;
         if (HasItem(item.ItemId))
@@ -83,7 +83,7 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    private bool IsValidAddition(IInventoryItem item, int quantity) =>
+    private bool IsValidAddition(InventoryItem item, int quantity) =>
         item != null && quantity > 0;
 
     private bool AddToExistingSlot(string itemId, int quantity)
@@ -92,7 +92,7 @@ public class InventoryManager : MonoBehaviour
         return slot.CanAddQuantity(quantity) && slot.AddQuantity(quantity);
     }
 
-    private bool CreateNewSlot(IInventoryItem item, int quantity)
+    private bool CreateNewSlot(InventoryItem item, int quantity)
     {
         if (quantity > item.MaxStackSize) return false;
         
@@ -138,21 +138,27 @@ public class InventoryManager : MonoBehaviour
     private void RecalculateStats()
     {
         PlayerStatsManager.Instance.ResetToDefaults();
-        _equippedItems.Values.ToList().ForEach(ApplySlotEffects);
+
+        _equippedItems.Values
+            .SelectMany(slot => GetEffectsWithQuantity(slot))
+            .OrderBy(e => e.effect.IsPercentage)
+            .Select(e => { ApplyEffectWithQuantity(e.effect, e.quantity); return e; })
+            .ToList();
     }
 
-    private void ApplySlotEffects(InventorySlot slot)
+    private IEnumerable<(ItemEffect effect, int quantity)> GetEffectsWithQuantity(InventorySlot slot)
     {
-        var effects = slot.Item.GetEffects();
-        if (effects == null || effects.Length == 0) return;
+        return slot.Item
+            .GetEffects()?
+            .Select(effect => (effect, slot.Quantity)) ?? 
+                Enumerable.Empty<(ItemEffect, int)>();
+    }
 
-        var sortedEffects = effects
-            .OrderBy(e => e.IsPercentage)
+    private void ApplyEffectWithQuantity(ItemEffect effect, int quantity)
+    {
+        Enumerable.Repeat(effect, quantity)
+            .Select(e => { e.Apply(); return e; })
             .ToList();
-
-        sortedEffects.ForEach(effect =>
-            Enumerable.Range(0, slot.Quantity).ToList().
-                ForEach(_ => effect.Apply()));
     }
 
     private void UnequipAllOfItem(string itemId)

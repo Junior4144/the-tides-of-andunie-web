@@ -26,11 +26,11 @@ public class MusketBallProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log($"Projectile hit {collision.name}");
-        if (collision.TryGetComponent(out IHealthController health))
+        if (collision.TryGetComponent(out HealthController health))
         {
             if (hasDamage) return;
             Debug.Log($"[MusketBallProjectile] Damage dealt {_pirateAttributes.DamageAmount}");
-            health.TakeDamage(_pirateAttributes.DamageAmount);
+            health.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Ranged);
             hasDamage = true;
             SpawnHitEffect(collision.transform.position);
             Destroy(gameObject);

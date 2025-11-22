@@ -56,6 +56,9 @@ public class WeaponManager : MonoBehaviour
         UIEvents.OnRewardActive += HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated += OnPopUpUIDeactivated;
 
+        UIEvents.OnTutorialActive += HandlePopUpUIActive;
+        UIEvents.OnTutorialDeactivated += OnPopUpUIDeactivated;
+
         UIEvents.OnPauseMenuActive += HandlePopUpUIActive;
         UIEvents.OnPauseMenuDeactivated += OnPopUpUIDeactivated;
     }
@@ -71,6 +74,9 @@ public class WeaponManager : MonoBehaviour
 
         UIEvents.OnRewardActive -= HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated -= OnPopUpUIDeactivated;
+
+        UIEvents.OnTutorialActive -= HandlePopUpUIActive;
+        UIEvents.OnTutorialDeactivated -= OnPopUpUIDeactivated;
 
         UIEvents.OnPauseMenuActive -= HandlePopUpUIActive;
         UIEvents.OnPauseMenuDeactivated -= OnPopUpUIDeactivated;

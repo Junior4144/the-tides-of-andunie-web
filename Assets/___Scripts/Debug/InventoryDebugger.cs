@@ -42,9 +42,8 @@ public class InventoryDebugger : MonoBehaviour
             return;
         }
 
-        IInventoryItem item = itemPrefabToEquip.GetComponent<IInventoryItem>();
         
-        if (item == null)
+        if (!itemPrefabToEquip.TryGetComponent<InventoryItem>(out var item))
         {
             Debug.LogError("Prefab doesn't have IInventoryItem component!");
             return;
@@ -71,7 +70,7 @@ public class InventoryDebugger : MonoBehaviour
             return;
         }
 
-        IInventoryItem item = itemPrefabToEquip.GetComponent<IInventoryItem>();
+        InventoryItem item = itemPrefabToEquip.GetComponent<InventoryItem>();
         
         if (item == null)
             return;
@@ -97,7 +96,7 @@ public class InventoryDebugger : MonoBehaviour
             return;
         }
 
-        IInventoryItem item = itemPrefabToEquip.GetComponent<IInventoryItem>();
+        InventoryItem item = itemPrefabToEquip.GetComponent<InventoryItem>();
         
         if (item == null)
         {
@@ -134,7 +133,7 @@ public class InventoryDebugger : MonoBehaviour
             return;
         }
 
-        IInventoryItem item = itemPrefabToEquip.GetComponent<IInventoryItem>();
+        InventoryItem item = itemPrefabToEquip.GetComponent<InventoryItem>();
         
         if (item == null)
             return;
