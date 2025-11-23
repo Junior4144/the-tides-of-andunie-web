@@ -64,12 +64,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.2905162, y: 0.15289818}
-  m_Size: {x: 6.096107, y: 3.1298993}
+  m_Offset: {x: 0.61749995, y: 0.60581493}
+  m_Size: {x: 4.7484446, y: 2.9091666}
   m_Direction: 1
 --- !u!114 &7459300132604522871
 MonoBehaviour:
@@ -90,12 +90,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756098288339873099}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 0
+  _impulseforce: 10
   impulseDuration: 0.2
   playSound: 1
   spawnParticles: 1
@@ -156,7 +156,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDamping: 10
   m_AngularDamping: 10
   m_GravityScale: 0
@@ -205,8 +205,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.11328484, y: 0.0255103}
-  m_Size: {x: 6.09613, y: 3.118843}
+  m_Offset: {x: 0.313934, y: 0.056378096}
+  m_Size: {x: 3.5340908, y: 3.2732754}
   m_Direction: 1
 --- !u!114 &1318188630637027886
 MonoBehaviour:
@@ -297,9 +297,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 3354042210201786904}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 2
   m_Speed: 3.5
-  m_Acceleration: 10
+  m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -307,7 +307,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1831263652495674172
@@ -343,7 +343,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
-  _impulseResistance: 0.5
+  _impulseResistance: 0
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!114 &5204618084516297090
@@ -394,7 +394,7 @@ AudioSource:
   m_GameObject: {fileID: 3354042210201786904}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -551,8 +551,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.9204756, y: -0.42606345}
-  m_Size: {x: 1.5805117, y: 4.9419026}
+  m_Offset: {x: 0.7237475, y: -0.42606345}
+  m_Size: {x: 3.9739656, y: 4.941902}
   m_Direction: 0
 --- !u!114 &2932234581836478258
 MonoBehaviour:
@@ -835,9 +835,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1440140687
-  m_SortingLayer: 6
-  m_SortingOrder: 40
+  m_SortingLayerID: -1158868627
+  m_SortingLayer: 7
+  m_SortingOrder: 100
   m_Sprite: {fileID: -1557549184530155163, guid: 63d4ca366e64ac84dbabaece0f7f8a88, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -128,5 +128,8 @@ public class LockedRegionUI : MonoBehaviour
             regionList.Count == 0
             ? "No prerequisites.\nRegion can be traveled."
             : string.Join("\n", regionList.Select(r => r.ToString()));
+
+        if (LSRegionLockManager.Instance.IsRegionLocked(region)) return;
+        prerequisiteText.text = "No prerequisites.\nRegion can be traveled.";
     }
 }

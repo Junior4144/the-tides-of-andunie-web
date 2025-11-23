@@ -7,7 +7,6 @@ public class LiberationUIController : MonoBehaviour, IPointerClickHandler
 {
     public GameObject targetObject;
 
-
     private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
     private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;

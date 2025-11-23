@@ -18,6 +18,10 @@ public class PirateMovementController : MonoBehaviour
 
         agent.speed = _attributes.MovementSpeed;
         agent.acceleration = _attributes.MovementSpeed * 4f;
+        if( _attributes.Acceleration > 5)
+        {
+            agent.acceleration = _attributes.Acceleration;
+        }
     }
 
     void Update()

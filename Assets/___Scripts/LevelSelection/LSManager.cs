@@ -149,12 +149,9 @@ public class LSManager : MonoBehaviour
     {
         var regionVillages = villages.Where(v => v.region == region);
 
-        // Safety: If no villages exist in region (bad data case), treat as NOT complete
-        if (!regionVillages.Any())
-            return false;
-
         // TRUE only if EVERY village is liberated
         return regionVillages.All(v =>
+            v.state == VillageState.PreInvasion ||
             v.state == VillageState.Liberated_FirstTime ||
             v.state == VillageState.Liberated_Done
         );

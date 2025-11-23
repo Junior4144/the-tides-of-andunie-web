@@ -3491,7 +3491,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.005218543, y: 8.02332, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5158,7 +5158,6 @@ MonoBehaviour:
   _coinHUD: {fileID: 1391784849}
   _CombatHUD: {fileID: 1432251167}
   _PerkHUD: {fileID: 1293513845}
-  _inventoryUI: {fileID: 1233555071}
   _pauseUI: {fileID: 952897575}
 --- !u!1 &1196949929
 GameObject:
@@ -5230,11 +5229,6 @@ MonoBehaviour:
   _healthBarDamageIndicator: {fileID: 177276959}
   _damageIndicatorSpeed: 0.5
   _delayBeforeShrink: 0.1
---- !u!1 &1233555071 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6589713735686658342, guid: d111f41bcfb36c24aa411ab3d241f9ad, type: 3}
-  m_PrefabInstance: {fileID: 913801304}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1256521218
 GameObject:
   m_ObjectHideFlags: 0
