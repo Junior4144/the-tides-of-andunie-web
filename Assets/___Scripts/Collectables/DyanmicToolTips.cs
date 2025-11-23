@@ -21,6 +21,7 @@ public class DyanmicToolTips : MonoBehaviour
 
     private Sprite lastSprite;
 
+
     private void Awake()
     {
         iconImage = iconPanel.GetComponent<Image>();
@@ -30,6 +31,8 @@ public class DyanmicToolTips : MonoBehaviour
     {
         Vector2 mousePos = Input.mousePosition;
         toolTipsRoot.position = mousePos + offset;
+
+        UnityEngine.Canvas.ForceUpdateCanvases();   // Force UI to update THIS frame
     }
 
     private void Update()
@@ -37,6 +40,12 @@ public class DyanmicToolTips : MonoBehaviour
         UpdatePosition();
         UpdateIconIfChanged();
         UpdateStatsIfChanged();
+    }
+
+    private void LateUpdate()
+    {
+        Vector2 mousePos = Input.mousePosition;
+        toolTipsRoot.position = mousePos + offset;
     }
 
     void UpdatePosition()

@@ -42,3 +42,4 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         UIEvents.OnShopListingExit?.Invoke();
     }
 }
+    
