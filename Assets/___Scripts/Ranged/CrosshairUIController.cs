@@ -11,7 +11,7 @@ public class CrosshairUIController : MonoBehaviour
     }
     private void OnDisable()
     {
-        WeaponEvents.OnNewWeaponEquipped += HandleCrossHairUiActivation;
+        WeaponEvents.OnNewWeaponEquipped -= HandleCrossHairUiActivation;
     }
 
     private void HandleCrossHairUiActivation(WeaponType weaponType)
