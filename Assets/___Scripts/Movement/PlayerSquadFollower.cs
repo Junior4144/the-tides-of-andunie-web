@@ -249,17 +249,17 @@ public class PlayerSquadFollower : MonoBehaviour
         Vector3 actualMovement = transform.position - lastPosition;
         Vector3 targetMovement = _targetPositionInFormation - lastTargetPosition;
         
-        Debug.Log($"[PlayerSquadFollower] === FRAME DEBUG ===");
-        Debug.Log($"In Formation: {_isInFormation}");
-        Debug.Log($"Position: {transform.position}");
-        Debug.Log($"Target: {_targetPositionInFormation}");
-        Debug.Log($"Direction: {directionToTarget}");
-        Debug.Log($"Direction.normalized: {directionToTarget.normalized}");
-        Debug.Log($"Distance: {distanceToTarget}");
-        Debug.Log($"Current Velocity: {_rb.linearVelocity}");
-        Debug.Log($"Actual Movement: {actualMovement}");
-        Debug.Log($"Target Movement: {targetMovement}");
-        Debug.Log($"Player Rotation: {_player.eulerAngles.z}");
+        //Debug.Log($"[PlayerSquadFollower] === FRAME DEBUG ===");
+        //Debug.Log($"In Formation: {_isInFormation}");
+        //Debug.Log($"Position: {transform.position}");
+        //Debug.Log($"Target: {_targetPositionInFormation}");
+        //Debug.Log($"Direction: {directionToTarget}");
+        //Debug.Log($"Direction.normalized: {directionToTarget.normalized}");
+        //Debug.Log($"Distance: {distanceToTarget}");
+        //Debug.Log($"Current Velocity: {_rb.linearVelocity}");
+        //Debug.Log($"Actual Movement: {actualMovement}");
+        //Debug.Log($"Target Movement: {targetMovement}");
+        //Debug.Log($"Player Rotation: {_player.eulerAngles.z}");
         
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(transform.position, 0.3f);
         if (overlaps.Length > 1)

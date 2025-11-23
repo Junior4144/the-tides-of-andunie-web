@@ -48,11 +48,6 @@ public class LowHealthController : MonoBehaviour
         }
         else if (uiActive) HideUI();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("Force low health for test");
-            health.SetCurrentHealth(health.GetMaxHealth() * 0.3f);
-        }
 
     }
 

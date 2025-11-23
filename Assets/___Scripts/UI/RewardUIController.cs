@@ -1,18 +1,20 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 using DG.Tweening;
 
 public class RewardUIController : MonoBehaviour
 {
-    public GameObject rewardsCanvas;
-    public GameObject rewardsPage;
+    [SerializeField] private GameObject _rewardsCanvas;
+    [SerializeField] private GameObject _rewardsPage;
+    [SerializeField] private Transform _rewardContainer;
+    [SerializeField] private GameObject _rewardItemUIPrefab;
     [SerializeField] private float hideDelay = 0.35f;
-
 
     void Start()
     {
-        rewardsCanvas.SetActive(false);
+        _rewardsCanvas.SetActive(false);
     }
 
     public void ShowRewards(List<RewardListing> rewardsToShow)
@@ -22,35 +24,50 @@ public class RewardUIController : MonoBehaviour
             Debug.LogWarning("ShowRewards called, but no rewards were provided.");
             return;
         }
-        UIEvents.OnRewardActive.Invoke();
-        rewardsCanvas.SetActive(true);
-    }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (rewardsCanvas.activeSelf)
-                HideRewards();
-            else
-                rewardsCanvas.SetActive(true);
-        }
+        PlayerManager.Instance.DisablePlayerMovement();
+
+        ClearExistingRewards();
+        InstantiateRewardUI(rewardsToShow);
+        ActivateRewardsCanvas();
     }
 
     public void HideRewards()
     {
+        PlayerManager.Instance.EnablePlayerMovement();
         UIEvents.OnRewardDeactivated?.Invoke();
         StartCoroutine(HideRewardsAfterDelay());
     }
 
+    private void ClearExistingRewards()
+    {
+        var existingRewards = _rewardContainer.Cast<Transform>().ToList();
+        existingRewards.ForEach(child => Destroy(child.gameObject));
+    }
+
+    private void InstantiateRewardUI(List<RewardListing> rewards)
+    {
+        rewards.ForEach(reward =>
+        {
+            var uiObject = Instantiate(_rewardItemUIPrefab, _rewardContainer);
+            var rewardUI = uiObject.GetComponent<RewardItemUI>();
+            rewardUI.SetData(reward, this);
+        });
+    }
+
+    private void ActivateRewardsCanvas()
+    {
+        UIEvents.OnRewardActive.Invoke();
+        _rewardsCanvas.SetActive(true);
+    }
+
     private IEnumerator HideRewardsAfterDelay()
     {
-        RectTransform rt = rewardsPage.GetComponent<RectTransform>();
+        RectTransform rt = _rewardsPage.GetComponent<RectTransform>();
         rt.DOScale(0f, hideDelay).SetEase(Ease.InBack);
 
         yield return new WaitForSeconds(hideDelay);
 
-
-        rewardsCanvas.SetActive(false);
+        _rewardsCanvas.SetActive(false);
     }
 }

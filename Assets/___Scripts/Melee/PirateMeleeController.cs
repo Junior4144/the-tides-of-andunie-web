@@ -14,20 +14,35 @@ public class PirateMeleeController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
+        var health = otherCollider.GetComponent(typeof(HealthController)) as HealthController;
         if (
-            IsEnemy(otherCollider) &&
+            IsFriendly(otherCollider) &&
             health != null &&
             !_isAttacking
         )
         {
+            Debug.Log($"[PirateMeleeController] Attack initiated {otherCollider.name}");
+            StartCoroutine(Attack(otherCollider.gameObject));
+            PlayAttackAnimation();
+        }
+    }
+    public void OnTriggerStay2D(Collider2D otherCollider)
+    {
+        var health = otherCollider.GetComponent(typeof(HealthController)) as HealthController;
+        if (
+            IsFriendly(otherCollider) &&
+            health != null &&
+            !_isAttacking
+        )
+        {
+            Debug.Log($"[PirateMeleeController] Attack initiated {otherCollider.name}");
             StartCoroutine(Attack(otherCollider.gameObject));
             PlayAttackAnimation();
         }
     }
 
-    private bool IsEnemy(Collider2D otherCollider) => 
-        otherCollider.gameObject.layer == LayerMask.NameToLayer("Friendly");
+    private bool IsFriendly(Collider2D otherCollider) =>
+        otherCollider.gameObject.CompareTag("Player");
     
 
     private IEnumerator Attack(GameObject enemyObject)
@@ -37,9 +52,16 @@ public class PirateMeleeController : MonoBehaviour
         if (enemyObject)
         {
             float distance = Vector2.Distance(transform.position, enemyObject.transform.position);
-            
+
             if (distance <= _damageRange)
-                enemyObject.GetComponent<IHealthController>().TakeDamage(_pirateAttributes.DamageAmount);
+            {
+                Debug.Log($"[PirateMeleeController] Dealing damage {_pirateAttributes.DamageAmount} to {enemyObject.name}");
+                enemyObject.GetComponent<HealthController>().TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
+            }
+            else
+            {
+                Debug.Log($"[PirateMeleeController] Target out of range {distance}/{_damageRange}");
+            }
         }
     }
 

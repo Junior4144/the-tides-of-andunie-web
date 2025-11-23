@@ -7,22 +7,80 @@ public class CameraToggleController : MonoBehaviour
 
     private void OnEnable()
     {
-        UIEvents.OnRequestShopToggle += HandleCameraToggle;
-        UIEvents.OnRequestInventoryToggle += HandleCameraToggle;
-        UIEvents.OnRequestPauseToggle += HandleCameraToggle;
-    }
-    private void OnDisable()
-    {
-        UIEvents.OnRequestShopToggle -= HandleCameraToggle;
-        UIEvents.OnRequestInventoryToggle -= HandleCameraToggle;
-        UIEvents.OnRequestPauseToggle -= HandleCameraToggle;
+        ShopUIController.ShopActivated += HandleCameraDeactivation;
+        ShopUIController.ShopDeactivated += HandleCameraActivation;
+
+        //UIEvents.OnInventoryActive += HandleCameraDeactivation;
+        //UIEvents.OnInventoryDeactivated += HandleCameraActivation;
+
+        UIEvents.OnPauseMenuActive += HandleCameraDeactivation;
+        UIEvents.OnPauseMenuDeactivated += HandleCameraActivation;
+
+        UIEvents.OnPreScreenConfirm += HandleCameraDeactivation;
+        UIEvents.OnPreScreenDeactivated += HandleCameraActivation;
+
+        UIEvents.OnTutorialActive += HandleCameraDeactivation;
+        UIEvents.OnTutorialDeactivated += HandleCameraActivation;
+
+        UIEvents.OnLSEnterConfirm += HandleCameraDeactivation;
+        UIEvents.OnLSEnterDeactivated += HandleCameraActivation;
     }
 
-    private void HandleCameraToggle()
+    private void OnDisable()
     {
-        bool newState = !zoomScript.enabled;
+        ShopUIController.ShopActivated -= HandleCameraDeactivation;
+        ShopUIController.ShopDeactivated -= HandleCameraActivation;
+
+        //UIEvents.OnInventoryActive -= HandleCameraDeactivation;
+        //UIEvents.OnInventoryDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnPauseMenuActive -= HandleCameraDeactivation;
+        UIEvents.OnPauseMenuDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnPreScreenConfirm -= HandleCameraDeactivation;
+        UIEvents.OnPreScreenDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnTutorialActive -= HandleCameraDeactivation;
+        UIEvents.OnTutorialDeactivated -= HandleCameraActivation;
+
+        UIEvents.OnLSEnterConfirm -= HandleCameraDeactivation;
+        UIEvents.OnLSEnterDeactivated -= HandleCameraActivation;
+    }
+
+    private void HandleCameraDeactivation()
+    {
+        bool newState = false;
 
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.DisableLSPlayerMovement();
+    }
+    private void HandleCameraDeactivation(bool isExit)
+    {
+        bool newState = false;
+
+        zoomScript.enabled = newState;
+        mouseScript.enabled = newState;
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.DisableLSPlayerMovement();
+    }
+
+
+    private void HandleCameraActivation()
+    {
+        bool newState = true;
+
+        zoomScript.enabled = newState;
+        mouseScript.enabled = newState;
+
+
+        if (PlayerManager.Instance == null) return;
+
+        PlayerManager.Instance.EnableLSPlayerMovement();
     }
 }

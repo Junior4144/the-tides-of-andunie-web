@@ -48,13 +48,16 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest += HandleEquipRequest;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
-        SceneManager.activeSceneChanged += OnSceneChanged;
+        //SceneManager.activeSceneChanged += OnSceneChanged;
 
-        UIEvents.OnInventoryActive += HandlePopUpUIActive;
-        UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
+        //UIEvents.OnInventoryActive += HandlePopUpUIActive;
+        //UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
 
         UIEvents.OnRewardActive += HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated += OnPopUpUIDeactivated;
+
+        UIEvents.OnTutorialActive += HandlePopUpUIActive;
+        UIEvents.OnTutorialDeactivated += OnPopUpUIDeactivated;
 
         UIEvents.OnPauseMenuActive += HandlePopUpUIActive;
         UIEvents.OnPauseMenuDeactivated += OnPopUpUIDeactivated;
@@ -64,13 +67,16 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
-        SceneManager.activeSceneChanged -= OnSceneChanged;
+        //SceneManager.activeSceneChanged -= OnSceneChanged;
 
-        UIEvents.OnInventoryActive -= HandlePopUpUIActive;
-        UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
+        //UIEvents.OnInventoryActive -= HandlePopUpUIActive;
+        //UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
 
         UIEvents.OnRewardActive -= HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated -= OnPopUpUIDeactivated;
+
+        UIEvents.OnTutorialActive -= HandlePopUpUIActive;
+        UIEvents.OnTutorialDeactivated -= OnPopUpUIDeactivated;
 
         UIEvents.OnPauseMenuActive -= HandlePopUpUIActive;
         UIEvents.OnPauseMenuDeactivated -= OnPopUpUIDeactivated;
@@ -113,7 +119,7 @@ public class WeaponManager : MonoBehaviour
         currentSceneName = SceneManager.GetActiveScene().name;
 
 
-        if (newState != GameState.Gameplay || currentSceneName == "Level0Stage1" || currentSceneName == "Level1")
+        if (newState != GameState.Gameplay)
         {
             Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
             IsBusy = true;
@@ -126,29 +132,6 @@ public class WeaponManager : MonoBehaviour
             HandleEquipRequest(WeaponType.Axe);
         }
     }
-
-    private void OnSceneChanged(Scene oldScene, Scene newScene)
-    {
-        currentSceneName = newScene.name;
-
-        bool shouldDisable = currentSceneName == "Level0Stage1" || currentSceneName == "Level1";
-
-        if (shouldDisable)
-        {
-            Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
-            IsBusy = true;
-            SetWeaponToNone();
-        }
-        else
-        {
-            Debug.Log($"Scene '{currentSceneName}' detected — enabling weapons if gameplay.");
-            IsBusy = false;
-
-            HandleEquipRequest(WeaponType.Axe);
-
-        }
-    }
-
     private void SetWeaponToNone()
     {
         if (currentWeapon != WeaponType.none)
@@ -185,6 +168,12 @@ public class WeaponManager : MonoBehaviour
                 EquipWeapon(queuedWeapon);
             }
         }
+    }
+
+    public void DisableWeapon()
+    {
+        IsBusy = true;
+        SetWeaponToNone();
     }
 
     public WeaponType GetCurrentWeapon()

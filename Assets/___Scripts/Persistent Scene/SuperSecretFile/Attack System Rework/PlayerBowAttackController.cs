@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerBowAttackController : MonoBehaviour
 {
@@ -188,6 +187,7 @@ public class PlayerBowAttackController : MonoBehaviour
         var arrow = Instantiate(arrowPrefab, spawnPos, rot).GetComponent<ArrowProjectile>();
         arrow.ArrowVelocity = speed;
         arrow.power = power;
+        arrow.maxPower = maxCharge;
     }
 
     void HandleCooldown()

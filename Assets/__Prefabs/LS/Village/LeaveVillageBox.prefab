@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3858140681920242324}
-  - component: {fileID: 3703515522380683629}
+  - component: {fileID: 844240545553947685}
   m_Layer: 0
   m_Name: LeaveVillageBox
   m_TagString: Untagged
@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5986685138332719327}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.17, y: -0.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3703515522380683629
+--- !u!114 &844240545553947685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5986685138332719327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63c3631106e8622428c19250844f71ee, type: 3}
+  m_Script: {fileID: 11500000, guid: dccaa3819899c704f934258228c74c36, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VillageLeaveSelectionBox
+  m_EditorClassIdentifier: Assembly-CSharp::ShowSelectionBox
   _BoxPrefab: {fileID: 4384781759092013488, guid: 5cd88680e33b72840b3d1bf2aa5d65c1, type: 3}
   _offsetX: -0.25
   _offsetY: 1.5
-  _camera: {fileID: 0}
