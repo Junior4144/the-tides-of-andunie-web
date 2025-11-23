@@ -7,7 +7,8 @@ public class ItemEffect : MonoBehaviour
     [SerializeField] private StatType statType;
     [SerializeField] private float amount;
     [SerializeField] private bool _isPercentage;
-
+    internal readonly int Amount;
+    [HideInInspector] public float ItemAmount => amount;
     public bool IsPercentage => _isPercentage;
 
     public void Apply()
