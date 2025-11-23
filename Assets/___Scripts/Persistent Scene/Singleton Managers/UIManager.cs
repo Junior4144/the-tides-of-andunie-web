@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public static class UIEvents
 {
-    public static Action OnRequestInventoryToggle;
+    //public static Action OnRequestInventoryToggle;
 
     public static Action OnRequestShopToggle;
 
@@ -17,8 +17,8 @@ public static class UIEvents
 
     public static Action OnRequestPauseToggle;
 
-    public static Action OnInventoryActive;
-    public static Action OnInventoryDeactivated;
+    //public static Action OnInventoryActive;
+    //public static Action OnInventoryDeactivated;
 
     public static Action OnRewardActive;
     public static Action OnRewardDeactivated;
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _PerkHUD;
 
     [Header("UI Groups")]
-    [SerializeField] private GameObject _inventoryUI;
+    //[SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _pauseUI;
 
     private bool _isPaused;
@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
 
-        UIEvents.OnRequestInventoryToggle += ToggleInventory;
+        //UIEvents.OnRequestInventoryToggle += ToggleInventory;
 
         UIEvents.OnRequestShopToggle += ToggleShop;
 
@@ -87,8 +87,8 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnRequestTutorialToggle += ToggleTutorialUI;
 
-        UIEvents.OnInventoryActive += () => _inventoryOpen = true;
-        UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
+        //UIEvents.OnInventoryActive += () => _inventoryOpen = true;
+        //UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
 
         UIEvents.OnShopConfirm += () => _shopOpen = true;
         UIEvents.OnShopDeactivated += () => _shopOpen = false;
@@ -114,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleGameStateChanged(GameState newState)
     {
-        HideAll();
+        //HideAll();
         Debug.Log($"UIManager responding to new state: {newState}");
 
         switch (newState)
@@ -197,32 +197,32 @@ public class UIManager : MonoBehaviour
 
     private bool IsLevel0Stage1 => SceneManager.GetActiveScene().name == "Level0Stage1";
 
-    private void HideAll()
-    {
-        _inventoryUI.SetActive(false);
-    }
+    //private void HideAll()
+    //{
+    //    _inventoryUI.SetActive(false);
+    //}
 
-    private void ToggleInventory()
-    {
-        if (_isPaused)
-        {
-            _inventoryUI.SetActive(false);
-            UIEvents.OnInventoryDeactivated?.Invoke();
-            return;
-        }
+    //private void ToggleInventory()
+    //{
+    //    if (_isPaused)
+    //    {
+    //        _inventoryUI.SetActive(false);
+    //        UIEvents.OnInventoryDeactivated?.Invoke();
+    //        return;
+    //    }
 
-        if (_inventoryUI.activeInHierarchy)
-        {
-            _inventoryUI.SetActive(false);
-            UIEvents.OnInventoryDeactivated?.Invoke();
-            return;
-        }
+    //    if (_inventoryUI.activeInHierarchy)
+    //    {
+    //        _inventoryUI.SetActive(false);
+    //        UIEvents.OnInventoryDeactivated?.Invoke();
+    //        return;
+    //    }
 
-        UIEvents.OnRequestCloseAllUI?.Invoke();
+    //    UIEvents.OnRequestCloseAllUI?.Invoke();
 
-        _inventoryUI.SetActive(true);
-        UIEvents.OnInventoryActive?.Invoke();
-    }
+    //    _inventoryUI.SetActive(true);
+    //    UIEvents.OnInventoryActive?.Invoke();
+    //}
 
     private void ToggleShop()
     {
@@ -289,11 +289,11 @@ public class UIManager : MonoBehaviour
 
     private void CloseAllUI()
     {
-        if (_inventoryOpen)
-        {
-            _inventoryUI.SetActive(false);
-            UIEvents.OnInventoryDeactivated?.Invoke();
-        }
+        //if (_inventoryOpen)
+        //{
+        //    _inventoryUI.SetActive(false);
+        //    UIEvents.OnInventoryDeactivated?.Invoke();
+        //}
 
         if (_shopOpen)
         {

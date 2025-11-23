@@ -50,8 +50,8 @@ public class WeaponManager : MonoBehaviour
         GameManager.OnGameStateChanged += HandleGameStateChanged;
         //SceneManager.activeSceneChanged += OnSceneChanged;
 
-        UIEvents.OnInventoryActive += HandlePopUpUIActive;
-        UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
+        //UIEvents.OnInventoryActive += HandlePopUpUIActive;
+        //UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
 
         UIEvents.OnRewardActive += HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated += OnPopUpUIDeactivated;
@@ -69,8 +69,8 @@ public class WeaponManager : MonoBehaviour
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
         //SceneManager.activeSceneChanged -= OnSceneChanged;
 
-        UIEvents.OnInventoryActive -= HandlePopUpUIActive;
-        UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
+        //UIEvents.OnInventoryActive -= HandlePopUpUIActive;
+        //UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
 
         UIEvents.OnRewardActive -= HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated -= OnPopUpUIDeactivated;

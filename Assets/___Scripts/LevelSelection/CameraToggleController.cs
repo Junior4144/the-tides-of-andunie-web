@@ -10,8 +10,8 @@ public class CameraToggleController : MonoBehaviour
         ShopUIController.ShopActivated += HandleCameraDeactivation;
         ShopUIController.ShopDeactivated += HandleCameraActivation;
 
-        UIEvents.OnInventoryActive += HandleCameraDeactivation;
-        UIEvents.OnInventoryDeactivated += HandleCameraActivation;
+        //UIEvents.OnInventoryActive += HandleCameraDeactivation;
+        //UIEvents.OnInventoryDeactivated += HandleCameraActivation;
 
         UIEvents.OnPauseMenuActive += HandleCameraDeactivation;
         UIEvents.OnPauseMenuDeactivated += HandleCameraActivation;
@@ -31,8 +31,8 @@ public class CameraToggleController : MonoBehaviour
         ShopUIController.ShopActivated -= HandleCameraDeactivation;
         ShopUIController.ShopDeactivated -= HandleCameraActivation;
 
-        UIEvents.OnInventoryActive -= HandleCameraDeactivation;
-        UIEvents.OnInventoryDeactivated -= HandleCameraActivation;
+        //UIEvents.OnInventoryActive -= HandleCameraDeactivation;
+        //UIEvents.OnInventoryDeactivated -= HandleCameraActivation;
 
         UIEvents.OnPauseMenuActive -= HandleCameraDeactivation;
         UIEvents.OnPauseMenuDeactivated -= HandleCameraActivation;
