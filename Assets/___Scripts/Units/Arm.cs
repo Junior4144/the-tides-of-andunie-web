@@ -40,7 +40,7 @@ public class Arm : HealthController
         bossRoot = root;
     }
 
-    public void TakeDamage(float amount)
+    public override void TakeDamage(float amount, DamageType damageType)
     {
         if (isBroken) return;
 
@@ -52,21 +52,6 @@ public class Arm : HealthController
             BreakArm();
     }
 
-    public override void AddHealth(float amount)
-    {
-        // Arms cannot be healed
-    }
-
-    public new float GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
-    public override float GetPercentHealth()
-    {
-        return maxHealth > 0 ? currentHealth / maxHealth : 0f;
-    }
-
     private void BreakArm()
     {
         isBroken = true;
@@ -75,7 +60,6 @@ public class Arm : HealthController
 
         // Enable physics so the arm "falls off"
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.gravityScale = 0;
         rb.AddForce(Random.insideUnitCircle * 5f, ForceMode2D.Impulse);
         rb.AddTorque(Random.Range(-200, 200));
 
