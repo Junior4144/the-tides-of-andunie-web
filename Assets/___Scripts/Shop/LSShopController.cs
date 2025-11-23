@@ -11,7 +11,7 @@ public class LSShopController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-
+        UIEvents.OnRequestShopToggle?.Invoke();
         OnPlayerEnterSelectionZone?.Invoke();
 
         Debug.Log("[Level Selection] Player entered level zone");
