@@ -32,6 +32,7 @@ public class ArmLungeController : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip spinSound;
 
     private Quaternion originalLocalRotation;
     private AudioSource audioSource;
@@ -212,6 +213,14 @@ public class ArmLungeController : MonoBehaviour
 
     private IEnumerator RotateFullSpin(float duration, float rotations)
     {
+        // Play spin sound and loop it during the spin
+        if (audioSource != null && spinSound != null)
+        {
+            audioSource.clip = spinSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
         float elapsed = 0f;
         float startAngle = transform.localRotation.eulerAngles.z;
         float totalAngle = rotations * 360f;
@@ -225,6 +234,13 @@ public class ArmLungeController : MonoBehaviour
 
             elapsed += Time.deltaTime;
             yield return null;
+        }
+
+        // Stop spin sound exactly when spin finishes
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            audioSource.loop = false;
         }
     }
 

@@ -17,19 +17,34 @@ public class BossRoot : MonoBehaviour
     [SerializeField] private AudioClip loopingSoundEffect;
     [SerializeField] private float soundIntervalTime = 3f;
     [SerializeField] private AudioClip phase2Sound;
+    
+    [Header("Phase 2 Spinning Audio")]
     [SerializeField] private AudioClip spinningSound;
-    [SerializeField] private bool loopSpinningSound = true;
+    [Tooltip("If false, script will not control the spinning audio")]
+    [SerializeField] private bool useScriptControlledSpinningAudio = true;
+    [Tooltip("Delay in seconds before starting spinning audio (useful to wait for phase 2 sound to finish)")]
+    [SerializeField] private float spinningAudioDelay = 0.1f;
 
     private int brokenArms = 0;
     private bool phase2 = false;
     private Rigidbody2D rb;
     private Coroutine soundLoopCoroutine;
     private AudioSource audioSource;
+    private AudioSource spinningAudioSource;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        
+        // Create a dedicated AudioSource for seamless looping with optimized settings
+        spinningAudioSource = gameObject.AddComponent<AudioSource>();
+        spinningAudioSource.playOnAwake = false;
+        spinningAudioSource.loop = true;
+        spinningAudioSource.priority = 0; // Highest priority to prevent interruption
+        spinningAudioSource.bypassEffects = true; // Skip audio effects for lower latency
+        spinningAudioSource.bypassListenerEffects = true;
+        spinningAudioSource.bypassReverbZones = true;
         
         if (audioSource != null)
         {
@@ -107,21 +122,27 @@ public class BossRoot : MonoBehaviour
             audioSource.PlayOneShot(phase2Sound);
         }
         
-        // Start spinning sound
-        if (audioSource != null && spinningSound != null)
+        // Start spinning sound if script-controlled
+        if (useScriptControlledSpinningAudio && spinningAudioSource != null)
         {
-            if (loopSpinningSound)
-            {
-                audioSource.clip = spinningSound;
-                audioSource.loop = true;
-                audioSource.Play();
-                Debug.Log($"[BossRoot] Started looping spinning sound: {spinningSound.name}");
-            }
-            else
-            {
-                audioSource.PlayOneShot(spinningSound);
-                Debug.Log($"[BossRoot] Playing spinning sound once: {spinningSound.name}");
-            }
+            StartCoroutine(StartSpinningAudioDelayed());
+        }
+    }
+
+    private IEnumerator StartSpinningAudioDelayed()
+    {
+        // Wait for specified delay (useful to avoid conflict with phase 2 transition sound)
+        yield return new WaitForSeconds(spinningAudioDelay);
+        
+        if (spinningAudioSource != null && spinningSound != null)
+        {
+            spinningAudioSource.clip = spinningSound;
+            spinningAudioSource.Play();
+            Debug.Log($"[BossRoot] Started seamless looping spinning sound: {spinningSound.name}");
+        }
+        else
+        {
+            Debug.LogWarning($"[BossRoot] Cannot play spinning sound - AudioSource: {spinningAudioSource != null}, Clip: {spinningSound != null}");
         }
     }
 
