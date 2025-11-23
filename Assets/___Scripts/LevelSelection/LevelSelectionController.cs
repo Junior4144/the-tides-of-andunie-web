@@ -18,20 +18,25 @@ public class LevelSelectionController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        OnPlayerEnterSelectionZone?.Invoke();
-        isPlayerInside = true;
-        OpenVillageEntryUI();
-        Debug.Log("[Level Selection] Player entered level zone");
+        if (!isPlayerInside)
+        {
+            isPlayerInside = true;
+            OnPlayerEnterSelectionZone?.Invoke();
+            OpenVillageEntryUI();
+            Debug.Log("[Level Selection] Player entered level zone");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
 
-        OnPlayerExitSelectionZone?.Invoke();
-        isPlayerInside = false;
-        
-        Debug.Log("[Level Selection] Player left level zone");
+        if (isPlayerInside)
+        {
+            isPlayerInside = false;
+            OnPlayerExitSelectionZone?.Invoke();
+            Debug.Log("[Level Selection] Player left level zone");
+        }
     }
 
     private void Update()
