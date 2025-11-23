@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExpandCollider
   startSize: {x: 2, y: 2, z: 2}
   endSize: {x: 0, y: 0, z: 0}
-  duration: 0.1
+  duration: 0.05
 --- !u!114 &3178518890717017906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3392328c846a2240a787cdce925d066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionDamageController
+  Power: 1
+  MaxPower: 1
 --- !u!1 &3548132128928179003
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ public class LevelSelectionController : MonoBehaviour
 {
     [SerializeField] private string villageId;
     [SerializeField] bool isExit;
-    [SerializeField] private string VillageLiberationID;
 
     private bool isPlayerInside = false;
 
@@ -21,7 +20,7 @@ public class LevelSelectionController : MonoBehaviour
 
         OnPlayerEnterSelectionZone?.Invoke();
         isPlayerInside = true;
-
+        OpenVillageEntryUI();
         Debug.Log("[Level Selection] Player entered level zone");
     }
 

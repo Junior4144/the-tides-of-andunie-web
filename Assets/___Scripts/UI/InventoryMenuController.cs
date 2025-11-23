@@ -19,13 +19,13 @@ public class InventoryMenuController : MonoBehaviour
         menuCanvas.SetActive(false);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            UIEvents.OnRequestInventoryToggle?.Invoke();
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Tab))
+    //    {
+    //        UIEvents.OnRequestInventoryToggle?.Invoke();
+    //    }
+    //}
 
     private void CloseInventory()
     {

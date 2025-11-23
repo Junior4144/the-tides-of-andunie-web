@@ -10,12 +10,6 @@ public enum Region
     None,
 }
 
-[CreateAssetMenu(menuName = "GameData/RegionProgression")]
-public class RegionProgression : ScriptableObject
-{
-    public List<RegionNode> regionNodes;
-}
-
 [System.Serializable]
 public class RegionNode
 {
@@ -40,9 +34,9 @@ public class LSRegionLockManager : MonoBehaviour
         Instance = this;
     }
 
-    private void OnEnable() => RaidRewardManager.OnRewardCollected += HandleRegionCheck;
+    private void OnEnable() => RewardListener.VillageSet += HandleRegionCheck;
 
-    private void OnDisable() => RaidRewardManager.OnRewardCollected -= HandleRegionCheck;
+    private void OnDisable() => RewardListener.VillageSet -= HandleRegionCheck;
     //check if region which region are unlock or locked
     //the check will be based on if every village is in a region is liberated -> based on some liberated event
 
@@ -58,14 +52,22 @@ public class LSRegionLockManager : MonoBehaviour
             _ => true,
         };
     }
+    public bool IsRegionLocked(RegionInfo regionInfo)
+    {
+        return IsRegionLocked(regionInfo.region);
+    }
 
     private void HandleRegionCheck()
     {
-        _orrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Orrostar);
-        _hyarrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
-        _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
-        _andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
-        _forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Forostar);
+        _orrostarLocked = false;
+
+        _hyarrostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Orrostar);
+
+        _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
+
+        //_andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
+
+        //_forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
 
         Debug.Log("[Region Lock Manager] Region lock states updated.");
     }

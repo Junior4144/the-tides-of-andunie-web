@@ -1,3 +1,5 @@
+using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +9,8 @@ public class RewardListener : MonoBehaviour
     public string Location;
     public string NextScene;
 
+    public static event Action VillageSet;
+
     private void OnEnable() => RaidRewardManager.OnRewardCollected += HandleRewardCollected;
 
     private void OnDisable() => RaidRewardManager.OnRewardCollected -= HandleRewardCollected;
@@ -14,6 +18,8 @@ public class RewardListener : MonoBehaviour
     private void HandleRewardCollected()
     {
         LSManager.Instance.SetVillageState(VillageLiberationID, VillageState.Liberated_Done);
+
+        VillageSet?.Invoke();
 
         SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
 

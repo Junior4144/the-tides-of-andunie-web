@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 public class PolygonOutline : MonoBehaviour
 {
     public Color fillColor = new Color(1f, 1f, 1f, 0.25f); // transparent white
+    private RegionInfo regionInfo;
+    private void Awake()
+    {
+        regionInfo = GetComponent<RegionInfo>();
+    }
     private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
     private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
@@ -37,6 +42,12 @@ public class PolygonOutline : MonoBehaviour
         // Recommended for map outlines
         lr.useWorldSpace = false;
         lr.loop = true;
+
+
+        if (!LSRegionLockManager.Instance.IsRegionLocked(regionInfo))
+        {
+            fillColor.a = 0f;
+        }
 
 
         // Generate the outline based on *all* collider paths

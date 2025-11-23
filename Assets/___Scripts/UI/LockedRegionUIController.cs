@@ -9,7 +9,10 @@ public class LockedRegionUI : MonoBehaviour
 {
 
     [SerializeField] private GameObject panel;
+    [SerializeField] private TMP_Text regionText;
+    [SerializeField] private TMP_Text middleText;
     [SerializeField] private TMP_Text prerequisiteText;
+
     [SerializeField] private float clickCooldown = 1f;
     private Region lastRegion;
     private bool isClickOnCooldown = false;
@@ -21,7 +24,7 @@ public class LockedRegionUI : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        CameraZoomController.OnMaxZoom += HandleMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
     }
 
     private void OnDisable()
@@ -30,7 +33,7 @@ public class LockedRegionUI : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        CameraZoomController.OnMaxZoom -= HandleMaxZoom;
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
     }
 
     private void ZoomBelowThreshold()
@@ -57,7 +60,7 @@ public class LockedRegionUI : MonoBehaviour
 
     }
 
-    private void HandleMaxZoom()
+    private void HandleDisablingOfRegionUI()
     {
         panel.SetActive(false);
     }
@@ -108,11 +111,25 @@ public class LockedRegionUI : MonoBehaviour
 
     private void HandlePanelPopulation(Region region)
     {
+        var regionLocked = LSRegionLockManager.Instance.IsRegionLocked(region);
+        regionText.text = regionLocked == false
+            ? "Region Unlocked"
+            : "Region Locked";
+
+        middleText.text = regionLocked == false
+            ? ""
+            : "You Must Liberate the following region";
+
+
         var regionList = LSRegionLockManager.Instance.GetPrerequisiteRegions(region);
 
+        // Set prerequisite list label
         prerequisiteText.text =
             regionList.Count == 0
-            ? "No prerequisites.\nRegion can be unlocked."
+            ? "No prerequisites.\nRegion can be traveled."
             : string.Join("\n", regionList.Select(r => r.ToString()));
+
+        if (LSRegionLockManager.Instance.IsRegionLocked(region)) return;
+        prerequisiteText.text = "No prerequisites.\nRegion can be traveled.";
     }
 }

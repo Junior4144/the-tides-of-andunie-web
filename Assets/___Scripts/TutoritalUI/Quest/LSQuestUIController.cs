@@ -39,7 +39,7 @@ public class LSQuestUIController : MonoBehaviour
 
     private void HandleDisplayingPanel()
     {
-        if (GlobalStoryManager.Instance.enterLevelSelectorFirstTime == false)
+        if (GlobalStoryManager.Instance.HasTalkedToChief == false)
         {
             Panel1.SetActive(true);
         }
