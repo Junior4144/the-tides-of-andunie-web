@@ -26,8 +26,6 @@ public class ShopItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private ShopListing listing;
     private RectTransform rect;
 
-    public static event Action<ShopListing> OnShopListingHover;
-    public static event Action OnShopListingExit;
 
     private void Awake()
     {
@@ -52,13 +50,13 @@ public class ShopItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         rect.DOScale(hoverScale, scaleDuration).SetEase(Ease.OutQuad);
-        OnShopListingHover?.Invoke(listing);
+        UIEvents.OnShopListingHover?.Invoke(listing);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         rect.DOScale(1f, scaleDuration).SetEase(Ease.OutQuad);
-        OnShopListingExit?.Invoke();
+        UIEvents.OnShopListingExit?.Invoke();
     }
 
     void OnBuyClicked()

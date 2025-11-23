@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+
 
 public class ToolTipsUIController : MonoBehaviour
 {
@@ -6,13 +8,13 @@ public class ToolTipsUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        ShopItemUI.OnShopListingHover += HandleUIActivation;
-        ShopItemUI.OnShopListingExit += HandleUIDeactivation;
+        UIEvents.OnShopListingHover += HandleUIActivation;
+        UIEvents.OnShopListingExit += HandleUIDeactivation;
     }
     private void OnDisable()
     {
-        ShopItemUI.OnShopListingHover -= HandleUIActivation;
-        ShopItemUI.OnShopListingExit -= HandleUIDeactivation;
+        UIEvents.OnShopListingHover -= HandleUIActivation;
+        UIEvents.OnShopListingExit -= HandleUIDeactivation;
     }
 
     private void HandleUIActivation(ShopListing Listing)

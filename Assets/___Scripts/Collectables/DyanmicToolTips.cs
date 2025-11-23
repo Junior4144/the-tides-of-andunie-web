@@ -26,6 +26,12 @@ public class DyanmicToolTips : MonoBehaviour
         iconImage = iconPanel.GetComponent<Image>();
     }
 
+    private void OnEnable()
+    {
+        Vector2 mousePos = Input.mousePosition;
+        toolTipsRoot.position = mousePos + offset;
+    }
+
     private void Update()
     {
         UpdatePosition();

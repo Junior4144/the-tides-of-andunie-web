@@ -39,6 +39,9 @@ public static class UIEvents
 
     public static Action OnTutorialActive;
     public static Action OnTutorialDeactivated;
+
+    public static Action<ShopListing> OnShopListingHover;
+    public static Action OnShopListingExit;
 }
 
 public class UIManager : MonoBehaviour

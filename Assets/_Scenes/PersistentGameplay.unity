@@ -419,7 +419,7 @@ MonoBehaviour:
     state: 0
     region: 1
     rewardConfig: {fileID: 11400000, guid: 4f6f27ca34371f24f9a6b70575ec1a42, type: 2}
-  startGlobalInvasion: 0
+  startGlobalInvasion: 1
 --- !u!1 &163009414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1567,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1090229802}
-  m_Father: {fileID: 2126357346}
+  m_Father: {fileID: 1958056508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &334992871
 GameObject:
@@ -3773,7 +3773,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 254.28, y: 156.93, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3894,11 +3894,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 3
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8952,6 +8952,7 @@ Transform:
   - {fileID: 1610734613}
   - {fileID: 2027680474}
   - {fileID: 529258124}
+  - {fileID: 327485304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1975148627
@@ -9306,7 +9307,6 @@ Transform:
   - {fileID: 1172666166}
   - {fileID: 1291431290}
   - {fileID: 1534921072}
-  - {fileID: 327485304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &631563992522397042
