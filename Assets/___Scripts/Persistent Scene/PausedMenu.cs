@@ -3,10 +3,9 @@ using UnityEngine;
 public class PausedMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
-
     public GameObject optionPanel;
-
     public bool isPaused;
+    public AudioClip clickSound;
 
     void Start() =>
         pauseMenu.SetActive(false);
@@ -52,5 +51,8 @@ public class PausedMenu : MonoBehaviour
     }
 
     public void HandleQuit() => Application.Quit();
+
+    public void PlayClickSound() =>
+        AudioManager.Instance?.PlayOneShot(clickSound, volumeScale: 0.6f);
 
 }
