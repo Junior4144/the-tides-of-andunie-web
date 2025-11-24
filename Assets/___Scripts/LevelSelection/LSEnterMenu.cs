@@ -6,6 +6,9 @@ public class LSEnterMenu : MonoBehaviour // PRE SCREEN UI
     [SerializeField]
     private GameObject Panel;
 
+    [SerializeField]
+    private float buttonDelay = 0.1f; // I added this for click noise (hayden)
+
     private bool Clicked = false;
 
     [HideInInspector]
@@ -29,6 +32,11 @@ public class LSEnterMenu : MonoBehaviour // PRE SCREEN UI
 
     public void CancelButtonClick()
     {
+        Invoke(nameof(DoCancelButtonClick), buttonDelay);
+    }
+
+    private void DoCancelButtonClick()
+    {
         UIEvents.OnPreScreenDeactivated?.Invoke();
     }
 
@@ -48,11 +56,16 @@ public class LSEnterMenu : MonoBehaviour // PRE SCREEN UI
     public void HandleEnterVillage()
     {
         Debug.Log("[LSEnterMenu] Trying to HandleEnterVillage");
+
         if (Clicked) return;
-
         Clicked = true;
-        Debug.Log("[LevelSelectionMenu] Button Clicked, success in HandleEnterVillage");
 
+        Invoke(nameof(DoEnterVillage), buttonDelay);
+    }
+
+    private void DoEnterVillage()
+    {
+        Debug.Log("[LevelSelectionMenu] Button Clicked, success in HandleEnterVillage");
         LSUIManager.Instance.ButtonClicked();
     }
 }
