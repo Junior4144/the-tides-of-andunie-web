@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,9 +12,7 @@ public class BomberPirateMovement : MonoBehaviour
     [SerializeField] private AudioClip fireShotSound;
 
     [Header("Runaway Settings")]
-    public float runBackDistance = 5f;
-    public float runDuration = 2f;
-    public float runBackSpeedMultiplier = 2f;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     private Transform player;
     private NavMeshAgent agent;
@@ -27,15 +26,6 @@ public class BomberPirateMovement : MonoBehaviour
 
     private float originalSpeed;
     private bool isRunningAway = false;
-
-    public float impulseForce = 10f;
-    public float impulseDuration = 0f;
-
-    // Stuck detection
-    private GameObject runawayTargetObject;
-    private float stuckCheckTime = 0f;
-    private float stuckThreshold = 0.2f;
-    private float minVelocityThreshold = 0.05f;
 
     void Awake()
     {
@@ -95,7 +85,6 @@ public class BomberPirateMovement : MonoBehaviour
         yield return new WaitForSeconds(_attackAnimDuration);
 
         Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
-        ApplyImpulse();
 
         if (fireShotSound)
             _audioSource.PlayOneShot(fireShotSound);
@@ -109,58 +98,60 @@ public class BomberPirateMovement : MonoBehaviour
     private IEnumerator RunAwayRoutine()
     {
         isRunningAway = true;
-
         agent.isStopped = false;
-        agent.speed = originalSpeed * runBackSpeedMultiplier;
+        agent.speed = originalSpeed * _attributes.RunBackSpeedMultiplier;
 
-        // Compute backward direction with random angle
-        Vector3 backward = -transform.up;
-        float randomAngle = Random.Range(-45f, 45f);
-        backward = Quaternion.Euler(0, 0, randomAngle) * backward;
-        Vector3 targetPos = transform.position + backward * runBackDistance;
+        agent.SetDestination(FindBestRunawayPosition());
 
-        // Create temporary runaway target object
-        if (runawayTargetObject != null)
-            Destroy(runawayTargetObject);
-
-        runawayTargetObject = new GameObject("BomberRunTarget");
-        runawayTargetObject.transform.position = targetPos;
-
-        // Move toward it
-        agent.SetDestination(runawayTargetObject.transform.position);
-
-        float elapsed = 0f;
-        stuckCheckTime = 0f;
-
-        while (elapsed < runDuration)
-        {
-            elapsed += Time.deltaTime;
-
-            // STUCK DETECTION
-            if (agent.velocity.magnitude < minVelocityThreshold)
-            {
-                stuckCheckTime += Time.deltaTime;
-
-                if (stuckCheckTime > stuckThreshold)
-                {
-                    Debug.Log("Bomber stuck → aborting runaway.");
-                    break;
-                }
-            }
-            else
-            {
-                stuckCheckTime = 0f;
-            }
-
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
-        }
 
-        // Reset states
         agent.speed = originalSpeed;
         isRunningAway = false;
+    }
 
-        if (runawayTargetObject != null)
-            Destroy(runawayTargetObject);
+    private Vector3 FindBestRunawayPosition()
+    {
+        Vector3 baseDirection = -transform.up;
+
+        var (direction, distance) = Enumerable.Range(0, _attributes.RaycastCount)
+            .Select(i => GetRunawayOption(baseDirection, i))
+            .OrderByDescending(option => option.Distance)
+            .First();
+
+        return transform.position + direction * distance;
+    }
+
+    private (Vector3 Direction, float Distance) GetRunawayOption(Vector3 baseDirection, int rayIndex)
+    {
+        float angle = GetAngleForRaycast(rayIndex);
+        Vector3 direction = Quaternion.Euler(0, 0, angle) * baseDirection;
+        float distance = GetAvailableDistance(direction);
+        return (direction, distance);
+    }
+
+    private float GetAngleForRaycast(int rayIndex)
+    {
+        if (_attributes.RaycastCount == 1)
+            return 0f;
+
+        float step = _attributes.RaycastSpread / (_attributes.RaycastCount - 1);
+        return -_attributes.RaycastSpread / 2f + step * rayIndex;
+    }
+
+    private float GetAvailableDistance(Vector3 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            direction,
+            _attributes.RunBackDistance,
+            obstacleLayerMask
+        );
+
+        if (hit.collider != null)
+            return hit.distance * _attributes.SafetyDistanceMultiplier;
+
+        return _attributes.RunBackDistance;
     }
 
     private void PlayAttackAnimation()
@@ -211,20 +202,76 @@ public class BomberPirateMovement : MonoBehaviour
         );
     }
 
-    void ApplyImpulse()
+    private void OnDrawGizmosSelected()
     {
-        var impulseSettings = new ImpulseSettings
-        {
-            Force = impulseForce,
-            Duration = impulseDuration,
-            PlaySound = true,
-            SpawnParticles = true
-        };
+        if (_attributes == null) return;
 
-        _impulseController.InitiateSquadImpulse(
-            transform.position,
-            -_rigidbody.transform.up,
-            impulseSettings
-        );
+        Vector3 baseDirection = -transform.up;
+        float maxDistance = 0f;
+        Vector3 bestDirection = baseDirection;
+
+        for (int i = 0; i < _attributes.RaycastCount; i++)
+        {
+            float angle = GetAngleForRaycast(i);
+            Vector3 direction = Quaternion.Euler(0, 0, angle) * baseDirection;
+
+            RaycastHit2D hit = Physics2D.Raycast(
+                transform.position,
+                direction,
+                _attributes.RunBackDistance,
+                obstacleLayerMask
+            );
+
+            float distance;
+            Vector3 endPoint;
+
+            if (hit.collider != null)
+            {
+                distance = hit.distance * _attributes.SafetyDistanceMultiplier;
+                endPoint = transform.position + direction * distance;
+
+                // Draw hit rays in yellow
+                Gizmos.color = new Color(1f, 0.8f, 0f, 0.6f);
+                Gizmos.DrawLine(transform.position, hit.point);
+
+                // Draw obstacle hit point
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(hit.point, 0.2f);
+
+                // Draw safe endpoint
+                Gizmos.color = new Color(1f, 0.5f, 0f, 0.8f);
+                Gizmos.DrawSphere(endPoint, 0.15f);
+            }
+            else
+            {
+                distance = _attributes.RunBackDistance;
+                endPoint = transform.position + direction * distance;
+
+                // Draw clear rays in green
+                Gizmos.color = new Color(0f, 1f, 0f, 0.4f);
+                Gizmos.DrawLine(transform.position, endPoint);
+
+                // Draw endpoint
+                Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
+                Gizmos.DrawSphere(endPoint, 0.15f);
+            }
+
+            // Track best option
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                bestDirection = direction;
+            }
+        }
+
+        // Highlight the best direction
+        Vector3 bestEndPoint = transform.position + bestDirection * maxDistance;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, bestEndPoint);
+        Gizmos.DrawWireSphere(bestEndPoint, 0.3f);
+
+        // Draw base backward direction for reference
+        Gizmos.color = new Color(1f, 1f, 1f, 0.3f);
+        Gizmos.DrawLine(transform.position, transform.position + baseDirection * 1f);
     }
 }
