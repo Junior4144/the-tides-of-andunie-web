@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2550260194529987717}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,8 +68,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5250422
+  m_Offset: {x: 0.13193399, y: 0.072089046}
+  m_Radius: 0.42569876
 --- !u!114 &2149196751891730237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ Transform:
   m_GameObject: {fileID: 5335120409702348075}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0394, y: 1.10677, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -331,8 +331,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.183, y: -0.139}
-  m_Radius: 0.5250422
+  m_Offset: {x: 0.131934, y: 0.07208905}
+  m_Radius: 0.4256988
 --- !u!114 &6843172075187527881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,9 +350,6 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 2366741659865636554, guid: 1803e8de19bb2984eb790a9c0c729402, type: 3}
   firePoint: {fileID: 7886364089457476399}
   fireShotSound: {fileID: 0}
-  runBackDistance: 7
-  runDuration: 2
-  runBackSpeedMultiplier: 2
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 131072
@@ -404,7 +401,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0.3
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
