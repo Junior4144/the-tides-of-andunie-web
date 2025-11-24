@@ -15,9 +15,11 @@ MonoBehaviour:
   Waves:
   - enemies:
     - prefab: {fileID: 6883433266602756374, guid: f84ca43102f81f647ac0f93e5e323dab, type: 3}
+      count: 4
+    - prefab: {fileID: 5335120409702348075, guid: 23faed5b780d76d4abef3705505c47eb, type: 3}
       count: 1
     countdown: 2
-    spawnInterval: 5
+    spawnInterval: 0.1
     countDownText: Enemies observed in the distance!
     waveStartText: Enemies are here! Fight!
   RaidCompletionRewards: {fileID: 11400000, guid: 8256c6a4fb22eee42836c7eba0eea068, type: 2}
