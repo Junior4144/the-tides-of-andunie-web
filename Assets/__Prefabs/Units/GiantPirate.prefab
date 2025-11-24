@@ -677,6 +677,7 @@ GameObject:
   - component: {fileID: 1752790062696734182}
   - component: {fileID: 3510851488030324672}
   - component: {fileID: 4227438563414407911}
+  - component: {fileID: 1121374081358102488}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -792,3 +793,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _attackAnimDuration: 1.067
+--- !u!114 &1121374081358102488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291861054942345205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b966a1c57cb836469e204b413a418cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicSpriteSorting
+  _spriteRenderer: {fileID: 0}
