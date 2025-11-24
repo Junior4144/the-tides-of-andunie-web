@@ -201,4 +201,77 @@ public class BomberPirateMovement : MonoBehaviour
             )
         );
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_attributes == null) return;
+
+        Vector3 baseDirection = -transform.up;
+        float maxDistance = 0f;
+        Vector3 bestDirection = baseDirection;
+
+        for (int i = 0; i < _attributes.RaycastCount; i++)
+        {
+            float angle = GetAngleForRaycast(i);
+            Vector3 direction = Quaternion.Euler(0, 0, angle) * baseDirection;
+
+            RaycastHit2D hit = Physics2D.Raycast(
+                transform.position,
+                direction,
+                _attributes.RunBackDistance,
+                obstacleLayerMask
+            );
+
+            float distance;
+            Vector3 endPoint;
+
+            if (hit.collider != null)
+            {
+                distance = hit.distance * _attributes.SafetyDistanceMultiplier;
+                endPoint = transform.position + direction * distance;
+
+                // Draw hit rays in yellow
+                Gizmos.color = new Color(1f, 0.8f, 0f, 0.6f);
+                Gizmos.DrawLine(transform.position, hit.point);
+
+                // Draw obstacle hit point
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(hit.point, 0.2f);
+
+                // Draw safe endpoint
+                Gizmos.color = new Color(1f, 0.5f, 0f, 0.8f);
+                Gizmos.DrawSphere(endPoint, 0.15f);
+            }
+            else
+            {
+                distance = _attributes.RunBackDistance;
+                endPoint = transform.position + direction * distance;
+
+                // Draw clear rays in green
+                Gizmos.color = new Color(0f, 1f, 0f, 0.4f);
+                Gizmos.DrawLine(transform.position, endPoint);
+
+                // Draw endpoint
+                Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
+                Gizmos.DrawSphere(endPoint, 0.15f);
+            }
+
+            // Track best option
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                bestDirection = direction;
+            }
+        }
+
+        // Highlight the best direction
+        Vector3 bestEndPoint = transform.position + bestDirection * maxDistance;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, bestEndPoint);
+        Gizmos.DrawWireSphere(bestEndPoint, 0.3f);
+
+        // Draw base backward direction for reference
+        Gizmos.color = new Color(1f, 1f, 1f, 0.3f);
+        Gizmos.DrawLine(transform.position, transform.position + baseDirection * 1f);
+    }
 }
