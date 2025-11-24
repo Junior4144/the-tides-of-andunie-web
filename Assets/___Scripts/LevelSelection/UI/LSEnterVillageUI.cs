@@ -37,8 +37,16 @@ public class LSEnterVillageUI : MonoBehaviour
             HandleEnterVillage();
         }
 
-        if(isExit) LevelSelectionEnterHeader.text = "Leave Village";
-        else LevelSelectionEnterHeader.text = "Visit Village";
+        if (isExit)
+        {
+            LevelSelectionEnterHeader.text = "Leave Village";
+            LSButtonText.text = "OK";
+        } 
+        else
+        {
+            LevelSelectionEnterHeader.text = "Visit Village";
+            LSButtonText.text = "Enter";
+        }
 
         UIPanel.SetActive(true);
 

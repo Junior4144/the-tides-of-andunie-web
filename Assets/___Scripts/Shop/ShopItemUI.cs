@@ -95,7 +95,7 @@ public class ShopItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         ErrorText.text = "Limit Reached";
         ErrorText.gameObject.SetActive(true);
-
+        audioSource.PlayOneShot(purchaseErrorSound);
         yield return new WaitForSeconds(1f);
 
         ErrorText.gameObject.SetActive(false);
