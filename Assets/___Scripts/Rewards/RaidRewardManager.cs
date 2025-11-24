@@ -19,7 +19,6 @@ public class RaidRewardManager : MonoBehaviour
     {
         Instance = this;
         _audioSource = GetComponent<AudioSource>();
-        RewardUI.HideRewards();
     }
 
     public void OnEnable()
