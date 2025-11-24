@@ -32,14 +32,12 @@ public class ShopUIController : MonoBehaviour
     {
         UIEvents.OnShopConfirm += HandleShopToggling;
         UIEvents.OnShopDeactivated += HandleShopDeactivation;
-        UIEvents.OnRequestCloseAllUI += HandleShopDeactivation;
     }
 
     private void OnDisable()
     {
         UIEvents.OnShopConfirm -= HandleShopToggling;
         UIEvents.OnShopDeactivated -= HandleShopDeactivation;
-        UIEvents.OnRequestCloseAllUI -= HandleShopDeactivation;
     }
 
     void Start()
@@ -62,7 +60,7 @@ public class ShopUIController : MonoBehaviour
 
     public void HandleExitClick()
     {
-        HandleShopDeactivation();
+        UIEvents.OnShopDeactivated?.Invoke();
     }
 
     public void HandleShopToggling()

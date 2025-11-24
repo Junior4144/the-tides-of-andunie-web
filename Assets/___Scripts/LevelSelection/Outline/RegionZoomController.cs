@@ -9,9 +9,8 @@ public class RegionZoomController : MonoBehaviour
     public float PreInvasionThreshold = 400f;
 
     private Camera cam;
-    private LSPlayerMovement playerMovement;
     private bool _activate = false;
-
+    private bool wasBelowThreshold = false;
 
     public static event Action ZoomBelowThreshold;
     public static event Action ZoomAboveThreshold;
@@ -27,30 +26,36 @@ public class RegionZoomController : MonoBehaviour
     private void Start()
     {
         cam = CameraManager.Instance.GetCamera();
-        playerMovement = PlayerManager.Instance.gameObject.GetComponent<LSPlayerMovement>();
 
         if(!LSManager.Instance.HasInvasionStarted) threshold = PreInvasionThreshold;
+
+        wasBelowThreshold = cam.orthographicSize <= threshold;
     }
 
     private void Update()
     {
         if (!_activate) return;
 
-        if (cam.orthographicSize <= threshold)
+        bool isBelowThreshold = cam.orthographicSize <= threshold;
+
+        // Only fire events when crossing from above -> below
+        if (isBelowThreshold && !wasBelowThreshold)
         {
-            if (playerMovement == null) return;
-            playerMovement.enabled = true;
+            PlayerManager.Instance?.EnableLSPlayerMovement();
             ZoomBelowThreshold?.Invoke();
             OnDisableOfRegionUI?.Invoke();
         }
 
-        if (cam.orthographicSize > threshold)
+        // Only fire events when crossing from below -> above
+        if (!isBelowThreshold && wasBelowThreshold)
         {
-            if (playerMovement == null) return;
-            playerMovement.enabled = false;
+            PlayerManager.Instance?.DisableLSPlayerMovement();
             ZoomAboveThreshold?.Invoke();
             NoLongerDisableOfRegionUI?.Invoke();
         }
+
+        // Update previous state
+        wasBelowThreshold = isBelowThreshold;
     }
 
     private void HandleCheck(Scene oldScene, Scene newScene)

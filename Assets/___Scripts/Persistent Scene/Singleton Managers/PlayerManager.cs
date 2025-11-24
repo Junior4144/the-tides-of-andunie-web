@@ -96,8 +96,8 @@ public class PlayerManager : MonoBehaviour
     //public bool IsInDash() => _playerMovement.IsInDash();
     public bool IsInImpulse() => _impulseController.IsInImpulse();
 
-    public bool DisableLSPlayerMovement() => _lsPlayerMovement.disableClicking = true;
-    public bool EnableLSPlayerMovement() => _lsPlayerMovement.disableClicking = false;
+    public bool DisableLSPlayerMovement() => _lsPlayerMovement.enabled = false;
+    public bool EnableLSPlayerMovement() => _lsPlayerMovement.enabled = true;
 
 
     //------DESTROY------//

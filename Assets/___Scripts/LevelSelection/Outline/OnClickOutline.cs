@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.SceneManagement;
 
 public class OnClickOutline : MonoBehaviour
 {
@@ -29,15 +31,33 @@ public class OnClickOutline : MonoBehaviour
             lineRenderer.startColor = normalColor;
             lineRenderer.endColor = normalColor;
         }
-        
     }
-    private void Start()
+    private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
+
+    private void OnDisable() => SceneManager.activeSceneChanged -= HandleCheck;
+
+    private void HandleCheck(Scene oldScene, Scene newScene)
+    {
+        StartCoroutine(CheckAfterLoading(newScene));
+    }
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
+    {
+        yield return null;
+
+        if (newScene == gameObject.scene)
+            HandleSetup();
+    }
+
+    private void HandleSetup()
     {
         if (LSRegionLockManager.Instance.IsRegionLocked(region))
         {
             isInvaded = true;
         }
+        ResetColor();
     }
+
     private void Update()
     {
         // --- CLICK ---
