@@ -343,7 +343,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
-  _impulseResistance: 0.4
+  _impulseResistance: 0.7
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!114 &5204618084516297090
@@ -513,8 +513,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7936400117629098556}
+  m_Children: []
   m_Father: {fileID: 8225468577275486795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &4708632008520994728
@@ -569,10 +568,10 @@ MonoBehaviour:
   _pirateAttributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
   _animator: {fileID: 4227438563414407911}
   _animDuration: 1
-  _damageDelay: 0.7
-  _damageRange: 10
-  _impulseCollider: {fileID: 831708140652290764}
-  _impulseColliderDuration: 0.1
+  _damageDelay: 0.62
+  _damageRange: 4
+  _impulseForce: 250
+  _impulseDuration: 0.5
 --- !u!82 &6228586469150828511
 AudioSource:
   m_ObjectHideFlags: 0
@@ -670,92 +669,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &5327086117480526305
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7936400117629098556}
-  - component: {fileID: 831708140652290764}
-  - component: {fileID: 5205106747568641347}
-  m_Layer: 6
-  m_Name: AttackImpulseCollider
-  m_TagString: ImpulseSource
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7936400117629098556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327086117480526305}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 242593571582595679}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!70 &831708140652290764
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327086117480526305}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.32044473, y: 1.0043551}
-  m_Size: {x: 5.1410704, y: 2.5133016}
-  m_Direction: 1
---- !u!114 &5205106747568641347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327086117480526305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 250
-  impulseDuration: 0.5
-  playSound: 1
-  spawnParticles: 1
 --- !u!1 &7291861054942345205
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,4 +795,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4b13b321b3cc3448b0c8307d4372b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _attackAnimDuration: 1.1
+  _attackAnimDuration: 1.067

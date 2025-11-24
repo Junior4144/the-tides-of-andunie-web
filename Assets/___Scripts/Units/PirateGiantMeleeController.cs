@@ -7,17 +7,17 @@ public class PirateGiantMeleeController : MonoBehaviour
     [SerializeField] private GiantEnemyAnimator _animator;
     [SerializeField] private float _animDuration;
 
-    [SerializeField] private float _damageDelay = 0f;
-    [SerializeField] private float _damageRange = 2f;
-
-    [SerializeField] private CapsuleCollider2D _impulseCollider;
-    [SerializeField] private float _impulseColliderDuration = 0.1f;
+    [SerializeField] private float _damageDelay = 0.62f;
+    [SerializeField] private float _damageRange = 4f;
+    [SerializeField] private float _impulseForce = 250f;
+    [SerializeField] private float _impulseDuration = 0.5f;
 
     private bool isAttacking;
+    private Collider2D _attackCollider;
 
     private void Awake()
     {
-        _impulseCollider.enabled = false;
+        _attackCollider = GetComponent<Collider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
@@ -36,21 +36,65 @@ public class PirateGiantMeleeController : MonoBehaviour
 
         yield return new WaitForSeconds(_damageDelay);
 
-        TryDealDamageToPlayer();
-        StartCoroutine(EnableColliderForSeconds(_impulseCollider, _impulseColliderDuration));
+        TryDealDamageAndImpulse();
 
         isAttacking = false;
     }
 
-    private void TryDealDamageToPlayer()
+    private void TryDealDamageAndImpulse()
     {
         if (!PlayerManager.Instance)
             return;
 
-        float distance = Vector2.Distance(transform.position, PlayerManager.Instance.GetPlayerTransform().position);
+        if (!IsPlayerInRange())
+            return;
 
-        if (distance <= _damageRange)
-             PlayerManager.Instance.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
+        DealDamageToPlayer();
+        ApplyImpulseToPlayer();
+    }
+
+    private bool IsPlayerInRange()
+    {
+        Vector2 playerPosition = PlayerManager.Instance.GetPlayerTransform().position;
+        float distance = Vector2.Distance(transform.position, playerPosition);
+        return distance <= _damageRange;
+    }
+
+    private void DealDamageToPlayer() =>
+        PlayerManager.Instance.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
+
+    private void ApplyImpulseToPlayer()
+    {
+        Vector2 contactPoint = CalculateContactPoint();
+        Vector2 impulseDirection = CalculateImpulseDirection();
+        ImpulseSettings settings = CreateImpulseSettings();
+
+        PlayerManager.Instance.ApplyImpulse(contactPoint, impulseDirection, settings);
+    }
+
+    private Vector2 CalculateContactPoint()
+    {
+        Vector2 playerPosition = PlayerManager.Instance.GetPlayerTransform().position;
+
+        return _attackCollider.ClosestPoint(playerPosition);
+    }
+
+    private Vector2 CalculateImpulseDirection()
+    {
+        Vector2 playerPosition = PlayerManager.Instance.GetPlayerTransform().position;
+
+        return (playerPosition - (Vector2)transform.position).normalized;
+    }
+
+    private ImpulseSettings CreateImpulseSettings()
+    {
+        return new ImpulseSettings
+        {
+            Force = _impulseForce,
+            Duration = _impulseDuration,
+            PlaySound = true,
+            SpawnParticles = true
+        };
     }
 
     private void PlayAttackAnimation()
@@ -67,12 +111,5 @@ public class PirateGiantMeleeController : MonoBehaviour
     private IEnumerator ResetAttackAnimation()
     {
         yield return new WaitForSeconds(_animDuration);
-    }
-
-    public IEnumerator EnableColliderForSeconds(Collider2D collider, float seconds)
-    {
-        collider.enabled = true;
-        yield return new WaitForSeconds(seconds);
-        collider.enabled = false;
     }
 }
