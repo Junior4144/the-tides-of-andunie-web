@@ -25,4 +25,21 @@ public class PirateAttributes : ScriptableObject
     [field: SerializeField]
     [field: Range(0, 1)]
     public float ChanceOfCollectableDrop { get; private set; }
+
+    [Header("Bomber Runaway Settings")]
+    [field: SerializeField]
+    public float RunBackDistance { get; private set; } = 5f;
+
+    [field: SerializeField]
+    public float RunBackSpeedMultiplier { get; private set; } = 2f;
+
+    [field: SerializeField]
+    [field: Range(0, 1)]
+    public float SafetyDistanceMultiplier { get; private set; } = 0.8f;
+
+    [field: SerializeField]
+    public int RaycastCount { get; private set; } = 5;
+
+    [field: SerializeField]
+    public float RaycastSpread { get; private set; } = 90f;
 }
