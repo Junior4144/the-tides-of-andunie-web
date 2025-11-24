@@ -24,6 +24,10 @@ public class VillageData
     public RewardsConfig rewardConfig;
     
 }
+public class TargetEvents
+{
+    public static Action OnClearAllTargets;
+}
 
 public class LSManager : MonoBehaviour
 {

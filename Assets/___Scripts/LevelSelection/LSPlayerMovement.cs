@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using NUnit.Framework.Internal;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,6 +7,7 @@ public class LSPlayerMovement : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 360f;
     public Vector2 cursorHotSpot = Vector2.zero;
+    public GameObject targetPrefab;
 
     NavMeshAgent agent;
     Camera cam;
@@ -67,6 +69,7 @@ public class LSPlayerMovement : MonoBehaviour
 
         if (validNavMesh)
         {
+            SpawnNewTarget(hit.position);
             agent.SetDestination(hit.position);
             return;
         }
@@ -74,7 +77,10 @@ public class LSPlayerMovement : MonoBehaviour
         if (pointerCollider != null)
         {
             var controller = pointerCollider.GetComponent<VillagePointerTargetController>();
-            agent.SetDestination(controller.navigationTarget.transform.position);
+            Vector3 dest = controller.navigationTarget.transform.position;
+
+            SpawnNewTarget(dest);              // <-- spawn exactly on pointer destination
+            agent.SetDestination(dest);
             return;
         }
 
@@ -95,5 +101,12 @@ public class LSPlayerMovement : MonoBehaviour
                 rotationSpeed * Time.deltaTime
             );
         }
+    }
+
+    public void SpawnNewTarget(Vector3 position)
+    {
+        TargetEvents.OnClearAllTargets?.Invoke();
+
+        Instantiate(targetPrefab, position, Quaternion.identity);
     }
 }
