@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,9 +12,7 @@ public class BomberPirateMovement : MonoBehaviour
     [SerializeField] private AudioClip fireShotSound;
 
     [Header("Runaway Settings")]
-    public float runBackDistance = 5f;
-    public float runDuration = 2f;
-    public float runBackSpeedMultiplier = 2f;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     private Transform player;
     private NavMeshAgent agent;
@@ -27,12 +26,6 @@ public class BomberPirateMovement : MonoBehaviour
 
     private float originalSpeed;
     private bool isRunningAway = false;
-
-    // Stuck detection
-    private GameObject runawayTargetObject;
-    private float stuckCheckTime = 0f;
-    private float stuckThreshold = 0.2f;
-    private float minVelocityThreshold = 0.05f;
 
     void Awake()
     {
@@ -105,58 +98,60 @@ public class BomberPirateMovement : MonoBehaviour
     private IEnumerator RunAwayRoutine()
     {
         isRunningAway = true;
-
         agent.isStopped = false;
-        agent.speed = originalSpeed * runBackSpeedMultiplier;
+        agent.speed = originalSpeed * _attributes.RunBackSpeedMultiplier;
 
-        // Compute backward direction with random angle
-        Vector3 backward = -transform.up;
-        float randomAngle = Random.Range(-45f, 45f);
-        backward = Quaternion.Euler(0, 0, randomAngle) * backward;
-        Vector3 targetPos = transform.position + backward * runBackDistance;
+        agent.SetDestination(FindBestRunawayPosition());
 
-        // Create temporary runaway target object
-        if (runawayTargetObject != null)
-            Destroy(runawayTargetObject);
-
-        runawayTargetObject = new GameObject("BomberRunTarget");
-        runawayTargetObject.transform.position = targetPos;
-
-        // Move toward it
-        agent.SetDestination(runawayTargetObject.transform.position);
-
-        float elapsed = 0f;
-        stuckCheckTime = 0f;
-
-        while (elapsed < runDuration)
-        {
-            elapsed += Time.deltaTime;
-
-            // STUCK DETECTION
-            if (agent.velocity.magnitude < minVelocityThreshold)
-            {
-                stuckCheckTime += Time.deltaTime;
-
-                if (stuckCheckTime > stuckThreshold)
-                {
-                    Debug.Log("Bomber stuck → aborting runaway.");
-                    break;
-                }
-            }
-            else
-            {
-                stuckCheckTime = 0f;
-            }
-
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
-        }
 
-        // Reset states
         agent.speed = originalSpeed;
         isRunningAway = false;
+    }
 
-        if (runawayTargetObject != null)
-            Destroy(runawayTargetObject);
+    private Vector3 FindBestRunawayPosition()
+    {
+        Vector3 baseDirection = -transform.up;
+
+        var (direction, distance) = Enumerable.Range(0, _attributes.RaycastCount)
+            .Select(i => GetRunawayOption(baseDirection, i))
+            .OrderByDescending(option => option.Distance)
+            .First();
+
+        return transform.position + direction * distance;
+    }
+
+    private (Vector3 Direction, float Distance) GetRunawayOption(Vector3 baseDirection, int rayIndex)
+    {
+        float angle = GetAngleForRaycast(rayIndex);
+        Vector3 direction = Quaternion.Euler(0, 0, angle) * baseDirection;
+        float distance = GetAvailableDistance(direction);
+        return (direction, distance);
+    }
+
+    private float GetAngleForRaycast(int rayIndex)
+    {
+        if (_attributes.RaycastCount == 1)
+            return 0f;
+
+        float step = _attributes.RaycastSpread / (_attributes.RaycastCount - 1);
+        return -_attributes.RaycastSpread / 2f + step * rayIndex;
+    }
+
+    private float GetAvailableDistance(Vector3 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            direction,
+            _attributes.RunBackDistance,
+            obstacleLayerMask
+        );
+
+        if (hit.collider != null)
+            return hit.distance * _attributes.SafetyDistanceMultiplier;
+
+        return _attributes.RunBackDistance;
     }
 
     private void PlayAttackAnimation()

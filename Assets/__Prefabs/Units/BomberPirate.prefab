@@ -350,9 +350,12 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 2366741659865636554, guid: 1803e8de19bb2984eb790a9c0c729402, type: 3}
   firePoint: {fileID: 7886364089457476399}
   fireShotSound: {fileID: 0}
-  runBackDistance: 10
+  runBackDistance: 7
   runDuration: 2
   runBackSpeedMultiplier: 2
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 131072
   fireCooldown: 0
 --- !u!114 &5689746314168022886
 MonoBehaviour:
