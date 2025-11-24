@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class BomberPirateMovement : MonoBehaviour
 {
     [SerializeField] private float _attackAnimDuration = .9f;
-    [SerializeField] private PirateAttributes _attributes;
+    [SerializeField] private BomberPirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;

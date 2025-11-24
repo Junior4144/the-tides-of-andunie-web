@@ -65,39 +65,53 @@ public class PlayerManager : MonoBehaviour
 
     //------HEALTH------//
     public float GetCurrentHealth() => _healthController.GetCurrentHealth();
+
     public float GetPercentHealth() => _healthController.GetPercentHealth();
-    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
+
     public void SetHealth(float value) => _healthController.SetCurrentHealth(value);
+
     public void AddHealth(float value) => _healthController.AddHealth(value);
+
+    public void TakeDamage(float value, DamageType damageType) => _healthController.TakeDamage(value, damageType);
     
 
     //------TRANSFORM------//
     public Transform GetPlayerTransform() => gameObject.transform;
+
     public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
+
+
+    //------ATTACK------//
+    public bool IsAttacking() => _attackController.IsAttacking;
+
+    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
+
+
+    //------LS PLAYER------//
+    public NavMeshAgent GetPlayerAgent() => GetComponent<NavMeshAgent>();
+
+
+    //------MOVEMENT------//
+    public bool IsInImpulse() => _impulseController.IsInImpulse();
+
+    public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings) => 
+        _impulseController.InitiateSquadImpulse(contactPoint, impulseDirection, settings);
+
+    public bool DisableLSPlayerMovement() => _lsPlayerMovement.disableClicking = true;
+
+    public bool EnableLSPlayerMovement() => _lsPlayerMovement.disableClicking = false;
 
     public void DisablePlayerMovement()
     {
         if (_playerMovement)
             _playerMovement.enabled = false;
     }
+
     public void EnablePlayerMovement()
     {
         if (_playerMovement)
             _playerMovement.enabled = true;
     }
-
-    //------TRANSFORM------//
-    public bool IsAttacking() => _attackController.IsAttacking;
-
-    //------LS PLAYER------//
-    public NavMeshAgent GetPlayerAgent() => GetComponent<NavMeshAgent>();
-
-    //------MOVEMENT------//
-    //public bool IsInDash() => _playerMovement.IsInDash();
-    public bool IsInImpulse() => _impulseController.IsInImpulse();
-
-    public bool DisableLSPlayerMovement() => _lsPlayerMovement.enabled = false;
-    public bool EnableLSPlayerMovement() => _lsPlayerMovement.enabled = true;
 
 
     //------DESTROY------//

@@ -249,7 +249,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _attackAnimDuration: 0.9
-  _holdFireAnimDuration: 0.5
   _attributes: {fileID: 11400000, guid: f20cf1ef13a1b2d448e71639a1b36a3c, type: 2}
   ProjectilePrefab: {fileID: 8293163787298628046, guid: 39cb029e64427e74191d3ebfa3a764fc, type: 3}
   firePoint: {fileID: 7461889038036150525}
@@ -419,6 +418,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
+  _impulseResistance: 0
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!82 &2353178238684322129
