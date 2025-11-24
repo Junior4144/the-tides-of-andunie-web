@@ -7,7 +7,7 @@ public class ArcherPirateMovement : MonoBehaviour
 {
 
     [SerializeField] private float _attackAnimDuration = .9f;
-    [SerializeField] private PirateAttributes _attributes;
+    [SerializeField] private RangedPirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;

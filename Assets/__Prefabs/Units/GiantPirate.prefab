@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 756098288339873099}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.183, y: -0.139, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50,7 +50,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -68,8 +68,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.61749995, y: 0.60581493}
-  m_Size: {x: 4.7484446, y: 2.9091666}
+  m_Offset: {x: 0.30940703, y: -0.02784292}
+  m_Size: {x: 3.6358953, y: 2.0988219}
   m_Direction: 1
 --- !u!114 &7459300132604522871
 MonoBehaviour:
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 10
+  _impulseforce: 30
   impulseDuration: 0.2
   playSound: 1
   spawnParticles: 1
@@ -135,7 +135,7 @@ Transform:
   m_GameObject: {fileID: 3354042210201786904}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.01, y: 2.27, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -156,7 +156,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 1
   m_LinearDamping: 10
   m_AngularDamping: 10
   m_GravityScale: 0
@@ -187,7 +187,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -201,12 +201,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.313934, y: 0.056378096}
-  m_Size: {x: 3.5340908, y: 3.2732754}
+  m_Offset: {x: 0.30940703, y: -0.02784292}
+  m_Size: {x: 3.6358953, y: 2.0988219}
   m_Direction: 1
 --- !u!114 &1318188630637027886
 MonoBehaviour:
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
-  _attributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
 --- !u!114 &6595407804366197556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _pirateAttributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _pirateAttributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
 --- !u!195 &845200191027578643
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
-  _enemyAttribute: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _enemyAttribute: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
   _collectablePrefabs:
   - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
   - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
@@ -343,7 +343,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
-  _impulseResistance: 0
+  _impulseResistance: 0.7
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!114 &5204618084516297090
@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 4708632008520994728}
   - component: {fileID: 2932234581836478258}
   - component: {fileID: 6228586469150828511}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,14 +509,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4773013938337830291}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.017, y: 0.6, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7936400117629098556}
+  m_Children: []
   m_Father: {fileID: 8225468577275486795}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &4708632008520994728
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -551,9 +550,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.7237475, y: -0.42606345}
-  m_Size: {x: 3.9739656, y: 4.941902}
-  m_Direction: 0
+  m_Offset: {x: 0.32044473, y: 1.0043551}
+  m_Size: {x: 5.1410704, y: 2.5133016}
+  m_Direction: 1
 --- !u!114 &2932234581836478258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,14 +565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba569d8bb6271044fbf1d739d74c26b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _pirateAttributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
   _animator: {fileID: 4227438563414407911}
   _animDuration: 1
-  _damageDelay: 0.7
-  _damageRange: 10
-  _attackCooldown: 1.5
-  _capsuleCollider: {fileID: 831708140652290764}
-  _audioClip: {fileID: 8300000, guid: d0e255443dbaf0a45a2559cf82bc86a9, type: 3}
 --- !u!82 &6228586469150828511
 AudioSource:
   m_ObjectHideFlags: 0
@@ -586,7 +580,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -671,92 +665,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &5327086117480526305
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7936400117629098556}
-  - component: {fileID: 831708140652290764}
-  - component: {fileID: 5205106747568641347}
-  m_Layer: 0
-  m_Name: AttackImpulseCollider
-  m_TagString: ImpulseSource
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7936400117629098556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327086117480526305}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 242593571582595679}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!70 &831708140652290764
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327086117480526305}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.71840286, y: -0.42606345}
-  m_Size: {x: 3.9846573, y: 4.941902}
-  m_Direction: 0
---- !u!114 &5205106747568641347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327086117480526305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 250
-  impulseDuration: 0.5
-  playSound: 1
-  spawnParticles: 1
 --- !u!1 &7291861054942345205
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +677,7 @@ GameObject:
   - component: {fileID: 1752790062696734182}
   - component: {fileID: 3510851488030324672}
   - component: {fileID: 4227438563414407911}
+  - component: {fileID: 1121374081358102488}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -883,4 +792,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4b13b321b3cc3448b0c8307d4372b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _attackAnimDuration: 1.1
+  _attackAnimDuration: 1.067
+--- !u!114 &1121374081358102488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291861054942345205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b966a1c57cb836469e204b413a418cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicSpriteSorting
+  _spriteRenderer: {fileID: 0}
