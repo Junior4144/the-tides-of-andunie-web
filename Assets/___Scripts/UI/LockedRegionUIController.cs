@@ -21,19 +21,38 @@ public class LockedRegionUI : MonoBehaviour
     {
         OnClickOutline.RegionClicked += HandleRegionClicked;
 
-        RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUIWithAnimation;
+
+        ShopUIController.ShopActivated += HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnLSEnterConfirm += HandleDisablingOfRegionUIWithAnimation;
     }
 
     private void OnDisable()
     {
         OnClickOutline.RegionClicked -= HandleRegionClicked;
-        RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUIWithAnimation;
+
+        ShopUIController.ShopActivated -= HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnLSEnterConfirm -= HandleDisablingOfRegionUIWithAnimation;
+    }
+    private void HandleDisablingOfRegionUIWithAnimation()
+    {
+        panel.SetActive(false);
+    }
+
+    private void HandleDisablingOfRegionUIWithAnimation(bool isExit)
+    {
+        panel.SetActive(false);
     }
 
     private void ZoomBelowThreshold()
@@ -54,15 +73,6 @@ public class LockedRegionUI : MonoBehaviour
                 panel.SetActive(false);
             }
         }
-    }
-    private void ZoomAboveThreshold()
-    {
-
-    }
-
-    private void HandleDisablingOfRegionUI()
-    {
-        panel.SetActive(false);
     }
 
     private void HandleRegionClicked(Region region)

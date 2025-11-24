@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RegionColliderController : MonoBehaviour
 {
@@ -7,19 +9,49 @@ public class RegionColliderController : MonoBehaviour
     private LineRenderer[] lineRenderers;
     private MeshRenderer[] meshRenderers;
 
+    private bool canShowUI = false;   // gate controlled by zoom level
+
     private void OnEnable()
     {
+        SceneManager.activeSceneChanged += HandleCheck;
+
         RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
         RegionZoomController.NoLongerDisableOfRegionUI += HandleNoLongerDisabledUI;
+
+        RegionZoomController.ZoomBelowThreshold += DisableZoomUI;
+        RegionZoomController.ZoomAboveThreshold += EnableZoomUI;
+
+        UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUI;
+        UIEvents.OnPreScreenDeactivated += HandleNoLongerDisabledUI;
+
+        ShopUIController.ShopActivated += HandleDisablingOfRegionUI;
+        ShopUIController.ShopDeactivated += HandleNoLongerDisabledUI;
+
+        UIEvents.OnLSEnterConfirm += HandleDisablingOfRegionUI;
+        UIEvents.OnLSEnterDeactivated += HandleNoLongerDisabledUI;
     }
 
     private void OnDisable()
     {
+        SceneManager.activeSceneChanged -= HandleCheck;
+
         RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
         RegionZoomController.NoLongerDisableOfRegionUI -= HandleNoLongerDisabledUI;
+
+        RegionZoomController.ZoomBelowThreshold -= DisableZoomUI;
+        RegionZoomController.ZoomAboveThreshold -= EnableZoomUI;
+
+        UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUI;
+        UIEvents.OnPreScreenDeactivated -= HandleNoLongerDisabledUI;
+
+        ShopUIController.ShopActivated -= HandleDisablingOfRegionUI;
+        ShopUIController.ShopDeactivated -= HandleNoLongerDisabledUI;
+
+        UIEvents.OnLSEnterConfirm -= HandleDisablingOfRegionUI;
+        UIEvents.OnLSEnterDeactivated -= HandleNoLongerDisabledUI;
     }
 
-    private void Start()
+    private void Awake()
     {
         // Collect all matching components in children (including inactive)
         polygonOutlines = GetComponentsInChildren<PolygonOutline>(true);
@@ -27,18 +59,55 @@ public class RegionColliderController : MonoBehaviour
         lineRenderers = GetComponentsInChildren<LineRenderer>(true);
         meshRenderers = GetComponentsInChildren<MeshRenderer>(true);
 
+    }
+    private void HandleCheck(Scene oldScene, Scene newScene)
+    {
+        StartCoroutine(CheckAfterLoading(newScene));
+    }
+
+    private IEnumerator CheckAfterLoading(Scene newScene)
+    {
+        yield return null;
+
+        if (newScene == gameObject.scene)
+            HandleSetup();
+    }
+    private void HandleSetup()
+    {
         if (!LSManager.Instance.HasInvasionStarted)
             gameObject.SetActive(false);
+
+        canShowUI = false;
+        SetAll(false);
+    }
+
+
+    private void DisableZoomUI()
+    {
+        canShowUI = false;
+    }
+
+    private void EnableZoomUI()
+    {
+        canShowUI = true;
     }
 
     private void HandleDisablingOfRegionUI()
     {
         SetAll(false);
+        Debug.Log("RegionColliderController DISABLING ALL REGION UI");
+    }
+
+    private void HandleDisablingOfRegionUI(bool isExit)
+    {
+        SetAll(false);
+        Debug.Log("RegionColliderController DISABLING ALL REGION UI");
     }
 
     private void HandleNoLongerDisabledUI()
     {
-        SetAll(true);
+        if (canShowUI)
+            SetAll(true);
     }
 
     private void SetAll(bool state)

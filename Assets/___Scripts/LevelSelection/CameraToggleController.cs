@@ -56,7 +56,7 @@ public class CameraToggleController : MonoBehaviour
 
         if (PlayerManager.Instance == null) return;
 
-        PlayerManager.Instance.DisableLSPlayerMovement();
+       PlayerManager.Instance.DisableLSPlayerMovement();
     }
     private void HandleCameraDeactivation(bool isExit)
     {
@@ -65,7 +65,11 @@ public class CameraToggleController : MonoBehaviour
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
 
-        if (PlayerManager.Instance == null) return;
+        if (PlayerManager.Instance == null)
+        {
+            Debug.LogError("Unable to find player manager HandleCameraDeactivation");
+            return;
+        }
 
         PlayerManager.Instance.DisableLSPlayerMovement();
     }
@@ -78,8 +82,11 @@ public class CameraToggleController : MonoBehaviour
         zoomScript.enabled = newState;
         mouseScript.enabled = newState;
 
-
-        if (PlayerManager.Instance == null) return;
+        if (PlayerManager.Instance == null)
+        {
+            Debug.LogError("Unable to find player manager HandleCameraActivation");
+            return;
+        }
 
         PlayerManager.Instance.EnableLSPlayerMovement();
     }
