@@ -97,16 +97,24 @@ public class BomberPirateMovement : MonoBehaviour
 
     private IEnumerator RunAwayRoutine()
     {
+        if (_impulseController.IsInImpulse())
+            yield break;
+
         isRunningAway = true;
         agent.isStopped = false;
         agent.speed = originalSpeed * _attributes.RunBackSpeedMultiplier;
 
         agent.SetDestination(FindBestRunawayPosition());
 
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        while (!_impulseController.IsInImpulse() &&
+               (agent.pathPending || agent.remainingDistance > agent.stoppingDistance))
+        {
             yield return null;
+        }
 
-        agent.speed = originalSpeed;
+        if (!_impulseController.IsInImpulse())
+            agent.speed = originalSpeed;
+
         isRunningAway = false;
     }
 
