@@ -11,12 +11,18 @@ public class RegionColliderController : MonoBehaviour
     {
         RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
         RegionZoomController.NoLongerDisableOfRegionUI += HandleNoLongerDisabledUI;
+
+        UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUI;
+        UIEvents.OnPreScreenDeactivated += HandleNoLongerDisabledUI;
     }
 
     private void OnDisable()
     {
         RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
         RegionZoomController.NoLongerDisableOfRegionUI -= HandleNoLongerDisabledUI;
+
+        UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUI;
+        UIEvents.OnPreScreenDeactivated -= HandleNoLongerDisabledUI;
     }
 
     private void Start()
@@ -34,6 +40,7 @@ public class RegionColliderController : MonoBehaviour
     private void HandleDisablingOfRegionUI()
     {
         SetAll(false);
+        Debug.Log("RegionColliderController DISABLING ALL REGION UI");
     }
 
     private void HandleNoLongerDisabledUI()
