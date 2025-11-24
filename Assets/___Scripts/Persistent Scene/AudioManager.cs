@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     public void FadeAudio() =>
         _sceneAudioFader.FadeAndLoad();
 
-      public void PlayOneShot(AudioClip clip, float volumeScale = 1f)
+    public void PlayOneShot(AudioClip clip, float volumeScale = 1f)
     {
         if (clip != null)
             audioSource.PlayOneShot(clip, volumeScale);
