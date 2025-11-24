@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -97,7 +98,14 @@ public class RegionUIController : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
+        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUIWithAnimation;
+
+        ShopUIController.ShopActivated += HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnLSEnterConfirm += HandleDisablingOfRegionUIWithAnimation;
+
     }
 
     private void OnDisable()
@@ -106,12 +114,27 @@ public class RegionUIController : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
+        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUIWithAnimation;
+
+        ShopUIController.ShopActivated -= HandleDisablingOfRegionUIWithAnimation;
+
+        UIEvents.OnLSEnterConfirm -= HandleDisablingOfRegionUIWithAnimation;
+
     }
 
-    private void HandleDisablingOfRegionUI()
+    private void HandleDisablingOfRegionUIWithAnimation()
     {
-        RegionPanel.SetActive(false);
+        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
+        if (scaler != null)
+            scaler.HideWithScale();
+    }
+    private void HandleDisablingOfRegionUIWithAnimation(bool isExit)
+    {
+        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
+        if (scaler != null)
+            scaler.HideWithScale();
     }
 
     private Region lastRegion;
