@@ -28,9 +28,6 @@ public class BomberPirateMovement : MonoBehaviour
     private float originalSpeed;
     private bool isRunningAway = false;
 
-    public float impulseForce = 10f;
-    public float impulseDuration = 0f;
-
     // Stuck detection
     private GameObject runawayTargetObject;
     private float stuckCheckTime = 0f;
@@ -95,7 +92,6 @@ public class BomberPirateMovement : MonoBehaviour
         yield return new WaitForSeconds(_attackAnimDuration);
 
         Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
-        ApplyImpulse();
 
         if (fireShotSound)
             _audioSource.PlayOneShot(fireShotSound);
@@ -208,23 +204,6 @@ public class BomberPirateMovement : MonoBehaviour
                 targetRotation.eulerAngles.z,
                 _attributes.RotationSpeed * Time.deltaTime
             )
-        );
-    }
-
-    void ApplyImpulse()
-    {
-        var impulseSettings = new ImpulseSettings
-        {
-            Force = impulseForce,
-            Duration = impulseDuration,
-            PlaySound = true,
-            SpawnParticles = true
-        };
-
-        _impulseController.InitiateSquadImpulse(
-            transform.position,
-            -_rigidbody.transform.up,
-            impulseSettings
         );
     }
 }
