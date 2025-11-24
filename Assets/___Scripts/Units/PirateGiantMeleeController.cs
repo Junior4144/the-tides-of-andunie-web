@@ -3,14 +3,9 @@ using System.Collections;
 
 public class PirateGiantMeleeController : MonoBehaviour
 {
-    [SerializeField] private PirateAttributes _pirateAttributes;
+    [SerializeField] private GiantPirateAttributes _attributes;
     [SerializeField] private GiantEnemyAnimator _animator;
     [SerializeField] private float _animDuration;
-
-    [SerializeField] private float _damageDelay = 0.62f;
-    [SerializeField] private float _damageRange = 4f;
-    [SerializeField] private float _impulseForce = 250f;
-    [SerializeField] private float _impulseDuration = 0.5f;
 
     private bool isAttacking;
     private Collider2D _attackCollider;
@@ -34,7 +29,7 @@ public class PirateGiantMeleeController : MonoBehaviour
 
         PlayAttackAnimation();
 
-        yield return new WaitForSeconds(_damageDelay);
+        yield return new WaitForSeconds(_attributes.DamageDelay);
 
         TryDealDamageAndImpulse();
 
@@ -57,11 +52,11 @@ public class PirateGiantMeleeController : MonoBehaviour
     {
         Vector2 playerPosition = PlayerManager.Instance.GetPlayerTransform().position;
         float distance = Vector2.Distance(transform.position, playerPosition);
-        return distance <= _damageRange;
+        return distance <= _attributes.DamageRange;
     }
 
     private void DealDamageToPlayer() =>
-        PlayerManager.Instance.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
+        PlayerManager.Instance.TakeDamage(_attributes.DamageAmount, DamageType.Melee);
 
     private void ApplyImpulseToPlayer()
     {
@@ -90,8 +85,8 @@ public class PirateGiantMeleeController : MonoBehaviour
     {
         return new ImpulseSettings
         {
-            Force = _impulseForce,
-            Duration = _impulseDuration,
+            Force = _attributes.ImpulseForce,
+            Duration = _attributes.ImpulseDuration,
             PlaySound = true,
             SpawnParticles = true
         };

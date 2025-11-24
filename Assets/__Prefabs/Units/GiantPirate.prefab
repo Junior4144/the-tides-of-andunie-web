@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
-  _attributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
 --- !u!114 &6595407804366197556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _pirateAttributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _pirateAttributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
 --- !u!195 &845200191027578643
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effed9ab5c3d20e48a36656f146070e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PirateSpawnCollectable
-  _enemyAttribute: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _enemyAttribute: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
   _collectablePrefabs:
   - {fileID: 6269243679089924460, guid: d43fe8e70922ccf4bbaddeed29d82054, type: 3}
   - {fileID: 6269243679089924460, guid: b65fd47a57ace464bbea3ffcb119e5fb, type: 3}
@@ -565,13 +565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba569d8bb6271044fbf1d739d74c26b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _pirateAttributes: {fileID: 11400000, guid: 8a535a92e1bcd344e8d27a392d6c2897, type: 2}
+  _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
   _animator: {fileID: 4227438563414407911}
   _animDuration: 1
-  _damageDelay: 0.62
-  _damageRange: 4
-  _impulseForce: 250
-  _impulseDuration: 0.5
 --- !u!82 &6228586469150828511
 AudioSource:
   m_ObjectHideFlags: 0
