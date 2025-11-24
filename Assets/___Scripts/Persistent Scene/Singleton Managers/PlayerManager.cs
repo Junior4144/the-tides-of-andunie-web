@@ -97,9 +97,15 @@ public class PlayerManager : MonoBehaviour
     public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings) => 
         _impulseController.InitiateSquadImpulse(contactPoint, impulseDirection, settings);
 
-    public bool DisableLSPlayerMovement() => _lsPlayerMovement.disableClicking = true;
+    public void DisableLSPlayerMovement()
+    {
+        _lsPlayerMovement.enabled = false;
+    }
 
-    public bool EnableLSPlayerMovement() => _lsPlayerMovement.disableClicking = false;
+    public void EnableLSPlayerMovement()
+    {
+        _lsPlayerMovement.enabled = true;
+    }
 
     public void DisablePlayerMovement()
     {
