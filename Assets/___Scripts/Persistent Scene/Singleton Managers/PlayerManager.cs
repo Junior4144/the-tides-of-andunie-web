@@ -66,9 +66,9 @@ public class PlayerManager : MonoBehaviour
     //------HEALTH------//
     public float GetCurrentHealth() => _healthController.GetCurrentHealth();
     public float GetPercentHealth() => _healthController.GetPercentHealth();
-    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
     public void SetHealth(float value) => _healthController.SetCurrentHealth(value);
     public void AddHealth(float value) => _healthController.AddHealth(value);
+    public void TakeDamage(float value, DamageType damageType) => _healthController.TakeDamage(value, damageType);
     
 
     //------TRANSFORM------//
@@ -86,14 +86,14 @@ public class PlayerManager : MonoBehaviour
             _playerMovement.enabled = true;
     }
 
-    //------TRANSFORM------//
+    //------ATTACK------//
     public bool IsAttacking() => _attackController.IsAttacking;
+    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
 
     //------LS PLAYER------//
     public NavMeshAgent GetPlayerAgent() => GetComponent<NavMeshAgent>();
 
     //------MOVEMENT------//
-    //public bool IsInDash() => _playerMovement.IsInDash();
     public bool IsInImpulse() => _impulseController.IsInImpulse();
 
     public bool DisableLSPlayerMovement() => _lsPlayerMovement.disableClicking = true;

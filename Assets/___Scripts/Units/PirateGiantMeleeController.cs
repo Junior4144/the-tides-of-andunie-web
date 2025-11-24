@@ -37,7 +37,7 @@ public class PirateGiantMeleeController : MonoBehaviour
         yield return new WaitForSeconds(_damageDelay);
 
         TryDealDamageToPlayer();
-        //StartCoroutine(EnableColliderForSeconds(_impulseCollider, _impulseColliderDuration));
+        StartCoroutine(EnableColliderForSeconds(_impulseCollider, _impulseColliderDuration));
 
         isAttacking = false;
     }
@@ -47,14 +47,10 @@ public class PirateGiantMeleeController : MonoBehaviour
         if (!PlayerManager.Instance)
             return;
 
-        Transform player = PlayerManager.Instance.transform;
-        float distance = Vector2.Distance(transform.position, player.position);
+        float distance = Vector2.Distance(transform.position, PlayerManager.Instance.GetPlayerTransform().position);
 
         if (distance <= _damageRange)
-        {
-            if (player.TryGetComponent<PlayerHealthController>(out var playerHealth))
-                playerHealth.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
-        }
+             PlayerManager.Instance.TakeDamage(_pirateAttributes.DamageAmount, DamageType.Melee);
     }
 
     private void PlayAttackAnimation()
@@ -75,7 +71,6 @@ public class PirateGiantMeleeController : MonoBehaviour
 
     public IEnumerator EnableColliderForSeconds(Collider2D collider, float seconds)
     {
-        yield return new WaitForSeconds(_damageDelay);
         collider.enabled = true;
         yield return new WaitForSeconds(seconds);
         collider.enabled = false;
