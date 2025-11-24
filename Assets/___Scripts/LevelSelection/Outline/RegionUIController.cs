@@ -4,6 +4,7 @@ using TMPro;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class RegionUIController : MonoBehaviour
 {
@@ -126,15 +127,11 @@ public class RegionUIController : MonoBehaviour
 
     private void HandleDisablingOfRegionUIWithAnimation()
     {
-        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
-        if (scaler != null)
-            scaler.HideWithScale();
+         RegionPanel.SetActive(false);
     }
     private void HandleDisablingOfRegionUIWithAnimation(bool isExit)
     {
-        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
-        if (scaler != null)
-            scaler.HideWithScale();
+        RegionPanel.SetActive(false);
     }
 
     private Region lastRegion;

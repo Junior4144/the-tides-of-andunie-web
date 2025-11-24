@@ -47,15 +47,12 @@ public class LockedRegionUI : MonoBehaviour
     }
     private void HandleDisablingOfRegionUIWithAnimation()
     {
-        var scaler = panel.GetComponent<ScaleOnEnable>();
-        if (scaler != null)
-            scaler.HideWithScale();
+        panel.SetActive(false);
     }
+
     private void HandleDisablingOfRegionUIWithAnimation(bool isExit)
     {
-        var scaler = panel.GetComponent<ScaleOnEnable>();
-        if (scaler != null)
-            scaler.HideWithScale();
+        panel.SetActive(false);
     }
 
     private void ZoomBelowThreshold()
