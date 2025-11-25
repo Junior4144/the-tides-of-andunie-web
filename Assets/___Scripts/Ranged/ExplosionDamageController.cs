@@ -23,9 +23,9 @@ public class ExplosionDamageController : MonoBehaviour
             hitEnemies.Add(target);
 
             float chargeMultiplier = Power / MaxPower;
-            float finalDamage = PlayerStatsManager.Instance.DefaultExplosionDamage * chargeMultiplier;
+            float finalDamage = PlayerStatsManager.Instance.ExplosionDamage * chargeMultiplier;
 
-            Debug.Log($"[ExplosionDamageController] Damage dealt {finalDamage} (base: {PlayerStatsManager.Instance.DefaultExplosionDamage}, multiplier: {chargeMultiplier})");
+            Debug.Log($"[ExplosionDamageController] Damage dealt {finalDamage} (base: {PlayerStatsManager.Instance.ExplosionDamage}, multiplier: {chargeMultiplier}, total: {finalDamage})");
             health.TakeDamage(finalDamage, DamageType.Explosion);
         }
 
