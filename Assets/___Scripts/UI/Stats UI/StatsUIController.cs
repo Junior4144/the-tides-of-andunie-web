@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StatsUIController : MonoBehaviour
@@ -33,13 +35,9 @@ public class StatsUIController : MonoBehaviour
         public GameObject Container;
     }
 
-    private void Start()
-    {
-        GenerateAllStatElements();
-    }
-
     private void OnEnable()
     {
+        GenerateAllStatElements();
         SubscribeToAllStatEvents();
         InitializeAllStats();
     }
@@ -109,12 +107,14 @@ public class StatsUIController : MonoBehaviour
     private float GetStatValue(StatType statType)
     {
         PropertyInfo property = typeof(PlayerStatsManager).GetProperty(statType.ToString());
+
         return property != null ? (float)property.GetValue(PlayerStatsManager.Instance) : 0f;
     }
 
     private float GetDefaultStatValue(StatType statType)
     {
         PropertyInfo property = typeof(PlayerStatsManager).GetProperty($"Default{statType}");
+
         return property != null ? (float)property.GetValue(PlayerStatsManager.Instance) : 0f;
     }
 
