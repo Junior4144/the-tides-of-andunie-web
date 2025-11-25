@@ -7,20 +7,16 @@ public class ShopCurrencyUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (CurrencyManager.Instance != null)
-            UpdateUI(CurrencyManager.Instance.Coins);
-    }
+        UpdateUI(CurrencyManager.Instance.Coins);
 
-    private void Start()
-    {
         CurrencyManager.Instance.OnCoinsChanged += UpdateUI;
     }
 
     private void OnDisable()
     {
-        if (CurrencyManager.Instance != null)
-            CurrencyManager.Instance.OnCoinsChanged -= UpdateUI;
+        CurrencyManager.Instance.OnCoinsChanged -= UpdateUI;
     }
+
 
     private void UpdateUI(int newAmount)
     {
