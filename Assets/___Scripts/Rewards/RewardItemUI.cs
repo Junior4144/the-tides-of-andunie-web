@@ -12,6 +12,8 @@ public class RewardItemUI : MonoBehaviour
     [SerializeField] private TMP_FontAsset effectFont;
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text ErrorText;
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip errorSound;
 
     private RewardListing reward_listing;
     private RewardUIController rewardUIController;
@@ -102,21 +104,37 @@ public class RewardItemUI : MonoBehaviour
 
     void HandleRewardClick()
     {
-        InventoryManager.Instance.AddItem(reward_listing.Item);
+        if (rewardUIController.IsConfirmationActive)
+            return;
+
+        if (InventoryManager.Instance.AddItem(reward_listing.Item))
+        {
+            PlaySound(clickSound);
+            rewardUIController.HideRewards();
+            RaidRewardManager.Instance.ReportRewardCollected();
+            return;
+        }
+
+        rewardUIController.ShowLimitReachedConfirmation(OnAcceptCoinValue);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+    }
+
+    private void OnAcceptCoinValue()
+    {
+        int coinValue = GetCoinValue();
+        CurrencyManager.Instance.AddCoins(coinValue);
         rewardUIController.HideRewards();
         RaidRewardManager.Instance.ReportRewardCollected();
     }
 
-    private void HandleLimitReached() { StopAllCoroutines(); StartCoroutine(LimitReached()); }
-
-    private IEnumerator LimitReached()
+    private int GetCoinValue()
     {
-        ErrorText.text = "Limit Reached";
-        ErrorText.gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(1f);
-
-        ErrorText.gameObject.SetActive(false);
+        return reward_listing.Item.SellAmount;
     }
 
     public void ResetErrors()
