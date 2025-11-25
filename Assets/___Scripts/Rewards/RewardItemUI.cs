@@ -12,6 +12,8 @@ public class RewardItemUI : MonoBehaviour
     [SerializeField] private TMP_FontAsset effectFont;
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text ErrorText;
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip errorSound;
 
     private RewardListing reward_listing;
     private RewardUIController rewardUIController;
@@ -104,11 +106,20 @@ public class RewardItemUI : MonoBehaviour
     {
         if (InventoryManager.Instance.AddItem(reward_listing.Item))
         {
+            PlaySound(clickSound);
             rewardUIController.HideRewards();
             RaidRewardManager.Instance.ReportRewardCollected();
+            return;
         }
 
+        PlaySound(errorSound);
         HandleLimitReached();
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
     }
 
     private void HandleLimitReached() { StopAllCoroutines(); StartCoroutine(LimitReached()); }

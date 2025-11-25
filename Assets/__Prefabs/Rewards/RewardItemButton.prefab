@@ -126,19 +126,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8520006771350795544}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1502622301314130699}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &4890699794377805147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +171,8 @@ MonoBehaviour:
   effectFont: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   buyButton: {fileID: 6504972994930366982}
   ErrorText: {fileID: 8138768628022797709}
+  clickSound: {fileID: 8300000, guid: c3e6d874bcb64214193e5bcd2be7a6f7, type: 3}
+  errorSound: {fileID: 8300000, guid: 754eb39339aa2904f908c6cc1f93c3d6, type: 3}
 --- !u!82 &1502622301314130699
 AudioSource:
   m_ObjectHideFlags: 0
@@ -196,7 +186,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c3e6d874bcb64214193e5bcd2be7a6f7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
