@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2515662577233714555}
   - component: {fileID: 7024241826308930087}
   - component: {fileID: -6410462544954700768}
+  - component: {fileID: 2866513064181648547}
   m_Layer: 0
   m_Name: ElendilsHelm
   m_TagString: Untagged
@@ -50,12 +51,13 @@ MonoBehaviour:
   itemName: Elendil's Helm
   stackable: 0
   maxStackSize: 1
-  sellAmount: 1
+  sellAmount: 70
   inventoryIconPrefab: {fileID: 5288914183131574500, guid: 54212052b936661438db37da5d7fee62, type: 3}
   spriteIcon: {fileID: 21300000, guid: 64b965f6294c5b44ca48e3f2f112dfb8, type: 3}
   _effects:
   - {fileID: 7024241826308930087}
   - {fileID: -6410462544954700768}
+  - {fileID: 2866513064181648547}
 --- !u!114 &7024241826308930087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 0
-  amount: 30
+  amount: 35
   _isPercentage: 0
 --- !u!114 &-6410462544954700768
 MonoBehaviour:
@@ -84,5 +86,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 5
-  amount: 12
+  amount: 30
   _isPercentage: 0
+--- !u!114 &2866513064181648547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4129423879244431184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
+  statType: 6
+  amount: -15
+  _isPercentage: 1

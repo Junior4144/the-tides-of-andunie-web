@@ -51,7 +51,7 @@ MonoBehaviour:
   itemName: Banner Of Turin
   stackable: 0
   maxStackSize: 1
-  sellAmount: 1
+  sellAmount: 75
   inventoryIconPrefab: {fileID: 891255100769462917, guid: 927b41e80907e4f48b0627d3d1f29436, type: 3}
   spriteIcon: {fileID: 21300000, guid: 6e5f0bab89d7c45478e7ce0833dcaeac, type: 3}
   _effects:
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 1
-  amount: 12
+  amount: 15
   _isPercentage: 0
 --- !u!114 &5888963684007619119
 MonoBehaviour:
@@ -100,6 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
-  statType: 1
-  amount: 10
-  _isPercentage: 1
+  statType: 5
+  amount: 13
+  _isPercentage: 0
