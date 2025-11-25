@@ -12,10 +12,10 @@ public class ShopUIController : MonoBehaviour
 
     [SerializeField] private GameObject shopItemUIPrefab;
 
-    public bool IsOpen => mainShopPanel.activeInHierarchy;
-
     public static event Action ShopActivated;
     public static event Action ShopDeactivated;
+
+    private bool isOpen = false;
 
     private void Awake()
     {
@@ -30,13 +30,13 @@ public class ShopUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        UIEvents.OnShopConfirm += HandleShopToggling;
+        UIEvents.OnShopConfirm += HandleShopUIActivation;
         UIEvents.OnShopDeactivated += HandleShopDeactivation;
     }
 
     private void OnDisable()
     {
-        UIEvents.OnShopConfirm -= HandleShopToggling;
+        UIEvents.OnShopConfirm -= HandleShopUIActivation;
         UIEvents.OnShopDeactivated -= HandleShopDeactivation;
     }
 
@@ -63,22 +63,17 @@ public class ShopUIController : MonoBehaviour
         UIEvents.OnShopDeactivated?.Invoke();
     }
 
-    public void HandleShopToggling()
+    public void HandleShopUIActivation()
     {
         var scaler = mainShopPanel.GetComponent<ScaleOnEnable>();
 
         if (scaler.IsAnimating)
             return;
 
-        if (IsOpen)
-        {
-            HandleShopDeactivation();
-        }
-        else
-        {
-            ShopActivated?.Invoke();
-            mainShopPanel.SetActive(true);
-        }
+
+        ShopActivated?.Invoke();
+        mainShopPanel.SetActive(true);
+
     }
 
     public void HandleShopDeactivation()
@@ -89,7 +84,11 @@ public class ShopUIController : MonoBehaviour
         {
             scaler.HideWithScale();
         }
+        else
+        {
+            mainShopPanel.SetActive(false);
+        }
 
-        ShopDeactivated?.Invoke();
+            ShopDeactivated?.Invoke();
     }
 }

@@ -352,7 +352,6 @@ MonoBehaviour:
   _playerAttributes: {fileID: 11400000, guid: bc2ea4766fe7ac0498d47fdbb625359c, type: 2}
   attackScript: {fileID: 5277005994999396361}
   bowAttackScript: {fileID: 7565582060733423824}
-  rotationSpeed: 10
   mouseRotationSpeed: 0.25
 --- !u!114 &3960513810986001214
 MonoBehaviour:
@@ -483,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af2a6e186bd7b46bb0b3904c1a0a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFallsBehind
+  _playerHealth: {fileID: 0}
   InactiveStateDelay: 2
 --- !u!114 &1530188297248041447
 MonoBehaviour:
@@ -627,6 +627,7 @@ MonoBehaviour:
   _centralImpactMultiplier: 2.5
   _minFallOffMultiplier: 0.2
   _maxFallOffDistance: 10
+  _impulseResistance: 0
   _impulseParticlePrefab: {fileID: 5773262420065705963, guid: 49a72dab0322f964d83f8f833d9e6415, type: 3}
   _impulseSound: {fileID: 8300000, guid: 10af157e13942ec449f395822fe8077b, type: 3}
 --- !u!1 &4743473966446129164
@@ -5877,8 +5878,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e0c9599914dc641be43f6ccbe38877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthController
-  _currentHealth: 100
-  _maxHealth: 100
   OnDied:
     m_PersistentCalls:
       m_Calls:
@@ -6574,7 +6573,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 30b5af9925016de4fbaed6e2dff4a170, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6644,7 +6643,6 @@ MonoBehaviour:
   _attackAnimDuration: 0.3
   _minIdleInterval: 5
   _maxIdleInterval: 15
-  _specialIdleChance: 0.3
   _idleAngryDuration: 1
   _idleAxeDuration: 1
   _idleWindDuration: 1

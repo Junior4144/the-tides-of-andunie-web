@@ -29,6 +29,9 @@ public class RegionColliderController : MonoBehaviour
 
         UIEvents.OnLSEnterConfirm += HandleDisablingOfRegionUI;
         UIEvents.OnLSEnterDeactivated += HandleNoLongerDisabledUI;
+
+        UIEvents.OnPauseMenuActive += HandleDisablingOfRegionUI;
+        UIEvents.OnPauseMenuDeactivated += HandleNoLongerDisabledUI;
     }
 
     private void OnDisable()
@@ -49,6 +52,9 @@ public class RegionColliderController : MonoBehaviour
 
         UIEvents.OnLSEnterConfirm -= HandleDisablingOfRegionUI;
         UIEvents.OnLSEnterDeactivated -= HandleNoLongerDisabledUI;
+
+        UIEvents.OnPauseMenuActive -= HandleDisablingOfRegionUI;
+        UIEvents.OnPauseMenuDeactivated -= HandleNoLongerDisabledUI;
     }
 
     private void Awake()
