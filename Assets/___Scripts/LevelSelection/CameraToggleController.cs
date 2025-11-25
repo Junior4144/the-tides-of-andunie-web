@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class CameraToggleController : MonoBehaviour
 {
+    [SerializeField] private Vector2 hotspot = new Vector2(16, 16);
+
     public MonoBehaviour zoomScript;
     public MonoBehaviour mouseScript;
+
+    public Texture2D defaultCursor;
+    public Texture2D normalCursor;
 
     private void OnEnable()
     {
@@ -56,7 +61,9 @@ public class CameraToggleController : MonoBehaviour
 
         if (PlayerManager.Instance == null) return;
 
-       PlayerManager.Instance.DisableLSPlayerMovement();
+        PlayerManager.Instance.DisableLSPlayerMovement();
+
+        Cursor.SetCursor(null, hotspot, CursorMode.Auto);
     }
     private void HandleCameraDeactivation(bool isExit)
     {
@@ -72,6 +79,8 @@ public class CameraToggleController : MonoBehaviour
         }
 
         PlayerManager.Instance.DisableLSPlayerMovement();
+
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
 
@@ -89,5 +98,7 @@ public class CameraToggleController : MonoBehaviour
         }
 
         PlayerManager.Instance.EnableLSPlayerMovement();
+
+        Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
     }
 }

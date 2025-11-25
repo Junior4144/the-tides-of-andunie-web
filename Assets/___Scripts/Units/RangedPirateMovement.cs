@@ -57,7 +57,7 @@ public class RangedPirateMovement : MonoBehaviour
             }
 
             ifStillInRange = true;
-            StartCoroutine(initiateFiringSequence());
+            StartCoroutine(InitiateFiringSequence());
             PlayAttackAnimation();
             return;
         }
@@ -71,7 +71,7 @@ public class RangedPirateMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator initiateFiringSequence()
+    private IEnumerator InitiateFiringSequence()
     {
         canFire = false;
         agent.isStopped = true;
@@ -83,7 +83,8 @@ public class RangedPirateMovement : MonoBehaviour
 
         _audioSource.PlayOneShot(fireShotSound);
         yield return new WaitForSeconds(fireCooldown);
-        agent.isStopped = false;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
         canFire = true;
     }
 

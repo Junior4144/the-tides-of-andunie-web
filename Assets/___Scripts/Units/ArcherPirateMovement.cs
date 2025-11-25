@@ -78,7 +78,8 @@ public class ArcherPirateMovement : MonoBehaviour
 
         yield return new WaitForSeconds(fireCooldown);
 
-        agent.isStopped = false;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
         canFire = true;
     }
 
