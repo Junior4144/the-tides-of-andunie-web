@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8005789977380964756}
   - component: {fileID: 5941975499880371609}
   - component: {fileID: 858632860348211849}
+  - component: {fileID: -5884975929678403997}
   m_Layer: 0
   m_Name: AmandilsSigil
   m_TagString: Untagged
@@ -54,6 +55,7 @@ MonoBehaviour:
   spriteIcon: {fileID: 21300000, guid: 796d20e5f1dc0eb48b7c4997f2878d55, type: 3}
   _effects:
   - {fileID: 858632860348211849}
+  - {fileID: -5884975929678403997}
 --- !u!114 &858632860348211849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,5 +69,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 2
-  amount: 5
+  amount: 15
   _isPercentage: 0
+--- !u!114 &-5884975929678403997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933367769275727668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
+  statType: 0
+  amount: -6
+  _isPercentage: 1
