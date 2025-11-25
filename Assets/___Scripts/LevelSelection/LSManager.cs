@@ -137,14 +137,16 @@ public class LSManager : MonoBehaviour
     public string GetLiberatedVillageAmount()
     {
         return villages.Count(village =>
-            village.state == VillageState.Liberated_FirstTime ||
-            village.state == VillageState.Liberated_Done
+            village.id != "Level1" &&
+            (village.state == VillageState.Liberated_FirstTime ||
+             village.state == VillageState.Liberated_Done)
         ).ToString();
     }
 
     public float GetTotalPlayableVillage()
     {
         return villages.Count(village =>
+            village.id != "Level1" &&
             village.region != Region.None
         );
     }
