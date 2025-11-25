@@ -11,15 +11,17 @@ public class ToolTipsUIController : MonoBehaviour
         UIEvents.OnShopListingHover += HandleUIActivation;
         UIEvents.OnShopListingExit += HandleUIDeactivation;
 
-
+        UIEvents.OnPreScreenDeactivated += HandleUIDeactivation;
         UIEvents.OnShopDeactivated += HandleUIDeactivation;
         UIEvents.OnPauseMenuActive += HandleUIDeactivation;
     }
+
     private void OnDisable()
     {
         UIEvents.OnShopListingHover -= HandleUIActivation;
         UIEvents.OnShopListingExit -= HandleUIDeactivation;
 
+        UIEvents.OnPreScreenDeactivated -= HandleUIDeactivation;
         UIEvents.OnShopDeactivated -= HandleUIDeactivation;
         UIEvents.OnPauseMenuActive -= HandleUIDeactivation;
     }
