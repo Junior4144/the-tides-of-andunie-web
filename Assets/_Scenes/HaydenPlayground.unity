@@ -1389,7 +1389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1863980443667321743, guid: c71b0f7ff1d654645b4966dda1338e3f, type: 3}
       propertyPath: listings.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1863980443667321743, guid: c71b0f7ff1d654645b4966dda1338e3f, type: 3}
       propertyPath: listings.Array.data[0].price
@@ -1412,6 +1412,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1863980443667321743, guid: c71b0f7ff1d654645b4966dda1338e3f, type: 3}
+      propertyPath: listings.Array.data[5].price
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863980443667321743, guid: c71b0f7ff1d654645b4966dda1338e3f, type: 3}
       propertyPath: listings.Array.data[0].inventoryItem
       value: 
       objectReference: {fileID: 585788219599681380, guid: ad39312e733327b4688bc9b0e36e63df, type: 3}
@@ -1431,6 +1435,10 @@ PrefabInstance:
       propertyPath: listings.Array.data[4].inventoryItem
       value: 
       objectReference: {fileID: 2296548241066548383, guid: bbb74cfa295554d48af4a392c6dedfa7, type: 3}
+    - target: {fileID: 1863980443667321743, guid: c71b0f7ff1d654645b4966dda1338e3f, type: 3}
+      propertyPath: listings.Array.data[5].inventoryItem
+      value: 
+      objectReference: {fileID: 4952028147179355312, guid: 881bffee1b0c9b34e9a664f639472b85, type: 3}
     - target: {fileID: 4545394533255824032, guid: c71b0f7ff1d654645b4966dda1338e3f, type: 3}
       propertyPath: m_Name
       value: ShopManager
