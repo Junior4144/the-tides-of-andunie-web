@@ -100,15 +100,42 @@ public class BomberPirateMovement : MonoBehaviour
         if (_impulseController.IsInImpulse())
             yield break;
 
+        Vector3 runPosition;
+
+        // If NO valid NavMesh direction → DO NOT run away
+        if (!FindBestRunawayPosition(out runPosition))
+        {
+            isRunningAway = false;
+            yield break;   // go back to attacking
+        }
+
+        // Valid navmesh found → run away normally
         isRunningAway = true;
         agent.isStopped = false;
         agent.speed = originalSpeed * _attributes.RunBackSpeedMultiplier;
 
-        agent.SetDestination(FindBestRunawayPosition());
+        agent.SetDestination(runPosition);
 
-        while (!_impulseController.IsInImpulse() &&
-               (agent.pathPending || agent.remainingDistance > agent.stoppingDistance))
+        // NEW: allow early escape if close enough
+        const float closeEnoughDistance = 1f;
+
+        while (!_impulseController.IsInImpulse())
         {
+            // If path is still forming, wait
+            if (agent.pathPending)
+            {
+                yield return null;
+                continue;
+            }
+
+            // Early exit if within 0.5f
+            if (Vector3.Distance(transform.position, runPosition) <= closeEnoughDistance)
+                break;
+
+            // Normal exit when NavMeshAgent thinks it reached destination
+            if (agent.remainingDistance <= agent.stoppingDistance)
+                break;
+
             yield return null;
         }
 
@@ -118,16 +145,32 @@ public class BomberPirateMovement : MonoBehaviour
         isRunningAway = false;
     }
 
-    private Vector3 FindBestRunawayPosition()
+    private bool FindBestRunawayPosition(out Vector3 finalPosition)
     {
         Vector3 baseDirection = -transform.up;
 
-        var (direction, distance) = Enumerable.Range(0, _attributes.RaycastCount)
+        // Get all raycast options
+        var options = Enumerable.Range(0, _attributes.RaycastCount)
             .Select(i => GetRunawayOption(baseDirection, i))
             .OrderByDescending(option => option.Distance)
-            .First();
+            .ToList();
 
-        return transform.position + direction * distance;
+        // Check each option for valid NavMesh
+        foreach (var option in options)
+        {
+            Vector3 targetPos = transform.position + option.Direction * option.Distance;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(targetPos, out hit, 1f, NavMesh.AllAreas))
+            {
+                finalPosition = hit.position;
+                return true;                // Found a valid NavMesh position
+            }
+        }
+
+        // No valid NavMesh found
+        finalPosition = Vector3.zero;
+        return false;
     }
 
     private (Vector3 Direction, float Distance) GetRunawayOption(Vector3 baseDirection, int rayIndex)
