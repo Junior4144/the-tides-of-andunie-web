@@ -12,21 +12,17 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject target = collision.gameObject;
+        if (playerHit) return;
 
-        if (hitEnemies.Contains(target))
-        {
-            return;
-        }
-
-        if (collision.TryGetComponent(out PlayerHealthController playerHealth) && !playerHit)
+        if (collision.TryGetComponent(out PlayerHealthController playerHealth))
         {
             playerHit = true;
-            hitEnemies.Add(target);
-            Debug.Log($"[ExplosionDamageController] Damage dealt {pirateAttribute.DamageAmount}");
-            playerHealth.TakeDamage(pirateAttribute.DamageAmount);
-        }
+            Debug.Log($"Explosion dealt {pirateAttribute.DamageAmount}");
+            playerHealth.TakeDamage(pirateAttribute.DamageAmount, DamageType.Explosion);
 
+            // Disable collider so no more triggers happen
+            GetComponent<Collider2D>().enabled = false;
+        }
     }
 
 }
