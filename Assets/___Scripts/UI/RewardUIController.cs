@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -12,9 +13,30 @@ public class RewardUIController : MonoBehaviour
     [SerializeField] private GameObject _rewardItemUIPrefab;
     [SerializeField] private float hideDelay = 0.35f;
 
+    [Header("Confirmation Popup")]
+    [SerializeField] private GameObject confirmationPanel;
+    [SerializeField] private Button yesButton;
+    [SerializeField] private Button noButton;
+    [SerializeField] private AudioClip confirmSound;
+
+    private System.Action onConfirmCallback;
+    private AudioSource audioSource;
+    public bool IsConfirmationActive { get; private set; }
+
     void Start()
     {
         _rewardsCanvas.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+        SetupConfirmationButtons();
+    }
+
+    private void SetupConfirmationButtons()
+    {
+        if (yesButton != null)
+            yesButton.onClick.AddListener(OnConfirmYes);
+
+        if (noButton != null)
+            noButton.onClick.AddListener(OnConfirmNo);
     }
 
     public void ShowRewards(List<RewardListing> rewardsToShow)
@@ -27,6 +49,7 @@ public class RewardUIController : MonoBehaviour
 
         PlayerManager.Instance.DisablePlayerMovement();
 
+        HideConfirmation();
         ClearExistingRewards();
         InstantiateRewardUI(rewardsToShow);
         ActivateRewardsCanvas();
@@ -69,5 +92,39 @@ public class RewardUIController : MonoBehaviour
         yield return new WaitForSeconds(hideDelay);
 
         _rewardsCanvas.SetActive(false);
+    }
+
+    public void ShowLimitReachedConfirmation(System.Action onAccept)
+    {
+        IsConfirmationActive = true;
+        onConfirmCallback = onAccept;
+        confirmationPanel.SetActive(true);
+    }
+
+    public void OnConfirmYes()
+    {
+        PlayConfirmSound();
+        var callback = onConfirmCallback;
+        HideConfirmation();
+        DOVirtual.DelayedCall(0.2f, () => callback?.Invoke());
+    }
+
+    private void PlayConfirmSound()
+    {
+        if (audioSource != null && confirmSound != null)
+            audioSource.PlayOneShot(confirmSound);
+    }
+
+    public void OnConfirmNo()
+    {
+        PlayConfirmSound();
+        HideConfirmation();
+    }
+
+    private void HideConfirmation()
+    {
+        IsConfirmationActive = false;
+        onConfirmCallback = null;
+        confirmationPanel.SetActive(false);
     }
 }

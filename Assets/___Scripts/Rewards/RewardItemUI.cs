@@ -104,6 +104,9 @@ public class RewardItemUI : MonoBehaviour
 
     void HandleRewardClick()
     {
+        if (rewardUIController.IsConfirmationActive)
+            return;
+
         if (InventoryManager.Instance.AddItem(reward_listing.Item))
         {
             PlaySound(clickSound);
@@ -112,8 +115,7 @@ public class RewardItemUI : MonoBehaviour
             return;
         }
 
-        PlaySound(errorSound);
-        HandleLimitReached();
+        rewardUIController.ShowLimitReachedConfirmation(OnAcceptCoinValue);
     }
 
     private void PlaySound(AudioClip clip)
@@ -122,16 +124,17 @@ public class RewardItemUI : MonoBehaviour
             AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
     }
 
-    private void HandleLimitReached() { StopAllCoroutines(); StartCoroutine(LimitReached()); }
-
-    private IEnumerator LimitReached()
+    private void OnAcceptCoinValue()
     {
-        ErrorText.text = "Limit Reached";
-        ErrorText.gameObject.SetActive(true);
+        int coinValue = GetCoinValue();
+        CurrencyManager.Instance.AddCoins(coinValue);
+        rewardUIController.HideRewards();
+        RaidRewardManager.Instance.ReportRewardCollected();
+    }
 
-        yield return new WaitForSeconds(1f);
-
-        ErrorText.gameObject.SetActive(false);
+    private int GetCoinValue()
+    {
+        return reward_listing.Item.SellAmount;
     }
 
     public void ResetErrors()
