@@ -100,7 +100,8 @@ public class RangedPirateMovement : MonoBehaviour
 
         _audioSource.PlayOneShot(fireShotSound);
         yield return new WaitForSeconds(HoldFireCooldown);
-        agent.isStopped = false;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
         canFire = true;
     }
 
