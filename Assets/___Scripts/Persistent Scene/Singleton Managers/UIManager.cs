@@ -238,9 +238,8 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        bool isShopOpen = ShopUIController.Instance.IsOpen;
 
-        if (isShopOpen)
+        if (_shopOpen)
         {
             UIEvents.OnShopDeactivated?.Invoke();
             return;
