@@ -102,9 +102,13 @@ public class RewardItemUI : MonoBehaviour
 
     void HandleRewardClick()
     {
-        InventoryManager.Instance.AddItem(reward_listing.Item);
-        rewardUIController.HideRewards();
-        RaidRewardManager.Instance.ReportRewardCollected();
+        if (InventoryManager.Instance.AddItem(reward_listing.Item))
+        {
+            rewardUIController.HideRewards();
+            RaidRewardManager.Instance.ReportRewardCollected();
+        }
+
+        HandleLimitReached();
     }
 
     private void HandleLimitReached() { StopAllCoroutines(); StartCoroutine(LimitReached()); }
