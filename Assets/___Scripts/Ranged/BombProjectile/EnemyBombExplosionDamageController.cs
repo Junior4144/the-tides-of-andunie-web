@@ -16,7 +16,6 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
 
         if (hitEnemies.Contains(target))
         {
-            Debug.Log($"[ExplosionDamageController] Already hit {target.name}");
             return;
         }
 
@@ -26,13 +25,6 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
             hitEnemies.Add(target);
             Debug.Log($"[ExplosionDamageController] Damage dealt {pirateAttribute.DamageAmount}");
             playerHealth.TakeDamage(pirateAttribute.DamageAmount);
-        }
-
-        if (collision.TryGetComponent(out PirateHealthController pirateHealth))
-        {
-            hitEnemies.Add(target);
-            Debug.Log($"[ExplosionDamageController] Damage dealt {pirateAttribute.DamageAmount}");
-            pirateHealth.TakeDamage(pirateAttribute.DamageAmount * 0.5f);
         }
 
     }
