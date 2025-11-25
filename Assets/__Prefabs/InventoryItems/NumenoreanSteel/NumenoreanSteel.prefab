@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2007739575216095169}
   - component: {fileID: 5519336349214526924}
   - component: {fileID: 5084853095783692375}
+  - component: {fileID: 6797241686343644675}
   m_Layer: 0
   m_Name: NumenoreanSteel
   m_TagString: Untagged
@@ -49,11 +50,12 @@ MonoBehaviour:
   itemName: "N\xFAmen\xF3rean Steel"
   stackable: 1
   maxStackSize: 5
-  sellAmount: 1
+  sellAmount: 9
   inventoryIconPrefab: {fileID: 4532848510381046919, guid: 03f4fd99fb57e04439be1c26aa2bd8a4, type: 3}
   spriteIcon: {fileID: 21300000, guid: 100ad2608984f494489cf790cdfe3099, type: 3}
   _effects:
   - {fileID: 5084853095783692375}
+  - {fileID: 6797241686343644675}
 --- !u!114 &5084853095783692375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,4 +70,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
   statType: 1
   amount: 3
+  _isPercentage: 0
+--- !u!114 &6797241686343644675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5495191867601442949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ddbbc279bc0c54eb16f6c483341b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemEffect
+  statType: 4
+  amount: 9
   _isPercentage: 0
