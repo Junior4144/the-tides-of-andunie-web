@@ -32,7 +32,7 @@ public class LSEnterVillageUI : MonoBehaviour
 
         PlayerManager.Instance.DisablePlayerMovement();
 
-        if (isActiveUI)
+        if (isActiveUI) // double click enter 
         {
             HandleEnterVillage();
         }

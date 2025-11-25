@@ -93,6 +93,9 @@ public class UIManager : MonoBehaviour
         //UIEvents.OnInventoryActive += () => _inventoryOpen = true;
         //UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
 
+        UIEvents.OnPauseMenuActive += () => _isPaused = true;
+        UIEvents.OnPauseMenuDeactivated += () => _isPaused = false;
+
         UIEvents.OnShopConfirm += () => _shopOpen = true;
         UIEvents.OnShopDeactivated += () => _shopOpen = false;
 
@@ -332,26 +335,11 @@ public class UIManager : MonoBehaviour
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();
-            Resume();
         }
         else
         {
             UIEvents.OnPauseMenuActive?.Invoke();
-            Pause();
         }
     }
 
-    private void Pause()
-    {
-        _pauseUI.SetActive(true);
-        Time.timeScale = 0f;
-        _isPaused = true;
-    }
-
-    private void Resume()
-    {
-        _pauseUI.SetActive(false);
-        Time.timeScale = 1f;
-        _isPaused = false;
-    }
 }

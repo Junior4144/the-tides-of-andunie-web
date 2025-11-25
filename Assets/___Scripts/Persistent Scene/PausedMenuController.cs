@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class PausedMenu : MonoBehaviour
+public class PausedMenuController : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject optionPanel;
     public bool isPaused;
     public AudioClip clickSound;
+
+    //private bool isActive;
 
     void Start() =>
         pauseMenu.SetActive(false);
@@ -13,14 +15,50 @@ public class PausedMenu : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            HandlePause();
+        {
+            UIEvents.OnRequestPauseToggle?.Invoke();
+        }
+            
     }
 
-    public void HandlePause()
+    private void OnEnable()
     {
-        Debug.Log("trying to pause game");
-        UIEvents.OnRequestPauseToggle?.Invoke();
-        optionPanel.SetActive(false);
+        UIEvents.OnPauseMenuDeactivated += HandlePauseMenuDeactivation;
+        UIEvents.OnPauseMenuActive += HandleActivatonOfPauseMenu;
+    }
+    private void OnDisable()
+    {
+        UIEvents.OnPauseMenuDeactivated -= HandlePauseMenuDeactivation;
+        UIEvents.OnPauseMenuActive -= HandleActivatonOfPauseMenu;
+    }
+
+    public void ClickResumeButton()
+    {
+        UIEvents.OnPauseMenuDeactivated?.Invoke();
+    }
+
+    public void HandleActivatonOfPauseMenu()
+    {
+        Debug.Log("PausedMenuController pausing game");
+        PauseGame();
+    }
+
+    private void HandlePauseMenuDeactivation()
+    {
+        Debug.Log("PausedMenuController Resuming game");
+        ResumeGame();
+    }
+
+    private void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    private void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void HandleOptions()
