@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using TMPro;
 using Unity.AppUI.UI;
@@ -11,14 +12,19 @@ public class DyanmicToolTips : MonoBehaviour
     [SerializeField] private Vector2 offset = new(40f, -40f);
     [SerializeField] private GameObject iconPanel;
     [SerializeField] private Transform statsPanel;
-    [SerializeField] private GameObject effectRowPrefab;
+    [SerializeField] private RectTransform mainPanel;
+
+    [Header("Tooltip Configuration")]
+    [SerializeField] private TMP_FontAsset tooltipFont;
+    [SerializeField] private float fontSize = 24f;
+    [SerializeField] private float rowHeight = 30f;
+    [SerializeField] private float minPanelWidth = 200f;
+    [SerializeField] private float mainPanelPadding = 20f;
 
     private readonly List<GameObject> spawnedEffectRows = new();
     private ItemEffect[] lastEffects;
-
     public ShopListing shopListing;
     private Image iconImage;
-
     private Sprite lastSprite;
 
 
@@ -73,31 +79,93 @@ public class DyanmicToolTips : MonoBehaviour
 
         ItemEffect[] effects = shopListing.Item.GetEffects();
 
-        // If nothing changed, do nothing
         if (lastEffects == effects)
             return;
 
         lastEffects = effects;
 
-        // Clear old UI rows
-        foreach (var row in spawnedEffectRows)
-            Destroy(row);
-
-        spawnedEffectRows.Clear();
+        ClearStatRows();
 
         if (effects == null || effects.Length == 0)
             return;
 
-        // Build new UI rows
         foreach (var effect in effects)
-        {
-            GameObject row = Instantiate(effectRowPrefab, statsPanel);
-            TextMeshProUGUI text = row.GetComponentInChildren<TextMeshProUGUI>();
+            CreateStatRow(effect);
 
-            text.text = effect.ToString();       // Uses your formatting
-            text.color = effect.ItemAmount >= 0 ? Color.green : Color.red;
+        AdjustPanelWidth();
 
-            spawnedEffectRows.Add(row);
-        }
+        UnityEngine.Canvas.ForceUpdateCanvases();
     }
+
+    private void ClearStatRows()
+    {
+        foreach (var row in spawnedEffectRows)
+            Destroy(row);
+
+        spawnedEffectRows.Clear();
+    }
+
+    private void CreateStatRow(ItemEffect effect)
+    {
+        GameObject textObject = new($"StatRow_{effect}");
+        textObject.transform.SetParent(statsPanel, false);
+
+        RectTransform rectTransform = textObject.AddComponent<RectTransform>();
+        TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
+
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rowHeight);
+
+        text.text = effect.ToString();
+        text.font = tooltipFont;
+        text.fontSize = fontSize;
+        text.alignment = TextAlignmentOptions.Left;
+        text.color = effect.ItemAmount >= 0 ? Color.green : Color.red;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
+        text.overflowMode = TextOverflowModes.Overflow;
+
+        spawnedEffectRows.Add(textObject);
+    }
+
+    private void AdjustPanelWidth()
+    {
+        if (mainPanel == null || !spawnedEffectRows.Any())
+            return;
+
+        var requiredWidth = CalculateRequiredWidth();
+        SetPanelWidth(requiredWidth);
+    }
+
+    private float CalculateRequiredWidth() => 
+        Mathf.Max(minPanelWidth, GetIconWidth() + GetMaxTextWidth() + mainPanelPadding);
+
+    private float GetIconWidth()
+    {
+        if (iconPanel == null)
+            return 0f;
+
+        RectTransform iconRect = iconPanel.GetComponent<RectTransform>();
+        return iconRect != null ? iconRect.sizeDelta.x : 0f;
+    }
+        
+
+    private float GetMaxTextWidth() =>
+        spawnedEffectRows
+            .Select(GetTextComponent)
+            .Where(text => text != null)
+            .Select(GetTextWidth)
+            .DefaultIfEmpty(0f)
+            .Max();
+
+    private TextMeshProUGUI GetTextComponent(GameObject row) =>
+        row.GetComponent<TextMeshProUGUI>();
+
+    private float GetTextWidth(TextMeshProUGUI text)
+    {
+        text.ForceMeshUpdate();
+
+        return text.preferredWidth;
+    }
+
+    private void SetPanelWidth(float width) =>
+        mainPanel.sizeDelta = new Vector2(width, mainPanel.sizeDelta.y);
 }
