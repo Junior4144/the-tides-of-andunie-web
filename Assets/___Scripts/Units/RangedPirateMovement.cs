@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
@@ -49,7 +49,18 @@ public class RangedPirateMovement : MonoBehaviour
 
         if (distance <= _attributes.ReadyDistance && canFire)
         {
-            if(ifStillInRange)
+            if (!HasLineOfSight())
+            {
+                // Can't see player → DO NOT SHOOT
+                ifStillInRange = false;
+                agent.isStopped = false;
+                agent.SetDestination(player.position);
+                _animator.SetPlayerInRange(false);
+                return;
+            }
+
+            // LOS is clear → proceed with firing sequences
+            if (ifStillInRange)
             {
                 StartCoroutine(initiateHoldFiringSequence());
                 PlayHoldFireAnimation();
@@ -164,6 +175,36 @@ public class RangedPirateMovement : MonoBehaviour
         );
     }
 
+    private bool HasLineOfSight()
+    {
+        Vector2 originCenter = firePoint.transform.position;
+        Vector2 directionCenter = (player.position - firePoint.transform.position).normalized;
+
+        float distance = Vector2.Distance(originCenter, player.position);
+
+        // Perpendicular vector for left/right offsets
+        Vector2 perp = new Vector2(-directionCenter.y, directionCenter.x);
+
+        Vector2 originLeft = originCenter + perp * 0.35f;
+        Vector2 originRight = originCenter - perp * 0.35f;
+
+        RaycastHit2D hitCenter = Physics2D.Raycast(originCenter, directionCenter, distance);
+        RaycastHit2D hitLeft = Physics2D.Raycast(originLeft, directionCenter, distance);
+        RaycastHit2D hitRight = Physics2D.Raycast(originRight, directionCenter, distance);
+
+        // Debug rays (optional)
+        Debug.DrawLine(originCenter, originCenter + directionCenter * distance, Color.red);
+        Debug.DrawLine(originLeft, originLeft + directionCenter * distance, Color.yellow);
+        Debug.DrawLine(originRight, originRight + directionCenter * distance, Color.yellow);
+
+        bool centerClear = hitCenter.collider != null && hitCenter.collider.CompareTag("Player");
+        bool leftClear = hitLeft.collider != null && hitLeft.collider.CompareTag("Player");
+        bool rightClear = hitRight.collider != null && hitRight.collider.CompareTag("Player");
+
+        // LOS is valid if ANY of the rays can see the player
+        return centerClear && leftClear && rightClear;
+    }
+
     void ApplyImpulse()
     {
         var impulseSettings = new ImpulseSettings
@@ -175,5 +216,25 @@ public class RangedPirateMovement : MonoBehaviour
         };
 
         _impulseController.InitiateSquadImpulse(transform.position, -_rigidbody.transform.up, impulseSettings);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (player == null || firePoint == null) return;
+
+        Vector2 originCenter = firePoint.transform.position;
+        Vector2 direction = (player.position - firePoint.transform.position).normalized;
+        float distance = Vector2.Distance(originCenter, player.position);
+
+        Vector2 perp = new Vector2(-direction.y, direction.x);
+        Vector2 originLeft = originCenter + perp * 0.35f;
+        Vector2 originRight = originCenter - perp * 0.35f;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(originCenter, originCenter + direction * distance);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(originLeft, originLeft + direction * distance);
+        Gizmos.DrawLine(originRight, originRight + direction * distance);
     }
 }
