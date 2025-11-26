@@ -17,7 +17,12 @@ public class RewardItemUI : MonoBehaviour
 
     private RewardListing reward_listing;
     private RewardUIController rewardUIController;
+    private AudioSource _audioSource;
 
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     private void Start() => ErrorText.gameObject.SetActive(false);
 
     private void OnDisable() => ErrorText.gameObject.SetActive(false);
@@ -114,14 +119,14 @@ public class RewardItemUI : MonoBehaviour
             RaidRewardManager.Instance.ReportRewardCollected();
             return;
         }
-
+        PlaySound(errorSound);
         rewardUIController.ShowLimitReachedConfirmation(OnAcceptCoinValue);
     }
 
     private void PlaySound(AudioClip clip)
     {
         if (clip != null)
-            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+            _audioSource.PlayOneShot(clip);
     }
 
     private void OnAcceptCoinValue()
