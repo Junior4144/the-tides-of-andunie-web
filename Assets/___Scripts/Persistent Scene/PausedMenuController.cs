@@ -7,14 +7,14 @@ public class PausedMenuController : MonoBehaviour
     public bool isPaused;
     public AudioClip clickSound;
 
-    //private bool isActive;
+    private bool isOptionPanelActive = false;
 
     void Start() =>
         pauseMenu.SetActive(false);
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive)
         {
             UIEvents.OnRequestPauseToggle?.Invoke();
         }
@@ -64,6 +64,7 @@ public class PausedMenuController : MonoBehaviour
     public void HandleOptions()
     {
         Debug.Log("OPTIONS pressed � opening options menu");
+        isOptionPanelActive = true;
         pauseMenu.SetActive(false);
         optionPanel.SetActive(true);
     }
@@ -71,6 +72,7 @@ public class PausedMenuController : MonoBehaviour
     public void OptionsToPauseMenu()
     {
         Debug.Log("BACK pressed � returning to pause menu");
+        isOptionPanelActive = false;
         optionPanel.SetActive(false);
         pauseMenu.SetActive(true);
     }
