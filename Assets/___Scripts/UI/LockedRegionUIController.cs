@@ -123,12 +123,12 @@ public class LockedRegionUI : MonoBehaviour
     {
         var regionLocked = LSRegionLockManager.Instance.IsRegionLocked(region);
         regionText.text = regionLocked == false
-            ? "Region Unlocked"
-            : "Region Locked";
+            ? "Region   Unlocked"
+            : "Region   Locked";
 
         middleText.text = regionLocked == false
             ? ""
-            : "You Must Liberate the following region";
+            : "You  Must  Liberate  the  following  region";
 
 
         var regionList = LSRegionLockManager.Instance.GetPrerequisiteRegions(region);
@@ -136,10 +136,10 @@ public class LockedRegionUI : MonoBehaviour
         // Set prerequisite list label
         prerequisiteText.text =
             regionList.Count == 0
-            ? "No prerequisites.\nRegion can be traveled."
+            ? "No  prerequisites. \nRegion  can  be  traveled."
             : string.Join("\n", regionList.Select(r => r.ToString()));
 
         if (LSRegionLockManager.Instance.IsRegionLocked(region)) return;
-        prerequisiteText.text = "No prerequisites.\nRegion can be traveled.";
+        prerequisiteText.text = "No  prerequisites. \nRegion  can  be  traveled.";
     }
 }
