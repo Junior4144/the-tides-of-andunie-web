@@ -13,6 +13,7 @@ public class BomberPirateMovement : MonoBehaviour
 
     [Header("Runaway Settings")]
     [SerializeField] private LayerMask obstacleLayerMask;
+    [SerializeField] private float runBackTimeout = 1f;
 
     private Transform player;
     private NavMeshAgent agent;
@@ -100,45 +101,50 @@ public class BomberPirateMovement : MonoBehaviour
         if (_impulseController.IsInImpulse())
             yield break;
 
-        Vector3 runPosition;
+        if (!FindBestRunawayPosition(out Vector3 runPosition))
+            yield break;
 
-        // If NO valid NavMesh direction → DO NOT run away
-        if (!FindBestRunawayPosition(out runPosition))
-        {
-            isRunningAway = false;
-            yield break;   // go back to attacking
-        }
+        StartRunningAway(runPosition);
+        yield return WaitForDestinationOrTimeout();
+        StopRunningAway();
+    }
 
-        // Valid navmesh found → run away normally
+    private void StartRunningAway(Vector3 destination)
+    {
         isRunningAway = true;
         agent.isStopped = false;
         agent.speed = originalSpeed * _attributes.RunBackSpeedMultiplier;
+        agent.SetDestination(destination);
+    }
 
-        agent.SetDestination(runPosition);
-
-        // NEW: allow early escape if close enough
-        const float closeEnoughDistance = 1f;
+    private IEnumerator WaitForDestinationOrTimeout()
+    {
+        float startTime = Time.time;
 
         while (!_impulseController.IsInImpulse())
         {
-            // If path is still forming, wait
+            if (HasTimedOut(startTime))
+                yield break;
+
             if (agent.pathPending)
             {
                 yield return null;
                 continue;
             }
 
-            // Early exit if within 0.5f
-            if (Vector3.Distance(transform.position, runPosition) <= closeEnoughDistance)
-                break;
-
-            // Normal exit when NavMeshAgent thinks it reached destination
-            if (agent.remainingDistance <= agent.stoppingDistance)
-                break;
+            if (HasReachedDestination())
+                yield break;
 
             yield return null;
         }
+    }
 
+    private bool HasTimedOut(float startTime) => Time.time - startTime >= runBackTimeout;
+
+    private bool HasReachedDestination() => agent.remainingDistance <= agent.stoppingDistance;
+
+    private void StopRunningAway()
+    {
         if (!_impulseController.IsInImpulse())
             agent.speed = originalSpeed;
 
@@ -147,29 +153,33 @@ public class BomberPirateMovement : MonoBehaviour
 
     private bool FindBestRunawayPosition(out Vector3 finalPosition)
     {
-        Vector3 baseDirection = -transform.up;
+        Vector3 backwardDirection = -transform.up;
 
-        // Get all raycast options
-        var options = Enumerable.Range(0, _attributes.RaycastCount)
-            .Select(i => GetRunawayOption(baseDirection, i))
-            .OrderByDescending(option => option.Distance)
-            .ToList();
+        var sortedOptions = Enumerable.Range(0, _attributes.RaycastCount)
+            .Select(i => GetRunawayOption(backwardDirection, i))
+            .OrderByDescending(option => option.Distance);
 
-        // Check each option for valid NavMesh
-        foreach (var option in options)
+        foreach (var option in sortedOptions)
         {
-            Vector3 targetPos = transform.position + option.Direction * option.Distance;
-
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(targetPos, out hit, 1f, NavMesh.AllAreas))
-            {
-                finalPosition = hit.position;
-                return true;                // Found a valid NavMesh position
-            }
+            if (TryGetNavMeshPosition(option, out finalPosition))
+                return true;
         }
 
-        // No valid NavMesh found
         finalPosition = Vector3.zero;
+        return false;
+    }
+
+    private bool TryGetNavMeshPosition((Vector3 Direction, float Distance) option, out Vector3 position)
+    {
+        Vector3 targetPos = transform.position + option.Direction * option.Distance;
+
+        if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+        {
+            position = hit.position;
+            return true;
+        }
+
+        position = Vector3.zero;
         return false;
     }
 
@@ -179,7 +189,7 @@ public class BomberPirateMovement : MonoBehaviour
         Vector2 direction = (player.position - firePoint.transform.position).normalized;
         float distance = Vector2.Distance(originCenter, player.position);
 
-        Vector2 perp = new Vector2(-direction.y, direction.x);
+        Vector2 perp = new(-direction.y, direction.x);
 
         Vector2 originLeft = originCenter + perp * 0.35f;
         Vector2 originRight = originCenter - perp * 0.35f;
@@ -231,15 +241,7 @@ public class BomberPirateMovement : MonoBehaviour
     private void PlayAttackAnimation()
     {
         if (_animator)
-        {
             _animator.TriggerAttack();
-            StartCoroutine(ResetAttackAnimation());
-        }
-    }
-
-    private IEnumerator ResetAttackAnimation()
-    {
-        yield return new WaitForSeconds(_attackAnimDuration);
     }
 
     private void RotateTowardsMovementDirection()
