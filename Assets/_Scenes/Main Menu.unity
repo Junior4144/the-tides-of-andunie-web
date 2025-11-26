@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _animator: {fileID: 487556514}
-  _timeBetweenAnimations: 30
+  _timeBetweenAnimations: 8
 --- !u!1 &488386525
 GameObject:
   m_ObjectHideFlags: 0
@@ -4147,7 +4147,6 @@ GameObject:
   - component: {fileID: 1720697140}
   - component: {fileID: 1720697139}
   - component: {fileID: 1720697138}
-  - component: {fileID: 1720697141}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -4216,26 +4215,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1720697141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720697137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.StandaloneInputModule
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!1 &1742924749
 GameObject:
   m_ObjectHideFlags: 0
