@@ -41,7 +41,6 @@ public class ArmLungeController : MonoBehaviour
 
     private enum SweepMode { None, SingleSweep, FullRotation }
     private enum ArmState { Idle, Attacking, CommandedSpin }
-    private ArmState state = ArmState.Idle;
 
     private bool isAttacking = false;
 
@@ -115,7 +114,6 @@ public class ArmLungeController : MonoBehaviour
         }
 
         isAttacking = true;
-        state = ArmState.Attacking;
 
         // Enable damage collider during attack
         if (damageCollider != null)
@@ -246,7 +244,6 @@ public class ArmLungeController : MonoBehaviour
 
     private void EndAttack()
     {
-        state = ArmState.Idle;
         isAttacking = false;
         attackCooldownTimer = attackCooldown;
         transform.localRotation = originalLocalRotation;
@@ -277,7 +274,6 @@ public class ArmLungeController : MonoBehaviour
             return;
         }
 
-        state = ArmState.CommandedSpin;
         isAttacking = true;
 
         if (currentRotationCoroutine != null)
@@ -305,7 +301,6 @@ public class ArmLungeController : MonoBehaviour
         yield return StartCoroutine(RotateFullSpin(duration, rotations));
 
         // Return to idle after spin
-        state = ArmState.Idle;
         isAttacking = false;
         transform.localRotation = originalLocalRotation;
 
@@ -327,7 +322,6 @@ public class ArmLungeController : MonoBehaviour
             currentRotationCoroutine = null;
         }
 
-        state = ArmState.Idle;
         isAttacking = false;
         transform.localRotation = originalLocalRotation;
 

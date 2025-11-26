@@ -15,8 +15,6 @@ public class ShopUIController : MonoBehaviour
     public static event Action ShopActivated;
     public static event Action ShopDeactivated;
 
-    private bool isOpen = false;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)

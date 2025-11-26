@@ -4,7 +4,6 @@ using DG.Tweening;
 public class ScalePulse : MonoBehaviour
 {
     [SerializeField] private float scaleAmount = 1.1f;
-    [SerializeField] private float duration = 0.5f;
 
     private Tween pulseTween;
 
