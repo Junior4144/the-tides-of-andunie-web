@@ -63,14 +63,14 @@ public class BomberPirateMovement : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, player.position);
 
-        if (distance <= _attributes.ReadyDistance && canFire)
+        if (distance <= _attributes.ReadyDistance && canFire && HasLineOfSight())
         {
             StartCoroutine(FireSequence());
             PlayAttackAnimation();
             return;
         }
 
-        if (distance > _attributes.ReadyDistance)
+        if (distance > _attributes.ReadyDistance || !HasLineOfSight())
         {
             RotateTowardsMovementDirection();
             agent.SetDestination(player.position);
@@ -171,6 +171,29 @@ public class BomberPirateMovement : MonoBehaviour
         // No valid NavMesh found
         finalPosition = Vector3.zero;
         return false;
+    }
+
+    private bool HasLineOfSight()
+    {
+        Vector2 originCenter = firePoint.transform.position;
+        Vector2 direction = (player.position - firePoint.transform.position).normalized;
+        float distance = Vector2.Distance(originCenter, player.position);
+
+        Vector2 perp = new Vector2(-direction.y, direction.x);
+
+        Vector2 originLeft = originCenter + perp * 0.35f;
+        Vector2 originRight = originCenter - perp * 0.35f;
+
+        LayerMask environmentMask = LayerMask.GetMask("Environment");
+
+        bool centerBlocked = Physics2D.Raycast(originCenter, direction, distance, environmentMask);
+        bool leftBlocked = Physics2D.Raycast(originLeft, direction, distance, environmentMask);
+        bool rightBlocked = Physics2D.Raycast(originRight, direction, distance, environmentMask);
+
+        if (centerBlocked || leftBlocked || rightBlocked)
+            return false;
+
+        return true;
     }
 
     private (Vector3 Direction, float Distance) GetRunawayOption(Vector3 baseDirection, int rayIndex)
