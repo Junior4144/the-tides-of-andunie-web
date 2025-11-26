@@ -26,6 +26,8 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnLSEnterConfirm += HandleCameraDeactivation;
         UIEvents.OnLSEnterDeactivated += HandleCameraActivation;
+
+        UIEvents.EndGamePopUPActive += HandleCameraDeactivation;
     }
 
     private void OnDisable()
@@ -44,6 +46,8 @@ public class CameraToggleController : MonoBehaviour
 
         UIEvents.OnLSEnterConfirm -= HandleCameraDeactivation;
         UIEvents.OnLSEnterDeactivated -= HandleCameraActivation;
+
+        UIEvents.EndGamePopUPActive -= HandleCameraDeactivation;
     }
 
     private void HandleCameraDeactivation()
