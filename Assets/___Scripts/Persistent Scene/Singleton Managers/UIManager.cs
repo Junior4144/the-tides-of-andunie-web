@@ -42,6 +42,8 @@ public static class UIEvents
 
     public static Action<ShopListing> OnShopListingHover;
     public static Action OnShopListingExit;
+
+    public static Action EndGamePopUPActive;
 }
 
 public class UIManager : MonoBehaviour
@@ -67,6 +69,7 @@ public class UIManager : MonoBehaviour
     private bool _lSEnterUIOpen;
     private bool _preScreenUIOpen;
     private bool _tutorialOpen;
+    private bool _endGameOpen;
 
     private void Awake()
     {
@@ -107,6 +110,8 @@ public class UIManager : MonoBehaviour
 
         UIEvents.OnTutorialActive += () => _tutorialOpen = true;
         UIEvents.OnTutorialDeactivated += () => _tutorialOpen = false;
+
+        UIEvents.EndGamePopUPActive += () => _endGameOpen = true;
 
         UIEvents.OnRequestCloseAllUI += CloseAllUI;
     }
@@ -334,6 +339,7 @@ public class UIManager : MonoBehaviour
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();
+            if (_endGameOpen) UIEvents.EndGamePopUPActive.Invoke();
         }
         else
         {
