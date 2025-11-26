@@ -41,8 +41,6 @@ public class BombProjectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isDetonating) return;
-
         Debug.Log($"Projectile hit {collision.gameObject.name}");
 
         if (collision.gameObject.CompareTag("Player"))

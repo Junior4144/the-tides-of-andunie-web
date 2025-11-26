@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
@@ -49,7 +49,18 @@ public class RangedPirateMovement : MonoBehaviour
 
         if (distance <= _attributes.ReadyDistance && canFire)
         {
-            if(ifStillInRange)
+            if (!HasLineOfSight())
+            {
+                // Can't see player → DO NOT SHOOT
+                ifStillInRange = false;
+                agent.isStopped = false;
+                agent.SetDestination(player.position);
+                _animator.SetPlayerInRange(false);
+                return;
+            }
+
+            // LOS is clear → proceed with firing sequences
+            if (ifStillInRange)
             {
                 StartCoroutine(initiateHoldFiringSequence());
                 PlayHoldFireAnimation();
@@ -164,6 +175,29 @@ public class RangedPirateMovement : MonoBehaviour
         );
     }
 
+    private bool HasLineOfSight()
+    {
+        Vector2 originCenter = firePoint.transform.position;
+        Vector2 direction = (player.position - firePoint.transform.position).normalized;
+        float distance = Vector2.Distance(originCenter, player.position);
+
+        Vector2 perp = new Vector2(-direction.y, direction.x);
+
+        Vector2 originLeft = originCenter + perp * 0.35f;
+        Vector2 originRight = originCenter - perp * 0.35f;
+
+        LayerMask environmentMask = LayerMask.GetMask("Environment");
+
+        bool centerBlocked = Physics2D.Raycast(originCenter, direction, distance, environmentMask);
+        bool leftBlocked = Physics2D.Raycast(originLeft, direction, distance, environmentMask);
+        bool rightBlocked = Physics2D.Raycast(originRight, direction, distance, environmentMask);
+
+        if (centerBlocked || leftBlocked || rightBlocked)
+            return false;
+
+        return true;
+    }
+
     void ApplyImpulse()
     {
         var impulseSettings = new ImpulseSettings
@@ -175,5 +209,25 @@ public class RangedPirateMovement : MonoBehaviour
         };
 
         _impulseController.InitiateSquadImpulse(transform.position, -_rigidbody.transform.up, impulseSettings);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (player == null || firePoint == null) return;
+
+        Vector2 originCenter = firePoint.transform.position;
+        Vector2 direction = (player.position - firePoint.transform.position).normalized;
+        float distance = Vector2.Distance(originCenter, player.position);
+
+        Vector2 perp = new Vector2(-direction.y, direction.x);
+        Vector2 originLeft = originCenter + perp * 0.35f;
+        Vector2 originRight = originCenter - perp * 0.35f;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(originCenter, originCenter + direction * distance);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(originLeft, originLeft + direction * distance);
+        Gizmos.DrawLine(originRight, originRight + direction * distance);
     }
 }
