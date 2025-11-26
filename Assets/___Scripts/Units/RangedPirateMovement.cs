@@ -178,31 +178,24 @@ public class RangedPirateMovement : MonoBehaviour
     private bool HasLineOfSight()
     {
         Vector2 originCenter = firePoint.transform.position;
-        Vector2 directionCenter = (player.position - firePoint.transform.position).normalized;
-
+        Vector2 direction = (player.position - firePoint.transform.position).normalized;
         float distance = Vector2.Distance(originCenter, player.position);
 
-        // Perpendicular vector for left/right offsets
-        Vector2 perp = new Vector2(-directionCenter.y, directionCenter.x);
+        Vector2 perp = new Vector2(-direction.y, direction.x);
 
         Vector2 originLeft = originCenter + perp * 0.35f;
         Vector2 originRight = originCenter - perp * 0.35f;
 
-        RaycastHit2D hitCenter = Physics2D.Raycast(originCenter, directionCenter, distance);
-        RaycastHit2D hitLeft = Physics2D.Raycast(originLeft, directionCenter, distance);
-        RaycastHit2D hitRight = Physics2D.Raycast(originRight, directionCenter, distance);
+        LayerMask environmentMask = LayerMask.GetMask("Environment");
 
-        // Debug rays (optional)
-        Debug.DrawLine(originCenter, originCenter + directionCenter * distance, Color.red);
-        Debug.DrawLine(originLeft, originLeft + directionCenter * distance, Color.yellow);
-        Debug.DrawLine(originRight, originRight + directionCenter * distance, Color.yellow);
+        bool centerBlocked = Physics2D.Raycast(originCenter, direction, distance, environmentMask);
+        bool leftBlocked = Physics2D.Raycast(originLeft, direction, distance, environmentMask);
+        bool rightBlocked = Physics2D.Raycast(originRight, direction, distance, environmentMask);
 
-        bool centerClear = hitCenter.collider != null && hitCenter.collider.CompareTag("Player");
-        bool leftClear = hitLeft.collider != null && hitLeft.collider.CompareTag("Player");
-        bool rightClear = hitRight.collider != null && hitRight.collider.CompareTag("Player");
+        if (centerBlocked || leftBlocked || rightBlocked)
+            return false;
 
-        // LOS is valid if ANY of the rays can see the player
-        return centerClear && leftClear && rightClear;
+        return true;
     }
 
     void ApplyImpulse()
