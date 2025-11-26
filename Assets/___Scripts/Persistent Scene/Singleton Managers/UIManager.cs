@@ -339,6 +339,7 @@ public class UIManager : MonoBehaviour
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();
+            if (_endGameOpen) UIEvents.EndGamePopUPActive.Invoke();
         }
         else
         {
