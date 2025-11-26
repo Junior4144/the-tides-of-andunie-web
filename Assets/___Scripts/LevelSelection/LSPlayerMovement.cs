@@ -5,14 +5,12 @@ using UnityEngine.AI;
 
 public class LSPlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 360f;
     public Vector2 cursorHotSpot = Vector2.zero;
     public GameObject targetPrefab;
     public GameObject pingSoundPrefab;
 
     NavMeshAgent agent;
     Camera cam;
-    Vector3 smoothDir;
 
     [HideInInspector]
     public bool disableClicking = false;
@@ -33,8 +31,6 @@ public class LSPlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !disableClicking)
             TryMoveToMouse();
-
-        RotateTowardVelocity();
     }
 
     void TryMoveToMouse()
@@ -87,22 +83,6 @@ public class LSPlayerMovement : MonoBehaviour
         }
 
         Debug.Log("Cannot move there — no NavMesh.");
-    }
-
-    void RotateTowardVelocity()
-    {
-        Vector3 vel = agent.velocity;
-        if (vel.sqrMagnitude > 0.01f)
-        {
-            float angle = Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg - 90f;
-            Quaternion targetRot = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                targetRot,
-                rotationSpeed * Time.deltaTime
-            );
-        }
     }
 
     public void SpawnNewTarget(Vector3 position)
