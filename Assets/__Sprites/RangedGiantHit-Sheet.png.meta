@@ -124,12 +124,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 14
-        width: 48
-        height: 26
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,12 +146,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_1
       rect:
         serializedVersion: 2
-        x: 74
-        y: 15
-        width: 48
-        height: 26
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_2
       rect:
         serializedVersion: 2
-        x: 135
-        y: 15
-        width: 48
-        height: 27
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -190,12 +190,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_3
       rect:
         serializedVersion: 2
-        x: 201
-        y: 14
-        width: 48
-        height: 30
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -212,12 +212,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_4
       rect:
         serializedVersion: 2
-        x: 259
-        y: 13
-        width: 53
-        height: 32
+        x: 256
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -234,12 +234,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_5
       rect:
         serializedVersion: 2
-        x: 323
-        y: 34
-        width: 8
-        height: 13
+        x: 320
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -256,12 +256,12 @@ TextureImporter:
       name: RangedGiantHit-Sheet_6
       rect:
         serializedVersion: 2
-        x: 330
-        y: 13
-        width: 48
-        height: 41
+        x: 384
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -274,33 +274,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: RangedGiantHit-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 393
-        y: 14
-        width: 50
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e9856c38acac1fd30800000000000000
-      internalID: 4463571676843890846
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: bb55c127e9336a741ae6e4ff82ecb944
     internalID: 0
     vertices: []
     indices: 
@@ -308,7 +286,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":64.0,"y":32.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       RangedGiantHit-Sheet_0: 7106176260877706842
       RangedGiantHit-Sheet_1: -9124311236099689788
@@ -317,7 +297,6 @@ TextureImporter:
       RangedGiantHit-Sheet_4: -3355544162515184328
       RangedGiantHit-Sheet_5: 5750196053188022229
       RangedGiantHit-Sheet_6: 3586503294852163566
-      RangedGiantHit-Sheet_7: 4463571676843890846
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
