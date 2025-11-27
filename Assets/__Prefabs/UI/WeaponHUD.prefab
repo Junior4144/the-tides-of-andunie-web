@@ -564,6 +564,7 @@ GameObject:
   - component: {fileID: 4115373336801240000}
   - component: {fileID: 7678568619110367962}
   - component: {fileID: 3546791532396114207}
+  - component: {fileID: 2975256513910523476}
   m_Layer: 0
   m_Name: WeaponPanel
   m_TagString: Untagged
@@ -656,6 +657,27 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2975256513910523476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822523909968927734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c609ffb647b9b41b1be4ff677259b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIKeyPressController
+  keyPressUIs:
+  - image: {fileID: 5331082941181254196}
+    unpressedSprite: {fileID: 188524800739998682, guid: 557ea2da675a5884197b63a3e677428d, type: 3}
+    pressedSprite: {fileID: -7498289518724460201, guid: 557ea2da675a5884197b63a3e677428d, type: 3}
+    key: 49
+  - image: {fileID: 7508872522955701506}
+    unpressedSprite: {fileID: -77339823060296489, guid: 557ea2da675a5884197b63a3e677428d, type: 3}
+    pressedSprite: {fileID: 5354938295553114340, guid: 557ea2da675a5884197b63a3e677428d, type: 3}
+    key: 50
 --- !u!1 &3263719957748546937
 GameObject:
   m_ObjectHideFlags: 0
