@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::randommovementscript
   _playerAttributes: {fileID: 11400000, guid: bc2ea4766fe7ac0498d47fdbb625359c, type: 2}
-  attackScript: {fileID: 5277005994999396361}
+  attackScript: {fileID: 0}
   bowAttackScript: {fileID: 7565582060733423824}
   mouseRotationSpeed: 0.25
 --- !u!114 &3960513810986001214
@@ -5745,6 +5745,7 @@ GameObject:
   - component: {fileID: 2059276219016998254}
   - component: {fileID: 6207334754615920825}
   - component: {fileID: 2851902867757680145}
+  - component: {fileID: 4557096688465954281}
   m_Layer: 7
   m_Name: AxeWeaponController
   m_TagString: Untagged
@@ -5795,6 +5796,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCooldownHandler
   abilityCooldownDuration: 5
+--- !u!114 &4557096688465954281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5017984629624715750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f451e0de857b04db65cf343dc14c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AxeWeaponController
+  normalAttack: {fileID: 8636002439597059991}
+  heavyAttack: {fileID: 0}
 --- !u!1 &5051202716831153992
 GameObject:
   m_ObjectHideFlags: 0
@@ -6741,11 +6756,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6360224139220271577}
   - component: {fileID: 1350842961473490342}
-  - component: {fileID: 5277005994999396361}
   - component: {fileID: 728254605536207020}
+  - component: {fileID: 8636002439597059991}
   - component: {fileID: 1850924139042858366}
   m_Layer: 7
-  m_Name: AttackPoint
+  m_Name: NormalAttackPoint
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6864,34 +6879,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5277005994999396361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8529623427114425704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9be04156afff024783f06c3cd1db070, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AttackRework
-  _animator: {fileID: 121471000654909590}
-  _attackSound: {fileID: 8300000, guid: 45587d4c2a06a1d41a2771275bcd0eed, type: 3}
-  _hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
-  _impulseCollider: {fileID: 8443880512905870559}
-  _attackDuration: 0.3
-  _damageDelay: 0
-  _impulseStrength: 35
-  _impulseDuration: 0.1
-  shakeCooldown: 0.2
-  _attackArcDegrees: 180
-  _attackStartAngle: -60
-  _sweepRotations: 1
-  _sweepDuration: 0.3
-  force: 0.3
-  hitStopCooldown: 0
-  hitStopDuration: 0
 --- !u!58 &728254605536207020
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6928,6 +6915,30 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 1.0421748, y: 0.7943941}
   m_Radius: 0.60250914
+--- !u!114 &8636002439597059991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8529623427114425704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed6e6743d0099c41b6b8f311108e4dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NormalAttack
+  _animator: {fileID: 121471000654909590}
+  _attackSound: {fileID: 8300000, guid: 45587d4c2a06a1d41a2771275bcd0eed, type: 3}
+  _hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
+  _impulseCollider: {fileID: 8443880512905870559}
+  _attackDuration: 0.3
+  _damageDelay: 0
+  shakeCooldown: 0.2
+  shakeForce: 0.3
+  _impulseStrength: 40
+  _impulseDuration: 0.1
+  _attackArcDegrees: 180
+  _attackStartAngle: -60
 --- !u!114 &1850924139042858366
 MonoBehaviour:
   m_ObjectHideFlags: 0
