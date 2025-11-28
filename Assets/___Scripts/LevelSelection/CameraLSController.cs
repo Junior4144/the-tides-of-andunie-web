@@ -25,34 +25,16 @@ public class CameraLSController : MonoBehaviour
     Transform PlayerTransform;
     Bounds bounds;
 
-    private bool isAboveThreshold = false;
-
     public static event Action<Vector2> LockedRegionClicked;
 
     private void OnEnable()
     {
-        RegionZoomController.ZoomAboveThreshold += OnZoomAboveThreshold;
-        RegionZoomController.ZoomBelowThreshold += OnZoomBelowThreshold;
-
         OnClickOutline.RegionClicked += HandleRegionClicked;
     }
 
     private void OnDisable()
     {
-        RegionZoomController.ZoomAboveThreshold -= OnZoomAboveThreshold;
-        RegionZoomController.ZoomBelowThreshold -= OnZoomBelowThreshold;
-
         OnClickOutline.RegionClicked -= HandleRegionClicked;
-    }
-
-    private void OnZoomAboveThreshold()
-    {
-        isAboveThreshold = true;
-    }
-
-    private void OnZoomBelowThreshold()
-    {
-        isAboveThreshold = false;
     }
 
     void Start()
