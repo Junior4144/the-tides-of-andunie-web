@@ -19,6 +19,7 @@ public class PlayerAnimator : MonoBehaviour
     private float _lockedTill;
     private bool _attacked;
     private HeavyAttackPhase _heavyAttackPhase = HeavyAttackPhase.None;
+    private NormalAttackPhase _normalAttackPhase = NormalAttackPhase.None;
     private BowState _currentBowState = BowState.None;
     private float _nextIdleCheckTime;
     private bool _playingSpecialIdle;
@@ -30,7 +31,9 @@ public class PlayerAnimator : MonoBehaviour
 
     private enum BowState { None, HandleIdle, Charging, ChargeIdle }
     private enum HeavyAttackPhase { None, Start, Loop, End }
-    
+
+    private enum NormalAttackPhase { None, Left, Right, Down }
+
     private void Awake()
     {
         _anim = GetComponent<Animator>();
@@ -109,6 +112,14 @@ public class PlayerAnimator : MonoBehaviour
             return s;
         }
     }
+
+    private int GetNormalAttackAnimation() => _normalAttackPhase switch
+    {
+        NormalAttackPhase.Left => HeavyAttackStart,
+        NormalAttackPhase.Right => HeavyAttackLoop,
+        NormalAttackPhase.Down => HeavyAttackEnd,
+        _ => IdleDefault
+    };
 
     private int GetHeavyAttackAnimation() => _heavyAttackPhase switch
     {
