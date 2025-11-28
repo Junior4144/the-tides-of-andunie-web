@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(CinemachineImpulseSource))]
 public abstract class BaseAttack : MonoBehaviour
 {
     [Header("References")]
@@ -57,18 +58,7 @@ public abstract class BaseAttack : MonoBehaviour
 
     public abstract void Execute();
 
-    protected virtual void OnTriggerEnter2D(Collider2D col)
-    {
-        if (!_isAttacking || _hitEnemies.Contains(col)) return;
-
-        if (col.TryGetComponent(out HealthController health))
-        {
-            _hitEnemies.Add(col);
-            StartCoroutine(DealDamageRoutine(health));
-            SpawnHitEffect(col.transform.position);
-            Shake();
-        }
-    }
+    protected abstract void OnTriggerEnter2D(Collider2D col);
 
     protected virtual IEnumerator DealDamageRoutine(HealthController health)
     {

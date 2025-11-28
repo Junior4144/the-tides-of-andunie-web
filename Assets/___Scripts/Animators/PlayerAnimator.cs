@@ -29,12 +29,6 @@ public class PlayerAnimator : MonoBehaviour
         _playerMovement = GetComponentInParent<PlayerController>();
         _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
     }
-    
-    public void TriggerAttack()
-    {
-        _attacked = true;
-        _bowAttack = false;
-    }
 
     private void Update()
     {
@@ -117,19 +111,18 @@ public class PlayerAnimator : MonoBehaviour
             _ => IdleAngry
         };
     }
-    
-    #region Cached Properties
-    private int _currentState;
-    private static readonly int IdleDefault = Animator.StringToHash("AldarionIdle");
-    private static readonly int IdleAngry = Animator.StringToHash("AldarionIdleAngry");
-    private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
-    private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
-    private static readonly int Attack = Animator.StringToHash("AldarionSlash");
-    private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
-    private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
-    private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");
-    #endregion
+    public void TriggerAttack()
+    {
+        _attacked = true;
+        _bowAttack = false;
+    }
 
+    public void TriggerHeavyAttack()
+    {
+        //add bools here
+    }
+    
+    
     public void PlayBowHandleIdle()
     {
         _bowAttack = true;
@@ -149,4 +142,16 @@ public class PlayerAnimator : MonoBehaviour
         _bowAttack = false;              // allow special idles again
         _anim.CrossFade(IdleDefault, 0f); // play the normal idle animation
     }
+    
+    #region Cached Properties
+    private int _currentState;
+    private static readonly int IdleDefault = Animator.StringToHash("AldarionIdle");
+    private static readonly int IdleAngry = Animator.StringToHash("AldarionIdleAngry");
+    private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
+    private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
+    private static readonly int Attack = Animator.StringToHash("AldarionSlash");
+    private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
+    private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
+    private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");
+    #endregion
 }

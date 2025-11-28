@@ -1,10 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponEuipController : MonoBehaviour
 {
     [SerializeField] private WeaponType myType;
-    [SerializeField] private GameObject weapon;
-
+    [SerializeField] private List<GameObject> weapons;
 
     private void OnEnable()
     {
@@ -20,7 +20,7 @@ public class WeaponEuipController : MonoBehaviour
     {
         bool isMyWeapon = equippedType == myType;
 
-        weapon.SetActive(isMyWeapon);
+        weapons.ForEach(weapon => weapon.SetActive(isMyWeapon));
 
         if (isMyWeapon)
             Debug.Log($"{myType} activated");
