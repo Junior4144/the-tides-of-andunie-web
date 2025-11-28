@@ -10,6 +10,7 @@ public class PlayerHealthController : HealthController
         if(GameManager.Instance.CurrentState == GameState.Gameplay ||
            GameManager.Instance.CurrentState == GameState.Stage1Gameplay)
         {
+            if (PlayerManager.Instance.IsInvincible) return;
             if (_currentHealth == 0 || damageAmount == 0) return;
 
             float resistance = GetResistanceForDamageType(damageType);

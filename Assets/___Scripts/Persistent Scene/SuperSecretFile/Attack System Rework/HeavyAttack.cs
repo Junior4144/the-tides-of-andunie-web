@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class HeavyAttack : BaseAttack
@@ -5,6 +6,7 @@ public class HeavyAttack : BaseAttack
     [Header("Heavy Attack Settings")]
     [SerializeField] private float _movementSpeedIncrease = -2f;
     [SerializeField] private float _meleeDamageIncrease = 10f;
+    [SerializeField] private float _audioFadeOutDuration = 0.3f;
 
     private (float speed, float damage) _originalStats;
 
@@ -20,6 +22,7 @@ public class HeavyAttack : BaseAttack
     {
         _isAttacking = true;
         WeaponManager.Instance.SetBusy(true);
+        PlayerManager.Instance.SetInvincible(true);
 
         _animator?.TriggerHeavyAttack();
         PlayLoopingAttackSound();
@@ -31,6 +34,7 @@ public class HeavyAttack : BaseAttack
     {
         StopLoopingAttackSound();
         ResetStatBuffs();
+        PlayerManager.Instance.SetInvincible(false);
         EndAttack();
     }
 
@@ -40,14 +44,27 @@ public class HeavyAttack : BaseAttack
 
         _audioSrc.clip = _attackSound;
         _audioSrc.loop = true;
-        _audioSrc.volume = 0.4f;
         _audioSrc.Play();
     }
 
-    void StopLoopingAttackSound()
+    void StopLoopingAttackSound() =>
+        StartCoroutine(FadeOutAttackSound());
+
+    IEnumerator FadeOutAttackSound()
     {
+        float startVolume = _audioSrc.volume;
+        float elapsed = 0f;
+
+        while (elapsed < _audioFadeOutDuration)
+        {
+            elapsed += Time.deltaTime;
+            _audioSrc.volume = Mathf.Lerp(startVolume, 0f, elapsed / _audioFadeOutDuration);
+            yield return null;
+        }
+
         _audioSrc.loop = false;
         _audioSrc.Stop();
+        _audioSrc.volume = startVolume;
     }
 
     void ApplyStatBuffs()

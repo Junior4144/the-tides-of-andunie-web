@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     private ImpulseController _impulseController;
 
     public bool AllowForceChange = false;
+    public bool IsInvincible { get; private set; }
 
     private void Awake()
     {
@@ -73,6 +74,8 @@ public class PlayerManager : MonoBehaviour
     public void AddHealth(float value) => _healthController.AddHealth(value);
 
     public void TakeDamage(float value, DamageType damageType) => _healthController.TakeDamage(value, damageType);
+
+    public void SetInvincible(bool invincible) => IsInvincible = invincible;
     
 
     //------TRANSFORM------//

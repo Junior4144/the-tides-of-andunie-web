@@ -260,7 +260,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -397,12 +397,13 @@ MonoBehaviour:
   _attackSound: {fileID: 8300000, guid: 4adb44ccd08c25b4cbe74ec3707fdd23, type: 3}
   _hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
   _impulseCollider: {fileID: 5308685087317168297}
-  _attackDuration: 6
+  _attackDuration: 4
   _damageDelay: 0
   shakeCooldown: 0.2
   shakeForce: 0.4
   _movementSpeedIncrease: -2
   _meleeDamageIncrease: 10
+  _audioFadeOutDuration: 0.3
 --- !u!114 &2826577184952916628
 MonoBehaviour:
   m_ObjectHideFlags: 0
