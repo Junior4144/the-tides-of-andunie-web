@@ -17,6 +17,8 @@ public class PlayerAnimator : MonoBehaviour
     private PlayerController _playerMovement;
     private float _lockedTill;
     private bool _attacked;
+    private bool _heavyAttacked;
+    private float _heavyAttackDuration;
     private bool _bowAttack;
     private float _nextIdleCheckTime;
     private bool _playingSpecialIdle;
@@ -36,6 +38,7 @@ public class PlayerAnimator : MonoBehaviour
 
         var state = GetState();
         _attacked = false;
+        _heavyAttacked = false;
 
         if (state == _currentState) return;
 
@@ -70,18 +73,24 @@ public class PlayerAnimator : MonoBehaviour
     private int GetState()
     {
         if (Time.time < _lockedTill) return _currentState;
-        
+
+        if (_heavyAttacked)
+        {
+            _playingSpecialIdle = false;
+            return LockState(HeavyAttack, _heavyAttackDuration);
+        }
+
         if (_attacked)
         {
             _playingSpecialIdle = false;
             return LockState(Attack, _attackAnimDuration);
         }
-        
+
         if (_playingSpecialIdle)
             return _currentSpecialIdleState;
-        
+
         return IdleDefault;
-        
+
         int LockState(int s, float t)
         {
             _lockedTill = Time.time + t;
@@ -117,9 +126,11 @@ public class PlayerAnimator : MonoBehaviour
         _bowAttack = false;
     }
 
-    public void TriggerHeavyAttack()
+    public void TriggerHeavyAttack(float duration)
     {
-        //add bools here
+        _heavyAttacked = true;
+        _heavyAttackDuration = duration;
+        _bowAttack = false;
     }
     
     
@@ -150,6 +161,7 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
     private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
     private static readonly int Attack = Animator.StringToHash("AldarionSlash");
+    private static readonly int HeavyAttack = Animator.StringToHash("AldarionHeavyTwirlLoop");
     private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
     private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
     private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");

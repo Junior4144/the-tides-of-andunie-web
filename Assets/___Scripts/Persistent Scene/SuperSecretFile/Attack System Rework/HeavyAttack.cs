@@ -24,7 +24,7 @@ public class HeavyAttack : BaseAttack
         WeaponManager.Instance.SetBusy(true);
         PlayerManager.Instance.SetInvincible(true);
 
-        _animator?.TriggerHeavyAttack();
+        _animator?.TriggerHeavyAttack(_attackDuration);
         PlayLoopingAttackSound();
 
         ApplyStatBuffs();
