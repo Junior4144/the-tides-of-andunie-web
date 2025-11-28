@@ -26,11 +26,20 @@ public class CavalryAttributes : ScriptableObject
     public float ChargeAcceleration = 25f;
     public float Deceleration = 120f;
 
+    [Range(0.1f, 1.0f)]
     public float MinPathStraightnessToAttack = 0.9f;
 
-
     public float AttackCoolDown = 5f;
-    
+
+    public float DestinationReachedThreshold = 1.0f;
+
+    [Tooltip("Penalty multiplier for patrol points behind the cavalry. Higher values = stronger preference for forward points.")]
+    [Range(0.1f, 1.0f)]
+    public float PatrolPointBehindnessPenalty = 0.5f;
+
+    [Tooltip("Time in seconds to detect if the cavalry is stuck.")]
+    [Range(0.1f, 10.0f)]
+    public float StuckDetectionTime = 2.0f;
 
     [field: Range(0, 1)]
     public float ChanceOfCollectableDrop;
