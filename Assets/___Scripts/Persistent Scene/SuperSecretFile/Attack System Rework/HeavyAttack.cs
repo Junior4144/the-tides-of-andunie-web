@@ -7,6 +7,7 @@ public class HeavyAttack : BaseAttack
     [SerializeField] private float _movementSpeedIncrease = -2f;
     [SerializeField] private float _meleeDamageIncrease = 10f;
     [SerializeField] private float _audioFadeOutDuration = 0.3f;
+    [SerializeField] private GameObject _deflectionCollider;
 
     private (float speed, float damage) _originalStats;
     private WeaponCooldownHandler _cooldownHandler;
@@ -33,6 +34,9 @@ public class HeavyAttack : BaseAttack
         WeaponManager.Instance.SetBusy(true);
         PlayerManager.Instance.SetInvincible(true);
 
+        if (_deflectionCollider != null)
+            _deflectionCollider.SetActive(true);
+
         _animator?.TriggerHeavyAttack(_attackDuration);
         PlayLoopingAttackSound();
 
@@ -41,6 +45,9 @@ public class HeavyAttack : BaseAttack
 
     void CompleteHeavyAttack()
     {
+        if (_deflectionCollider != null)
+            _deflectionCollider.SetActive(false);
+
         StopLoopingAttackSound();
         ResetStatBuffs();
         PlayerManager.Instance.SetInvincible(false);
