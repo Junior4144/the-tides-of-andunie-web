@@ -20,7 +20,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void EquipItem()
     {
         if (currentItem == null) return;
-        InventoryManager.Instance.EquipItem(currentItem.ItemId);
+        InventoryManager.Instance.EquipAllOfItem(currentItem.ItemId);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

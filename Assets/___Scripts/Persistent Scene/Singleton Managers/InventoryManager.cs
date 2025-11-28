@@ -69,6 +69,19 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    public bool EquipAllOfItem(string itemId)
+    {
+        if (!HasItem(itemId)) return false;
+
+        int totalQuantity = _inventory[itemId].Quantity;
+        int equippedQuantity = GetEquippedQuantity(itemId);
+        int remainingToEquip = totalQuantity - equippedQuantity;
+
+        if (remainingToEquip <= 0) return false;
+
+        return EquipItem(itemId, remainingToEquip);
+    }
+
     public bool UnequipItem(string itemId, int quantity = 1)
     {
         if (!HasItemEquipped(itemId)) return false;
