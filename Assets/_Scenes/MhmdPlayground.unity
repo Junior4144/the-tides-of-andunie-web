@@ -4285,11 +4285,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.84
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.75
+      value: -4.47
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6304,7 +6304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5599995
+      value: -0.84
       objectReference: {fileID: 0}
     - target: {fileID: 1244897031593099641, guid: 794571375c4017640ab803506ebdd2f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14808,65 +14808,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -188.342
       objectReference: {fileID: 0}
-    - target: {fileID: 2757773616876435204, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Radius
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757773616876435204, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: PatrolPointsParent
       value: 
       objectReference: {fileID: 610419563}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1800363067}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1508507084}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1681156460}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[3]'
-      value: 
-      objectReference: {fileID: 1026055535}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[4]'
-      value: 
-      objectReference: {fileID: 191311475}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[5]'
-      value: 
-      objectReference: {fileID: 698517599}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[6]'
-      value: 
-      objectReference: {fileID: 1735906887}
-    - target: {fileID: 5001232514121650020, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
     - target: {fileID: 5425580518855252515, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: m_Name
       value: Cavalry (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 5425580518855252515, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
+    - target: {fileID: 9103737287983059288, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
+      propertyPath: _damageDelay
+      value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 6741593385575792318, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7695467522341596218, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
+    - target: {fileID: 9103737287983059288, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
+      propertyPath: _damageRange
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16017,69 +15973,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -188.342
       objectReference: {fileID: 0}
-    - target: {fileID: 2757773616876435204, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Radius
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757773616876435204, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: PatrolPointsParent
       value: 
       objectReference: {fileID: 610419563}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: PatrolPointsSequence.Array.size
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1800363067}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1508507084}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1681156460}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[3]'
-      value: 
-      objectReference: {fileID: 1026055535}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[4]'
-      value: 
-      objectReference: {fileID: 191311475}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[5]'
-      value: 
-      objectReference: {fileID: 698517599}
-    - target: {fileID: 3634809567030686046, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: 'PatrolPointsSequence.Array.data[6]'
-      value: 
-      objectReference: {fileID: 1735906887}
-    - target: {fileID: 5001232514121650020, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
     - target: {fileID: 5425580518855252515, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: m_Name
       value: Cavalry
       objectReference: {fileID: 0}
-    - target: {fileID: 5425580518855252515, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
+    - target: {fileID: 9103737287983059288, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
+      propertyPath: _damageDelay
+      value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 6741593385575792318, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7695467522341596218, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
-      propertyPath: m_Layer
-      value: 18
+    - target: {fileID: 9103737287983059288, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
+      propertyPath: _damageRange
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
