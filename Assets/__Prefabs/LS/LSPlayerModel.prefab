@@ -310,7 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1dd0a2b3d87a54aa0fbcfbb436f5f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LSPlayerMovement
-  rotationSpeed: 460
   cursorHotSpot: {x: 0, y: 0}
   targetPrefab: {fileID: 3299832904111238696, guid: 32a1232836ba7e44aae734d0cb69b582, type: 3}
   pingSoundPrefab: {fileID: 1049902758221316414, guid: 0e8602b873be98d4eb78ea6aebf9e86b, type: 3}
@@ -325,7 +324,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 15
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -459,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6477d3c4a20dfa34f810956e9627f4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  rotationSpeed: 360
 --- !u!1 &2293263509871401463
 GameObject:
   m_ObjectHideFlags: 0
