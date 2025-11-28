@@ -48,10 +48,6 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest += HandleEquipRequest;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
-        //SceneManager.activeSceneChanged += OnSceneChanged;
-
-        //UIEvents.OnInventoryActive += HandlePopUpUIActive;
-        //UIEvents.OnInventoryDeactivated += OnPopUpUIDeactivated;
 
         UIEvents.OnRewardActive += HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated += OnPopUpUIDeactivated;
@@ -67,10 +63,6 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponEvents.OnEquipWeaponRequest -= HandleEquipRequest;
         GameManager.OnGameStateChanged -= HandleGameStateChanged;
-        //SceneManager.activeSceneChanged -= OnSceneChanged;
-
-        //UIEvents.OnInventoryActive -= HandlePopUpUIActive;
-        //UIEvents.OnInventoryDeactivated -= OnPopUpUIDeactivated;
 
         UIEvents.OnRewardActive -= HandlePopUpUIActive;
         UIEvents.OnRewardDeactivated -= OnPopUpUIDeactivated;
@@ -95,7 +87,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        if (IsBusy || IsAbilityAiming || IsNormalAiming)
+        if (IsBusy)
         {
             pendingWeaponRequest = requestedWeapon;
             Debug.Log($"Weapon switch to {requestedWeapon} queued (currently busy).");
@@ -132,6 +124,7 @@ public class WeaponManager : MonoBehaviour
             HandleEquipRequest(WeaponType.Axe);
         }
     }
+
     private void SetWeaponToNone()
     {
         if (currentWeapon != WeaponType.none)
