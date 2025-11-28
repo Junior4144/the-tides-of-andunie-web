@@ -66,18 +66,18 @@ public class PlayerBowAttackController : MonoBehaviour
         // Left-Click Attack
         if (!canFire) { HandleCooldown(); return; }
 
-        if (Input.GetMouseButton(0)) HandleAiming(normal: true);
-        else if (Input.GetMouseButtonUp(0)) Fire(isAbility: false);
+        if (Input.GetMouseButton(0) && !IsAbilityAiming) HandleAiming(normal: true);
+        else if (Input.GetMouseButtonUp(0) && !IsAbilityAiming) Fire(isAbility: false);
 
 
         if (_cooldownHandler.IsAbilityOnCooldown)
             return;
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !IsNormalAiming)
         {
             HandleAiming(normal: false);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1) && !IsNormalAiming)
         {
             Fire(isAbility: true);
         }
