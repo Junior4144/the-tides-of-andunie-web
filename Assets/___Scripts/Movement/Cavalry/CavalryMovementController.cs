@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System.Collections.Generic;
-using Unity.Properties;
+// using Unity.Properties;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -21,8 +21,16 @@ public class CavalryMovementController : MonoBehaviour
     [SerializeField] private List<Transform> PatrolPointsSequence;
     private int _currentPatrolPointIndex;
     private NavMeshPath _pathPlaceholder;
-
     private float _lastAttackTime;
+
+    // Stuck detection fields
+    private Vector3 _lastPosition;
+    private float _lastMovementTime;
+    private bool _isStuck;
+
+    private Transform Player => _player ??= PlayerManager.Instance.transform;
+    private float TurnAbility => 1.0f - Mathf.InverseLerp(_attributes.MinSpeedForTurning, _attributes.MaxSpeedForTurning, _rigidbody.linearVelocity.magnitude);
+    private float EffectiveTurnSpeed => _attributes.TurningSpeed * TurnAbility;
 
     void Awake()
     {
@@ -32,21 +40,29 @@ public class CavalryMovementController : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         _pathPlaceholder = new NavMeshPath();
+        // Initialize stuck detection
+        _lastPosition = _rigidbody.position;
+        _lastMovementTime = Time.time;
+        _isStuck = false;
         SetNearestPatrolPoint();
         TransitionToPatrollingState();
         _hasHitThePlayer = false;
         _lastAttackTime = -_attributes.AttackCoolDown;
     }
 
-    private Transform Player => _player == null ? _player = PlayerManager.Instance.transform : _player;
+    
 
     void FixedUpdate()
     {
         if (!agent.enabled) return;
-        
+        CheckAndHandleStuck();
+        if (!_isStuck)
+        {
+            ApplyForwardMovement();
+            ApplySpeedBasedSteering();
+        }
+    
         SyncAgentToRigidbody();
-        ApplyForwardMovement();
-        ApplySpeedBasedSteering();
     }
 
     void SyncAgentToRigidbody() => agent.nextPosition = _rigidbody.position;
@@ -54,14 +70,13 @@ public class CavalryMovementController : MonoBehaviour
 
     void Update()
     {
-        
         if (!agent.enabled || Player == null) return;
 
         switch (_currentState)
         {
             case CavalryState.Patrolling:
                 bool canAttack = Time.time - _lastAttackTime > _attributes.AttackCoolDown;
-                if (canAttack && IsLinedUpWithTarget(Player.transform.position) && IsStraightPathToPlayer())
+                if (canAttack && IsLinedUpWithTarget(Player.position) && IsStraightPathToPlayer())
                     TransitionToAttackingState();
                 else
                     Patrol();
@@ -96,10 +111,10 @@ public class CavalryMovementController : MonoBehaviour
     {
         Vector3 CurrentPatrolPointPosition() => PatrolPointsSequence[_currentPatrolPointIndex].position;
         ChangeAgentSpeedTowards(_attributes.PatrollingSpeed);
-        if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= 1.0f)
+        if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= _attributes.DestinationReachedThreshold)
         {
             _currentPatrolPointIndex = 
-            _currentPatrolPointIndex + 1 == PatrolPointsSequence.Count()?
+            _currentPatrolPointIndex + 1 == PatrolPointsSequence.Count?
             0 : _currentPatrolPointIndex + 1;
         }
         agent.SetDestination(CurrentPatrolPointPosition());
@@ -151,7 +166,8 @@ public class CavalryMovementController : MonoBehaviour
 
         for (int i = 0; i < PatrolPointsSequence.Count; i++)
         {
-            float distance = CalculateDistanceToTarget(PatrolPointsSequence[i].position);
+            // float distance = CalculateDistanceToTarget(PatrolPointsSequence[i].position);
+            float distance = CalculateWeightedDistanceToPatrolPoint(PatrolPointsSequence[i].position);
 
             if (distance < minDistance)
             {
@@ -161,6 +177,33 @@ public class CavalryMovementController : MonoBehaviour
         }
 
         _currentPatrolPointIndex = nearestIndex;
+    }
+
+    private float CalculateWeightedDistanceToPatrolPoint(Vector3 patrolPointPosition)
+    {
+        float pathDistance = CalculateDistanceToTarget(patrolPointPosition);
+        
+        // Calculate direction to patrol point
+        Vector3 currentPosition = (Vector3)_rigidbody.position;
+        Vector3 directionToPoint = (patrolPointPosition - currentPosition).normalized;
+        Vector3 currentForward = transform.up;
+        
+        // Calculate angle between forward direction and direction to point
+        float angleToPoint = Vector3.Angle(currentForward, directionToPoint);
+        
+        // Apply penalty if point is behind (angle > 90 degrees)
+        float behindnessPenalty = 1f;
+        if (angleToPoint > 90f)
+        {
+            // Scale penalty based on how far behind (180° = maximum penalty)
+            // Normalize angle from 90-180 range to 0-1 range, then apply multiplier
+            float behindnessFactor = (angleToPoint - 90f) / 90f; // 0 at 90°, 1 at 180°
+            float penaltyMultiplier = 100000f;
+            behindnessPenalty = 1f + (behindnessFactor * _attributes.PatrolPointBehindnessPenalty * penaltyMultiplier);
+        }
+        
+        // Return weighted distance = path distance * penalty
+        return pathDistance * behindnessPenalty;
     }
 
     private void UpdateChaseSpeed()
@@ -197,12 +240,14 @@ public class CavalryMovementController : MonoBehaviour
         float displacement = CalculateDisplacementToTarget(Player.position);
         float pathDistance = CalculateDistanceToTarget(Player.position);
 
-        if (pathDistance == Mathf.Infinity || pathDistance < 0.01f)
-            return false;
+        if (pathDistance == Mathf.Infinity) return false;
+        if (displacement < _attributes.DestinationReachedThreshold) return true;
 
         float straightness = displacement / pathDistance;
         return straightness >= _attributes.MinPathStraightnessToAttack;
     }
+
+   
     private void ApplySpeedBasedSteering()
     {
         Vector3 steeringDirection = (agent.steeringTarget - (Vector3)_rigidbody.position).normalized;
@@ -211,17 +256,11 @@ public class CavalryMovementController : MonoBehaviour
 
         float desiredRotationAngle = AngleOfVectorInDegrees(steeringDirection) - 90f;
 
-        float currentSpeed = _rigidbody.linearVelocity.magnitude;
-
-        float turnAbility = 1.0f - Mathf.InverseLerp(_attributes.MinSpeedForTurning, _attributes.MaxSpeedForTurning, currentSpeed);
-
-        float effectiveTurnSpeed = _attributes.TurningSpeed * turnAbility;
-
         _rigidbody.SetRotation(
             Mathf.MoveTowardsAngle(
                 _rigidbody.rotation,
                 desiredRotationAngle,
-                effectiveTurnSpeed * Time.fixedDeltaTime 
+                EffectiveTurnSpeed * Time.fixedDeltaTime 
             )
         );
     }
@@ -229,4 +268,49 @@ public class CavalryMovementController : MonoBehaviour
     private float AngleOfVectorInDegrees(Vector3 vector)
      => Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
 
+
+
+    private void CheckAndHandleStuck()
+    {
+        float currentSpeed = _rigidbody.linearVelocity.magnitude;
+        float distanceMoved = Vector3.Distance(_rigidbody.position, _lastPosition);
+        
+        // Check if moving (has speed or has moved position)
+        if (currentSpeed > 0.1f || distanceMoved > 0.01f)
+        {
+            // Not stuck - update tracking
+            _lastPosition = _rigidbody.position;
+            _lastMovementTime = Time.time;
+            _isStuck = false;
+            return;
+        }
+        
+        // Check if stuck (hasn't moved for the threshold time)
+        if (Time.time - _lastMovementTime >= _attributes.StuckDetectionTime)
+        {
+            _isStuck = true;
+            RotateWhileStuck();
+        }
+        else
+        {
+            _isStuck = false;
+        }
+    }
+
+    private void RotateWhileStuck()
+    {
+        Vector3 steeringDirection = (agent.steeringTarget - (Vector3)_rigidbody.position).normalized;
+        
+        if (steeringDirection.sqrMagnitude < 0.01f) return;
+        
+        float desiredRotationAngle = AngleOfVectorInDegrees(steeringDirection) - 90f;
+        
+        _rigidbody.SetRotation(
+            Mathf.MoveTowardsAngle(
+                _rigidbody.rotation,
+                desiredRotationAngle,
+                EffectiveTurnSpeed * Time.fixedDeltaTime
+            )
+        );
+    }
 }
