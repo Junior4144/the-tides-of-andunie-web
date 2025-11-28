@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6486003932951188407}
   - component: {fileID: 709690356714544174}
   - component: {fileID: 4747784450579262829}
-  m_Layer: 6
+  m_Layer: 18
   m_Name: ImpulseCollider
   m_TagString: ImpulseSource
   m_Icon: {fileID: 0}
@@ -95,11 +95,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.51204, y: 1.5173869}
-      - {x: -0.013190497, y: 1.8719835}
-      - {x: -0.59946823, y: 1.3990064}
-      - {x: 0.8168687, y: -1.2771813}
-      - {x: 1.1181352, y: 0.28206173}
+    - - {x: -0.057450093, y: 1.9907765}
+      - {x: -0.6190504, y: 1.4308171}
+      - {x: -0.6950485, y: -0.27434152}
+      - {x: 1.0478649, y: -0.52729523}
+      - {x: 1.0914419, y: 0.6191062}
+      - {x: 0.45209214, y: 1.4914021}
   m_UseDelaunayMesh: 0
 --- !u!1 &5425580518855252515
 GameObject:
@@ -113,14 +114,14 @@ GameObject:
   - component: {fileID: 1784765837961995947}
   - component: {fileID: 2866799394606730820}
   - component: {fileID: 8913830651329308444}
-  - component: {fileID: 1767219498962728319}
   - component: {fileID: 3634809567030686046}
   - component: {fileID: 2757773616876435204}
   - component: {fileID: 9049392723570572433}
   - component: {fileID: 792966302691581397}
   - component: {fileID: 8375551497397488788}
   - component: {fileID: 1884797297630639170}
-  m_Layer: 6
+  - component: {fileID: 7621787426357092757}
+  m_Layer: 18
   m_Name: Cavalry
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -135,7 +136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5425580518855252515}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.9973512, w: -0.07273628}
+  m_LocalRotation: {x: -0, y: 0, z: -0.99735147, w: -0.07273315}
   m_LocalPosition: {x: -11.653633, y: 7.005538, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -306,73 +307,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1767219498962728319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5425580518855252515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a5ef65276046fd4a91a2cb7a5c377e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthController
-  OnDied:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1884797297630639170}
-        m_TargetAssemblyTypeName: PlayerDeathAnimation, Assembly-CSharp
-        m_MethodName: DeathAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 9049392723570572433}
-        m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
-        m_MethodName: RandomlyDropCollectable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 792966302691581397}
-        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
-        m_MethodName: Destroy
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDamaged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8375551497397488788}
-        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
-        m_MethodName: Flash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
 --- !u!114 &3634809567030686046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,14 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CavalryMovementController
   _attributes: {fileID: 11400000, guid: f1ef20319b9b43541a1b3f5370aa16be, type: 2}
-  PatrolPointsSequence:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PatrolPointsParent: {fileID: 0}
 --- !u!195 &2757773616876435204
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -403,7 +330,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5425580518855252515}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Speed: 3.5
   m_Acceleration: 10
   avoidancePriority: 50
@@ -415,7 +342,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &9049392723570572433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +398,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimation
   deathAnimation: {fileID: 3706533600887995784, guid: a6eb5691c0c264807910e50cd9638545, type: 3}
+--- !u!114 &7621787426357092757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5425580518855252515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19182d7aeb9f2f4eaf9fcad5f1e1845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CavalryHealthController
+  OnDied:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1884797297630639170}
+        m_TargetAssemblyTypeName: PlayerDeathAnimation, Assembly-CSharp
+        m_MethodName: DeathAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9049392723570572433}
+        m_TargetAssemblyTypeName: PirateSpawnCollectable, Assembly-CSharp
+        m_MethodName: RandomlyDropCollectable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 792966302691581397}
+        m_TargetAssemblyTypeName: DestroyController, Assembly-CSharp
+        m_MethodName: Destroy
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8375551497397488788}
+        m_TargetAssemblyTypeName: FlashOnDamage, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _attributes: {fileID: 11400000, guid: f1ef20319b9b43541a1b3f5370aa16be, type: 2}
 --- !u!1 &6741593385575792318
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +477,7 @@ GameObject:
   - component: {fileID: 3392269078147015250}
   - component: {fileID: 2599918725347662401}
   - component: {fileID: 8398955902975038741}
-  m_Layer: 6
+  m_Layer: 18
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,8 +602,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9013382757531796118}
   - component: {fileID: 6591169541997225647}
-  - component: {fileID: 4028406953377949279}
-  m_Layer: 6
+  - component: {fileID: 9103737287983059288}
+  m_Layer: 18
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,13 +618,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7695467522341596218}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.009371041, w: 0.99995613}
-  m_LocalPosition: {x: 0.59535986, y: 0.8778767, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.0063230162, w: 0.99998003}
+  m_LocalPosition: {x: -1.045776, y: 0.466448, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 220352273037767741}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.725}
 --- !u!70 &6591169541997225647
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -665,10 +659,10 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.25746876, y: 0.16542087}
-  m_Size: {x: 1.544646, y: 2.6887167}
+  m_Offset: {x: 1.4130697, y: 0.6575536}
+  m_Size: {x: 1.957944, y: 2.759495}
   m_Direction: 0
---- !u!114 &4028406953377949279
+--- !u!114 &9103737287983059288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -677,11 +671,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7695467522341596218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ffc875c350b3da4d96879061748b972, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c4586fcb2504e342bcdd079d645e321, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PirateMeleeController
-  _pirateAttributes: {fileID: 11400000, guid: 004e6c4402c9df64fa7ac619ae24317f, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::CavalryMeleeController
+  _attributes: {fileID: 11400000, guid: f1ef20319b9b43541a1b3f5370aa16be, type: 2}
   _animator: {fileID: 8398955902975038741}
-  _damageDelay: 0.3
+  _damageDelay: 0.1
   _animDuration: 0.35
-  _damageRange: 2
+  _damageRange: 5
