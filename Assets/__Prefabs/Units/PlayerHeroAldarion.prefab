@@ -6043,7 +6043,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b49849cb6a2bc4449bfde95c3fad1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCooldownHandler
-  abilityCooldownDuration: 5
+  weaponType: 1
+  abilityCooldownDuration: 15
 --- !u!114 &4557096688465954281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6682,6 +6683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b49849cb6a2bc4449bfde95c3fad1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCooldownHandler
+  weaponType: 2
   abilityCooldownDuration: 5
 --- !u!1 &7727062384500332437
 GameObject:

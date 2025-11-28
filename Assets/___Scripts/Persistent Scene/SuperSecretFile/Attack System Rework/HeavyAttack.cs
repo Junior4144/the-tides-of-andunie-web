@@ -9,11 +9,20 @@ public class HeavyAttack : BaseAttack
     [SerializeField] private float _audioFadeOutDuration = 0.3f;
 
     private (float speed, float damage) _originalStats;
+    private WeaponCooldownHandler _cooldownHandler;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _cooldownHandler = GetComponentInParent<WeaponCooldownHandler>();
+    }
 
     public override void Execute()
     {
         if (_isAttacking) return;
+        if (_cooldownHandler.IsAbilityOnCooldown) return;
 
+        _cooldownHandler.StartAbilityCooldown();
         BeginHeavyAttack();
         Invoke(nameof(CompleteHeavyAttack), _attackDuration);
     }

@@ -142,7 +142,6 @@ public class PlayerBowAttackController : MonoBehaviour
 
         if (isAbility)
         {
-            WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
             _cooldownHandler.StartAbilityCooldown();
             FireSpreadShot();
         }
