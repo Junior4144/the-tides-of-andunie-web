@@ -41,15 +41,37 @@ public class BombProjectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"Projectile hit {collision.gameObject.name}");
+        Debug.Log($"Projectile hit {collision.collider.name}");
 
-        if (collision.gameObject.CompareTag("Player"))
+        // Check for deflection first
+        if (collision.collider.CompareTag("DeflectCollider"))
+        {
+            DeflectProjectile(collision);
+            return;
+        }
+
+        if (collision.collider.CompareTag("Player"))
         {
             HandlePlayerHit(collision.transform.position);
             return;
         }
 
         BeginDetonation();
+    }
+
+    void DeflectProjectile(Collision2D collision)
+    {
+        Vector2 incomingDir = rb.linearVelocity.normalized;
+        Vector2 normal = collision.contacts[0].normal;
+        Vector2 reflectDir = Vector2.Reflect(incomingDir, normal);
+
+        rb.linearVelocity = reflectDir * velocity;
+
+        // Rotate projectile to face new direction
+        float angle = Mathf.Atan2(reflectDir.y, reflectDir.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        Debug.Log($"[BombProjectile] Deflected by player attack!");
     }
 
     private bool HasReachedMaxDistance()

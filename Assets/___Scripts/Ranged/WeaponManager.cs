@@ -13,7 +13,7 @@ public static class WeaponEvents
 {
     public static Action<WeaponType> OnEquipWeaponRequest;
     public static Action<WeaponType> OnNewWeaponEquipped;
-    public static Action<WeaponType> OnWeaponAbilityActivation;
+    public static Action<WeaponType, float> OnWeaponAbilityActivation;
 }
 
 public class WeaponManager : MonoBehaviour
