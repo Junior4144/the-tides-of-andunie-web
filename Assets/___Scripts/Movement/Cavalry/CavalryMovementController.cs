@@ -14,7 +14,7 @@ public class CavalryMovementController : MonoBehaviour
     private NavMeshAgent agent;
     private Rigidbody2D _rigidbody;
 
-    private enum CavalryState { Patrolling, Attacking }
+    private enum CavalryState { Patrolling, Attacking, Stuck }
     private CavalryState _currentState;
     private bool _hasHitThePlayer;
 
@@ -28,6 +28,8 @@ public class CavalryMovementController : MonoBehaviour
     private Vector3 _lastPosition;
     private float _lastMovementTime;
     private bool _isStuck;
+    private float _backupStartTime;
+    private float _backupDuration = 1f;
 
     private Transform Player => _player ??= PlayerManager.Instance.transform;
     private float TurnAbility => 1.0f - Mathf.InverseLerp(_attributes.MinSpeedForTurning, _attributes.MaxSpeedForTurning, _rigidbody.linearVelocity.magnitude);
@@ -44,10 +46,13 @@ public class CavalryMovementController : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         _pathPlaceholder = new NavMeshPath();
+        
         // Initialize stuck detection
         _lastPosition = _rigidbody.position;
         _lastMovementTime = Time.time;
         _isStuck = false;
+        _backupStartTime = 0f;
+
         SetNearestPatrolPoint();
         TransitionToPatrollingState();
         _hasHitThePlayer = false;
@@ -59,13 +64,10 @@ public class CavalryMovementController : MonoBehaviour
     void FixedUpdate()
     {
         if (!agent.enabled) return;
+        
         CheckAndHandleStuck();
-        if (!_isStuck)
-        {
-            ApplyForwardMovement();
-            ApplySpeedBasedSteering();
-        }
-    
+        
+        if (!_isStuck) SetDefaultMovement();
         SyncAgentToRigidbody();
     }
 
@@ -142,6 +144,7 @@ public class CavalryMovementController : MonoBehaviour
         Debug.Log("Cavalry Patrolling...");
         _currentState = CavalryState.Patrolling;
         _hasHitThePlayer = false;
+        SetDefaultMovement();
     }
 
     private float CalculateDistanceToTarget(Vector3 targetPosition)
@@ -170,8 +173,7 @@ public class CavalryMovementController : MonoBehaviour
 
         for (int i = 0; i < PatrolPointsSequence.Count; i++)
         {
-            // float distance = CalculateDistanceToTarget(PatrolPointsSequence[i].position);
-            float distance = CalculateWeightedDistanceToPatrolPoint(PatrolPointsSequence[i].position);
+            float distance = CalculateWeightedDistanceToTarget(PatrolPointsSequence[i].position);
 
             if (distance < minDistance)
             {
@@ -183,30 +185,26 @@ public class CavalryMovementController : MonoBehaviour
         _currentPatrolPointIndex = nearestIndex;
     }
 
-    private float CalculateWeightedDistanceToPatrolPoint(Vector3 patrolPointPosition)
+    private float CalculateWeightedDistanceToTarget(Vector3 targetPosition)
     {
-        float pathDistance = CalculateDistanceToTarget(patrolPointPosition);
+        float pathDistance = CalculateDistanceToTarget(targetPosition);
         
         // Calculate direction to patrol point
         Vector3 currentPosition = (Vector3)_rigidbody.position;
-        Vector3 directionToPoint = (patrolPointPosition - currentPosition).normalized;
+        Vector3 directionToPoint = (targetPosition - currentPosition).normalized;
         Vector3 currentForward = transform.up;
         
-        // Calculate angle between forward direction and direction to point
         float angleToPoint = Vector3.Angle(currentForward, directionToPoint);
         
-        // Apply penalty if point is behind (angle > 90 degrees)
+        // Apply penalty if point is behind (angle > charge angle)
         float behindnessPenalty = 1f;
-        if (angleToPoint > 90f)
+        if (angleToPoint > _attributes.ChargeAngle)
         {
-            // Scale penalty based on how far behind (180° = maximum penalty)
-            // Normalize angle from 90-180 range to 0-1 range, then apply multiplier
             float behindnessFactor = (angleToPoint - 90f) / 90f; // 0 at 90°, 1 at 180°
             float penaltyMultiplier = 100000f;
-            behindnessPenalty = 1f + (behindnessFactor * _attributes.PatrolPointBehindnessPenalty * penaltyMultiplier);
+            behindnessPenalty = 1f + (behindnessFactor * _attributes.TargetBehindnessPenalty * penaltyMultiplier);
         }
         
-        // Return weighted distance = path distance * penalty
         return pathDistance * behindnessPenalty;
     }
 
@@ -276,45 +274,53 @@ public class CavalryMovementController : MonoBehaviour
 
     private void CheckAndHandleStuck()
     {
+        if (_isStuck){
+            if (Time.time - _backupStartTime < _backupDuration)
+            {
+                SetBackwardsMovement();
+            }
+            else
+            {
+                _isStuck = false;
+                TransitionToPatrollingState();
+            }
+        }
+        
         float currentSpeed = _rigidbody.linearVelocity.magnitude;
         float distanceMoved = Vector3.Distance(_rigidbody.position, _lastPosition);
         
-        // Check if moving (has speed or has moved position)
         if (currentSpeed > 0.1f || distanceMoved > 0.01f)
         {
-            // Not stuck - update tracking
             _lastPosition = _rigidbody.position;
             _lastMovementTime = Time.time;
-            _isStuck = false;
             return;
         }
         
         // Check if stuck (hasn't moved for the threshold time)
         if (Time.time - _lastMovementTime >= _attributes.StuckDetectionTime)
         {
-            _isStuck = true;
-            RotateWhileStuck();
-        }
-        else
-        {
-            _isStuck = false;
+            TransitionToStuckState();
         }
     }
 
-    private void RotateWhileStuck()
+    private void TransitionToStuckState()
     {
-        Vector3 steeringDirection = (agent.steeringTarget - (Vector3)_rigidbody.position).normalized;
-        
-        if (steeringDirection.sqrMagnitude < 0.01f) return;
-        
-        float desiredRotationAngle = AngleOfVectorInDegrees(steeringDirection) - 90f;
-        
-        _rigidbody.SetRotation(
-            Mathf.MoveTowardsAngle(
-                _rigidbody.rotation,
-                desiredRotationAngle,
-                EffectiveTurnSpeed * Time.fixedDeltaTime
-            )
-        );
+        Debug.Log("Cavalry Stuck!");
+        _currentState = CavalryState.Stuck;
+        _isStuck = true;
+        _backupStartTime = Time.time;
+        SetBackwardsMovement();
+    }
+
+
+    private void SetBackwardsMovement()
+    {
+        _rigidbody.linearVelocity = -transform.up * (_attributes.PatrollingSpeed * 0.5f);
+    }
+
+    private void SetDefaultMovement()
+    {
+        ApplyForwardMovement();
+        ApplySpeedBasedSteering();
     }
 }
