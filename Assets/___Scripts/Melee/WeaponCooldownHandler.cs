@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class WeaponCooldownHandler : MonoBehaviour
 {
+    [SerializeField] private WeaponType weaponType;
+    [SerializeField] private float abilityCooldownDuration = 5f;
+
     private bool isAbilityOnCooldown = false;
     private float abilityCooldownTimer = 0f;
-
-    [SerializeField] private float abilityCooldownDuration = 5f;
 
     public bool IsAbilityOnCooldown => isAbilityOnCooldown;
 
@@ -17,6 +18,7 @@ public class WeaponCooldownHandler : MonoBehaviour
 
     public void StartAbilityCooldown()
     {
+        WeaponEvents.OnWeaponAbilityActivation?.Invoke(weaponType, abilityCooldownDuration);
         isAbilityOnCooldown = true;
         abilityCooldownTimer = abilityCooldownDuration;
         Debug.Log("Ability cooldown started.");

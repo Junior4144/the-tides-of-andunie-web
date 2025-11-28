@@ -20,7 +20,7 @@ public class SoundSpawnShuffler : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-        _player = PlayerManager.Instance.GetPlayerTransform();
+        _player = PlayerManager.Instance?.GetPlayerTransform();
 
         if (_playOnStart)
             Play();
