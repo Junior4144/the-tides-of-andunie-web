@@ -112,14 +112,7 @@ public class CameraLSController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
-
-            if (isAboveThreshold)
-            {
-            }
-            else
-            {
-                HandleBelowThresholdClick(mouseWorld);
-            }
+            HandleBelowThresholdClick(mouseWorld);
         }
 
         if (Input.GetMouseButtonUp(0))

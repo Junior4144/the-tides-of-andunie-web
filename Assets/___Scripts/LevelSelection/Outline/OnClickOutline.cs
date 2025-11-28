@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -60,15 +61,37 @@ public class OnClickOutline : MonoBehaviour
 
     private void Update()
     {
-        // --- CLICK ---
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         if (Input.GetMouseButtonDown(0) && wasHovering)
         {
-            Debug.Log($"[OnClickOutline] Region Clicked: {region}");
-            RegionClicked?.Invoke(region);
+            bool validNavMesh = NavMesh.SamplePosition(mousePos, out NavMeshHit navHit, 0.5f, NavMesh.AllAreas);
+
+            Collider2D[] hits = Physics2D.OverlapPointAll(mousePos);
+
+            bool hasPointerCollider = false;
+
+            foreach (var col in hits)
+            {
+                if (col.TryGetComponent<VillagePointerTargetController>(out _))
+                {
+                    hasPointerCollider = true;
+                    break;
+                }
+            }
+
+            if (!validNavMesh && !hasPointerCollider)
+            {
+                Debug.Log($"[OnClickOutline] Region Clicked: {region}");
+                RegionClicked?.Invoke(region);
+            }
+            else
+            {
+                Debug.Log("[OnClickOutline] Ignored click (navmesh or collider present)");
+            }
         }
 
         // --- HOVER CHECK ---
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         bool isHovering = col.OverlapPoint(mousePos);
 
         if (isHovering && !wasHovering)
