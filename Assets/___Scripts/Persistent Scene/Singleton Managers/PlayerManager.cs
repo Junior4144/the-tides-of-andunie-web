@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     private ImpulseController _impulseController;
 
     public bool AllowForceChange = false;
+    public bool IsInvincible { get; private set; }
 
     private void Awake()
     {
@@ -73,6 +74,8 @@ public class PlayerManager : MonoBehaviour
     public void AddHealth(float value) => _healthController.AddHealth(value);
 
     public void TakeDamage(float value, DamageType damageType) => _healthController.TakeDamage(value, damageType);
+
+    public void SetInvincible(bool invincible) => IsInvincible = invincible;
     
 
     //------TRANSFORM------//
@@ -94,8 +97,13 @@ public class PlayerManager : MonoBehaviour
     //------MOVEMENT------//
     public bool IsInImpulse() => _impulseController.IsInImpulse();
 
-    public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings) => 
+    public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings)
+    {
+        if (IsInvincible) return;
+
         _impulseController.InitiateSquadImpulse(contactPoint, impulseDirection, settings);
+    }
+        
 
     public void DisableLSPlayerMovement()
     {

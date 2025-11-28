@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerBowAttackController : MonoBehaviour
 {
@@ -58,7 +57,7 @@ public class PlayerBowAttackController : MonoBehaviour
     }
     private void OnEnable()
     {
-        animator.PlayBowHandleIdle();
+        animator.TriggerBowHandleIdle();
     }
 
     // ---------------- UPDATE ----------------
@@ -105,18 +104,17 @@ public class PlayerBowAttackController : MonoBehaviour
         {
             isChargingAnimPlayed = true;
             isChargeIdlePlayed = false;
-            animator.PlayBowCharge();  // play 0.45s draw animation
-            StartCoroutine(TransitionToChargeIdleAfter(0.45f)); // hold pose after
+            animator.TriggerBowCharge();  // play 0.45s draw animation
+            Invoke(nameof(CheckForChargeIdle), 0.45f); // hold pose after
         }
     }
 
-    IEnumerator TransitionToChargeIdleAfter(float delay)
+    void CheckForChargeIdle()
     {
-        yield return new WaitForSeconds(delay);
         if (IsAttacking && !isChargeIdlePlayed)
         {
             isChargeIdlePlayed = true;
-            animator.PlayBowChargeIdle();  // now holding the bow drawn
+            animator.TriggerBowChargeIdle();  // now holding the bow drawn
         }
     }
 
@@ -144,13 +142,12 @@ public class PlayerBowAttackController : MonoBehaviour
 
         if (isAbility)
         {
-            WeaponEvents.OnWeaponAbilityActivation?.Invoke(WeaponType.Bow);
             _cooldownHandler.StartAbilityCooldown();
             FireSpreadShot();
         }
         else FireSingleShot();
 
-        animator.PlayBowHandleIdle(); // ← return to idle bow pose after firing
+        animator.TriggerBowHandleIdle(); // ← return to idle bow pose after firing
         ResetAfterFire();
         isChargingAnimPlayed = false;
         isChargeIdlePlayed = false;
@@ -217,7 +214,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
     void CancelShot()
     {
-        animator.PlayBowHandleIdle(); // ← return to holding bow pose
+        animator.TriggerBowHandleIdle(); // ← return to holding bow pose
         ResetState();
         ResetCharge();
         ToggleArrowSprites(3, false);
@@ -228,7 +225,7 @@ public class PlayerBowAttackController : MonoBehaviour
 
     void ResetAfterFire()
     {
-        animator.PlayBowHandleIdle();
+        animator.TriggerBowHandleIdle();
         ResetState();
         ResetCharge();
         ToggleArrowSprites(3, false);

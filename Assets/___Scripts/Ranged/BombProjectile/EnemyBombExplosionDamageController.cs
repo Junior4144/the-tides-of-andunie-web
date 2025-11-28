@@ -6,8 +6,6 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
 {
     [SerializeField] private PirateAttributes pirateAttribute;
 
-    private readonly HashSet<GameObject> hitEnemies = new();
-
     private bool playerHit = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
