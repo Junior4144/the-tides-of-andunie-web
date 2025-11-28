@@ -223,8 +223,8 @@ GameObject:
   - component: {fileID: 7830419371915389727}
   - component: {fileID: 3894954020374212676}
   - component: {fileID: 2673839631832528661}
-  - component: {fileID: 2826577184952916628}
   - component: {fileID: 7636183001294515290}
+  - component: {fileID: 2826577184952916628}
   m_Layer: 7
   m_Name: HeavyAttackPoint
   m_TagString: Player
@@ -381,6 +381,28 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.4
+--- !u!114 &7636183001294515290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169845442023608201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d34b6431c2ac0c4e98c54ecc7d9ec7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeavyAttack
+  _animator: {fileID: 121471000654909590}
+  _attackSound: {fileID: 8300000, guid: 4adb44ccd08c25b4cbe74ec3707fdd23, type: 3}
+  _hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
+  _impulseCollider: {fileID: 5308685087317168297}
+  _attackDuration: 6
+  _damageDelay: 0
+  shakeCooldown: 0.2
+  shakeForce: 0.4
+  _movementSpeedIncrease: -2
+  _meleeDamageIncrease: 10
 --- !u!114 &2826577184952916628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,29 +456,6 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -1, z: 0}
---- !u!114 &7636183001294515290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3169845442023608201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d34b6431c2ac0c4e98c54ecc7d9ec7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HeavyAttack
-  _animator: {fileID: 121471000654909590}
-  _attackSound: {fileID: 0}
-  _hitEffectPrefab: {fileID: 7864261423219817626, guid: 1b9222eed7863884c99387cd5423685d, type: 3}
-  _impulseCollider: {fileID: 5308685087317168297}
-  _attackDuration: 1.5
-  _damageDelay: 0
-  shakeCooldown: 0.2
-  shakeForce: 1
-  _whirlwindSound: {fileID: 0}
-  _movementSpeedIncrease: -2
-  _meleeDamageIncrease: 10
 --- !u!1 &3559905506132868611
 GameObject:
   m_ObjectHideFlags: 0

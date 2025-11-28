@@ -3,7 +3,6 @@ using UnityEngine;
 public class HeavyAttack : BaseAttack
 {
     [Header("Heavy Attack Settings")]
-    [SerializeField] private AudioClip _whirlwindSound;
     [SerializeField] private float _movementSpeedIncrease = -2f;
     [SerializeField] private float _meleeDamageIncrease = 10f;
 
@@ -23,15 +22,32 @@ public class HeavyAttack : BaseAttack
         WeaponManager.Instance.SetBusy(true);
 
         _animator?.TriggerHeavyAttack();
-        if (_whirlwindSound) _audioSrc.PlayOneShot(_whirlwindSound, 0.4f);
+        PlayLoopingAttackSound();
 
         ApplyStatBuffs();
     }
 
     void CompleteHeavyAttack()
     {
+        StopLoopingAttackSound();
         ResetStatBuffs();
         EndAttack();
+    }
+
+    void PlayLoopingAttackSound()
+    {
+        if (_attackSound == null) return;
+
+        _audioSrc.clip = _attackSound;
+        _audioSrc.loop = true;
+        _audioSrc.volume = 0.4f;
+        _audioSrc.Play();
+    }
+
+    void StopLoopingAttackSound()
+    {
+        _audioSrc.loop = false;
+        _audioSrc.Stop();
     }
 
     void ApplyStatBuffs()
