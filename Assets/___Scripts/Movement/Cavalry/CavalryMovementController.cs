@@ -18,7 +18,8 @@ public class CavalryMovementController : MonoBehaviour
     private CavalryState _currentState;
     private bool _hasHitThePlayer;
 
-    [SerializeField] private List<Transform> PatrolPointsSequence;
+    [SerializeField] public GameObject PatrolPointsParent;
+    private List<Transform> PatrolPointsSequence;
     private int _currentPatrolPointIndex;
     private NavMeshPath _pathPlaceholder;
 
@@ -26,6 +27,9 @@ public class CavalryMovementController : MonoBehaviour
 
     void Awake()
     {
+        PatrolPointsSequence = new();
+        foreach (Transform child in PatrolPointsParent.transform)
+            PatrolPointsSequence.Add(child.gameObject.transform);
         agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
         agent.updatePosition = false;
