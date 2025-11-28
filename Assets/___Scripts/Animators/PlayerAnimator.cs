@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -17,21 +18,28 @@ public class PlayerAnimator : MonoBehaviour
     private PlayerController _playerMovement;
     private float _lockedTill;
     private bool _attacked;
-    private bool _heavyAttacked;
-    private float _heavyAttackDuration;
+    private HeavyAttackPhase _heavyAttackPhase = HeavyAttackPhase.None;
     private BowState _currentBowState = BowState.None;
     private float _nextIdleCheckTime;
     private bool _playingSpecialIdle;
     private float _specialIdleEndTime;
     private int _currentSpecialIdleState;
 
+    private AnimationClip _heavyTwirlStartClip;
+    private AnimationClip _heavyTwirlEndClip;
+
     private enum BowState { None, HandleIdle, Charging, ChargeIdle }
+    private enum HeavyAttackPhase { None, Start, Loop, End }
     
     private void Awake()
     {
         _anim = GetComponent<Animator>();
         _playerMovement = GetComponentInParent<PlayerController>();
         _nextIdleCheckTime = Time.time + UnityEngine.Random.Range(_minIdleInterval, _maxIdleInterval);
+
+        var clips = _anim.runtimeAnimatorController.animationClips;
+        _heavyTwirlStartClip = clips.FirstOrDefault(c => c.name == "AldarionHeavyTwirlStart");
+        _heavyTwirlEndClip = clips.FirstOrDefault(c => c.name == "AldarionHeavyTwirlEnd");
     }
 
     private void Update()
@@ -40,7 +48,6 @@ public class PlayerAnimator : MonoBehaviour
 
         var state = GetState();
         _attacked = false;
-        _heavyAttacked = false;
 
         if (state == _currentState) return;
 
@@ -76,10 +83,10 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (Time.time < _lockedTill) return _currentState;
 
-        if (_heavyAttacked)
+        if (_heavyAttackPhase != HeavyAttackPhase.None)
         {
             _playingSpecialIdle = false;
-            return LockState(HeavyAttack, _heavyAttackDuration);
+            return GetHeavyAttackAnimation();
         }
 
         if (_attacked)
@@ -102,6 +109,14 @@ public class PlayerAnimator : MonoBehaviour
             return s;
         }
     }
+
+    private int GetHeavyAttackAnimation() => _heavyAttackPhase switch
+    {
+        HeavyAttackPhase.Start => HeavyAttackStart,
+        HeavyAttackPhase.Loop => HeavyAttackLoop,
+        HeavyAttackPhase.End => HeavyAttackEnd,
+        _ => IdleDefault
+    };
 
     private int GetBowStateAnimation() => _currentBowState switch
     {
@@ -139,12 +154,23 @@ public class PlayerAnimator : MonoBehaviour
         _currentBowState = BowState.None;
     }
 
-    public void TriggerHeavyAttack(float duration)
+    public void TriggerHeavyAttack(float totalDuration)
     {
-        _heavyAttacked = true;
-        _heavyAttackDuration = duration;
+        _heavyAttackPhase = HeavyAttackPhase.Start;
         _currentBowState = BowState.None;
+
+        float startDuration = _heavyTwirlStartClip.length;
+        float endDuration = _heavyTwirlEndClip.length;
+        float loopDuration = totalDuration - startDuration - endDuration;
+
+        Invoke(nameof(TransitionToHeavyLoop), startDuration);
+        Invoke(nameof(TransitionToHeavyEnd), startDuration + loopDuration);
+        Invoke(nameof(CompleteHeavyAttack), totalDuration);
     }
+
+    void TransitionToHeavyLoop() => _heavyAttackPhase = HeavyAttackPhase.Loop;
+    void TransitionToHeavyEnd() => _heavyAttackPhase = HeavyAttackPhase.End;
+    void CompleteHeavyAttack() => _heavyAttackPhase = HeavyAttackPhase.None;
 
     public void TriggerBowHandleIdle() =>
         _currentBowState = BowState.HandleIdle;
@@ -165,7 +191,9 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
     private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
     private static readonly int Attack = Animator.StringToHash("AldarionSlash");
-    private static readonly int HeavyAttack = Animator.StringToHash("AldarionHeavyTwirlLoop");
+    private static readonly int HeavyAttackStart = Animator.StringToHash("AldarionHeavyTwirlStart");
+    private static readonly int HeavyAttackLoop = Animator.StringToHash("AldarionHeavyTwirlLoop");
+    private static readonly int HeavyAttackEnd = Animator.StringToHash("AldarionHeavyTwirlEnd");
     private static readonly int BowHandleIdle = Animator.StringToHash("AldarionBowHandleIdle");
     private static readonly int BowCharge = Animator.StringToHash("AldarionBowCharge");
     private static readonly int BowChargeIdle = Animator.StringToHash("AldarionBowChargeIdle");
