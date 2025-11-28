@@ -1,5 +1,4 @@
 using System;
-using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +17,7 @@ public class RewardListener : MonoBehaviour
     private void HandleRewardCollected()
     {
         LSManager.Instance.SetVillageState(VillageLiberationID, VillageState.Liberated_Done);
-
+        GlobalStoryManager.Instance.HasExitedLiberation = true;
         VillageSet?.Invoke();
 
         SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
