@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour
     {
         PlayerRigidBody = GetComponent<Rigidbody2D>();
     }
+    private void OnEnable()
+    {
+        PlayerStatsManager.OnSpeedChanged += UpdateSpeed;
+    }
 
     void Start()
     {
@@ -56,6 +60,11 @@ public class PlayerController : MonoBehaviour
         {
             RotateHand();
         }
+    }
+
+    private void UpdateSpeed(float speed, float _)
+    {
+        movementSpeed = speed;
     }
 
     private void RotatePlayerEightWay()

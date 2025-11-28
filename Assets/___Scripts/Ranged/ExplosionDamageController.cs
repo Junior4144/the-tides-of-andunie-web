@@ -1,12 +1,24 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class ExplosionDamageController : MonoBehaviour
 {
     private readonly HashSet<GameObject> hitEnemies = new();
+    private CinemachineImpulseSource _impulseSource;
 
     public float Power = 0;
     public float MaxPower = 1;
+
+    private void Awake()
+    {
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
+
+    }
+    private void Start()
+    {
+        _impulseSource.GenerateImpulseWithForce(2f);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
