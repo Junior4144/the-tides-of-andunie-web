@@ -97,8 +97,13 @@ public class PlayerManager : MonoBehaviour
     //------MOVEMENT------//
     public bool IsInImpulse() => _impulseController.IsInImpulse();
 
-    public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings) => 
+    public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings)
+    {
+        if (IsInvincible) return;
+
         _impulseController.InitiateSquadImpulse(contactPoint, impulseDirection, settings);
+    }
+        
 
     public void DisableLSPlayerMovement()
     {
