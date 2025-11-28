@@ -33,9 +33,9 @@ public class CavalryAttributes : ScriptableObject
 
     public float DestinationReachedThreshold = 1.0f;
 
-    [Tooltip("Penalty multiplier for patrol points behind the cavalry. Higher values = stronger preference for forward points.")]
+    [Tooltip("Penalty multiplier for targets behind the cavalry. Higher values = stronger preference for forward targets.")]
     [Range(0.1f, 1.0f)]
-    public float PatrolPointBehindnessPenalty = 0.5f;
+    public float TargetBehindnessPenalty = 0.5f;
 
     [Tooltip("Time in seconds to detect if the cavalry is stuck.")]
     [Range(0.1f, 10.0f)]
