@@ -37,6 +37,11 @@ public abstract class BaseAttack : MonoBehaviour
         _cameraImpulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
+    protected virtual void OnEnable()
+    {
+        _animator.ReturnToDefaultIdle();
+    }
+
     protected virtual void OnDisable()
     {
         StopAllCoroutines();

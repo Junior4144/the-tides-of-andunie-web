@@ -49,10 +49,7 @@ public class PlayerBowAttackController : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
-        ToggleArrowSprites(3, false);
-        ResetCharge();
         CancelShot();
-        ResetState();
         animator.ReturnToDefaultIdle();
     }
     private void OnEnable()
@@ -93,7 +90,6 @@ public class PlayerBowAttackController : MonoBehaviour
         WeaponManager.Instance.IsAbilityAiming = !normal;
 
         IsAttacking = true;
-        WeaponManager.Instance.SetBusy(true);
 
         ToggleArrowSprites(normal ? 1 : 3, true);
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);
