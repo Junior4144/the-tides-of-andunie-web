@@ -19,11 +19,13 @@ public class PlayerAnimator : MonoBehaviour
     private bool _attacked;
     private bool _heavyAttacked;
     private float _heavyAttackDuration;
-    private bool _bowAttack;
+    private BowState _currentBowState = BowState.None;
     private float _nextIdleCheckTime;
     private bool _playingSpecialIdle;
     private float _specialIdleEndTime;
     private int _currentSpecialIdleState;
+
+    private enum BowState { None, HandleIdle, Charging, ChargeIdle }
     
     private void Awake()
     {
@@ -48,7 +50,7 @@ public class PlayerAnimator : MonoBehaviour
     
     private void HandleSpecialIdle()
     {
-        if (_bowAttack) return;
+        if (_currentBowState != BowState.None) return;
 
         if (_playingSpecialIdle && Time.time >= _specialIdleEndTime)
             _playingSpecialIdle = false;
@@ -86,6 +88,9 @@ public class PlayerAnimator : MonoBehaviour
             return LockState(Attack, _attackAnimDuration);
         }
 
+        if (_currentBowState != BowState.None)
+            return GetBowStateAnimation();
+
         if (_playingSpecialIdle)
             return _currentSpecialIdleState;
 
@@ -97,6 +102,14 @@ public class PlayerAnimator : MonoBehaviour
             return s;
         }
     }
+
+    private int GetBowStateAnimation() => _currentBowState switch
+    {
+        BowState.HandleIdle => BowHandleIdle,
+        BowState.Charging => BowCharge,
+        BowState.ChargeIdle => BowChargeIdle,
+        _ => IdleDefault
+    };
     
     private int PickRandomSpecialIdle()
     {
@@ -123,36 +136,27 @@ public class PlayerAnimator : MonoBehaviour
     public void TriggerAttack()
     {
         _attacked = true;
-        _bowAttack = false;
+        _currentBowState = BowState.None;
     }
 
     public void TriggerHeavyAttack(float duration)
     {
         _heavyAttacked = true;
         _heavyAttackDuration = duration;
-        _bowAttack = false;
-    }
-    
-    
-    public void PlayBowHandleIdle()
-    {
-        _bowAttack = true;
-        _anim.CrossFade(BowHandleIdle, 0f);
+        _currentBowState = BowState.None;
     }
 
-    public void PlayBowCharge()
-    {
-        _bowAttack = true;
-        _anim.CrossFade(BowCharge, 0f);
-    }
-        
-    public void PlayBowChargeIdle() => _anim.CrossFade(BowChargeIdle, 0f);
+    public void TriggerBowHandleIdle() =>
+        _currentBowState = BowState.HandleIdle;
 
-    public void ReturnToDefaultIdle()
-    {
-        _bowAttack = false;              // allow special idles again
-        _anim.CrossFade(IdleDefault, 0f); // play the normal idle animation
-    }
+    public void TriggerBowCharge() =>
+        _currentBowState = BowState.Charging;
+
+    public void TriggerBowChargeIdle() =>
+        _currentBowState = BowState.ChargeIdle;
+
+    public void ReturnToDefaultIdle() =>
+        _currentBowState = BowState.None;
     
     #region Cached Properties
     private int _currentState;
