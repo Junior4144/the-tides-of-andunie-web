@@ -72,6 +72,7 @@ public class UIManager : MonoBehaviour
     private bool _preScreenUIOpen;
     private bool _tutorialOpen;
     private bool _endGameOpen;
+    private bool _rewardActive;
 
     private void Awake()
     {
@@ -114,8 +115,10 @@ public class UIManager : MonoBehaviour
         UIEvents.OnTutorialDeactivated += () => _tutorialOpen = false;
 
         UIEvents.DefaultPopUPActive += () => _endGameOpen = true;
-
         UIEvents.DefaultPopUpDisabled += () => _endGameOpen = false;
+
+        UIEvents.OnRewardActive += () => _rewardActive = true;
+        UIEvents.OnRewardDeactivated += () => _rewardActive = false;
 
         UIEvents.OnRequestCloseAllUI += CloseAllUI;
     }
@@ -344,6 +347,8 @@ public class UIManager : MonoBehaviour
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();
             if (_endGameOpen) UIEvents.DefaultPopUPActive.Invoke();
+            Debug.Log($"UI Manager: Reward is {_rewardActive}");
+            if (_rewardActive) WeaponManager.Instance.DisableWeapon();
         }
         else
         {
