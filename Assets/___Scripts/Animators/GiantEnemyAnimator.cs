@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class GiantEnemyAnimator : MonoBehaviour
+public class GiantEnemyAnimator : MonoBehaviour, IMeleeAnimator
 {
     [SerializeField] private float _attackAnimDuration = 0f;
 
@@ -12,7 +12,7 @@ public class GiantEnemyAnimator : MonoBehaviour
 
     private void Awake() => _animator = GetComponent<Animator>();
 
-    public void TriggerAttack() => _attacked = true;
+    public void TriggerMeleeAttack() => _attacked = true;
 
     private void Update()
     {
@@ -24,7 +24,6 @@ public class GiantEnemyAnimator : MonoBehaviour
         _animator.CrossFade(state, 0, 0);
         _currentState = state;
     }
-
     private int GetState()
     {
         if (Time.time < _lockedTill) return _currentState;
