@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class GiantRangedPirateAnimator : MonoBehaviour
+public class GiantRangedPirateAnimator : MonoBehaviour, IMeleeAnimator
 {
     [SerializeField] private float _meleeAttackAnimDuration = 1.067f;
     [SerializeField] private float _cannonAttackAnimDuration = 0.9f;

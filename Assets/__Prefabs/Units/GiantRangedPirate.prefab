@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2252648056164599593}
   - component: {fileID: 321228177619035854}
   - component: {fileID: 6740681583903973816}
-  - component: {fileID: 8475552790595669104}
   - component: {fileID: 1061839343252736463}
+  - component: {fileID: 8475552790595669104}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -115,19 +115,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8475552790595669104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656191722525059825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b966a1c57cb836469e204b413a418cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DynamicSpriteSorting
-  _baseSortingOrder: 100
 --- !u!114 &1061839343252736463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +129,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GiantRangedPirateAnimator
   _meleeAttackAnimDuration: 1.067
   _cannonAttackAnimDuration: 0.9
+--- !u!114 &8475552790595669104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656191722525059825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b966a1c57cb836469e204b413a418cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicSpriteSorting
+  _baseSortingOrder: 100
 --- !u!1 &2838326766718683790
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,9 +526,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _attributes: {fileID: 11400000, guid: f90e069d83236dc48b15d68c3ffd54db, type: 2}
-  ProjectilePrefab: {fileID: 8293163787298628046, guid: 39cb029e64427e74191d3ebfa3a764fc, type: 3}
+  ProjectilePrefab: {fileID: 4540153732042383152, guid: 44a58587bcd204149893791a34732c12, type: 3}
   firePoint: {fileID: 3728098243069031058}
   fireShotSound: {fileID: 8300000, guid: 82d9b4b3071bad349b4b58cfbfe235a7, type: 3}
+  _meleeAttackCollider: {fileID: 2884095403603254102}
 --- !u!1 &3728098243069031058
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +555,7 @@ Transform:
   m_GameObject: {fileID: 3728098243069031058}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.61, y: 1.06, z: 0}
+  m_LocalPosition: {x: 1.859, y: 1.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -742,8 +743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba569d8bb6271044fbf1d739d74c26b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
-  _animator: {fileID: 0}
+  _attributes: {fileID: 11400000, guid: f90e069d83236dc48b15d68c3ffd54db, type: 2}
+  _animatorComponent: {fileID: 1061839343252736463}
   _animDuration: 1
 --- !u!82 &1242489905277275622
 AudioSource:

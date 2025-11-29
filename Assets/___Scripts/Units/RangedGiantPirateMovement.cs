@@ -18,7 +18,6 @@ public class RangedGiantPirateMovement : MonoBehaviour
     private GiantRangedPirateAnimator _animator;
     private AudioSource _audioSource;
     private ImpulseController _impulseController;
-    private Collider2D _attackCollider;
     
     private enum CombatState
     {
@@ -29,7 +28,6 @@ public class RangedGiantPirateMovement : MonoBehaviour
 
     private CombatState _currentState = CombatState.Default;
     private bool _canAttack = true;
-    private bool _isMeleeAttacking = false;
 
     void Awake()
     {
@@ -38,8 +36,7 @@ public class RangedGiantPirateMovement : MonoBehaviour
         _animator = GetComponentInChildren<GiantRangedPirateAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _impulseController = GetComponentInChildren<ImpulseController>();
-        _attackCollider = GetComponent<Collider2D>();
-        
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         
@@ -176,101 +173,6 @@ public class RangedGiantPirateMovement : MonoBehaviour
         {
             agent.isStopped = true;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D otherCollider)
-    {
-        if (!otherCollider.CompareTag("Player") || _isMeleeAttacking || !_canAttack)
-            return;
-
-        StartCoroutine(PerformMeleeAttack());
-    }
-
-    // ===== MELEE ATTACK METHODS =====
-    private IEnumerator PerformMeleeAttack()
-    {
-        _isMeleeAttacking = true;
-        _canAttack = false;
-        agent.isStopped = true;
-
-        PlayMeleeAttackAnimation();
-
-        yield return new WaitForSeconds(_attributes.DamageDelay);
-
-        TryDealMeleeDamageAndImpulse();
-
-        yield return new WaitForSeconds(_attributes.MeleeAttackAnimDuration - _attributes.DamageDelay);
-
-        _isMeleeAttacking = false;
-        _canAttack = true;
-        agent.isStopped = false;
-    }
-
-    private void TryDealMeleeDamageAndImpulse()
-    {
-        if (!PlayerManager.Instance)
-            return;
-
-        if (!IsPlayerInMeleeRange())
-            return;
-
-        DealMeleeDamageToPlayer();
-        ApplyMeleeImpulseToPlayer();
-    }
-
-    private bool IsPlayerInMeleeRange()
-    {
-        if (!player) return false;
-        
-        float distance = Vector2.Distance(transform.position, player.position);
-        return distance <= _attributes.DamageRange;
-    }
-
-    private void DealMeleeDamageToPlayer()
-    {
-        PlayerManager.Instance.TakeDamage(_attributes.DamageAmount, DamageType.Melee);
-    }
-
-    private void ApplyMeleeImpulseToPlayer()
-    {
-        Vector2 contactPoint = CalculateMeleeContactPoint();
-        Vector2 impulseDirection = CalculateMeleeImpulseDirection();
-        ImpulseSettings settings = CreateMeleeImpulseSettings();
-
-        PlayerManager.Instance.ApplyImpulse(contactPoint, impulseDirection, settings);
-    }
-
-    private Vector2 CalculateMeleeContactPoint()
-    {
-        Vector2 playerPosition = PlayerManager.Instance.GetPlayerTransform().position;
-        return _attackCollider.ClosestPoint(playerPosition);
-    }
-
-    private Vector2 CalculateMeleeImpulseDirection()
-    {
-        Vector2 playerPosition = PlayerManager.Instance.GetPlayerTransform().position;
-        return (playerPosition - (Vector2)transform.position).normalized;
-    }
-
-    private ImpulseSettings CreateMeleeImpulseSettings()
-    {
-        return new ImpulseSettings
-        {
-            Force = _attributes.ImpulseForce,
-            Duration = _attributes.ImpulseDuration,
-            PlaySound = true,
-            SpawnParticles = true
-        };
-    }
-
-    private void PlayMeleeAttackAnimation()
-    {
-        if (_animator)
-        {
-            _animator.TriggerMeleeAttack();
-        }
-        else
-            Debug.LogWarning("[RangedGiantPirateMovement] Melee Animator is Null. Playing no Animation");
     }
 
     // ===== RANGED ATTACK METHODS =====
