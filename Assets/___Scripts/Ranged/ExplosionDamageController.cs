@@ -38,7 +38,15 @@ public class ExplosionDamageController : MonoBehaviour
             float finalDamage = PlayerStatsManager.Instance.ExplosionDamage * chargeMultiplier;
 
             Debug.Log($"[ExplosionDamageController] Damage dealt {finalDamage} (base: {PlayerStatsManager.Instance.ExplosionDamage}, multiplier: {chargeMultiplier}, total: {finalDamage})");
-            health.TakeDamage(finalDamage, DamageType.Explosion);
+
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                health.TakeDamage(finalDamage * 0.25f, DamageType.Explosion);
+            }
+            else
+            {
+                health.TakeDamage(finalDamage, DamageType.Explosion);
+            } 
         }
 
     }
