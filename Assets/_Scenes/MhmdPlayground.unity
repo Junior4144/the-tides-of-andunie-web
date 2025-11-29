@@ -4706,10 +4706,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5279127f05ad60449d584fa19dddced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsUIController
-  MaxHpText: {fileID: 0}
-  MaxHpAdditiveText: {fileID: 0}
-  DamageText: {fileID: 0}
-  DamageAdditiveText: {fileID: 0}
+  statsContainer: {fileID: 0}
+  statFont: {fileID: 0}
+  statElementHeight: 50
+  statElementWidth: 1400
+  mainTextFontSize: 48
+  additiveTextFontSize: 46
+  horizontalSpacing: 10
+  labelWidthRatio: 0.5
+  mainValueWidthRatio: 0.15
+  additiveValueWidthRatio: 0.15
 --- !u!1001 &483272476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15417,11 +15423,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 220352273037767741, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.6
+      value: -2.56
       objectReference: {fileID: 0}
     - target: {fileID: 220352273037767741, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.74
+      value: 4.33
       objectReference: {fileID: 0}
     - target: {fileID: 220352273037767741, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15465,7 +15471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5425580518855252515, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9103737287983059288, guid: 2a3f99103a6bb9f428de8ad1f9e518e8, type: 3}
       propertyPath: _damageDelay
@@ -16813,9 +16819,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9625c12d2af1849a46105c7a2a3160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  shopPanel: {fileID: 35558476}
-  shopItemUIPrefab: {fileID: 5226409884855454837, guid: e9288335593df3a4a8b1a0ddf1c15267, type: 3}
+  mainShopPanel: {fileID: 0}
+  shopItemContainer: {fileID: 0}
   canvas: {fileID: 1849022912}
+  shopItemUIPrefab: {fileID: 5226409884855454837, guid: e9288335593df3a4a8b1a0ddf1c15267, type: 3}
 --- !u!1001 &1544533016981831375
 PrefabInstance:
   m_ObjectHideFlags: 0

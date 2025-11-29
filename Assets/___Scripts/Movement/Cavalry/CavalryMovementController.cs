@@ -8,21 +8,32 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CavalryMovementController : MonoBehaviour
 {
+    // External objects
     [SerializeField] private CavalryAttributes _attributes;
-
+    [SerializeField] public GameObject PatrolPointsParent;
     private Transform _player;
     private NavMeshAgent agent;
     private Rigidbody2D _rigidbody;
 
+    // State variables
     private enum CavalryState { Patrolling, Attacking, Stuck }
     private CavalryState _currentState;
     private bool _hasHitThePlayer;
+    private float _lastAttackTime;
 
-    [SerializeField] public GameObject PatrolPointsParent;
+    // Events
+    public event System.Action OnChargeStart;
+    public event System.Action OnPlayerHit;
+
+    // Public getters
+    // ADD THESE TWO LINES:
+    public float CurrentSpeed => agent.speed;
+    public float MaxSpeed => _attributes.ChargeSpeed;
+
+    // Path finding variables
     private List<Transform> PatrolPointsSequence;
     private int _currentPatrolPointIndex;
     private NavMeshPath _pathPlaceholder;
-    private float _lastAttackTime;
 
     // Stuck detection fields
     private Vector3 _lastPosition;
@@ -30,6 +41,8 @@ public class CavalryMovementController : MonoBehaviour
     private bool _isStuck;
     private float _backupStartTime;
     private float _backupDuration = 1f;
+
+    // Local getters
 
     private Transform Player => _player ??= PlayerManager.Instance.transform;
     private float TurnAbility => 1.0f - Mathf.InverseLerp(_attributes.MinSpeedForTurning, _attributes.MaxSpeedForTurning, _rigidbody.linearVelocity.magnitude);
@@ -111,6 +124,7 @@ public class CavalryMovementController : MonoBehaviour
     {
         _hasHitThePlayer = true;
         _lastAttackTime = Time.time;
+        OnPlayerHit?.Invoke();
     }
 
     private void Patrol()
@@ -136,6 +150,7 @@ public class CavalryMovementController : MonoBehaviour
     private void TransitionToAttackingState()
     {
         _currentState = CavalryState.Attacking;
+        OnChargeStart?.Invoke();
     }
 
     private void TransitionToPatrollingState()
