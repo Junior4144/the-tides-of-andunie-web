@@ -269,8 +269,8 @@ public class RangedGiantPirateMovement : MonoBehaviour
 
         Vector2 perp = new Vector2(-direction.y, direction.x);
 
-        Vector2 originLeft = originCenter + perp * 0.35f;
-        Vector2 originRight = originCenter - perp * 0.35f;
+        Vector2 originLeft = originCenter + perp * 0.6f;
+        Vector2 originRight = originCenter - perp * 0.6f;
 
         LayerMask environmentMask = LayerMask.GetMask("Environment");
 
@@ -309,8 +309,8 @@ public class RangedGiantPirateMovement : MonoBehaviour
         float distance = Vector2.Distance(originCenter, player.position);
 
         Vector2 perp = new Vector2(-direction.y, direction.x);
-        Vector2 originLeft = originCenter + perp * 0.35f;
-        Vector2 originRight = originCenter - perp * 0.35f;
+        Vector2 originLeft = originCenter + perp * 0.6f;
+        Vector2 originRight = originCenter - perp * 0.6f;
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(originCenter, originCenter + direction * distance);
