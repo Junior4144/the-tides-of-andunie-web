@@ -20,7 +20,7 @@ public class CavalryMeleeController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        var health = otherCollider.GetComponent(typeof(IHealthController)) as IHealthController;
+        var health = otherCollider.GetComponent(typeof(HealthController)) as HealthController;
         if (
             IsEnemy(otherCollider) &&
             health != null &&
@@ -47,7 +47,7 @@ public class CavalryMeleeController : MonoBehaviour
             float distance = Vector2.Distance(transform.position, enemyObject.transform.position);
             
             if (distance <= _damageRange)
-                enemyObject.GetComponent<IHealthController>().TakeDamage(_attributes.DamageAmount);
+                enemyObject.GetComponent<HealthController>().TakeDamage(_attributes.DamageAmount);
         }
     }
 
