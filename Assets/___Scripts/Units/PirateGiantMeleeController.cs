@@ -4,14 +4,16 @@ using System.Collections;
 public class PirateGiantMeleeController : MonoBehaviour
 {
     [SerializeField] private GiantPirateAttributes _attributes;
-    [SerializeField] private GiantEnemyAnimator _animator;
+    [SerializeField] private MonoBehaviour _animatorComponent;
     [SerializeField] private float _animDuration;
 
     private bool isAttacking;
     private Collider2D _attackCollider;
+    private IMeleeAnimator _animator;
 
     private void Awake()
-    {
+    {   
+        _animator = _animatorComponent as IMeleeAnimator;
         _attackCollider = GetComponent<Collider2D>();
     }
 
@@ -94,9 +96,9 @@ public class PirateGiantMeleeController : MonoBehaviour
 
     private void PlayAttackAnimation()
     {
-        if (_animator)
+        if (_animator != null)
         {
-            _animator.TriggerAttack();
+            _animator.TriggerMeleeAttack();
             StartCoroutine(ResetAttackAnimation());
         }
         else
