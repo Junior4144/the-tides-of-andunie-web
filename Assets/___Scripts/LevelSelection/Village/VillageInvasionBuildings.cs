@@ -15,6 +15,8 @@ public class VillageInvasionBuildings : MonoBehaviour
     [Header("Village Settings")]
     [SerializeField] private string villageId;
 
+    [SerializeField] private VillageBuildingData _buildingData;
+
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
@@ -51,7 +53,15 @@ public class VillageInvasionBuildings : MonoBehaviour
     private void HandleInvasion()
     {
         if (string.IsNullOrEmpty(villageId))
-            return;
+        {
+            if (VillageIDManager.Instance)
+            {
+                villageId = VillageIDManager.Instance.villageId;
+            }
+        }
+            
+
+       
 
         if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
@@ -62,8 +72,24 @@ public class VillageInvasionBuildings : MonoBehaviour
     }
     private void HandleFireBuilding()
     {
-        SpawnFire();
-        SpawnFireSound();
+        if(fireSprites.Length > 0)
+        {
+            SpawnFire();
+        }
+        else
+        {
+            SpawnFireUsingData();
+        }
+
+        if (fireSoundPrefab != null)
+        {
+            SpawnFireSound();
+        }
+        else
+        {
+            SpawnFireSoundUsingData();
+        }
+        
     }
 
 
@@ -84,5 +110,29 @@ public class VillageInvasionBuildings : MonoBehaviour
     {
         if (spriteRenderer != null && destroyedSprite != null)
             spriteRenderer.sprite = destroyedSprite;
+        else
+        {
+            ReplaceSpriteUsingData();
+        }
+    }
+
+    private void ReplaceSpriteUsingData()
+    {
+        Sprite destroyedSprite = _buildingData.GetDestroyedSprite(gameObject.name);
+        if (destroyedSprite != null)
+            spriteRenderer.sprite = destroyedSprite;
+    }
+
+    private void SpawnFireSoundUsingData()
+    {
+        Instantiate(_buildingData.fireSoundPrefab, transform.position, Quaternion.identity, transform);
+    }
+
+    private void SpawnFireUsingData()
+    {
+        foreach (var position in firePositions)
+        {
+            Instantiate(_buildingData.fireSpritePrefab, position.transform.position, Quaternion.identity);
+        }
     }
 }
