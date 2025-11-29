@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 2826577184952916628}
   m_Layer: 7
   m_Name: HeavyAttackPoint
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
   _damageDelay: 0
   shakeCooldown: 0.2
   shakeForce: 0.4
-  _movementSpeedIncrease: -2
+  _movementSpeedIncrease: 10
   _meleeDamageIncrease: 10
   _audioFadeOutDuration: 0.3
   _deflectionCollider: {fileID: 4660484581588781656}
@@ -5848,7 +5848,7 @@ AudioSource:
   m_GameObject: {fileID: 4953174308568767268}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -6561,7 +6561,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -8901091602260372801, guid: 294d60e224357fb44993da9f24ca482d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e5e77f00b3ca6bf45b3c438c63f8d48f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
@@ -7121,7 +7121,7 @@ GameObject:
   - component: {fileID: 1850924139042858366}
   m_Layer: 7
   m_Name: NormalAttackPoint
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

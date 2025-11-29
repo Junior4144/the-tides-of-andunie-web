@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 8225468577275486795}
   - component: {fileID: 4810601562168249464}
   - component: {fileID: 8636014263562488927}
-  - component: {fileID: 1318188630637027886}
+  - component: {fileID: 6794341595725858104}
   - component: {fileID: 6595407804366197556}
   - component: {fileID: 845200191027578643}
   - component: {fileID: 1831263652495674172}
@@ -208,7 +208,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01079129, y: -0.07693506}
   m_Size: {x: 3.627749, y: 2.000691}
   m_Direction: 1
---- !u!114 &1318188630637027886
+--- !u!114 &6794341595725858104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,10 +217,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3354042210201786904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: f9a170c432f44fb4d9777cb72b66344d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
+  m_EditorClassIdentifier: '::'
   _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
+  playerVelocityThreshold: 1
 --- !u!114 &6595407804366197556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +309,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 8
   m_ObstacleAvoidanceType: 1
 --- !u!114 &1831263652495674172
 MonoBehaviour:

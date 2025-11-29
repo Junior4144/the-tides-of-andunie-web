@@ -34,7 +34,7 @@ public class EndGamePopUpController : MonoBehaviour
             (int)LSManager.Instance.GetTotalPlayableVillage())
         {
             panel.SetActive(true);
-            UIEvents.EndGamePopUPActive.Invoke();
+            UIEvents.DefaultPopUPActive.Invoke();
         }
 
     }

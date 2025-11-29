@@ -49,10 +49,7 @@ public class PlayerBowAttackController : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
-        ToggleArrowSprites(3, false);
-        ResetCharge();
         CancelShot();
-        ResetState();
         animator.ReturnToDefaultIdle();
     }
     private void OnEnable()
@@ -66,18 +63,18 @@ public class PlayerBowAttackController : MonoBehaviour
         // Left-Click Attack
         if (!canFire) { HandleCooldown(); return; }
 
-        if (Input.GetMouseButton(0)) HandleAiming(normal: true);
-        else if (Input.GetMouseButtonUp(0)) Fire(isAbility: false);
+        if (Input.GetMouseButton(0) && !IsAbilityAiming) HandleAiming(normal: true);
+        else if (Input.GetMouseButtonUp(0) && !IsAbilityAiming) Fire(isAbility: false);
 
 
         if (_cooldownHandler.IsAbilityOnCooldown)
             return;
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !IsNormalAiming)
         {
             HandleAiming(normal: false);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1) && !IsNormalAiming)
         {
             Fire(isAbility: true);
         }
@@ -93,7 +90,6 @@ public class PlayerBowAttackController : MonoBehaviour
         WeaponManager.Instance.IsAbilityAiming = !normal;
 
         IsAttacking = true;
-        WeaponManager.Instance.SetBusy(true);
 
         ToggleArrowSprites(normal ? 1 : 3, true);
         charge = Mathf.Min(charge + Time.deltaTime * _chargeRate, maxCharge);

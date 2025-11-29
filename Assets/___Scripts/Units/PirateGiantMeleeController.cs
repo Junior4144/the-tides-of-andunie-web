@@ -17,9 +17,9 @@ public class PirateGiantMeleeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (!otherCollider.CompareTag("Player") || isAttacking)
+        if (!otherCollider.gameObject.CompareTag("Player") || isAttacking)
             return;
-
+        
         StartCoroutine(PerformAttack());
     }
 
