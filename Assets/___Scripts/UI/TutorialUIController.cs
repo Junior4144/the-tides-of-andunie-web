@@ -36,7 +36,9 @@ public class TutorialUIController : MonoBehaviour
         yield return new WaitForSeconds(initialDelay);
 
         _canvas.SetActive(true);
-        Instantiate(_questPrefab, _prefabPanel);
+        if(_questPrefab != null)
+            Instantiate(_questPrefab, _prefabPanel);
+
         Instantiate(_tutorialPrefab, _prefabPanel);
         yield return new WaitForSeconds(initialDelay);
 

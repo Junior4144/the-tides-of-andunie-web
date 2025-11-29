@@ -15,8 +15,6 @@ public class UIKeyPressController : MonoBehaviour
 
         public readonly void UpdateSprite()
         {
-            if (Input.GetKey(key)) Debug.Log($"[UIKeyPressController] {key} was pressed");
-
             image.sprite = Input.GetKey(key) ? pressedSprite : unpressedSprite;
         }
     }

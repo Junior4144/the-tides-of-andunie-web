@@ -33,6 +33,7 @@ public class WeaponManager : MonoBehaviour
     private WeaponType? pendingWeaponRequest = null;
     private string currentSceneName;
 
+    private bool _rewardActive;
 
     private void Awake()
     {
@@ -55,8 +56,12 @@ public class WeaponManager : MonoBehaviour
         UIEvents.OnTutorialActive += HandlePopUpUIActive;
         UIEvents.OnTutorialDeactivated += OnPopUpUIDeactivated;
 
-        UIEvents.OnPauseMenuActive += HandlePopUpUIActive;
-        UIEvents.OnPauseMenuDeactivated += OnPopUpUIDeactivated;
+        UIEvents.OnPauseMenuActive += HandlePauseMenuActivation;
+        UIEvents.OnPauseMenuDeactivated += HandlePauseMenuDeactivation;
+
+
+        UIEvents.OnRewardActive += () => _rewardActive = true;
+        UIEvents.OnRewardDeactivated += () => _rewardActive = false;
     }
 
     private void OnDisable()
@@ -70,8 +75,8 @@ public class WeaponManager : MonoBehaviour
         UIEvents.OnTutorialActive -= HandlePopUpUIActive;
         UIEvents.OnTutorialDeactivated -= OnPopUpUIDeactivated;
 
-        UIEvents.OnPauseMenuActive -= HandlePopUpUIActive;
-        UIEvents.OnPauseMenuDeactivated -= OnPopUpUIDeactivated;
+        UIEvents.OnPauseMenuActive -= HandlePauseMenuActivation;
+        UIEvents.OnPauseMenuDeactivated -= HandlePauseMenuDeactivation;
     }
 
     private void Start()
@@ -81,6 +86,13 @@ public class WeaponManager : MonoBehaviour
 
     private void HandleEquipRequest(WeaponType requestedWeapon)
     {
+        if (_rewardActive)
+        {
+            currentWeapon = WeaponType.none;
+            WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
+            return;
+        }
+
         if (currentGameState != GameState.Gameplay)
         {
             Debug.Log("Weapon logic disabled due to game state.");
@@ -139,13 +151,31 @@ public class WeaponManager : MonoBehaviour
         WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
         IsBusy = true;
     }
-    
+
     private void OnPopUpUIDeactivated()
     {
         Debug.Log("OnPopUpUIDeactivated is called");
         IsBusy = false;
         HandleEquipRequest(WeaponType.Axe);
     }
+
+    private void HandlePauseMenuActivation()
+    {
+        WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
+        IsBusy = true;
+    }
+
+    private void HandlePauseMenuDeactivation()
+    {
+        Debug.Log($"Weapon Manager: Reward is {_rewardActive}");
+
+        if (!_rewardActive)
+        {
+            IsBusy = false;
+            WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.Axe);
+        }   
+    }
+
 
     public void SetBusy(bool value)
     {
@@ -167,6 +197,12 @@ public class WeaponManager : MonoBehaviour
     {
         IsBusy = true;
         SetWeaponToNone();
+    }
+
+    public void EnableWeapon()
+    {
+        IsBusy = true;
+        HandleEquipRequest(WeaponType.Axe);
     }
 
     public WeaponType GetCurrentWeapon()
