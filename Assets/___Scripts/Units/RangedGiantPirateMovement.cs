@@ -1,27 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Audio;
 
 public class RangedGiantPirateMovement : MonoBehaviour
 {
-    [Header("Ranged Attack Settings")]
-    [SerializeField] private float _rangedAttackAnimDuration = .9f;
+
+    [Header("References")]
+    [SerializeField] private RangedGiantAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;
-    [SerializeField] private float fireCooldown = 1f;
-    [SerializeField] private float HoldFireCooldown = 1f;
-    [SerializeField] private float impulseForce = 10f;
-    [SerializeField] private float impulseDuration = 0;
-    [SerializeField] private float minRangedDistance = 6f; // Won't shoot if player is closer than this
-
-    [Header("Melee Attack Settings")]
-    [SerializeField] private float _meleeAttackAnimDuration = 1.067f;
-    [SerializeField] private float meleeAttackRange = 3f;
-    
-    [Header("References")]
-    [SerializeField] private RangedGiantPirateAttributes _attributes;
+    [SerializeField] private Collider2D _meleeAttackCollider;
 
     private Transform player;
     private NavMeshAgent agent;
@@ -31,9 +20,16 @@ public class RangedGiantPirateMovement : MonoBehaviour
     private ImpulseController _impulseController;
     private Collider2D _attackCollider;
     
-    private bool canAttack = true;
-    private bool ifStillInRangedRange = false;
-    private bool isMeleeAttacking = false;
+    private enum CombatState
+    {
+        Default,
+        Ranged,
+        Melee
+    }
+
+    private CombatState _currentState = CombatState.Default;
+    private bool _canAttack = true;
+    private bool _isMeleeAttacking = false;
 
     void Awake()
     {
@@ -61,82 +57,130 @@ public class RangedGiantPirateMovement : MonoBehaviour
         {
             agent.acceleration = _attributes.Acceleration;
         }
+
+        // Disable melee attack collider by default (enabled only in Melee state)
+        if (_meleeAttackCollider != null)
+        {
+            _meleeAttackCollider.enabled = false;
+        }
     }
 
+    // ===== STATE MACHINE =====
     void Update()
     {
         if (!agent.enabled || !PlayerManager.Instance) return;
 
         player = PlayerManager.Instance.transform;
-        
         float distance = Vector2.Distance(transform.position, player.position);
-        Debug.Log($"[RangedGiantPirateMovement] Distance to player: {distance:F2}, ReadyDistance: {_attributes.ReadyDistance}, MeleeRange: {meleeAttackRange}");
 
-        // Determine which attack mode to use based on distance
-        if (distance <= meleeAttackRange)
+        // Determine and transition to new state
+        CombatState newState = DetermineState(distance);
+        if (newState != _currentState)
         {
-            // Close range - use melee attack (handled by OnTriggerEnter2D)
-            Debug.Log($"[RangedGiantPirateMovement] In MELEE range - waiting for trigger");
-            RotateTowardsPlayer();
-            agent.isStopped = true;
+            OnStateChanged(_currentState, newState);
+            _currentState = newState;
         }
-        else if (distance >= minRangedDistance && distance <= _attributes.ReadyDistance && canAttack)
+
+        // Execute current state behavior
+        switch (_currentState)
         {
-            // Medium range - use ranged attack (only if outside minimum range)
-            Debug.Log($"[RangedGiantPirateMovement] In RANGED range - checking LOS");
-            RotateTowardsPlayer();
-            
-            if (!HasLineOfSight())
-            {
-                // Can't see player → move closer
-                Debug.Log($"[RangedGiantPirateMovement] No line of sight - moving closer");
-                ifStillInRangedRange = false;
-                agent.isStopped = false;
-                agent.SetDestination(player.position);
-                return;
-            }
+            case CombatState.Default:
+                HandleApproachingState();
+                break;
+            case CombatState.Ranged:
+                HandleRangedState();
+                break;
+            case CombatState.Melee:
+                HandleMeleeState();
+                break;
+        }
+    }
 
-            // LOS is clear → proceed with firing sequences
-            if (ifStillInRangedRange)
-            {
-                Debug.Log($"[RangedGiantPirateMovement] Hold firing sequence");
-                StartCoroutine(initiateHoldFiringSequence());
-                PlayRangedHoldFireAnimation();
-                return;
-            }
+    private CombatState DetermineState(float distanceToPlayer)
+    {
+        // Don't interrupt firing sequence - stay in Ranged state until complete
+        if (!_canAttack && _currentState == CombatState.Ranged)
+        {
+            Debug.Log($"[RangedGiantPirateMovement] Firing in progress, staying in Ranged state");
+            return CombatState.Ranged;
+        }
 
-            Debug.Log($"[RangedGiantPirateMovement] Starting initial firing sequence");
-            ifStillInRangedRange = true;
-            StartCoroutine(InitiateFiringSequence());
-            PlayRangedAttackAnimation();
+        // Normal state determination based on distance
+        if (distanceToPlayer < _attributes.RangedMeleeThreshold)
+            return CombatState.Melee;
+
+        if (distanceToPlayer <= _attributes.ReadyDistance)
+            return CombatState.Ranged;
+
+        return CombatState.Default;
+    }
+
+    private void OnStateChanged(CombatState fromState, CombatState toState)
+    {
+        Debug.Log($"[RangedGiantPirateMovement] State changed: {fromState} → {toState}");
+
+        // Enable melee attack collider only in Melee state
+        if (_meleeAttackCollider != null)
+        {
+            _meleeAttackCollider.enabled = (toState == CombatState.Melee);
+        }
+    }
+
+    private void HandleApproachingState()
+    {
+        Debug.Log($"[RangedGiantPirateMovement] APPROACHING - moving towards player");
+        RotateTowardsMovementDirection();
+        agent.isStopped = false;
+        agent.SetDestination(player.position);
+    }
+
+    private void HandleRangedState()
+    {
+        RotateTowardsPlayer();
+
+        // Check line of sight - if blocked, move closer
+        if (!HasLineOfSight())
+        {
+            Debug.Log($"[RangedGiantPirateMovement] RANGED - No line of sight, moving closer");
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
             return;
         }
-        else if (distance > meleeAttackRange && distance < minRangedDistance)
+
+        // Line of sight clear - fire if ready
+        if (_canAttack)
         {
-            // Too close for ranged, too far for melee - move to maintain distance
-            Debug.Log($"[RangedGiantPirateMovement] In DEAD ZONE (between melee and min ranged distance) - moving away");
-            ifStillInRangedRange = false;
-            RotateTowardsPlayer();
-            
-            // Move away from player to get to minRangedDistance
-            Vector3 awayDirection = (transform.position - player.position).normalized;
-            Vector3 targetPosition = player.position + awayDirection * minRangedDistance;
-            agent.isStopped = false;
-            agent.SetDestination(targetPosition);
+            Debug.Log($"[RangedGiantPirateMovement] RANGED - Firing cannon");
+            StartCoroutine(InitiateFiringSequence());
         }
         else
         {
-            // Far away - move towards player
-            Debug.Log($"[RangedGiantPirateMovement] TOO FAR - moving towards player");
-            ifStillInRangedRange = false;
-            RotateTowardsMovementDirection();
+            // Currently in firing sequence or cooldown
+            agent.isStopped = true;
+        }
+    }
+
+    private void HandleMeleeState()
+    {
+        Debug.Log($"[RangedGiantPirateMovement] MELEE - closing distance and waiting for trigger");
+        RotateTowardsPlayer();
+
+        // Move towards player until trigger collision occurs
+        float distance = Vector2.Distance(transform.position, player.position);
+        if (distance > _attributes.MeleeAttackRange)
+        {
+            agent.isStopped = false;
             agent.SetDestination(player.position);
+        }
+        else
+        {
+            agent.isStopped = true;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (!otherCollider.CompareTag("Player") || isMeleeAttacking || !canAttack)
+        if (!otherCollider.CompareTag("Player") || _isMeleeAttacking || !_canAttack)
             return;
 
         StartCoroutine(PerformMeleeAttack());
@@ -145,8 +189,8 @@ public class RangedGiantPirateMovement : MonoBehaviour
     // ===== MELEE ATTACK METHODS =====
     private IEnumerator PerformMeleeAttack()
     {
-        isMeleeAttacking = true;
-        canAttack = false;
+        _isMeleeAttacking = true;
+        _canAttack = false;
         agent.isStopped = true;
 
         PlayMeleeAttackAnimation();
@@ -155,10 +199,10 @@ public class RangedGiantPirateMovement : MonoBehaviour
 
         TryDealMeleeDamageAndImpulse();
 
-        yield return new WaitForSeconds(_meleeAttackAnimDuration - _attributes.DamageDelay);
-        
-        isMeleeAttacking = false;
-        canAttack = true;
+        yield return new WaitForSeconds(_attributes.MeleeAttackAnimDuration - _attributes.DamageDelay);
+
+        _isMeleeAttacking = false;
+        _canAttack = true;
         agent.isStopped = false;
     }
 
@@ -232,73 +276,48 @@ public class RangedGiantPirateMovement : MonoBehaviour
     // ===== RANGED ATTACK METHODS =====
     private IEnumerator InitiateFiringSequence()
     {
-        Debug.Log($"[RangedGiantPirateMovement] InitiateFiringSequence started");
-        canAttack = false;
+        Debug.Log($"[RangedGiantPirateMovement] Firing sequence started");
+        _canAttack = false;
         agent.isStopped = true;
 
-        yield return new WaitForSeconds(0.67f);
+        // 1. Play cannon attack animation
+        PlayRangedAttackAnimation();
 
+        // 2. Wait for projectile spawn timing in animation
+        yield return new WaitForSeconds(_attributes.ProjectileSpawnDelay);
+
+        // 3. Spawn projectile and apply recoil
         Debug.Log($"[RangedGiantPirateMovement] Firing cannon projectile!");
         Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
         ApplyCannonImpulse();
 
         if (fireShotSound)
             _audioSource.PlayOneShot(fireShotSound);
-        
-        yield return new WaitForSeconds(fireCooldown);
-        
+
+        // 4. Wait for rest of animation to complete
+        float remainingAnimTime = _attributes.RangedAttackAnimDuration - _attributes.ProjectileSpawnDelay;
+        yield return new WaitForSeconds(remainingAnimTime);
+
+        // 5. Cooldown before next shot can be fired
+        yield return new WaitForSeconds(_attributes.FireCooldown);
+
+        // 6. Ready to fire again
         if (agent.enabled && agent.isOnNavMesh)
             agent.isStopped = false;
-        
-        canAttack = true;
-    }
 
-    private IEnumerator initiateHoldFiringSequence()
-    {
-        canAttack = false;
-        agent.isStopped = true;
-
-        yield return new WaitForSeconds(HoldFireCooldown);
-
-        Instantiate(ProjectilePrefab, firePoint.transform.position, transform.rotation);
-        ApplyCannonImpulse();
-
-        if (fireShotSound)
-            _audioSource.PlayOneShot(fireShotSound);
-        
-        yield return new WaitForSeconds(HoldFireCooldown);
-        
-        if (agent.enabled && agent.isOnNavMesh)
-            agent.isStopped = false;
-        
-        canAttack = true;
+        _canAttack = true;
+        Debug.Log($"[RangedGiantPirateMovement] Firing sequence complete, ready to fire again");
     }
 
     private void PlayRangedAttackAnimation()
     {
-        Debug.Log($"[RangedGiantPirateMovement] PlayRangedAttackAnimation called");
         if (_animator)
         {
-            Debug.Log($"[RangedGiantPirateMovement] Triggering CANNON attack animation");
             _animator.TriggerCannonAttack();
-            StartCoroutine(ResetRangedAttackAnimation());
         }
         else
-            Debug.LogWarning("[RangedGiantPirateMovement] Animator is Null. Playing no Animation");
-    }
-
-    private IEnumerator ResetRangedAttackAnimation()
-    {
-        yield return new WaitForSeconds(_rangedAttackAnimDuration);
-    }
-
-    private void PlayRangedHoldFireAnimation()
-    {
-        // Not used with GiantEnemyAnimator - it doesn't have a hold fire state
-        // Just trigger the cannon attack directly
-        if (_animator)
         {
-            _animator.TriggerCannonAttack();
+            Debug.LogWarning("[RangedGiantPirateMovement] Animator is null, cannot play cannon attack animation");
         }
     }
 
@@ -367,11 +386,11 @@ public class RangedGiantPirateMovement : MonoBehaviour
     void ApplyCannonImpulse()
     {
         if (!_impulseController) return;
-        
+
         var impulseSettings = new ImpulseSettings
         {
-            Force = impulseForce,
-            Duration = impulseDuration,
+            Force = _attributes.CannonImpulseForce,
+            Duration = _attributes.CannonImpulseDuration,
             PlaySound = true,
             SpawnParticles = true
         };

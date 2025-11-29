@@ -3,20 +3,37 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ranged Giant Attributes", menuName = "Scriptable Objects/Ranged Giant Pirate Attributes")]
 public class RangedGiantAttributes : GiantPirateAttributes
 {
-    [Header("Ranged Attack Settings")]
     [field: SerializeField]
-    public float ReadyDistance { get; private set; }
+    [Tooltip("Maximum distance to start ranged attacks")]
+    public float ReadyDistance { get; private set; } = 15f;
 
-    // [Header("Giant Attack Settings")]
-    // [field: SerializeField]
-    // public float DamageDelay { get; private set; } = 0.62f;
+    [field: SerializeField]
+    [Tooltip("Minimum distance for ranged attacks (closer = melee)")]
+    public float RangedMeleeThreshold { get; private set; } = 6f;
 
-    // [field: SerializeField]
-    // public float DamageRange { get; private set; } = 4f;
+    [field: SerializeField]
+    [Tooltip("Distance for melee trigger activation")]
+    public float MeleeAttackRange { get; private set; } = 3f;
 
-    // [field: SerializeField]
-    // public float ImpulseForce { get; private set; } = 250f;
+    [field: SerializeField]
+    [Tooltip("Time from animation start until projectile spawns")]
+    public float ProjectileSpawnDelay { get; private set; } = 0.67f;
 
-    // [field: SerializeField]
-    // public float ImpulseDuration { get; private set; } = 0.5f;
+    [field: SerializeField]
+    [Tooltip("Cooldown after animation completes before next shot")]
+    public float FireCooldown { get; private set; } = 0.33f;
+
+    [field: SerializeField]
+    [Tooltip("Knockback force applied to giant when firing cannon")]
+    public float CannonImpulseForce { get; private set; } = 10f;
+
+    [field: SerializeField]
+    [Tooltip("Duration of cannon recoil effect")]
+    public float CannonImpulseDuration { get; private set; } = 0.5f;
+
+    [field: SerializeField]
+    public float MeleeAttackAnimDuration { get; private set; } = 1.067f;
+
+    [field: SerializeField]
+    public float RangedAttackAnimDuration { get; private set; } = 0.9f;
 }

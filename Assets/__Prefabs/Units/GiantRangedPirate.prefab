@@ -153,7 +153,6 @@ GameObject:
   - component: {fileID: 9088921356851920638}
   - component: {fileID: 2007808774914955006}
   - component: {fileID: 673159795073199582}
-  - component: {fileID: 3214870578112929930}
   - component: {fileID: 4827322845831514705}
   - component: {fileID: 1272627699150088297}
   - component: {fileID: 7035089849763417686}
@@ -164,7 +163,7 @@ GameObject:
   - component: {fileID: 463725366349022905}
   - component: {fileID: 2392673364269833951}
   m_Layer: 6
-  m_Name: GiantPirate 1
+  m_Name: GiantRangedPirate
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,19 +252,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01079129, y: -0.07693506}
   m_Size: {x: 3.627749, y: 2.000691}
   m_Direction: 1
---- !u!114 &3214870578112929930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2838326766718683790}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f717d76417afb640a1419a839bab2aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PiratePatrol
-  _attributes: {fileID: 11400000, guid: c2fc97c951feccc47a710b2ddbde1cfb, type: 2}
 --- !u!114 &4827322845831514705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,17 +525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb6b936945421348a189042fa344b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _rangedAttackAnimDuration: 0.9
+  _attributes: {fileID: 11400000, guid: f90e069d83236dc48b15d68c3ffd54db, type: 2}
   ProjectilePrefab: {fileID: 8293163787298628046, guid: 39cb029e64427e74191d3ebfa3a764fc, type: 3}
   firePoint: {fileID: 3728098243069031058}
-  fireShotSound: {fileID: 0}
-  fireCooldown: 1
-  HoldFireCooldown: 1
-  impulseForce: 10
-  impulseDuration: 0
-  _meleeAttackAnimDuration: 0.9
-  meleeAttackRange: 3
-  _attributes: {fileID: 11400000, guid: 7e3b1a23d1a32774b8030324e6e4f825, type: 2}
+  fireShotSound: {fileID: 8300000, guid: 82d9b4b3071bad349b4b58cfbfe235a7, type: 3}
 --- !u!1 &3728098243069031058
 GameObject:
   m_ObjectHideFlags: 0

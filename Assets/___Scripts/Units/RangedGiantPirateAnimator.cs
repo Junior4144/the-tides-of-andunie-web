@@ -34,7 +34,6 @@ public class GiantRangedPirateAnimator : MonoBehaviour
 
         if (state == _currentState) return;
 
-        Debug.Log($"[GiantRangedPirateAnimator] State change: {GetStateName(_currentState)} -> {GetStateName(state)}");
         _animator.CrossFade(state, 0, 0);
         _currentState = state;
     }
@@ -44,16 +43,10 @@ public class GiantRangedPirateAnimator : MonoBehaviour
         if (Time.time < _lockedTill) return _currentState;
 
         if (_cannonAttacked)
-        {
-            Debug.Log("[GiantRangedPirateAnimator] Playing CannonAttack animation");
             return LockState(Cannon_Attack, _cannonAttackAnimDuration);
-        }
 
         if (_meleeAttacked)
-        {
-            Debug.Log("[GiantRangedPirateAnimator] Playing LeftAttack animation");
             return LockState(Left_Attack, _meleeAttackAnimDuration);
-        }
 
         return Idle;
     }
@@ -62,14 +55,6 @@ public class GiantRangedPirateAnimator : MonoBehaviour
     {
         _lockedTill = Time.time + t;
         return s;
-    }
-
-    private string GetStateName(int state)
-    {
-        if (state == Idle) return "Idle";
-        if (state == Left_Attack) return "LeftAttack";
-        if (state == Cannon_Attack) return "CannonAttack";
-        return "Unknown";
     }
 
     #region Cached Properties
