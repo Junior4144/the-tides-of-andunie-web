@@ -1,19 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenUI : MonoBehaviour
+public class RewardsUIDebugger : MonoBehaviour
 {
-
-    [SerializeField] private GameObject _canvas;
+    [SerializeField] private RewardUIController _rewardUIController;
     [SerializeField] private KeyCode _key;
+    [SerializeField] private List<RewardListing> _rewards;
 
-    void Start()
-    {
-        _canvas.SetActive(false);
-    }
+    private bool _isOpen = false;
 
     void Update()
     {
         if (Input.GetKeyDown(_key))
-            _canvas.SetActive(!_canvas.activeSelf);
-    }
+            if (!_isOpen)
+                _rewardUIController.ShowRewards(_rewards);
+            else
+                _rewardUIController.HideRewards();
+
+            _isOpen = !_isOpen;
+    }           
 }

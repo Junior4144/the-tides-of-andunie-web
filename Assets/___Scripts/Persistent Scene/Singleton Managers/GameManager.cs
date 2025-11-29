@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum GameState
@@ -6,7 +7,9 @@ public enum GameState
     Cutscene,
     Paused,
     Menu,
-    LevelSelector
+    LevelSelector,
+    PeacefulGameplay,
+    Stage1Gameplay
 }
 
 public class GameManager : MonoBehaviour
@@ -15,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
 
-    public Camera MainCamera;
+    public static event Action<GameState> OnGameStateChanged;
 
     void Awake()
     {
@@ -35,7 +38,4 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
     }
 
-
-    public delegate void GameStateChanged(GameState newState);
-    public static event GameStateChanged OnGameStateChanged;
 }

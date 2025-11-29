@@ -49,11 +49,14 @@ public class ImpulseController : MonoBehaviour
         if (settings.SpawnParticles) SpawnParticles(contactPoint, impulseDirection);
         if (settings.PlaySound) PlaySound();
 
-        _impulseTimer = settings.Duration;
+        _impulseTimer = settings.Duration * (1f - _impulseResistance);
     }
 
     private void ApplyImpulse(float impulseforce, Vector2 impulseDirection, Vector2 contactPoint)
     {
+        if (_agent != null)
+            _agent.enabled = false;
+
         Vector2 individualDirection = (_rb.position - contactPoint).normalized;
 
         Vector2 blendedDirection = BlendVectors(

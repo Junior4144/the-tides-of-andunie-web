@@ -11,22 +11,28 @@ public class LSShopController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
+        if (!isPlayerInside)
+        {
+            isPlayerInside = true;
+            OnPlayerEnterSelectionZone?.Invoke();
 
-        OnPlayerEnterSelectionZone?.Invoke();
+            Debug.Log("[LSShopController] Player entered shop zone");
 
-        Debug.Log("[Level Selection] Player entered level zone");
-        isPlayerInside = true;
+            UIEvents.OnRequestShopToggle?.Invoke();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
 
+        if (isPlayerInside)
+        {
+            isPlayerInside = false;
+            OnPlayerExitSelectionZone?.Invoke();
 
-        OnPlayerExitSelectionZone?.Invoke();
-
-        Debug.Log("[Level Selection] Player left level zone");
-        isPlayerInside = false;
+            Debug.Log("[LSShopController] Player left shop zone");
+        }
     }
 
     private void Update()

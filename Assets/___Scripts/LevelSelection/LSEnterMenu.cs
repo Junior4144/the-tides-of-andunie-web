@@ -1,28 +1,71 @@
+using System;
 using UnityEngine;
 
-public class LSEnterMenu : MonoBehaviour
+public class LSEnterMenu : MonoBehaviour // PRE SCREEN UI
 {
+    [SerializeField]
+    private GameObject Panel;
+
+    [SerializeField]
+    private float buttonDelay = 0.1f; // I added this for click noise (hayden)
+
     private bool Clicked = false;
 
-    public void ButtonClicked()
+    [HideInInspector]
+    public bool isActive = false;
+
+
+    private void OnEnable()
     {
-        if (Clicked) return;
+        UIEvents.OnPreScreenConfirm += HandleUIToggling;
 
-        Clicked = true;
-        Debug.Log("[LevelSelectionMenu] Button Clicked");
-
-        LSUIManager.Instance.ButtonClicked();
+        UIEvents.OnPreScreenDeactivated += HandleUIDeactivation;
     }
-    private void Update()
+    private void OnDisable()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (Clicked) return;
+        UIEvents.OnPreScreenConfirm -= HandleUIToggling;
 
-            Clicked = true;
-            Debug.Log("[LevelSelectionMenu] Button Clicked");
+        UIEvents.OnPreScreenDeactivated -= HandleUIDeactivation;
+    }
 
-            LSUIManager.Instance.ButtonClicked();
-        }
+    private void Start() => Panel.SetActive(false);
+
+    public void CancelButtonClick()
+    {
+        Invoke(nameof(DoCancelButtonClick), buttonDelay);
+    }
+
+    private void DoCancelButtonClick()
+    {
+        UIEvents.OnPreScreenDeactivated?.Invoke();
+    }
+
+    private void HandleUIToggling()
+    {
+        Panel.SetActive(true);
+        isActive = true;
+    }
+
+    public void HandleUIDeactivation()
+    {
+        Debug.Log("[LSEnterMenu] HandleUIDeactivation");
+        Panel.SetActive(false);
+        isActive = false;
+    }
+
+    public void HandleEnterVillage()
+    {
+        Debug.Log("[LSEnterMenu] Trying to HandleEnterVillage");
+
+        if (Clicked) return;
+        Clicked = true;
+
+        Invoke(nameof(DoEnterVillage), buttonDelay);
+    }
+
+    private void DoEnterVillage()
+    {
+        Debug.Log("[LevelSelectionMenu] Button Clicked, success in HandleEnterVillage");
+        LSUIManager.Instance.ButtonClicked();
     }
 }

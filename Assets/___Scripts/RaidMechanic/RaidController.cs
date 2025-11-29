@@ -42,8 +42,8 @@ public class RaidController : MonoBehaviour
     private RaidState _currentState;
 
     // ------- PUBLIC EVENTS -------
-    public event Action OnRaidTriggered;
-    public event Action OnRaidStart;
+    public static event Action OnRaidTriggered;
+    public static event Action OnRaidStart;
     public event Action OnRaidComplete;
     public event Action OnRaidFailed;
     public event Action OnRaidReset; // For the PreRaid state

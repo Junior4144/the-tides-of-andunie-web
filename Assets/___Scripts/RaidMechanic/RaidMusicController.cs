@@ -26,8 +26,8 @@ public class RaidMusicController : MonoBehaviour
         }
 
         raidController.OnRaidReset += Stop;
-        raidController.OnRaidTriggered += PlayPreWave;
-        raidController.OnRaidStart += PlayInProgress;
+        RaidController.OnRaidTriggered += PlayPreWave;
+        RaidController.OnRaidStart += PlayInProgress;
         raidController.OnRaidComplete += PlayPostRaid;
         raidController.OnRaidFailed += PlayPostRaid;
     }
@@ -38,8 +38,8 @@ public class RaidMusicController : MonoBehaviour
         if (raidController == null) return;
 
         raidController.OnRaidReset -= Stop;
-        raidController.OnRaidTriggered -= PlayPreWave;
-        raidController.OnRaidStart -= PlayInProgress;
+        RaidController.OnRaidTriggered -= PlayPreWave;
+        RaidController.OnRaidStart -= PlayInProgress;
         raidController.OnRaidComplete -= PlayPostRaid;
         raidController.OnRaidFailed -= PlayPostRaid;
     }

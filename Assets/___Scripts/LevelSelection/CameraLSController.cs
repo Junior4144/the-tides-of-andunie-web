@@ -1,4 +1,6 @@
+﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 enum MouseButton { Left = 0, Right = 1, Middle = 2 }
@@ -23,6 +25,18 @@ public class CameraLSController : MonoBehaviour
     Transform PlayerTransform;
     Bounds bounds;
 
+    public static event Action<Vector2> LockedRegionClicked;
+
+    private void OnEnable()
+    {
+        OnClickOutline.RegionClicked += HandleRegionClicked;
+    }
+
+    private void OnDisable()
+    {
+        OnClickOutline.RegionClicked -= HandleRegionClicked;
+    }
+
     void Start()
     {
         PlayerTransform = PlayerManager.Instance.GetPlayerTransform();
@@ -35,10 +49,12 @@ public class CameraLSController : MonoBehaviour
 
     void Update()
     {
-        HandleDrag(MouseButton.Left);
+        HandleDrag(MouseButton.Right);
         HandleDrag(MouseButton.Middle);
-        HandleRightClickNav();
+        HandleLeftClick();
     }
+
+
     void HandleDrag(MouseButton button)
     {
         if (Input.GetMouseButtonDown((int)button))
@@ -56,7 +72,6 @@ public class CameraLSController : MonoBehaviour
             float camHeight = cam.orthographicSize;
             float camWidth = camHeight * cam.aspect;
 
-            // Clamp using edge-aware logic
             newPos.x = Mathf.Clamp(newPos.x,
                 bounds.min.x + camWidth,
                 bounds.max.x - camWidth);
@@ -74,28 +89,92 @@ public class CameraLSController : MonoBehaviour
         }
     }
 
-    void HandleRightClickNav()
+    void HandleLeftClick()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
-            bool valid = NavMesh.SamplePosition(mouseWorld, out _, 0.3f, NavMesh.AllAreas);
-
-            if (valid)
-            {
-                Cursor.SetCursor(validClickCursor, hotspot, CursorMode.Auto);
-            }
-            else
-            {
-                Cursor.SetCursor(invalidClickCursor, hotspot, CursorMode.Auto);
-            }
+            HandleBelowThresholdClick(mouseWorld);
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
         }
     }
 
+    void HandleRegionClicked(Region region)
+    {
+        Cursor.SetCursor(validClickCursor, hotspot, CursorMode.Auto);
+    }
 
+    void HandleBelowThresholdClick(Vector2 mouseWorld)
+    {
+        bool isVillage = false;
+
+        // ---------------------------------
+        // 1. CHECK VILLAGE POINTER TARGET
+        // ---------------------------------
+        Collider2D[] hits = Physics2D.OverlapPointAll(mouseWorld);
+
+        foreach (var h in hits)
+        {
+            if (h.CompareTag("LSVillagePointerTarget"))
+            {
+                isVillage = true;
+                break;
+            }
+        }
+
+        // ---------------------------------
+        // 2. IF NOT A VILLAGE → CHECK NAVMESH
+        // ---------------------------------
+        bool navValid = false;
+
+        if (!isVillage)
+            navValid = NavMesh.SamplePosition(mouseWorld, out _, 0.3f, NavMesh.AllAreas);
+        else
+            navValid = true; // Village acts like a valid nav target
+
+        if (!navValid)
+        {
+            Cursor.SetCursor(invalidClickCursor, hotspot, CursorMode.Auto);
+            return;
+        }
+
+        // ---------------------------------
+        // 3. REGION CHECK (FINAL DECISION MAKER)
+        // ---------------------------------
+        bool regionLocked = false;
+
+        foreach (var h in hits)
+        {
+            if (h.TryGetComponent<RegionInfo>(out var region))
+            {
+                if (LSRegionLockManager.Instance.IsRegionLocked(region))
+                {
+                    regionLocked = true;
+                    LockedRegionClicked?.Invoke(mouseWorld);
+                    break;
+                }
+            }
+        }
+
+        // ---------------------------------
+        // 4. FINAL RESULT BASED ON REGION LOCK
+        // ---------------------------------
+        if (regionLocked)
+        {
+            Cursor.SetCursor(invalidClickCursor, hotspot, CursorMode.Auto);
+            return;
+        }
+
+        // ---------------------------------
+        // 5. VALID RESULT
+        // ---------------------------------
+        if (isVillage)
+            Debug.Log("Hit the correct Village Pointer Target!");
+
+        Cursor.SetCursor(validClickCursor, hotspot, CursorMode.Auto);
+    }
 }

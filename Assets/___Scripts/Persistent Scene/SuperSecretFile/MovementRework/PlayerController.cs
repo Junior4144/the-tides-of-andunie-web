@@ -10,12 +10,22 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D PlayerRigidBody;
     private Vector2 movementInput;
+    private float movementSpeed;
 
     public bool IsWalking { get; private set; }
 
     void Awake()
     {
         PlayerRigidBody = GetComponent<Rigidbody2D>();
+    }
+    private void OnEnable()
+    {
+        PlayerStatsManager.OnSpeedChanged += UpdateSpeed;
+    }
+
+    void Start()
+    {
+        movementSpeed = PlayerStatsManager.Instance.Speed;
     }
 
     void Update()
@@ -39,7 +49,7 @@ public class PlayerController : MonoBehaviour
         if (PlayerManager.Instance.IsInImpulse()) return;
         if (PlayerManager.Instance.AllowForceChange) return;
 
-        PlayerRigidBody.linearVelocity = movementInput * _playerAttributes.MovementSpeed;
+        PlayerRigidBody.linearVelocity = movementInput * movementSpeed;
         IsWalking = movementInput.magnitude > 0f;
 
         if (!bowAttackScript.IsAttacking)
@@ -50,6 +60,11 @@ public class PlayerController : MonoBehaviour
         {
             RotateHand();
         }
+    }
+
+    private void UpdateSpeed(float speed, float _)
+    {
+        movementSpeed = speed;
     }
 
     private void RotatePlayerEightWay()

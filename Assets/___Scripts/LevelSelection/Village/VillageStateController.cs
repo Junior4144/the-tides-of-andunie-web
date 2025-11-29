@@ -4,9 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class VillageStateController : MonoBehaviour
 {
-    [Header("Village Identifier")]
-    [SerializeField] private string villageId;
-
     [Header("Objects for States")]
     [SerializeField] private GameObject preInvasionObjects;
     [SerializeField] private GameObject invadedObjects;
@@ -37,7 +34,7 @@ public class VillageStateController : MonoBehaviour
 
     private void ApplyCurrentState()
     {
-        VillageState state = LSManager.Instance.GetVillageState(villageId);
+        VillageState state = LSManager.Instance.GetVillageState(VillageIDManager.Instance.villageId);
         ApplyState(state);
     }
 

@@ -3,10 +3,10 @@ using System;
 [Serializable]
 public class InventorySlot
 {
-    public IInventoryItem Item { get; private set; }
+    public InventoryItem Item { get; private set; }
     public int Quantity { get; set; }
 
-    public InventorySlot(IInventoryItem item, int quantity = 1)
+    public InventorySlot(InventoryItem item, int quantity = 1)
     {
         Item = item;
         Quantity = quantity;

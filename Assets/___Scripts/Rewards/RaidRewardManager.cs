@@ -9,8 +9,6 @@ public class RaidRewardManager : MonoBehaviour
     public static RaidRewardManager Instance;
     [SerializeField] public RaidController RaidController;
     [SerializeField] public RewardUIController RewardUI;
-    [SerializeField] private Transform RewardContainer;
-    [SerializeField] private GameObject RewardItemUIPrefab;
     [SerializeField] private float showRewardsDelay = 0.5f;
     [SerializeField] private AudioClip rewardSound;
     public static event Action OnRewardCollected;
@@ -21,7 +19,6 @@ public class RaidRewardManager : MonoBehaviour
     {
         Instance = this;
         _audioSource = GetComponent<AudioSource>();
-        RewardUI.HideRewards();
     }
 
     public void OnEnable()
@@ -36,15 +33,7 @@ public class RaidRewardManager : MonoBehaviour
 
     private void HandleRaidFinished()
     {
-        List<RewardListing> rewards = RaidController.RaidCompletionRewards;
-
-        foreach (var reward in rewards)
-        {
-            var uiObj = Instantiate(RewardItemUIPrefab, RewardContainer);
-            var ui = uiObj.GetComponent<RewardItemUI>();
-            ui.SetData(reward);
-        }
-
+        var rewards = RaidController.RaidCompletionRewards;
         StartCoroutine(ShowRewardsAfterDelay(rewards));
     }
 

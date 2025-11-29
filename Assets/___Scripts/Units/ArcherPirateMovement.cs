@@ -7,7 +7,7 @@ public class ArcherPirateMovement : MonoBehaviour
 {
 
     [SerializeField] private float _attackAnimDuration = .9f;
-    [SerializeField] private PirateAttributes _attributes;
+    [SerializeField] private RangedPirateAttributes _attributes;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private GameObject firePoint;
     [SerializeField] private AudioClip fireShotSound;
@@ -78,7 +78,8 @@ public class ArcherPirateMovement : MonoBehaviour
 
         yield return new WaitForSeconds(fireCooldown);
 
-        agent.isStopped = false;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
         canFire = true;
     }
 

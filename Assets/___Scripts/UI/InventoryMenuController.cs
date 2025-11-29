@@ -3,18 +3,32 @@ using UnityEngine;
 public class InventoryMenuController : MonoBehaviour
 {
     public GameObject menuCanvas;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void OnEnable()
+    {
+        UIEvents.OnRequestCloseAllUI += CloseInventory;
+    }
+
+    private void OnDisable()
+    {
+        UIEvents.OnRequestCloseAllUI -= CloseInventory;
+    }
+
     void Start()
     {
         menuCanvas.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Tab))
+    //    {
+    //        UIEvents.OnRequestInventoryToggle?.Invoke();
+    //    }
+    //}
+
+    private void CloseInventory()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            UIEvents.OnRequestInventoryToggle?.Invoke();
-        }
+        menuCanvas.SetActive(false);
     }
 }

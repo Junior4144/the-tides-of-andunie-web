@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(DestroyController))]
 public class PlayerManager : MonoBehaviour
@@ -12,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     private ImpulseController _impulseController;
 
     public bool AllowForceChange = false;
-
+    public bool IsInvincible { get; private set; }
 
     private void Awake()
     {
@@ -65,25 +66,76 @@ public class PlayerManager : MonoBehaviour
 
     //------HEALTH------//
     public float GetCurrentHealth() => _healthController.GetCurrentHealth();
+
     public float GetPercentHealth() => _healthController.GetPercentHealth();
-    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
+
     public void SetHealth(float value) => _healthController.SetCurrentHealth(value);
+
     public void AddHealth(float value) => _healthController.AddHealth(value);
+
+    public void TakeDamage(float value, DamageType damageType) => _healthController.TakeDamage(value, damageType);
+
+    public void SetInvincible(bool invincible) => IsInvincible = invincible;
     
 
     //------TRANSFORM------//
     public Transform GetPlayerTransform() => gameObject.transform;
+
     public void SetPlayerTransform(Vector3 pos, Quaternion rotation) => gameObject.transform.SetPositionAndRotation(pos, rotation);
 
-    //------TRANSFORM------//
+
+    //------ATTACK------//
     public bool IsAttacking() => _attackController.IsAttacking;
+
+    public float GetDamageAmount() => PlayerStatsManager.Instance.MeleeDamage;
+
+
+    //------LS PLAYER------//
+    public NavMeshAgent GetPlayerAgent() => GetComponent<NavMeshAgent>();
 
 
     //------MOVEMENT------//
-    //public bool IsInDash() => _playerMovement.IsInDash();
     public bool IsInImpulse() => _impulseController.IsInImpulse();
-    
-    
+
+    public void ApplyImpulse(Vector2 contactPoint, Vector2 impulseDirection, ImpulseSettings settings)
+    {
+        if (IsInvincible) return;
+
+        _impulseController.InitiateSquadImpulse(contactPoint, impulseDirection, settings);
+    }
+        
+
+    public void DisableLSPlayerMovement()
+    {
+        _lsPlayerMovement.enabled = false;
+    }
+
+    public void EnableLSPlayerMovement()
+    {
+        _lsPlayerMovement.enabled = true;
+    }
+
+    public void DisablePlayerMovement()
+    {
+        if (_playerMovement)
+            _playerMovement.enabled = false;
+    }
+
+    public void EnablePlayerMovement()
+    {
+        if (_playerMovement)
+            _playerMovement.enabled = true;
+    }
+
+
     //------DESTROY------//
-    public void HandleDestroy() => GetComponent<DestroyController>().Destroy(0f);    
+    public void HandleDestroy()
+    {
+        if (this == null) return;
+
+        if (TryGetComponent<DestroyController>(out var dc))
+        {
+            dc.Destroy(0f);
+        }
+    }
 }

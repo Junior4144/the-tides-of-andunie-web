@@ -5,12 +5,20 @@ using UnityEngine.SceneManagement;
 
 public static class UIEvents
 {
-    public static Action OnRequestInventoryToggle;
+    //public static Action OnRequestInventoryToggle;
+
     public static Action OnRequestShopToggle;
+
+    public static Action<bool> OnRequestLSEnterToggle;
+
+    public static Action OnRequestPreScreenToggle;
+
+    public static Action OnRequestTutorialToggle;
+
     public static Action OnRequestPauseToggle;
 
-    public static Action OnInventoryActive;
-    public static Action OnInventoryDeactivated;
+    //public static Action OnInventoryActive;
+    //public static Action OnInventoryDeactivated;
 
     public static Action OnRewardActive;
     public static Action OnRewardDeactivated;
@@ -18,6 +26,26 @@ public static class UIEvents
     public static Action OnPauseMenuActive;
     public static Action OnPauseMenuDeactivated;
 
+    public static Action OnShopConfirm;
+    public static Action OnShopDeactivated;
+
+    public static Action<bool> OnLSEnterConfirm;
+    public static Action OnLSEnterDeactivated;
+
+    public static Action OnPreScreenConfirm;
+    public static Action OnPreScreenDeactivated;
+
+    public static Action OnRequestCloseAllUI;
+
+    public static Action OnTutorialActive;
+    public static Action OnTutorialDeactivated;
+
+    public static Action<ShopListing> OnShopListingHover;
+    public static Action OnShopListingExit;
+
+    public static Action DefaultPopUPActive;
+
+    public static Action DefaultPopUpDisabled;
 }
 
 public class UIManager : MonoBehaviour
@@ -34,13 +62,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _PerkHUD;
 
     [Header("UI Groups")]
-    [SerializeField] private GameObject _inventoryUI;
-
-    private GameObject _shopUI;
-    private GameObject _shopUIPrefab;
-
+    //[SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _pauseUI;
+
     private bool _isPaused;
+    private bool _inventoryOpen;
+    private bool _shopOpen;
+    private bool _lSEnterUIOpen;
+    private bool _preScreenUIOpen;
+    private bool _tutorialOpen;
+    private bool _endGameOpen;
+    private bool _rewardActive;
 
     private void Awake()
     {
@@ -50,14 +82,46 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.activeSceneChanged += OnSceneChanged;
         GameManager.OnGameStateChanged += HandleGameStateChanged;
 
-        UIEvents.OnRequestInventoryToggle += ToggleInventory;
+        //UIEvents.OnRequestInventoryToggle += ToggleInventory;
+
         UIEvents.OnRequestShopToggle += ToggleShop;
+
         UIEvents.OnRequestPauseToggle += TogglePause;
 
-}
+        UIEvents.OnRequestPreScreenToggle += TogglePreScreenUI;
+
+        UIEvents.OnRequestLSEnterToggle += ToggleLSEnterUI;
+
+        UIEvents.OnRequestTutorialToggle += ToggleTutorialUI;
+
+        //UIEvents.OnInventoryActive += () => _inventoryOpen = true;
+        //UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
+
+        UIEvents.OnPauseMenuActive += () => _isPaused = true;
+        UIEvents.OnPauseMenuDeactivated += () => _isPaused = false;
+
+        UIEvents.OnShopConfirm += () => _shopOpen = true;
+        UIEvents.OnShopDeactivated += () => _shopOpen = false;
+
+        UIEvents.OnLSEnterConfirm += isExit => _lSEnterUIOpen = true;
+        UIEvents.OnLSEnterDeactivated += () => _lSEnterUIOpen = false;
+
+        UIEvents.OnPreScreenConfirm += () => _preScreenUIOpen = true;
+        UIEvents.OnPreScreenDeactivated += () => _preScreenUIOpen = false;
+
+        UIEvents.OnTutorialActive += () => _tutorialOpen = true;
+        UIEvents.OnTutorialDeactivated += () => _tutorialOpen = false;
+
+        UIEvents.DefaultPopUPActive += () => _endGameOpen = true;
+        UIEvents.DefaultPopUpDisabled += () => _endGameOpen = false;
+
+        UIEvents.OnRewardActive += () => _rewardActive = true;
+        UIEvents.OnRewardDeactivated += () => _rewardActive = false;
+
+        UIEvents.OnRequestCloseAllUI += CloseAllUI;
+    }
 
     private IEnumerator Start()
     {
@@ -68,7 +132,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleGameStateChanged(GameState newState)
     {
-        HideAll();
+        //HideAll();
         Debug.Log($"UIManager responding to new state: {newState}");
 
         switch (newState)
@@ -76,8 +140,14 @@ public class UIManager : MonoBehaviour
             case GameState.Gameplay:
                 ShowGameplayUI();
                 break;
+            case GameState.PeacefulGameplay:
+                PeacefulGameplay();
+                break;
+            case GameState.Stage1Gameplay:
+                Stage1UI();
+                break;
             case GameState.Menu:
-                ShowMenuUI();
+                ShowMainMenuUI();
                 break;
             case GameState.Paused:
             case GameState.Cutscene:
@@ -96,20 +166,33 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(!IsLevel0Stage1);
         _CombatHUD.SetActive(!IsLevel0Stage1);
         _PerkHUD.SetActive(true);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(true);
     }
 
-    private void ShowMenuUI()
+    private void Stage1UI()
     {
+        _UIPrefab.SetActive(false);
+        _healthBarHUD.SetActive(true);
+        _coinHUD.SetActive(false);
+        _CombatHUD.SetActive(false);
+        _PerkHUD.SetActive(false);
+    }
+
+    private void PeacefulGameplay()
+    {
+        _UIPrefab.SetActive(true);
+        _healthBarHUD.SetActive(true);
+        _coinHUD.SetActive(true);
+        _CombatHUD.SetActive(false);
+        _PerkHUD.SetActive(true);
+    }
+
+    private void ShowMainMenuUI()
+    {
+        _UIPrefab.SetActive(true);
         _healthBarHUD.SetActive(false);
         _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
-        _UIPrefab.SetActive(false);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
+        _PerkHUD.SetActive(true);
     }
 
     private void ShowCutsceneUI()
@@ -119,9 +202,6 @@ public class UIManager : MonoBehaviour
         _CombatHUD.SetActive(false);
         _UIPrefab.SetActive(false);
         _PerkHUD.SetActive(false);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
     }
 
     private void ShowLevelSelectorUI()
@@ -131,93 +211,149 @@ public class UIManager : MonoBehaviour
         _coinHUD.SetActive(true);
         _CombatHUD.SetActive(false);
         _PerkHUD.SetActive(true);
-
-        if (_shopUIPrefab)
-            _shopUIPrefab.SetActive(false);
     }
 
     private bool IsLevel0Stage1 => SceneManager.GetActiveScene().name == "Level0Stage1";
 
-    private void HideAll()
-    {
-        if (_shopUI != null)
-            _shopUI.SetActive(false);
+    //private void HideAll()
+    //{
+    //    _inventoryUI.SetActive(false);
+    //}
 
-        _inventoryUI.SetActive(false);
-    }
+    //private void ToggleInventory()
+    //{
+    //    if (_isPaused)
+    //    {
+    //        _inventoryUI.SetActive(false);
+    //        UIEvents.OnInventoryDeactivated?.Invoke();
+    //        return;
+    //    }
 
-    private void ToggleInventory()
-    {
-        if (_inventoryUI.activeInHierarchy)
-        {
-            _inventoryUI.SetActive(false);
-            UIEvents.OnInventoryDeactivated?.Invoke();
-            return;
-        }
+    //    if (_inventoryUI.activeInHierarchy)
+    //    {
+    //        _inventoryUI.SetActive(false);
+    //        UIEvents.OnInventoryDeactivated?.Invoke();
+    //        return;
+    //    }
 
-        HideAll();
-        _inventoryUI.SetActive(true);
-        UIEvents.OnInventoryActive?.Invoke();
-    }
+    //    UIEvents.OnRequestCloseAllUI?.Invoke();
+
+    //    _inventoryUI.SetActive(true);
+    //    UIEvents.OnInventoryActive?.Invoke();
+    //}
 
     private void ToggleShop()
     {
-        if (!TryResolveShop())
-            return;
-
-        if (_shopUI.activeInHierarchy)
+        if (_isPaused) // already paused
         {
-            _shopUI.SetActive(false);
+            UIEvents.OnShopDeactivated?.Invoke(); // consider removing
             return;
         }
 
-        HideAll();
-        _shopUI.SetActive(true);
+
+        if (_shopOpen)
+        {
+            UIEvents.OnShopDeactivated?.Invoke();
+            return;
+        }
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnShopConfirm?.Invoke();
     }
 
-    private bool TryResolveShop()
+    private void ToggleLSEnterUI(bool isExit)
     {
-        if (_shopUI != null) return true;
+        if (_isPaused)
+        {
+            return;
+        }
 
-        if (ShopUIController.Instance == null)
-            return false;
+        if (!_lSEnterUIOpen)
+        {
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+        }
 
-        _shopUI = ShopUIController.Instance.canvas;
-        _shopUIPrefab = ShopUIController.Instance.gameObject;
-        return true;
+        
+        UIEvents.OnLSEnterConfirm?.Invoke(isExit);
     }
 
-    private void OnSceneChanged(Scene oldScene, Scene newScene)
+
+    private void TogglePreScreenUI()
     {
-        _shopUI = null;
-        _shopUIPrefab = null;
+        if (_isPaused)
+        {
+            return;
+        }
+
+        if (!_preScreenUIOpen)
+        {
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+        }
+
+        UIEvents.OnPreScreenConfirm?.Invoke();
+    }
+
+    private void ToggleTutorialUI()
+    {
+        if (_tutorialOpen)
+        {
+            return;
+        }
+
+        UIEvents.OnRequestCloseAllUI?.Invoke();
+        UIEvents.OnTutorialActive?.Invoke();
+    }
+
+    private void CloseAllUI()
+    {
+        //if (_inventoryOpen)
+        //{
+        //    _inventoryUI.SetActive(false);
+        //    UIEvents.OnInventoryDeactivated?.Invoke();
+        //}
+
+        if (_shopOpen)
+        {
+            UIEvents.OnShopDeactivated?.Invoke();
+        }
+
+        if (_preScreenUIOpen)
+        {
+            UIEvents.OnPreScreenDeactivated?.Invoke();
+        }
+
+        if (_lSEnterUIOpen)
+        {
+            UIEvents.OnLSEnterDeactivated?.Invoke();
+        }
+
+        if (_tutorialOpen)
+        {
+            UIEvents.OnTutorialDeactivated?.Invoke();
+        }
     }
 
     private void TogglePause()
     {
+        // 1. If ANY UI popup is open, close it and STOP pause from happening
+        if (_inventoryOpen || _shopOpen || _preScreenUIOpen || _lSEnterUIOpen || _tutorialOpen)
+        {
+            UIEvents.OnRequestCloseAllUI?.Invoke();
+            return;
+        }
+
+        // 2. If no popups are open, proceed with pause logic
         if (_isPaused)
         {
-            UIEvents.OnPauseMenuDeactivated.Invoke();
-            Resume();
+            UIEvents.OnPauseMenuDeactivated?.Invoke();
+            if (_endGameOpen) UIEvents.DefaultPopUPActive.Invoke();
+            Debug.Log($"UI Manager: Reward is {_rewardActive}");
+            if (_rewardActive) WeaponManager.Instance.DisableWeapon();
         }
         else
         {
-            UIEvents.OnPauseMenuActive.Invoke();
-            Pause();
+            UIEvents.OnPauseMenuActive?.Invoke();
         }
     }
 
-    private void Pause()
-    {
-        _pauseUI.SetActive(true);
-        Time.timeScale = 0f;
-        _isPaused = true;
-    }
-
-    private void Resume()
-    {
-        _pauseUI.SetActive(false);
-        Time.timeScale = 1f;
-        _isPaused = false;
-    }
 }
