@@ -87,6 +87,7 @@ public class VillageInvasionBuildings : MonoBehaviour
         }
         else
         {
+            if (_buildingData == null) return;
             SpawnFireSoundUsingData();
         }
         

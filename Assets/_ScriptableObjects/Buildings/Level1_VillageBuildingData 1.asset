@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddcb60f3099ee5b41965e78b0363ef76, type: 3}
+  m_Name: Level1_VillageBuildingData 1
+  m_EditorClassIdentifier: Assembly-CSharp::VillageBuildingData
+  fireSoundPrefab: {fileID: 4184515136674530310, guid: 94823e4846a0ebe46a5684790ae8864e, type: 3}
+  fireSpritePrefab: {fileID: 2363694424657553371, guid: c3969a3d5094eba439136642f48d3064, type: 3}
+  destroyedSprites: []
+  rules:
+  - keyword: Chimney
+    destroyedSprite: {fileID: -3953500905395835532, guid: 47c671fdf8ab48447b0b812c308d8e6e, type: 3}
+  - keyword: Stairs
+    destroyedSprite: {fileID: 21300000, guid: 53f70b3c9afe4ae4086cd43dd86aba18, type: 3}
+  - keyword: Long
+    destroyedSprite: {fileID: 21300000, guid: 64e757dbb1d24284e90f6b318ddd84c6, type: 3}
+  - keyword: Sqaure
+    destroyedSprite: {fileID: 21300000, guid: 3cd3846d04533dd48a84bfe33fa5d982, type: 3}
+  - keyword: Circle
+    destroyedSprite: {fileID: 21300000, guid: b9ad11a01ddee5641a3642c6769c0921, type: 3}
