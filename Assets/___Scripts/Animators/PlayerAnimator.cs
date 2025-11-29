@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private AnimationClip _heavyTwirlStartClip;
     private AnimationClip _heavyTwirlEndClip;
+
 
     private enum BowState { None, HandleIdle, Charging, ChargeIdle }
     private enum HeavyAttackPhase { None, Start, Loop, End }
@@ -95,7 +97,7 @@ public class PlayerAnimator : MonoBehaviour
         if (_attacked)
         {
             _playingSpecialIdle = false;
-            return LockState(Attack, _attackAnimDuration);
+            return LockState(GetNormalAttackAnimation(), _attackAnimDuration);
         }
 
         if (_currentBowState != BowState.None)
@@ -115,9 +117,9 @@ public class PlayerAnimator : MonoBehaviour
 
     private int GetNormalAttackAnimation() => _normalAttackPhase switch
     {
-        NormalAttackPhase.Left => HeavyAttackStart,
-        NormalAttackPhase.Right => HeavyAttackLoop,
-        NormalAttackPhase.Down => HeavyAttackEnd,
+        NormalAttackPhase.Left => LeftAttack,
+        NormalAttackPhase.Right => RightAttack,
+        NormalAttackPhase.Down => MiddleAttack,
         _ => IdleDefault
     };
 
@@ -163,6 +165,30 @@ public class PlayerAnimator : MonoBehaviour
     {
         _attacked = true;
         _currentBowState = BowState.None;
+        SetNextNormalAttackPhase();
+        Debug.Log("Attack ocurring in animator");
+
+    }
+
+    public void SetNextNormalAttackPhase()
+    {
+        switch (_normalAttackPhase)
+        {
+            case NormalAttackPhase.None:
+                _normalAttackPhase = NormalAttackPhase.Right;
+                break;
+            case NormalAttackPhase.Right:
+                _normalAttackPhase = NormalAttackPhase.Left;
+                break;
+
+            case NormalAttackPhase.Left:
+                _normalAttackPhase = NormalAttackPhase.Down;
+                break;
+
+            case NormalAttackPhase.Down:
+                _normalAttackPhase = NormalAttackPhase.Right;
+                break;
+        }
     }
 
     public void TriggerHeavyAttack(float totalDuration)
@@ -201,7 +227,11 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IdleAngry = Animator.StringToHash("AldarionIdleAngry");
     private static readonly int IdleAxe = Animator.StringToHash("AldarionIdleAxe");
     private static readonly int IdleWind = Animator.StringToHash("AldarionIdleWind");
-    private static readonly int Attack = Animator.StringToHash("AldarionSlash");
+
+    private static readonly int RightAttack = Animator.StringToHash("AldarionRightSlash");
+    private static readonly int LeftAttack = Animator.StringToHash("AldarionLeftSlash");
+    private static readonly int MiddleAttack = Animator.StringToHash("AldarionMIddleAttack");
+
     private static readonly int HeavyAttackStart = Animator.StringToHash("AldarionHeavyTwirlStart");
     private static readonly int HeavyAttackLoop = Animator.StringToHash("AldarionHeavyTwirlLoop");
     private static readonly int HeavyAttackEnd = Animator.StringToHash("AldarionHeavyTwirlEnd");
