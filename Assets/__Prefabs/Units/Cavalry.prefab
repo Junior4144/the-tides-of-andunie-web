@@ -95,12 +95,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.057450093, y: 1.9907765}
-      - {x: -0.6190504, y: 1.4308171}
+    - - {x: 0.058657765, y: 2.0777683}
+      - {x: -0.5929573, y: 1.4403878}
       - {x: -0.6950485, y: -0.27434152}
-      - {x: 1.0478649, y: -0.52729523}
-      - {x: 1.0914419, y: 0.6191062}
-      - {x: 0.45209214, y: 1.4914021}
+      - {x: 1.1731393, y: -0.7477724}
+      - {x: 1.3501546, y: 1.0840364}
+      - {x: 1.2788278, y: 1.1170801}
+      - {x: 0.6764975, y: 1.4849037}
   m_UseDelaunayMesh: 0
 --- !u!1 &5425580518855252515
 GameObject:
@@ -475,8 +476,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7783386117405707337}
   - component: {fileID: 3392269078147015250}
-  - component: {fileID: 2599918725347662401}
-  - component: {fileID: 8398955902975038741}
+  - component: {fileID: 6478907107101978460}
+  - component: {fileID: 7974941708627345996}
   m_Layer: 18
   m_Name: Sprite
   m_TagString: Untagged
@@ -557,7 +558,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &2599918725347662401
+--- !u!95 &6478907107101978460
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -565,9 +566,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741593385575792318}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8700a4a6fe75c8f4ea3a8814dbd1f6bf, type: 2}
+  m_Controller: {fileID: 9100000, guid: 07e57da1bd6c31e47aa600f3e954eb0d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -579,19 +580,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8398955902975038741
+--- !u!114 &7974941708627345996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741593385575792318}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 616136e9426c2ae45889c3244666cd78, type: 3}
+  m_Script: {fileID: 11500000, guid: 774e95ffdf1c95742902fa7fc5acaab0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  _attackAnimDuration: 0.41111
+  m_EditorClassIdentifier: Assembly-CSharp::CavalryAnimator
+  _attackAnimDuration: 0.33
+  _attacked: 0
 --- !u!1 &7695467522341596218
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,8 +661,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.4130697, y: 0.6575536}
-  m_Size: {x: 1.957944, y: 2.759495}
+  m_Offset: {x: 1.4019593, y: 0.9349017}
+  m_Size: {x: 2.3450773, y: 2.53999}
   m_Direction: 0
 --- !u!114 &9103737287983059288
 MonoBehaviour:
@@ -675,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CavalryMeleeController
   _attributes: {fileID: 11400000, guid: f1ef20319b9b43541a1b3f5370aa16be, type: 2}
-  _animator: {fileID: 8398955902975038741}
+  _animator: {fileID: 7974941708627345996}
   _damageDelay: 0.1
   _animDuration: 0.35
   _damageRange: 5

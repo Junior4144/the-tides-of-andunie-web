@@ -31,7 +31,8 @@ public class CavalryAttributes : ScriptableObject
 
     public float AttackCoolDown = 5f;
 
-    public float DestinationReachedThreshold = 1.0f;
+    [Tooltip("The distance threshold at which the cavalry will consider itself reached the patrol point")]
+    public float PatrolPointReachedThreshold = 5.0f;
 
     [Tooltip("Penalty multiplier for targets behind the cavalry. Higher values = stronger preference for forward targets.")]
     [Range(0.1f, 1.0f)]

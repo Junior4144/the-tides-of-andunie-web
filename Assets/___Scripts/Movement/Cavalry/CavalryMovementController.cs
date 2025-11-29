@@ -117,7 +117,7 @@ public class CavalryMovementController : MonoBehaviour
     {
         Vector3 CurrentPatrolPointPosition() => PatrolPointsSequence[_currentPatrolPointIndex].position;
         ChangeAgentSpeedTowards(_attributes.PatrollingSpeed);
-        if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= _attributes.DestinationReachedThreshold)
+        if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= _attributes.PatrolPointReachedThreshold)
         {
             _currentPatrolPointIndex = 
             _currentPatrolPointIndex + 1 == PatrolPointsSequence.Count?
@@ -135,13 +135,11 @@ public class CavalryMovementController : MonoBehaviour
     
     private void TransitionToAttackingState()
     {
-        Debug.Log("Cavalry Attacking!");
         _currentState = CavalryState.Attacking;
     }
 
     private void TransitionToPatrollingState()
     {
-        Debug.Log("Cavalry Patrolling...");
         _currentState = CavalryState.Patrolling;
         _hasHitThePlayer = false;
         SetDefaultMovement();
@@ -201,8 +199,8 @@ public class CavalryMovementController : MonoBehaviour
         if (angleToPoint > _attributes.ChargeAngle)
         {
             float behindnessFactor = (angleToPoint - 90f) / 90f; // 0 at 90°, 1 at 180°
-            float penaltyMultiplier = 100000f;
-            behindnessPenalty = 1f + (behindnessFactor * _attributes.TargetBehindnessPenalty * penaltyMultiplier);
+            float penaltyMultiplier = 100f;
+            behindnessPenalty = behindnessFactor * _attributes.TargetBehindnessPenalty * penaltyMultiplier;
         }
         
         return pathDistance * behindnessPenalty;
@@ -243,7 +241,7 @@ public class CavalryMovementController : MonoBehaviour
         float pathDistance = CalculateDistanceToTarget(Player.position);
 
         if (pathDistance == Mathf.Infinity) return false;
-        if (displacement < _attributes.DestinationReachedThreshold) return true;
+        if (displacement < _attributes.PatrolPointReachedThreshold) return true;
 
         float straightness = displacement / pathDistance;
         return straightness >= _attributes.MinPathStraightnessToAttack;
@@ -305,7 +303,6 @@ public class CavalryMovementController : MonoBehaviour
 
     private void TransitionToStuckState()
     {
-        Debug.Log("Cavalry Stuck!");
         _currentState = CavalryState.Stuck;
         _isStuck = true;
         _backupStartTime = Time.time;

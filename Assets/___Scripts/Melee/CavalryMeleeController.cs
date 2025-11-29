@@ -4,7 +4,7 @@ using System.Collections;
 public class CavalryMeleeController : MonoBehaviour
 {
     [SerializeField] private CavalryAttributes _attributes;
-    [SerializeField] private MeleeEnemyAnimator _animator;
+    [SerializeField] private CavalryAnimator _animator;
 
     [SerializeField] private float _damageDelay = 0f;
     [SerializeField] private float _animDuration;
@@ -28,7 +28,6 @@ public class CavalryMeleeController : MonoBehaviour
             Time.time - _lastAttackTime > _attributes.AttackCoolDown
         )
         {
-            Debug.Log("Hitting the player now");
             _lastAttackTime = Time.time;
             StartCoroutine(Attack(otherCollider.gameObject));
             PlayAttackAnimation();
