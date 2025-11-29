@@ -582,9 +582,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2392673364269833951, guid: 715578f8fc4b5dd41b79d2720bf10140, type: 3}
+      propertyPath: ProjectilePrefab
+      value: 
+      objectReference: {fileID: 4540153732042383152, guid: 44a58587bcd204149893791a34732c12, type: 3}
+    - target: {fileID: 2392673364269833951, guid: 715578f8fc4b5dd41b79d2720bf10140, type: 3}
+      propertyPath: _meleeAttackCollider
+      value: 
+      objectReference: {fileID: 838953468}
     - target: {fileID: 2838326766718683790, guid: 715578f8fc4b5dd41b79d2720bf10140, type: 3}
       propertyPath: m_Name
       value: GiantRangedPirate
+      objectReference: {fileID: 0}
+    - target: {fileID: 7239734925987711679, guid: 715578f8fc4b5dd41b79d2720bf10140, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.859
       objectReference: {fileID: 0}
     - target: {fileID: 9088921356851920638, guid: 715578f8fc4b5dd41b79d2720bf10140, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1032,6 +1044,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5de90974c47117b4abded5198793bc70, type: 3}
+--- !u!70 &838953468 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2884095403603254102, guid: 715578f8fc4b5dd41b79d2720bf10140, type: 3}
+  m_PrefabInstance: {fileID: 399158830}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &856726645
 GameObject:
   m_ObjectHideFlags: 0

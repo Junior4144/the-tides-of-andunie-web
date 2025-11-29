@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43dcc6de9e8a1904e8141b43c8a5b643, type: 3}
   m_Name: Ranged Giant Attributes
   m_EditorClassIdentifier: Assembly-CSharp::RangedGiantAttributes
-  <RotationSpeed>k__BackingField: 0
-  <MovementSpeed>k__BackingField: 0
-  <Acceleration>k__BackingField: 0
-  <Health>k__BackingField: 0
-  <DamageAmount>k__BackingField: 0
+  <RotationSpeed>k__BackingField: 360
+  <MovementSpeed>k__BackingField: 2.5
+  <Acceleration>k__BackingField: 50
+  <Health>k__BackingField: 220
+  <DamageAmount>k__BackingField: 10
   <ChanceOfCollectableDrop>k__BackingField: 0
   <DamageDelay>k__BackingField: 0.62
   <DamageRange>k__BackingField: 4
@@ -25,9 +25,9 @@ MonoBehaviour:
   <ReadyDistance>k__BackingField: 15
   <RangedMeleeThreshold>k__BackingField: 6
   <MeleeAttackRange>k__BackingField: 3
-  <RangedAttackAnimDuration>k__BackingField: 0.9
+  <ProjectileSpawnDelay>k__BackingField: 0.67
   <FireCooldown>k__BackingField: 1
-  <HoldFireCooldown>k__BackingField: 1
-  <CannonRecoilForce>k__BackingField: 10
-  <CannonRecoilDuration>k__BackingField: 0.5
+  <CannonImpulseForce>k__BackingField: 10
+  <CannonImpulseDuration>k__BackingField: 0.5
   <MeleeAttackAnimDuration>k__BackingField: 1.067
+  <RangedAttackAnimDuration>k__BackingField: 0.9
