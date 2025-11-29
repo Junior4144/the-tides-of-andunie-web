@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class LSBuildingsInvasion : MonoBehaviour
 {
@@ -115,8 +116,8 @@ public class LSBuildingsInvasion : MonoBehaviour
 
     private void SpawnFireSound()
     {
-        if (fireSoundPrefab != null)
-            Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
+        //if (fireSoundPrefab != null)
+            //Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
     }
     private void ReplaceSprite()
     {
@@ -154,7 +155,8 @@ public class LSBuildingsInvasion : MonoBehaviour
 
         foreach (var position in firePositions)
         {
-            Instantiate(_buildingData.fireSpritePrefab, position.transform.position, Quaternion.identity);
+            GameObject fire = Instantiate(_buildingData.fireSpritePrefab, position.transform.position, Quaternion.identity);
+            fire.transform.localScale = Vector3.one * 0.3f;
         }
     }
 
@@ -163,7 +165,7 @@ public class LSBuildingsInvasion : MonoBehaviour
         if (_buildingData == null || _buildingData.fireSoundPrefab == null)
             return;
 
-        Instantiate(_buildingData.fireSoundPrefab, transform.position, Quaternion.identity, transform);
+        //Instantiate(_buildingData.fireSoundPrefab, transform.position, Quaternion.identity, transform);
     }
 
     private void ReplaceSpriteUsingData()
