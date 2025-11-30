@@ -180,9 +180,9 @@ public class WeaponManager : MonoBehaviour
         }   
     }
 
-    private void GetLastWeapon()
+    private WeaponType GetLastWeapon()
     {
-        lastWeapon = currentWeapon == WeaponType.none ? WeaponType.Axe : currentWeapon;
+        return currentWeapon == WeaponType.none ? WeaponType.Axe : currentWeapon;
     }
 
     public void SetBusy(bool value)
