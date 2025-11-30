@@ -5,10 +5,8 @@ using System.Linq;
 public class CavalryPatrolPointsController : MonoBehaviour
 {
 
-    // create fields for the list of patrol points (transforms)
     private List<Transform> _patrolPoints;
     private int _currentPatrollingUnitsCount;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake(){
         InitializePatrolPoints();

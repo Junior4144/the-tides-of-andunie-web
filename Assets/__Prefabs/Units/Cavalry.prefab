@@ -174,8 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5221d1117c92941a7084477e3e7cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImpulseSource
-  _impulseforce: 150
-  impulseDuration: 0.9
+  _impulseforce: 250
+  impulseDuration: 0.5
   playSound: 1
   spawnParticles: 1
 --- !u!60 &4747784450579262829
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CavalryMovementController
   _attributes: {fileID: 11400000, guid: f1ef20319b9b43541a1b3f5370aa16be, type: 2}
-  PatrolPointsParent: {fileID: 0}
+  _reversePatrolOrder: 0
 --- !u!195 &2757773616876435204
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -904,4 +904,4 @@ MonoBehaviour:
   _animator: {fileID: 7974941708627345996}
   _damageDelay: 0.1
   _animDuration: 0.35
-  _damageRange: 5
+  _damageRange: 6

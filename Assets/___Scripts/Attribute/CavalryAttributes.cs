@@ -8,11 +8,9 @@ public class CavalryAttributes : ScriptableObject
     [Range(10f, 360f)]
     public float TurningSpeed = 120f;
 
-    public float Health = 300f;
+    public float Health = 170f;
 
-    public float DamageAmount = 50f;
-
-    public float ReadyDistance;
+    public float DamageAmount = 10f;
 
     public float MinSpeedForTurning = 10f;
 

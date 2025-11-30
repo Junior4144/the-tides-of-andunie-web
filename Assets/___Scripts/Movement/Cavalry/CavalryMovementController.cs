@@ -43,7 +43,6 @@ public class CavalryMovementController : MonoBehaviour
     private float _backupDuration = 1f;
 
     // Local getters
-
     private Transform Player => _player ??= PlayerManager.Instance.transform;
     private float TurnAbility => 1.0f - Mathf.InverseLerp(_attributes.MinSpeedForTurning, _attributes.MaxSpeedForTurning, _rigidbody.linearVelocity.magnitude);
     private float EffectiveTurnSpeed => _attributes.TurningSpeed * TurnAbility;
@@ -58,7 +57,6 @@ public class CavalryMovementController : MonoBehaviour
         agent.updateUpAxis = false;
         _pathPlaceholder = new NavMeshPath();
         
-        // Initialize stuck detection
         _lastPosition = _rigidbody.position;
         _lastMovementTime = Time.time;
         _isStuck = false;
