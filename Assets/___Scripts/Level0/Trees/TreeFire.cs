@@ -55,6 +55,9 @@ public abstract class TreeFire : MonoBehaviour
 
     private void SpawnFire()
     {
+        if (LSManager.Instance.GetVillageState("Village9") == VillageState.Liberated_Done)
+            return;
+
         int fireCount = _fire_position_list.Length;
 
         for (int i = 0; i < fireCount; i++)

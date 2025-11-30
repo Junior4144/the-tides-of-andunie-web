@@ -164,13 +164,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LSManager
   villages:
-  - id: Stage1
-    villageName: 
-    SceneName: 
-    diffculty: 0
+  - id: Village9
+    villageName: Andunie
+    SceneName: Village9
+    diffculty: 5
     state: 1
-    region: 5
-    rewardConfig: {fileID: 0}
+    region: 4
+    rewardConfig: {fileID: 11400000, guid: 2aae970e9dfb9a14596bc925cc818a2d, type: 2}
   - id: Level1
     villageName: Emerie
     SceneName: Level1
@@ -206,6 +206,34 @@ MonoBehaviour:
     state: 0
     region: 1
     rewardConfig: {fileID: 11400000, guid: 4f6f27ca34371f24f9a6b70575ec1a42, type: 2}
+  - id: Village5
+    villageName: Coro
+    SceneName: Village5
+    diffculty: 4
+    state: 0
+    region: 2
+    rewardConfig: {fileID: 11400000, guid: e3eec9cf8f1dc5146a6805657e4dabdf, type: 2}
+  - id: Village6
+    villageName: Vareshin
+    SceneName: Village6
+    diffculty: 5
+    state: 0
+    region: 2
+    rewardConfig: {fileID: 11400000, guid: 8da955bc9fb76664ca0e2e766a9e0a7f, type: 2}
+  - id: Village7
+    villageName: Gondolin
+    SceneName: Village7
+    diffculty: 5
+    state: 0
+    region: 3
+    rewardConfig: {fileID: 11400000, guid: cfc155d9506a1134e8f733d6d215569d, type: 2}
+  - id: Village8
+    villageName: Minas
+    SceneName: Village8
+    diffculty: 5
+    state: 0
+    region: 3
+    rewardConfig: {fileID: 11400000, guid: 129a1bff114719f409823474379ce8a5, type: 2}
   startGlobalInvasion: 0
 --- !u!1 &177276957
 GameObject:
@@ -1085,7 +1113,7 @@ Transform:
   m_GameObject: {fileID: 796557379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 254.28, y: 156.93, z: -20}
+  m_LocalPosition: {x: 254, y: 153.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1210,7 +1238,7 @@ Camera:
   far clip plane: 5000
   field of view: 3
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 60
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
