@@ -129,7 +129,7 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
             IsBusy = true;
-            lastWeapon = currentWeapon;
+            lastWeapon = GetLastWeapon();
             SetWeaponToNone();
         }
         else
@@ -151,7 +151,7 @@ public class WeaponManager : MonoBehaviour
 
     private void HandlePopUpUIActive()
     {
-        lastWeapon = currentWeapon;
+        lastWeapon = GetLastWeapon();
         WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
         IsBusy = true;
     }
@@ -180,6 +180,10 @@ public class WeaponManager : MonoBehaviour
         }   
     }
 
+    private void GetLastWeapon()
+    {
+        lastWeapon = currentWeapon == WeaponType.none ? WeaponType.Axe : currentWeapon;
+    }
 
     public void SetBusy(bool value)
     {
