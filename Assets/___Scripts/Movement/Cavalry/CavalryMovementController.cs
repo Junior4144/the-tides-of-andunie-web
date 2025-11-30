@@ -8,9 +8,9 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CavalryMovementController : MonoBehaviour
 {
-    // External objects
+    // External objects and variables
     [SerializeField] private CavalryAttributes _attributes;
-    [SerializeField] public GameObject PatrolPointsParent;
+    [SerializeField] private bool _reversePatrolOrder;
     private Transform _player;
     private NavMeshAgent agent;
     private Rigidbody2D _rigidbody;
@@ -26,12 +26,11 @@ public class CavalryMovementController : MonoBehaviour
     public event System.Action OnPlayerHit;
 
     // Public getters
-    // ADD THESE TWO LINES:
-    public float CurrentSpeed => agent.speed;
+    public float CurrentSpeed => agent != null ? agent.speed : 0f;
     public float MaxSpeed => _attributes.ChargeSpeed;
 
     // Path finding variables
-    private List<Transform> PatrolPointsSequence;
+    private List<Transform> _patrolPointsSequence;
     private int _currentPatrolPointIndex;
     private NavMeshPath _pathPlaceholder;
 
@@ -50,9 +49,8 @@ public class CavalryMovementController : MonoBehaviour
 
     void Awake()
     {
-        PatrolPointsSequence = new();
-        foreach (Transform child in PatrolPointsParent.transform)
-            PatrolPointsSequence.Add(child.gameObject.transform);
+        AssignPatrolPointsSequence();
+        Debug.Log("Cavalry awake here");
         agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
         agent.updatePosition = false;
@@ -72,7 +70,21 @@ public class CavalryMovementController : MonoBehaviour
         _lastAttackTime = -_attributes.AttackCoolDown;
     }
 
-    
+    void AssignPatrolPointsSequence()
+    {
+        var patrolPointsSets = GameObject.FindGameObjectsWithTag("CavalryPatrolPointsSet");
+        if (patrolPointsSets.Length == 0)
+        {
+            Debug.LogError("No PatrolPointsSets found!");
+            return;
+        }
+        var patrolPointsSetWithLeastUnits = patrolPointsSets.OrderBy(set => set.GetComponent<CavalryPatrolPointsController>().GetCurrentPatrollingUnits()).First();
+        _patrolPointsSequence = patrolPointsSetWithLeastUnits.GetComponent<CavalryPatrolPointsController>().SubscribeToPatrolPointSequence(gameObject);
+        if (_reversePatrolOrder)
+        {
+            _patrolPointsSequence.Reverse();
+        }
+    }
 
     void FixedUpdate()
     {
@@ -129,12 +141,12 @@ public class CavalryMovementController : MonoBehaviour
 
     private void Patrol()
     {
-        Vector3 CurrentPatrolPointPosition() => PatrolPointsSequence[_currentPatrolPointIndex].position;
+        Vector3 CurrentPatrolPointPosition() => _patrolPointsSequence[_currentPatrolPointIndex].position;
         ChangeAgentSpeedTowards(_attributes.PatrollingSpeed);
         if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= _attributes.PatrolPointReachedThreshold)
         {
             _currentPatrolPointIndex = 
-            _currentPatrolPointIndex + 1 == PatrolPointsSequence.Count?
+            _currentPatrolPointIndex + 1 == _patrolPointsSequence.Count?
             0 : _currentPatrolPointIndex + 1;
         }
         agent.SetDestination(CurrentPatrolPointPosition());
@@ -176,7 +188,7 @@ public class CavalryMovementController : MonoBehaviour
 
     private void SetNearestPatrolPoint()
     {
-        if (PatrolPointsSequence == null || PatrolPointsSequence.Count == 0){
+        if (_patrolPointsSequence == null || _patrolPointsSequence.Count == 0){
             Debug.LogError("No PatrolPoints assigned to Cavalry unit.");
              return;
         }   
@@ -184,9 +196,9 @@ public class CavalryMovementController : MonoBehaviour
         int nearestIndex = -1;
         float minDistance = Mathf.Infinity;
 
-        for (int i = 0; i < PatrolPointsSequence.Count; i++)
+        for (int i = 0; i < _patrolPointsSequence.Count; i++)
         {
-            float distance = CalculateWeightedDistanceToTarget(PatrolPointsSequence[i].position);
+            float distance = CalculateWeightedDistanceToTarget(_patrolPointsSequence[i].position);
 
             if (distance < minDistance)
             {
