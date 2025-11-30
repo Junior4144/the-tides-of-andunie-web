@@ -243,18 +243,16 @@ public class CavalryMovementController : MonoBehaviour
     {
         float pathDistance = CalculateDistanceToTarget(targetPosition);
         
-        // Calculate direction to patrol point
         Vector3 currentPosition = (Vector3)_rigidbody.position;
         Vector3 directionToPoint = (targetPosition - currentPosition).normalized;
         Vector3 currentForward = transform.up;
         
         float angleToPoint = Vector3.Angle(currentForward, directionToPoint);
         
-        // Apply penalty if point is behind (angle > charge angle)
         float behindnessPenalty = 1f;
         if (angleToPoint > _attributes.ChargeAngle)
         {
-            float behindnessFactor = (angleToPoint - 90f) / 90f; // 0 at 90°, 1 at 180°
+            float behindnessFactor = (angleToPoint - 90f) / 90f;
             float penaltyMultiplier = 100f;
             behindnessPenalty = behindnessFactor * _attributes.TargetBehindnessPenalty * penaltyMultiplier;
         }
@@ -331,6 +329,7 @@ public class CavalryMovementController : MonoBehaviour
         if (_isStuck){
             if (Time.time - _backupStartTime < _backupDuration)
             {
+                Debug.Log($"cavalry is stuck while going to {_patrolPointsSequence[_currentPatrolPointIndex]}");
                 SetBackwardsMovement();
             }
             else

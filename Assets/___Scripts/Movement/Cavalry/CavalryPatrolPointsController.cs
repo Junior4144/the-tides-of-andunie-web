@@ -11,6 +11,11 @@ public class CavalryPatrolPointsController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake(){
+        InitializePatrolPoints();
+    }
+
+    private void InitializePatrolPoints()
+    {
         _patrolPoints = new List<Transform>();
         foreach (Transform child in transform)
         {
@@ -20,8 +25,12 @@ public class CavalryPatrolPointsController : MonoBehaviour
     }
 
 
-    // Make the cavalry unit subscribe to this patrol point so that we'll know when it dies we can decrease the counter
     public List<Transform> SubscribeToPatrolPointSequence(GameObject Cavalry){
+        if (_patrolPoints == null)
+        {
+           InitializePatrolPoints();
+        }
+        
         var healthController = Cavalry.GetComponent<CavalryHealthController>();
         if (healthController == null)
         {

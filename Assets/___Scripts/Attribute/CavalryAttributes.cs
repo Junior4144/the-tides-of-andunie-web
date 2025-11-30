@@ -27,7 +27,7 @@ public class CavalryAttributes : ScriptableObject
     public float Deceleration = 120f;
 
     [Range(0.1f, 1.0f)]
-    public float MinPathStraightnessToAttack = 0.9f;
+    public float MinPathStraightnessToAttack = 0.75f;
 
     public float AttackCoolDown = 5f;
 
@@ -40,8 +40,5 @@ public class CavalryAttributes : ScriptableObject
 
     [Tooltip("Time in seconds to detect if the cavalry is stuck.")]
     [Range(0.1f, 10.0f)]
-    public float StuckDetectionTime = 2.0f;
-
-    [field: Range(0, 1)]
-    public float ChanceOfCollectableDrop;
+    public float StuckDetectionTime = 1.0f;
 }

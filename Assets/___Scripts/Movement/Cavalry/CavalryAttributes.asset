@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f00214df442a6064082448d0bfcaa41d, type: 3}
-  m_Name: EnemyCavalryAttributes
+  m_Name: CavalryAttributes
   m_EditorClassIdentifier: Assembly-CSharp::CavalryAttributes
   TurningSpeed: 180
   Health: 300
@@ -24,9 +24,8 @@ MonoBehaviour:
   Acceleration: 5
   ChargeAcceleration: 25
   Deceleration: 150
-  MinPathStraightnessToAttack: 0.9
+  MinPathStraightnessToAttack: 0.75
   AttackCoolDown: 3
   PatrolPointReachedThreshold: 5
   TargetBehindnessPenalty: 1
-  StuckDetectionTime: 2
-  ChanceOfCollectableDrop: 0.3
+  StuckDetectionTime: 1
