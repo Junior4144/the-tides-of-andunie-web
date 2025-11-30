@@ -35,6 +35,8 @@ public class WeaponManager : MonoBehaviour
 
     private bool _rewardActive;
 
+    private WeaponType lastWeapon = WeaponType.Axe;
+
     private void Awake()
     {
         if (Instance != null)
@@ -127,13 +129,14 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.Log($"Scene '{currentSceneName}' detected — disabling all weapons.");
             IsBusy = true;
+            lastWeapon = currentWeapon;
             SetWeaponToNone();
         }
         else
         {
             Debug.Log($"Scene '{currentSceneName}' detected or GAMEPLAY — enabling weapons if gameplay.");
             IsBusy = false;
-            HandleEquipRequest(WeaponType.Axe);
+            HandleEquipRequest(lastWeapon);
         }
     }
 
@@ -148,6 +151,7 @@ public class WeaponManager : MonoBehaviour
 
     private void HandlePopUpUIActive()
     {
+        lastWeapon = currentWeapon;
         WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.none);
         IsBusy = true;
     }
@@ -156,7 +160,7 @@ public class WeaponManager : MonoBehaviour
     {
         Debug.Log("OnPopUpUIDeactivated is called");
         IsBusy = false;
-        HandleEquipRequest(WeaponType.Axe);
+        HandleEquipRequest(lastWeapon);
     }
 
     private void HandlePauseMenuActivation()
