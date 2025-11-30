@@ -30,7 +30,7 @@ public class Village9LSController : MonoBehaviour
 
     private void HandleSetup()
     {
-        if(LSManager.Instance.startGlobalInvasion)
+        if(LSManager.Instance.HasInvasionStarted)
         {
             _collider2D.enabled = true;
         }
