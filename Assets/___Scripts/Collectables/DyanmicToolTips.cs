@@ -16,7 +16,7 @@ public class DyanmicToolTips : MonoBehaviour
 
     [Header("Tooltip Configuration")]
     [SerializeField] private TMP_FontAsset tooltipFont;
-    [SerializeField] private float fontSize = 24f;
+    [SerializeField] private float fontSize = 18f;
     [SerializeField] private float rowHeight = 30f;
     [SerializeField] private float minPanelWidth = 200f;
     [SerializeField] private float mainPanelPadding = 20f;
@@ -86,11 +86,14 @@ public class DyanmicToolTips : MonoBehaviour
 
         ClearStatRows();
 
-        if (effects == null || effects.Length == 0)
-            return;
+        if (effects != null && effects.Length > 0)
+        {
+            foreach (var effect in effects)
+                CreateStatRow(effect);
+        }
 
-        foreach (var effect in effects)
-            CreateStatRow(effect);
+        CreateStackSizeRow();
+        CreateSellPriceRow();
 
         AdjustPanelWidth();
 
@@ -120,6 +123,54 @@ public class DyanmicToolTips : MonoBehaviour
         text.fontSize = fontSize;
         text.alignment = TextAlignmentOptions.Left;
         text.color = effect.ItemAmount >= 0 ? Color.green : Color.red;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
+        text.overflowMode = TextOverflowModes.Overflow;
+
+        spawnedEffectRows.Add(textObject);
+    }
+
+    private void CreateStackSizeRow()
+    {
+        if (shopListing?.Item == null)
+            return;
+
+        GameObject textObject = new("StatRow_StackSize");
+        textObject.transform.SetParent(statsPanel, false);
+
+        RectTransform rectTransform = textObject.AddComponent<RectTransform>();
+        TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
+
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rowHeight);
+
+        text.text = $"Stack Size: {shopListing.Item.MaxStackSize}";
+        text.font = tooltipFont;
+        text.fontSize = fontSize;
+        text.alignment = TextAlignmentOptions.Left;
+        text.color = Color.black;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
+        text.overflowMode = TextOverflowModes.Overflow;
+
+        spawnedEffectRows.Add(textObject);
+    }
+
+    private void CreateSellPriceRow()
+    {
+        if (shopListing?.Item == null)
+            return;
+
+        GameObject textObject = new("StatRow_SellPrice");
+        textObject.transform.SetParent(statsPanel, false);
+
+        RectTransform rectTransform = textObject.AddComponent<RectTransform>();
+        TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
+
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rowHeight);
+
+        text.text = $"Sell Price: {shopListing.Item.SellAmount}";
+        text.font = tooltipFont;
+        text.fontSize = fontSize;
+        text.alignment = TextAlignmentOptions.Left;
+        text.color = Color.black;
         text.textWrappingMode = TextWrappingModes.NoWrap;
         text.overflowMode = TextOverflowModes.Overflow;
 

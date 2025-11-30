@@ -14,8 +14,12 @@ public class ExplosionCameraShakeController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (hasImpulsed) return;
-        hasImpulsed = true;
-        Debug.Log("Explosion Shake Occured");
-        _impulseSource.GenerateImpulseWithForce(2f);
+
+        if (collision.CompareTag("Player"))
+        {
+            hasImpulsed = true;
+            Debug.Log("Explosion Shake Occured");
+            _impulseSource.GenerateImpulseWithForce(2f); 
+        }
     }
 }

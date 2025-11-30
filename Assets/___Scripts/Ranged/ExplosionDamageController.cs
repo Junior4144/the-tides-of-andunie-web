@@ -1,12 +1,24 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class ExplosionDamageController : MonoBehaviour
 {
     private readonly HashSet<GameObject> hitEnemies = new();
+    private CinemachineImpulseSource _impulseSource;
 
     public float Power = 0;
     public float MaxPower = 1;
+
+    private void Awake()
+    {
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
+
+    }
+    private void Start()
+    {
+        _impulseSource.GenerateImpulseWithForce(2f);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,7 +38,15 @@ public class ExplosionDamageController : MonoBehaviour
             float finalDamage = PlayerStatsManager.Instance.ExplosionDamage * chargeMultiplier;
 
             Debug.Log($"[ExplosionDamageController] Damage dealt {finalDamage} (base: {PlayerStatsManager.Instance.ExplosionDamage}, multiplier: {chargeMultiplier}, total: {finalDamage})");
-            health.TakeDamage(finalDamage, DamageType.Explosion);
+
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                health.TakeDamage(finalDamage * 0.25f, DamageType.Explosion);
+            }
+            else
+            {
+                health.TakeDamage(finalDamage, DamageType.Explosion);
+            } 
         }
 
     }

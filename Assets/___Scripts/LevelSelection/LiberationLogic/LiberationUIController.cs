@@ -1,11 +1,14 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class LiberationUIController : MonoBehaviour, IPointerClickHandler
+public class LiberationUIController : MonoBehaviour
 {
     public GameObject targetObject;
+
+    public TextMeshProUGUI VillageNameText;
 
     private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
@@ -26,18 +29,24 @@ public class LiberationUIController : MonoBehaviour, IPointerClickHandler
 
     private IEnumerator HandleLiberationLogic()
     {
-        if(LSManager.Instance.GetVillageState("Village1") == VillageState.Liberated_Done && !GlobalStoryManager.Instance.Village1Liberated)
+        if (GlobalStoryManager.Instance.HasExitedLiberation)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(.5f);
             targetObject.SetActive(true);
-            GlobalStoryManager.Instance.Village1Liberated = true;
+            UIEvents.DefaultPopUPActive?.Invoke();
+
+            string id = GlobalStoryManager.Instance.LastLiberatedVillageID;
+            VillageNameText.text = LSManager.Instance.GetVillageName(id);
+
+            GlobalStoryManager.Instance.HasExitedLiberation = false;
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnButtonClicked()
     {
         if (targetObject != null)
         {
+            UIEvents.DefaultPopUpDisabled.Invoke();
             targetObject.SetActive(false);
         }
     }

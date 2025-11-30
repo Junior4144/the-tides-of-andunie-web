@@ -19,7 +19,7 @@ public class HealthBarUI : MonoBehaviour
     private IEnumerator DelayStart()
     {
         yield return null;
-        UpdateHealthBar(PlayerManager.Instance.GetCurrentHealth(), PlayerStatsManager.Instance.MaxHealth);
+        UpdateHealthBar(PlayerStatsManager.Instance.MaxHealth, PlayerStatsManager.Instance.MaxHealth);
     }
 
     public void UpdateHealthBar(float _currentHealth, float _maxHealth)

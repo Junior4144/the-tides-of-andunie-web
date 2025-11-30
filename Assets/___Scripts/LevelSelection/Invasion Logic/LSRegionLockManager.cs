@@ -65,9 +65,9 @@ public class LSRegionLockManager : MonoBehaviour
 
         _hyarnustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarrostar);
 
-        //_andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
+        _andustarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Hyarnustar);
 
-        //_forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
+        _forostarLocked = !LSManager.Instance.IsRegionFullyLiberated(Region.Andustar);
 
         Debug.Log("[Region Lock Manager] Region lock states updated.");
     }

@@ -5,6 +5,7 @@ public class TutorialUIController : MonoBehaviour
 {
     [SerializeField] private GameObject _canvas;
     [SerializeField] private GameObject _tutorialPrefab;
+    [SerializeField] private GameObject _questPrefab;
     [SerializeField] private Transform _prefabPanel;
     [SerializeField] private float initialDelay = 0.4f;
 
@@ -35,6 +36,9 @@ public class TutorialUIController : MonoBehaviour
         yield return new WaitForSeconds(initialDelay);
 
         _canvas.SetActive(true);
+        if(_questPrefab != null)
+            Instantiate(_questPrefab, _prefabPanel);
+
         Instantiate(_tutorialPrefab, _prefabPanel);
         yield return new WaitForSeconds(initialDelay);
 

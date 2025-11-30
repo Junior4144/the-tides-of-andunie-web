@@ -41,7 +41,6 @@ public class RegionZoomController : MonoBehaviour
         // Only fire events when crossing from above -> below
         if (isBelowThreshold && !wasBelowThreshold)
         {
-            PlayerManager.Instance?.EnableLSPlayerMovement();
             ZoomBelowThreshold?.Invoke();
             OnDisableOfRegionUI?.Invoke();
         }
@@ -49,7 +48,6 @@ public class RegionZoomController : MonoBehaviour
         // Only fire events when crossing from below -> above
         if (!isBelowThreshold && wasBelowThreshold)
         {
-            PlayerManager.Instance?.DisableLSPlayerMovement();
             ZoomAboveThreshold?.Invoke();
             NoLongerDisableOfRegionUI?.Invoke();
         }

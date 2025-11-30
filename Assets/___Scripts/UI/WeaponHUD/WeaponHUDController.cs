@@ -50,13 +50,13 @@ public class WeaponHUDController : MonoBehaviour
         icon.color = color;
     }
 
-    private void HandleAbilityRequest(WeaponType weaponType)
+    private void HandleAbilityRequest(WeaponType weaponType, float cooldownDuration)
     {
         if (weaponType == WeaponType.Axe){
             AxeCoolDown.SetActive(true);
-            AxeCoolDown.GetComponent<AbilityCooldownController>().ActivateAbility();}
+            AxeCoolDown.GetComponent<AbilityCooldownController>().ActivateAbility(cooldownDuration);}
         else if (weaponType == WeaponType.Bow){
             BowCoolDown.SetActive(true);
-            BowCoolDown.GetComponent<AbilityCooldownController>().ActivateAbility();}
+            BowCoolDown.GetComponent<AbilityCooldownController>().ActivateAbility(cooldownDuration);}
     }
 }

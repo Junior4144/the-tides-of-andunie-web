@@ -46,11 +46,12 @@ public class LSManager : MonoBehaviour
 
     public static event Action GlobalInvasionTriggered;
 
+
     void Awake()
     {
         if (Instance != null && Instance != this) {Destroy(gameObject); return;}
         Instance = this;
-
+        Debug.Log($"LSManager Awake — villages count: {villages.Count}", this);
     }
 
     private void OnEnable()
@@ -78,6 +79,7 @@ public class LSManager : MonoBehaviour
 
         village.state = newState;
         OnVillageStateChanged?.Invoke(villageId, newState);
+        GlobalStoryManager.Instance.LastLiberatedVillageID = villageId;
         return;
     }
 
@@ -92,6 +94,15 @@ public class LSManager : MonoBehaviour
         }
 
         return village.state;
+    }
+
+    public string GetVillageName(string villageId)
+    {
+        var village = villages.Find(village => village.id == villageId);
+        Debug.Log($"LSManager {villages}");
+
+        if (village == null) return "Village Not Found";
+        return village.villageName;
     }
 
     public void TriggerGlobalInvasion()

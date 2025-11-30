@@ -42,7 +42,7 @@ public class PlayerSpawner : MonoBehaviour
         SaveManager.Instance.RestorePlayerStats();
 
         HealthUIController.Instance.UpdateHealthBar(
-            currentHealth: PlayerManager.Instance.GetCurrentHealth(),
+            currentHealth: PlayerStatsManager.Instance.MaxHealth,
             maxhealth: PlayerStatsManager.Instance.MaxHealth
         );
     }

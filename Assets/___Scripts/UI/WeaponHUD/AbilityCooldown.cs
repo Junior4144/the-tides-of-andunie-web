@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class AbilityCooldownController : MonoBehaviour
 {
     public Image cooldownImage;
-    public float cooldownTime = 5f;
+    private float cooldownTime;
     private float timer;
     private bool isCoolingDown;
 
@@ -20,17 +20,17 @@ public class AbilityCooldownController : MonoBehaviour
             {
                 isCoolingDown = false;
                 cooldownImage.fillAmount = 0f;
-                gameObject.SetActive(true);
+                gameObject.SetActive(false);
             }
         }
     }
 
-    public void ActivateAbility()
+    public void ActivateAbility(float duration)
     {
         if (!isCoolingDown)
         {
-            // trigger ability logic here
             isCoolingDown = true;
+            cooldownTime = duration;
             timer = cooldownTime;
             cooldownImage.fillAmount = 1f;
         }

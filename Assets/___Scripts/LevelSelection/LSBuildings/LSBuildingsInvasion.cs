@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class LSBuildingsInvasion : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class LSBuildingsInvasion : MonoBehaviour
     public string VillageId => villageId;
 
     private SpriteRenderer spriteRenderer;
+
+    [Header("Building Data (Shared ScriptableObject)")]
+    [SerializeField] private VillageBuildingData _buildingData;
 
     private void Awake()
     {
@@ -70,9 +74,18 @@ public class LSBuildingsInvasion : MonoBehaviour
 
 
 
+        // Fire logic
         if (bigBuilding) HandleFireBigBuilding();
         else if (smallBuilding) HandleFireSmallBuilding();
+        else HandleFireUsingData(); // NEW: use ScriptableObject fallback
 
+        // Audio logic
+        if (fireSoundPrefab != null)
+            SpawnFireSound();
+        else
+            SpawnFireSoundUsingData(); // NEW fallback
+
+        // Sprite replace logic
         ReplaceSprite();
     }
     private void HandleFireBigBuilding()
@@ -86,28 +99,82 @@ public class LSBuildingsInvasion : MonoBehaviour
     }
     private void SpawnFire(float scale)
     {
-        if (fireSprites == null || fireSprites.Length == 0 || fireSprites[0] == null)
+        if (fireSprites != null && fireSprites.Length > 0 && fireSprites[0] != null)
         {
-            Debug.Log($"{name}: fireSprites not assigned or empty!");
+            foreach (var position in firePositions)
+            {
+                GameObject fire = Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
+                fire.transform.localScale = Vector3.one * scale;
+            }
+        }
+        else
+        {
+            // Use data-based fire if no local prefab assigned
+            SpawnFireUsingData(scale);
+        }
+    }
+
+    private void SpawnFireSound()
+    {
+        //if (fireSoundPrefab != null)
+            //Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
+    }
+    private void ReplaceSprite()
+    {
+        if (spriteRenderer != null && destroyedSprite != null)
+        {
+            spriteRenderer.sprite = destroyedSprite;
+            return;
+        }
+
+        ReplaceSpriteUsingData();
+    }
+
+    private void SpawnFireUsingData(float scale)
+    {
+        if (_buildingData == null || _buildingData.fireSpritePrefab == null)
+        {
+            Debug.Log($"{name}: No fire sprite found in scriptable object!");
             return;
         }
 
         foreach (var position in firePositions)
         {
-            GameObject fire = Instantiate(fireSprites[0], position.transform.position, Quaternion.identity);
+            GameObject fire = Instantiate(_buildingData.fireSpritePrefab, position.transform.position, Quaternion.identity);
             fire.transform.localScale = Vector3.one * scale;
         }
-
     }
 
-    private void SpawnFireSound()
+    private void HandleFireUsingData()
     {
-        if (fireSoundPrefab != null)
-            Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
+        if (_buildingData == null || _buildingData.fireSpritePrefab == null)
+        {
+            Debug.Log($"{name}: No fire sprite assigned for data-based fallback.");
+            return;
+        }
+
+        foreach (var position in firePositions)
+        {
+            GameObject fire = Instantiate(_buildingData.fireSpritePrefab, position.transform.position, Quaternion.identity);
+            fire.transform.localScale = Vector3.one * 0.3f;
+        }
     }
-    private void ReplaceSprite()
+
+    private void SpawnFireSoundUsingData()
     {
-        if (spriteRenderer != null && destroyedSprite != null)
-            spriteRenderer.sprite = destroyedSprite;
+        if (_buildingData == null || _buildingData.fireSoundPrefab == null)
+            return;
+
+        //Instantiate(_buildingData.fireSoundPrefab, transform.position, Quaternion.identity, transform);
+    }
+
+    private void ReplaceSpriteUsingData()
+    {
+        if (_buildingData == null)
+            return;
+
+        Sprite destroyed = _buildingData.GetDestroyedSprite(gameObject.name);
+        if (destroyed != null)
+            spriteRenderer.sprite = destroyed;
     }
 }
