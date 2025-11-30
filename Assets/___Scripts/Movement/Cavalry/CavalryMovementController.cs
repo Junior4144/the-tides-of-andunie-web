@@ -2,27 +2,38 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 // using Unity.Properties;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class CavalryMovementController : MonoBehaviour
 {
+    // External objects and variables
     [SerializeField] private CavalryAttributes _attributes;
-
+    [SerializeField] private bool _reversePatrolOrder;
     private Transform _player;
     private NavMeshAgent agent;
     private Rigidbody2D _rigidbody;
 
+    // State variables
     private enum CavalryState { Patrolling, Attacking, Stuck }
     private CavalryState _currentState;
     private bool _hasHitThePlayer;
+    private float _lastAttackTime;
 
-    [SerializeField] public GameObject PatrolPointsParent;
-    private List<Transform> PatrolPointsSequence;
+    // Events
+    public event System.Action OnChargeStart;
+    public event System.Action OnPlayerHit;
+
+    // Public getters
+    public float CurrentSpeed => agent != null ? agent.speed : 0f;
+    public float MaxSpeed => _attributes.ChargeSpeed;
+
+    // Path finding variables
+    private List<Transform> _patrolPointsSequence;
     private int _currentPatrolPointIndex;
     private NavMeshPath _pathPlaceholder;
-    private float _lastAttackTime;
 
     // Stuck detection fields
     private Vector3 _lastPosition;
@@ -31,15 +42,14 @@ public class CavalryMovementController : MonoBehaviour
     private float _backupStartTime;
     private float _backupDuration = 1f;
 
+    // Local getters
     private Transform Player => _player ??= PlayerManager.Instance.transform;
     private float TurnAbility => 1.0f - Mathf.InverseLerp(_attributes.MinSpeedForTurning, _attributes.MaxSpeedForTurning, _rigidbody.linearVelocity.magnitude);
     private float EffectiveTurnSpeed => _attributes.TurningSpeed * TurnAbility;
 
     void Awake()
     {
-        PatrolPointsSequence = new();
-        foreach (Transform child in PatrolPointsParent.transform)
-            PatrolPointsSequence.Add(child.gameObject.transform);
+        AssignPatrolPointsSequence();
         agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
         agent.updatePosition = false;
@@ -47,7 +57,6 @@ public class CavalryMovementController : MonoBehaviour
         agent.updateUpAxis = false;
         _pathPlaceholder = new NavMeshPath();
         
-        // Initialize stuck detection
         _lastPosition = _rigidbody.position;
         _lastMovementTime = Time.time;
         _isStuck = false;
@@ -59,7 +68,17 @@ public class CavalryMovementController : MonoBehaviour
         _lastAttackTime = -_attributes.AttackCoolDown;
     }
 
-    
+    void AssignPatrolPointsSequence()
+    {
+        var patrolPointsSets = GameObject.FindGameObjectsWithTag("CavalryPatrolPointsSet");
+        if (patrolPointsSets.Length == 0)
+        {
+            Debug.LogError("No PatrolPointsSets found!");
+            return;
+        }
+        var patrolPointsSetWithLeastUnits = patrolPointsSets.OrderBy(set => set.GetComponent<CavalryPatrolPointsController>().GetCurrentPatrollingUnits()).First();
+        _patrolPointsSequence = patrolPointsSetWithLeastUnits.GetComponent<CavalryPatrolPointsController>().SubscribeToPatrolPointSequence(gameObject);
+    }
 
     void FixedUpdate()
     {
@@ -111,17 +130,16 @@ public class CavalryMovementController : MonoBehaviour
     {
         _hasHitThePlayer = true;
         _lastAttackTime = Time.time;
+        OnPlayerHit?.Invoke();
     }
 
     private void Patrol()
     {
-        Vector3 CurrentPatrolPointPosition() => PatrolPointsSequence[_currentPatrolPointIndex].position;
+        Vector3 CurrentPatrolPointPosition() => _patrolPointsSequence[_currentPatrolPointIndex].position;
         ChangeAgentSpeedTowards(_attributes.PatrollingSpeed);
         if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= _attributes.PatrolPointReachedThreshold)
         {
-            _currentPatrolPointIndex = 
-            _currentPatrolPointIndex + 1 == PatrolPointsSequence.Count?
-            0 : _currentPatrolPointIndex + 1;
+            _currentPatrolPointIndex = NextPatrolPointIndex();
         }
         agent.SetDestination(CurrentPatrolPointPosition());
     }
@@ -132,10 +150,20 @@ public class CavalryMovementController : MonoBehaviour
         UpdateChaseSpeed();
     }
 
+    private int NextPatrolPointIndex()
+    {
+        int direction = _reversePatrolOrder ? -1 : 1;
+        int nextIndex =_currentPatrolPointIndex + direction;
+        if (nextIndex < 0) nextIndex = _patrolPointsSequence.Count - 1;
+        else if (nextIndex == _patrolPointsSequence.Count) nextIndex = 0;
+        return nextIndex;
+    }
+    private void ReversePatrolPointSequence() => _reversePatrolOrder = !_reversePatrolOrder;
     
     private void TransitionToAttackingState()
     {
         _currentState = CavalryState.Attacking;
+        OnChargeStart?.Invoke();
     }
 
     private void TransitionToPatrollingState()
@@ -161,7 +189,7 @@ public class CavalryMovementController : MonoBehaviour
 
     private void SetNearestPatrolPoint()
     {
-        if (PatrolPointsSequence == null || PatrolPointsSequence.Count == 0){
+        if (_patrolPointsSequence == null || _patrolPointsSequence.Count == 0){
             Debug.LogError("No PatrolPoints assigned to Cavalry unit.");
              return;
         }   
@@ -169,9 +197,9 @@ public class CavalryMovementController : MonoBehaviour
         int nearestIndex = -1;
         float minDistance = Mathf.Infinity;
 
-        for (int i = 0; i < PatrolPointsSequence.Count; i++)
+        for (int i = 0; i < _patrolPointsSequence.Count; i++)
         {
-            float distance = CalculateWeightedDistanceToTarget(PatrolPointsSequence[i].position);
+            float distance = CalculateWeightedDistanceToTarget(_patrolPointsSequence[i].position);
 
             if (distance < minDistance)
             {
@@ -181,24 +209,48 @@ public class CavalryMovementController : MonoBehaviour
         }
 
         _currentPatrolPointIndex = nearestIndex;
+
+        if (_patrolPointsSequence.Count > 2 && PreviousPatrolAngleIsLess())
+            ReversePatrolPointSequence();
+    }
+
+    private bool PreviousPatrolAngleIsLess()
+    {
+        Vector3 currentPoint = _patrolPointsSequence[_currentPatrolPointIndex].position;
+        
+        int nextIndex = (_currentPatrolPointIndex + 1) % _patrolPointsSequence.Count;
+        Vector3 nextPoint = _patrolPointsSequence[nextIndex].position;
+
+        int prevIndex = _currentPatrolPointIndex - 1;
+        if (prevIndex < 0) prevIndex = _patrolPointsSequence.Count - 1;
+        Vector3 prevPoint = _patrolPointsSequence[prevIndex].position;
+
+        Vector3 forwardPatrolDir = (nextPoint - currentPoint).normalized;
+        Vector3 backwardPatrolDir = (prevPoint - currentPoint).normalized;
+        
+        Vector3 currentFacingDir = transform.up;
+
+        float angleToForward = Vector3.Angle(currentFacingDir, forwardPatrolDir);
+        float angleToBackward = Vector3.Angle(currentFacingDir, backwardPatrolDir);
+
+
+        return angleToBackward < angleToForward;
     }
 
     private float CalculateWeightedDistanceToTarget(Vector3 targetPosition)
     {
         float pathDistance = CalculateDistanceToTarget(targetPosition);
         
-        // Calculate direction to patrol point
         Vector3 currentPosition = (Vector3)_rigidbody.position;
         Vector3 directionToPoint = (targetPosition - currentPosition).normalized;
         Vector3 currentForward = transform.up;
         
         float angleToPoint = Vector3.Angle(currentForward, directionToPoint);
         
-        // Apply penalty if point is behind (angle > charge angle)
         float behindnessPenalty = 1f;
         if (angleToPoint > _attributes.ChargeAngle)
         {
-            float behindnessFactor = (angleToPoint - 90f) / 90f; // 0 at 90°, 1 at 180°
+            float behindnessFactor = (angleToPoint - 90f) / 90f;
             float penaltyMultiplier = 100f;
             behindnessPenalty = behindnessFactor * _attributes.TargetBehindnessPenalty * penaltyMultiplier;
         }
@@ -275,6 +327,7 @@ public class CavalryMovementController : MonoBehaviour
         if (_isStuck){
             if (Time.time - _backupStartTime < _backupDuration)
             {
+                Debug.Log($"cavalry is stuck while going to {_patrolPointsSequence[_currentPatrolPointIndex]}");
                 SetBackwardsMovement();
             }
             else
