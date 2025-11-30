@@ -37,20 +37,24 @@ public class FireworksController : MonoBehaviour
 
     private void HandleSetup()
     {
-        villageId = GlobalStoryManager.Instance.LastLiberatedVillageID;
-
-        if (string.IsNullOrEmpty(villageId))
-            return;
-
-        spawnArea = FindSpawnAreaByVillageName(villageId);
-
-        if (spawnArea == null)
+        if (GlobalStoryManager.Instance.HasExitedLiberation)
         {
-            Debug.LogWarning("Could not find village: " + villageId);
-            return;
+            villageId = GlobalStoryManager.Instance.LastLiberatedVillageID;
+
+            if (string.IsNullOrEmpty(villageId))
+                return;
+
+            spawnArea = FindSpawnAreaByVillageName(villageId);
+
+            if (spawnArea == null)
+            {
+                Debug.LogWarning("Could not find village: " + villageId);
+                return;
+            }
+
+            StartCoroutine(PlayWaves());
         }
 
-        StartCoroutine(PlayWaves());
     }
 
     private IEnumerator PlayWaves()
