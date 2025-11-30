@@ -11,7 +11,11 @@ public class CavalryPatrolPointsController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake(){
-        _patrolPoints = GetComponentInChildren<Transform>().gameObject.GetComponentsInChildren<Transform>().ToList();
+        _patrolPoints = new List<Transform>();
+        foreach (Transform child in transform)
+        {
+            _patrolPoints.Add(child);
+        }
         _currentPatrollingUnitsCount = 0;
     }
 

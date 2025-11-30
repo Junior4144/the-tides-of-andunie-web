@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 // using Unity.Properties;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -50,7 +51,6 @@ public class CavalryMovementController : MonoBehaviour
     void Awake()
     {
         AssignPatrolPointsSequence();
-        Debug.Log("Cavalry awake here");
         agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
         agent.updatePosition = false;
@@ -80,10 +80,6 @@ public class CavalryMovementController : MonoBehaviour
         }
         var patrolPointsSetWithLeastUnits = patrolPointsSets.OrderBy(set => set.GetComponent<CavalryPatrolPointsController>().GetCurrentPatrollingUnits()).First();
         _patrolPointsSequence = patrolPointsSetWithLeastUnits.GetComponent<CavalryPatrolPointsController>().SubscribeToPatrolPointSequence(gameObject);
-        if (_reversePatrolOrder)
-        {
-            _patrolPointsSequence.Reverse();
-        }
     }
 
     void FixedUpdate()
@@ -145,9 +141,7 @@ public class CavalryMovementController : MonoBehaviour
         ChangeAgentSpeedTowards(_attributes.PatrollingSpeed);
         if (CalculateDisplacementToTarget(CurrentPatrolPointPosition()) <= _attributes.PatrolPointReachedThreshold)
         {
-            _currentPatrolPointIndex = 
-            _currentPatrolPointIndex + 1 == _patrolPointsSequence.Count?
-            0 : _currentPatrolPointIndex + 1;
+            _currentPatrolPointIndex = NextPatrolPointIndex();
         }
         agent.SetDestination(CurrentPatrolPointPosition());
     }
@@ -158,6 +152,15 @@ public class CavalryMovementController : MonoBehaviour
         UpdateChaseSpeed();
     }
 
+    private int NextPatrolPointIndex()
+    {
+        int direction = _reversePatrolOrder ? -1 : 1;
+        int nextIndex =_currentPatrolPointIndex + direction;
+        if (nextIndex < 0) nextIndex = _patrolPointsSequence.Count - 1;
+        else if (nextIndex == _patrolPointsSequence.Count) nextIndex = 0;
+        return nextIndex;
+    }
+    private void ReversePatrolPointSequence() => _reversePatrolOrder = !_reversePatrolOrder;
     
     private void TransitionToAttackingState()
     {
@@ -208,6 +211,32 @@ public class CavalryMovementController : MonoBehaviour
         }
 
         _currentPatrolPointIndex = nearestIndex;
+
+        if (_patrolPointsSequence.Count > 2 && PreviousPatrolAngleIsLess())
+            ReversePatrolPointSequence();
+    }
+
+    private bool PreviousPatrolAngleIsLess()
+    {
+        Vector3 currentPoint = _patrolPointsSequence[_currentPatrolPointIndex].position;
+        
+        int nextIndex = (_currentPatrolPointIndex + 1) % _patrolPointsSequence.Count;
+        Vector3 nextPoint = _patrolPointsSequence[nextIndex].position;
+
+        int prevIndex = _currentPatrolPointIndex - 1;
+        if (prevIndex < 0) prevIndex = _patrolPointsSequence.Count - 1;
+        Vector3 prevPoint = _patrolPointsSequence[prevIndex].position;
+
+        Vector3 forwardPatrolDir = (nextPoint - currentPoint).normalized;
+        Vector3 backwardPatrolDir = (prevPoint - currentPoint).normalized;
+        
+        Vector3 currentFacingDir = transform.up;
+
+        float angleToForward = Vector3.Angle(currentFacingDir, forwardPatrolDir);
+        float angleToBackward = Vector3.Angle(currentFacingDir, backwardPatrolDir);
+
+
+        return angleToBackward < angleToForward;
     }
 
     private float CalculateWeightedDistanceToTarget(Vector3 targetPosition)
