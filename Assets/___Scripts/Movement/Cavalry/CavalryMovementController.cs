@@ -16,15 +16,15 @@ public class CavalryMovementController : MonoBehaviour
     private NavMeshAgent agent;
     private Rigidbody2D _rigidbody;
 
+    private CavalryMeleeController _meleeController;
+
     // State variables
     private enum CavalryState { Patrolling, Attacking, Stuck }
     private CavalryState _currentState;
     private bool _hasHitThePlayer;
-    private float _lastAttackTime;
 
     // Events
     public event System.Action OnChargeStart;
-    public event System.Action OnPlayerHit;
 
     // Public getters
     public float CurrentSpeed => agent != null ? agent.speed : 0f;
@@ -52,6 +52,8 @@ public class CavalryMovementController : MonoBehaviour
         AssignPatrolPointsSequence();
         agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _meleeController = gameObject.GetComponentInChildren<CavalryMeleeController>();
+
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -65,7 +67,16 @@ public class CavalryMovementController : MonoBehaviour
         SetNearestPatrolPoint();
         TransitionToPatrollingState();
         _hasHitThePlayer = false;
-        _lastAttackTime = -_attributes.AttackCoolDown;
+    }
+
+    void OnEnable()
+    {
+        _meleeController.OnAttack += HandlePlayerHit;
+    }
+
+    void OnDisable()
+    {
+        _meleeController.OnAttack -= HandlePlayerHit;
     }
 
     void AssignPatrolPointsSequence()
@@ -100,8 +111,7 @@ public class CavalryMovementController : MonoBehaviour
         switch (_currentState)
         {
             case CavalryState.Patrolling:
-                bool canAttack = Time.time - _lastAttackTime > _attributes.AttackCoolDown;
-                if (canAttack && IsLinedUpWithTarget(Player.position) && IsStraightPathToPlayer())
+                if (_meleeController.CanAttack && IsLinedUpWithTarget(Player.position) && IsStraightPathToPlayer())
                     TransitionToAttackingState();
                 else
                     Patrol();
@@ -119,18 +129,9 @@ public class CavalryMovementController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (_currentState == CavalryState.Attacking && collision.gameObject.CompareTag("Player"))
-            HandlePlayerHit();
-        
-    }
-
     private void HandlePlayerHit()
     {
         _hasHitThePlayer = true;
-        _lastAttackTime = Time.time;
-        OnPlayerHit?.Invoke();
     }
 
     private void Patrol()
