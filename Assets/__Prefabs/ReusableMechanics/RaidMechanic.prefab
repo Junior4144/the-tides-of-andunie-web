@@ -116,9 +116,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaidMusicController
   raidController: {fileID: 2509106713038772796}
   audioSource: {fileID: 8115295088577124013}
-  preWaveClip: {fileID: 8300000, guid: ec3f6c779a23c5244bf0364bdc8c1c7b, type: 3}
-  inProgressClip: {fileID: 8300000, guid: 4ea1cc88a6b94604f8973de925d569fe, type: 3}
-  postRaidClip: {fileID: 8300000, guid: 36d346f12ef004841be40071ae144ae3, type: 3}
+  inProgressClips:
+  - {fileID: 8300000, guid: a4cbea539a4966b44984f695efe86c45, type: 3}
+  - {fileID: 8300000, guid: 7ef2b266d1180b143967491fb3c17287, type: 3}
+  - {fileID: 8300000, guid: 33adf5145ff15c749a05d75996762fd7, type: 3}
+  - {fileID: 8300000, guid: 33adf5145ff15c749a05d75996762fd7, type: 3}
+  - {fileID: 8300000, guid: 33adf5145ff15c749a05d75996762fd7, type: 3}
+  postRaidClips:
+  - {fileID: 8300000, guid: 36d346f12ef004841be40071ae144ae3, type: 3}
 --- !u!82 &8115295088577124013
 AudioSource:
   m_ObjectHideFlags: 0
