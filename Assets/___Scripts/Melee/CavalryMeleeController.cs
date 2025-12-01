@@ -10,6 +10,8 @@ public class CavalryMeleeController : MonoBehaviour
     [SerializeField] private float _animDuration;
     [SerializeField] private float _damageRange = 5f;
 
+    public event System.Action OnAttack;
+
     private float _lastAttackTime;
     private bool _isAttacking = false;
 
@@ -22,10 +24,7 @@ public class CavalryMeleeController : MonoBehaviour
     {
         var health = otherCollider.GetComponent(typeof(HealthController)) as HealthController;
         if (
-            IsEnemy(otherCollider) &&
-            health != null &&
-            !_isAttacking &&
-            Time.time - _lastAttackTime > _attributes.AttackCoolDown
+            IsEnemy(otherCollider) && health != null && CanAttack
         )
         {
             _lastAttackTime = Time.time;
@@ -36,7 +35,8 @@ public class CavalryMeleeController : MonoBehaviour
 
     private bool IsEnemy(Collider2D otherCollider) => 
         otherCollider.gameObject.layer == LayerMask.NameToLayer("Friendly");
-    
+
+    public bool CanAttack => !_isAttacking && Time.time - _lastAttackTime > _attributes.AttackCoolDown;
 
     private IEnumerator Attack(GameObject enemyObject)
     {
@@ -46,8 +46,10 @@ public class CavalryMeleeController : MonoBehaviour
         {
             float distance = Vector2.Distance(transform.position, enemyObject.transform.position);
             
-            if (distance <= _damageRange)
+            if (distance <= _damageRange){
                 enemyObject.GetComponent<HealthController>().TakeDamage(_attributes.DamageAmount);
+                OnAttack?.Invoke();
+            }
         }
     }
 
