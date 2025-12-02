@@ -21,8 +21,13 @@ public class PeacefulVillageSoundController : MonoBehaviour
             Debug.LogWarning("List of AudioClips in Peaceful Village Sound Controller was not assigned!");
             return;
         }
-
+        if (_audioSrc == null)
+        {
+            Debug.LogWarning("Audio source in Peaceful Village Sound Controller was not assigned!");
+            return;
+        }
         _audioSrc.clip = _peacefulMusicClips[Random.Range(0, clips.Length)];
+        _audioSrc.Play();
     }
 
 }
