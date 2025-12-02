@@ -22,6 +22,8 @@ public class RewardListener : MonoBehaviour
 
         SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
 
+        SaveGameManager.Instance.SaveGame();
+
         Debug.Log($"[LS UI MANAGER] Next scene : {NextScene}");
 
         SaveManager.Instance.SaveLastLocation(Location);

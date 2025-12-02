@@ -27,6 +27,7 @@ public class SceneControllerManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(LoadNextStageCoroutine(sceneToBeUnloaded, additiveScene));
     }
+
     private IEnumerator LoadNextStageCoroutine(string sceneToBeUnloaded, string additiveScene)
     {
         Debug.Log("Next Scene Change Starting");

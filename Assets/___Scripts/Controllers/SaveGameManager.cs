@@ -1,17 +1,19 @@
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SaveGameManager : MonoBehaviour
 {
     public static SaveGameManager Instance;
-    private string savePath;
 
     [Header("References")]
     [SerializeField] private LSManager lsManager;
 
     [HideInInspector]
     public GameSaveData data;
+
+    private string savePath;
 
     [System.Serializable]
     public class GameSaveData
@@ -26,6 +28,35 @@ public class SaveGameManager : MonoBehaviour
         public int coins;
 
         public InventorySaveData inventoryData;
+
+        public StorySaveData storyData;
+
+        public RegionLockSaveData regionLockData;
+    }
+
+    [System.Serializable]
+    public class StorySaveData
+    {
+        public string lastLiberatedVillageID;
+
+        public bool playTownhallCutscene;
+        public bool enterLevelSelectorFirstTime;
+        public bool playLSInvasionCutscene;
+        public bool hasTalkedToChief;
+        public bool hasExitedLiberation;
+
+        public bool showWaypoints;
+        public bool comingFromPauseMenu;
+    }
+
+    [System.Serializable]
+    public class RegionLockSaveData
+    {
+        public bool orrostarLocked;
+        public bool hyarrostarLocked;
+        public bool hyarnustarLocked;
+        public bool andustarLocked;
+        public bool forostarLocked;
     }
 
     void Awake()
@@ -47,6 +78,7 @@ public class SaveGameManager : MonoBehaviour
         GameSaveData data = new GameSaveData();
 
         data.levelSelectorData = lsManager.GetSaveData();
+
         data.playerSaveData = SaveManager.Instance.CurrentSave;
         data.coins = CurrencyManager.Instance.Coins;
 
@@ -55,6 +87,9 @@ public class SaveGameManager : MonoBehaviour
         data.lastPlayerRot = SceneSavePositionManager.Instance.LastRotation;
 
         data.inventoryData = InventoryManager.Instance.GetSaveData();
+
+        data.storyData = GlobalStoryManager.Instance.GetSaveData();
+        data.regionLockData = LSRegionLockManager.Instance.GetSaveData();
 
         string json = JsonUtility.ToJson(data, true);
 
@@ -81,6 +116,9 @@ public class SaveGameManager : MonoBehaviour
         CurrencyManager.Instance.SetCoins(data.coins);
 
         InventoryManager.Instance.ApplySaveData(data.inventoryData);
+
+        GlobalStoryManager.Instance.ApplySaveData(data.storyData);
+        LSRegionLockManager.Instance.ApplySaveData(data.regionLockData);
 
         Debug.Log("Game Loaded");
     }

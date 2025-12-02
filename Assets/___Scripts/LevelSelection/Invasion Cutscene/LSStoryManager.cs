@@ -72,6 +72,7 @@ public class LSStoryManager : MonoBehaviour
     {
         _cutscene.Play();
         GlobalStoryManager.Instance.playLSInvasionCutscene = false;
+        SaveGameManager.Instance.SaveGame();
     }
 
     private void StartGameplay()

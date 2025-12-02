@@ -1,4 +1,6 @@
 using UnityEngine;
+using static SaveGameManager;
+
 
 public class GlobalStoryManager : MonoBehaviour
 {
@@ -31,5 +33,36 @@ public class GlobalStoryManager : MonoBehaviour
     #region GameLogic
     public bool comingFromPauseMenu = false;
     #endregion
+
+    public StorySaveData GetSaveData()
+    {
+        return new StorySaveData
+        {
+            lastLiberatedVillageID = LastLiberatedVillageID,
+
+            playTownhallCutscene = playTownhallCutscene,
+            enterLevelSelectorFirstTime = enterLevelSelectorFirstTime,
+            playLSInvasionCutscene = playLSInvasionCutscene,
+            hasTalkedToChief = HasTalkedToChief,
+            hasExitedLiberation = HasExitedLiberation,
+
+            showWaypoints = showWaypoints,
+            comingFromPauseMenu = comingFromPauseMenu
+        };
+    }
+
+    public void ApplySaveData(StorySaveData data)
+    {
+        LastLiberatedVillageID = data.lastLiberatedVillageID;
+
+        playTownhallCutscene = data.playTownhallCutscene;
+        enterLevelSelectorFirstTime = data.enterLevelSelectorFirstTime;
+        playLSInvasionCutscene = data.playLSInvasionCutscene;
+        HasTalkedToChief = data.hasTalkedToChief;
+        HasExitedLiberation = data.hasExitedLiberation;
+
+        showWaypoints = data.showWaypoints;
+        comingFromPauseMenu = data.comingFromPauseMenu;
+    }
 }
 
