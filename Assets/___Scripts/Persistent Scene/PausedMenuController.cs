@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PausedMenuController : MonoBehaviour
 {
@@ -95,4 +96,24 @@ public class PausedMenuController : MonoBehaviour
     public void PlayClickSound() =>
         AudioManager.Instance?.PlayOneShot(clickSound, volumeScale: 0.6f);
 
+    public void HandleMainMenuClick()
+    {
+        GoToMainMenu();
+    }
+
+    public void GoToMainMenu()
+    {
+        AudioManager.Instance.FadeAudio();
+        SaveManager.Instance.SavePlayerStats();
+        PlayerManager.Instance.HandleDestroy();
+
+        LoadNextStage();
+        UIEvents.OnPauseMenuDeactivated?.Invoke();
+    }
+
+    private void LoadNextStage()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneControllerManager.Instance.LoadNextStage(currentScene, "Main Menu");
+    }
 }

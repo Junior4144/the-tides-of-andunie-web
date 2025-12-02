@@ -9,9 +9,21 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) return;
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("[CameraManager] Duplicate instance detected, destroying this one.");
+            Destroy(gameObject);
+            return;
+        }
 
         Instance = this;
+
+        if (_camera == null)
+        {
+            _camera = Camera.main;
+            if (_camera == null)
+                Debug.LogError("[CameraManager] No Camera assigned and no MainCamera found!");
+        }
     }
     private void OnEnable() =>
         GameManager.OnGameStateChanged += HandleGameStateChanged;
@@ -21,9 +33,6 @@ public class CameraManager : MonoBehaviour
 
     private void HandleGameStateChanged(GameState newState)
     {
-        Debug.Log($"CameraManager responding to new state: {newState}");
-
-        _camera.gameObject.SetActive(true);
     }
     public Camera GetCamera()
     {

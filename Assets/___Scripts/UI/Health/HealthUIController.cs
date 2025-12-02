@@ -19,6 +19,10 @@ public class HealthUIController : MonoBehaviour
     {
         PlayerHealthController.OnHealthChanged += HandleHealthChanged;
     }
+    private void OnDisable()
+    {
+        PlayerHealthController.OnHealthChanged -= HandleHealthChanged;
+    }
 
     private void HandleHealthChanged(float currentHealth, float maxhealth)
     {

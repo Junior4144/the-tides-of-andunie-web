@@ -76,8 +76,15 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        // If instance exists and it's not us, destroy duplicate
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"{nameof(CameraManager)} duplicate found, destroying.");
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
     private void OnEnable()
@@ -121,6 +128,40 @@ public class UIManager : MonoBehaviour
         UIEvents.OnRewardDeactivated += () => _rewardActive = false;
 
         UIEvents.OnRequestCloseAllUI += CloseAllUI;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= HandleGameStateChanged;
+
+        UIEvents.OnRequestShopToggle -= ToggleShop;
+        UIEvents.OnRequestPauseToggle -= TogglePause;
+        UIEvents.OnRequestPreScreenToggle -= TogglePreScreenUI;
+        UIEvents.OnRequestLSEnterToggle -= ToggleLSEnterUI;
+        UIEvents.OnRequestTutorialToggle -= ToggleTutorialUI;
+
+        UIEvents.OnPauseMenuActive -= () => _isPaused = true;
+        UIEvents.OnPauseMenuDeactivated -= () => _isPaused = false;
+
+        UIEvents.OnShopConfirm -= () => _shopOpen = true;
+        UIEvents.OnShopDeactivated -= () => _shopOpen = false;
+
+        UIEvents.OnLSEnterConfirm -= isExit => _lSEnterUIOpen = true;
+        UIEvents.OnLSEnterDeactivated -= () => _lSEnterUIOpen = false;
+
+        UIEvents.OnPreScreenConfirm -= () => _preScreenUIOpen = true;
+        UIEvents.OnPreScreenDeactivated -= () => _preScreenUIOpen = false;
+
+        UIEvents.OnTutorialActive -= () => _tutorialOpen = true;
+        UIEvents.OnTutorialDeactivated -= () => _tutorialOpen = false;
+
+        UIEvents.DefaultPopUPActive -= () => _endGameOpen = true;
+        UIEvents.DefaultPopUpDisabled -= () => _endGameOpen = false;
+
+        UIEvents.OnRewardActive -= () => _rewardActive = true;
+        UIEvents.OnRewardDeactivated -= () => _rewardActive = false;
+
+        UIEvents.OnRequestCloseAllUI -= CloseAllUI;
     }
 
     private IEnumerator Start()
@@ -197,7 +238,8 @@ public class UIManager : MonoBehaviour
 
     private void ShowCutsceneUI()
     {
-        _healthBarHUD.SetActive(false);
+
+        _healthBarHUD?.SetActive(false);
         _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
         _UIPrefab.SetActive(false);
