@@ -17,7 +17,6 @@ public class CameraManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         if (_camera == null)
         {

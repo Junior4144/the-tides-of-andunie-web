@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -6,53 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class ReloadPersistentController : MonoBehaviour
 {
-    private AsyncOperationHandle<SceneInstance>? loadedHandle = null;
-
-    void Start()
+    private void Awake()
     {
-        if (IsSceneLoaded("PersistentGameplay"))
-        {
-#if UNITY_EDITOR
-            Debug.Log("[Bootstrapper] PersistentGameplay scene already loaded — unloading it first.");
-#endif
-            UnloadPersistent();
-        }
-
-        LoadPersistent();
+        StartCoroutine(HandleSetup());
     }
 
-    private void LoadPersistent()
+    private IEnumerator HandleSetup()
     {
-        loadedHandle = Addressables.LoadSceneAsync("PersistentGameplay", LoadSceneMode.Additive);
-        loadedHandle.Value.WaitForCompletion();
+        yield return new WaitForSeconds(1f);
+        PersistentSceneManager.ReloadPersistentAsync();
+        yield return new WaitForSeconds(1f);
+        LoadNextStage();
     }
-
-    private void UnloadPersistent()
+    private void LoadNextStage()
     {
-        // If you kept the original load handle
-        if (loadedHandle.HasValue)
-        {
-            Addressables.UnloadSceneAsync(loadedHandle.Value);
-        }
-        else
-        {
-            // fallback: unload by name if already in scene list
-            Scene scene = SceneManager.GetSceneByName("PersistentGameplay");
-            if (scene.IsValid())
-            {
-                SceneManager.UnloadSceneAsync(scene);
-            }
-        }
-    }
-
-    private static bool IsSceneLoaded(string sceneName)
-    {
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            Scene scene = SceneManager.GetSceneAt(i);
-            if (scene.name == sceneName)
-                return true;
-        }
-        return false;
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneControllerManager.Instance.LoadNextStage(currentScene, "Main Menu");
     }
 }
