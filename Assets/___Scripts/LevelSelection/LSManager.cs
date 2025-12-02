@@ -4,6 +4,19 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[Serializable]
+public class VillageSaveData
+{
+    public string id;
+    public VillageState state;
+}
+
+[Serializable]
+public class LSManagerSave
+{
+    public List<VillageSaveData> villages = new();
+}
+
 public enum VillageState
 {
     PreInvasion,
@@ -172,5 +185,33 @@ public class LSManager : MonoBehaviour
             v.state == VillageState.Liberated_FirstTime ||
             v.state == VillageState.Liberated_Done
         );
+    }
+
+    public LSManagerSave GetSaveData()
+    {
+        LSManagerSave save = new LSManagerSave();
+
+        foreach (var v in villages)
+        {
+            save.villages.Add(new VillageSaveData
+            {
+                id = v.id,
+                state = v.state
+            });
+        }
+
+        return save;
+    }
+
+    public void ApplySaveData(LSManagerSave data)
+    {
+        foreach (var savedVillage in data.villages)
+        {
+            var village = villages.Find(v => v.id == savedVillage.id);
+            if (village != null)
+            {
+                village.state = savedVillage.state;
+            }
+        }
     }
 }

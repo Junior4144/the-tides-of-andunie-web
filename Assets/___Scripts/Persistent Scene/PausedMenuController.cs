@@ -66,7 +66,7 @@ public class PausedMenuController : MonoBehaviour
 
     public void HandleOptions()
     {
-        Debug.Log("OPTIONS pressed � opening options menu");
+        Debug.Log("OPTIONS pressed opening options menu");
         isOptionPanelActive = true;
         pauseMenu.SetActive(false);
         optionPanel.SetActive(true);
@@ -74,14 +74,14 @@ public class PausedMenuController : MonoBehaviour
 
     public void OptionsToPauseMenu()
     {
-        Debug.Log("BACK pressed � returning to pause menu");
+        Debug.Log("BACK pressed returning to pause menu");
         isOptionPanelActive = false;
         optionPanel.SetActive(false);
         pauseMenu.SetActive(true);
     }
     public void HandleSkip()
     {
-        Debug.Log("SKIP pressed � handling all transitions");
+        Debug.Log("SKIP pressed handling all transitions");
 
         GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
         if (obj.TryGetComponent(out SceneChangeController ecs))
@@ -101,6 +101,11 @@ public class PausedMenuController : MonoBehaviour
     public void HandleMainMenuClick()
     {
         GoToMainMenu();
+    }
+
+    public void HandleSavingGame()
+    {
+
     }
 
     public void GoToMainMenu()

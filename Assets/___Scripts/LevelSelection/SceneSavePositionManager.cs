@@ -7,6 +7,17 @@ public class SceneSavePositionManager : MonoBehaviour
 
     public static SceneSavePositionManager Instance { get; private set; }
 
+    private string _lastSceneName;
+    public string LastSceneName => _lastSceneName;
+
+    //public bool HasLastSave => _lastSceneName != null;
+
+    private Vector3 _lastPosition;
+    public Vector3 LastPosition => _lastPosition;
+
+    private Quaternion _lastRotation;
+    public Quaternion LastRotation => _lastRotation;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,6 +33,15 @@ public class SceneSavePositionManager : MonoBehaviour
     {
         Debug.Log($"[SceneSavePositionManager] Position saved {sceneName} {position}");
         _playerPrevPosition[sceneName] = (position, rotation);
+
+        _lastSceneName = sceneName;
+        _lastPosition = position;
+        _lastRotation = rotation;
+    }
+
+    public void SaveLastScene(string sceneName)
+    {
+        _lastSceneName = sceneName;
     }
 
     public void ResetPlayerPosition(string sceneName)

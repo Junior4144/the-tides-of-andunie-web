@@ -32,6 +32,22 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(SwitchPanels(optionsPanel, MainPanel));
     }
 
+    public void HandleLoadSave()
+    {
+        if (!SaveGameManager.Instance.CheckSaveFile()) return;
+        if (isStarting) return;
+
+        Debug.Log("Clicked Play");
+        isStarting = true;
+
+        AudioManager.Instance.FadeAudio();
+
+        SaveGameManager.Instance.LoadGame();
+
+        string lastScene = SaveGameManager.Instance.data.lastScene;
+        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, lastScene);
+    }
+
     private IEnumerator SwitchPanels(GameObject panelToDeactivate, GameObject panelToActivate)
     {
         yield return new WaitForSeconds(panelSwitchDelay);
