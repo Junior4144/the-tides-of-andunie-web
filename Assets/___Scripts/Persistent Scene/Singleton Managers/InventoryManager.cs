@@ -66,7 +66,7 @@ public class InventoryManager : MonoBehaviour
             result = CreateNewSlot(item, quantity);
 
         OnInventoryChanged?.Invoke();
-        SaveGameManager.Instance.SaveInventoryData();
+        SaveGameManager.Instance.SaveGame();
         return result;
     }
 
@@ -81,7 +81,7 @@ public class InventoryManager : MonoBehaviour
         RemoveEmptySlot(itemId, inventorySlot);
         
         OnInventoryChanged?.Invoke();
-        SaveGameManager.Instance.SaveInventoryData();
+        SaveGameManager.Instance.SaveGame();
         return true;
     }
 
@@ -94,7 +94,7 @@ public class InventoryManager : MonoBehaviour
 
         RecalculateStats();
         OnEquippedItemsChanged?.Invoke();
-        SaveGameManager.Instance.SaveInventoryData();
+        SaveGameManager.Instance.SaveGame();
         return true;
     }
 
@@ -122,7 +122,7 @@ public class InventoryManager : MonoBehaviour
 
         RecalculateStats();
         OnEquippedItemsChanged?.Invoke();
-        SaveGameManager.Instance.SaveInventoryData();
+        SaveGameManager.Instance.SaveGame();
         return true;
     }
 

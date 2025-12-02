@@ -54,23 +54,13 @@ public class SaveGameManager : MonoBehaviour
         data.lastPlayerPos = SceneSavePositionManager.Instance.LastPosition;
         data.lastPlayerRot = SceneSavePositionManager.Instance.LastRotation;
 
-        
+        data.inventoryData = InventoryManager.Instance.GetSaveData();
 
         string json = JsonUtility.ToJson(data, true);
 
         File.WriteAllText(savePath, json);
 
         Debug.Log("Game Saved to: " + savePath);
-    }
-
-    public void SaveCoinData()
-    {
-        data.coins = CurrencyManager.Instance.Coins;
-    }
-
-    public void SaveInventoryData()
-    {
-        data.inventoryData = InventoryManager.Instance.GetSaveData();
     }
 
     public void LoadGame()
