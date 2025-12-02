@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
         isStarting = true;
 
         AudioManager.Instance.FadeAudio();
-        SceneControllerManager.Instance.LoadNextStage("Main Menu", "Level0Cutscene");
+        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, "Level0Cutscene");
     }
 
     public void OpenOptions()

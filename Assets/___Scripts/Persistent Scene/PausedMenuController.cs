@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 public class PausedMenuController : MonoBehaviour
@@ -106,7 +108,7 @@ public class PausedMenuController : MonoBehaviour
         AudioManager.Instance.FadeAudio();
         SaveManager.Instance.SavePlayerStats();
         PlayerManager.Instance.HandleDestroy();
-
+        GlobalStoryManager.Instance.comingFromPauseMenu = true;
         LoadNextStage();
         UIEvents.OnPauseMenuDeactivated?.Invoke();
     }
@@ -114,6 +116,6 @@ public class PausedMenuController : MonoBehaviour
     private void LoadNextStage()
     {
         string currentScene = SceneManager.GetActiveScene().name;
-        SceneControllerManager.Instance.LoadNextStage(currentScene, "Main Menu");
+        SceneControllerManager.Instance.LoadNextStage(currentScene, "TransitionMainMenu");
     }
 }

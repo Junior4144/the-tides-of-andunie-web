@@ -27,5 +27,9 @@ public class GlobalStoryManager : MonoBehaviour
     #region WayPoint
     public bool showWaypoints = false;
     #endregion
+
+    #region GameLogic
+    public bool comingFromPauseMenu = false;
+    #endregion
 }
 

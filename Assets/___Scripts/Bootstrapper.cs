@@ -1,7 +1,42 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+
+public static class PersistentSceneManager
+{
+    public static AsyncOperationHandle<SceneInstance>? PersistentHandle;
+
+    /// <summary>
+    /// Reloads the PersistentGameplay scene using Addressables.
+    /// Unloads existing persistent scene (if any), then loads it again inactive.
+    /// </summary>
+    public static IEnumerator ReloadPersistentAsync()
+    {
+        // --- UNLOAD ---
+        if (PersistentHandle.HasValue)
+        {
+            var unloadOp = Addressables.UnloadSceneAsync(PersistentHandle.Value);
+            yield return unloadOp;
+            PersistentHandle = null;
+        }
+
+        // --- LOAD INACTIVE ---
+        var loadOp = Addressables.LoadSceneAsync(
+            "PersistentGameplay",
+            LoadSceneMode.Additive,
+            activateOnLoad: false
+        );
+
+        PersistentHandle = loadOp;
+        yield return loadOp; // loaded but not active yet
+
+        // --- ACTIVATE ---
+        yield return loadOp.Result.ActivateAsync();
+    }
+}
 
 public static class Bootstrapper
 {
@@ -20,6 +55,8 @@ public static class Bootstrapper
 
         var handle = Addressables.LoadSceneAsync("PersistentGameplay", LoadSceneMode.Additive);
         handle.WaitForCompletion();
+
+        PersistentSceneManager.PersistentHandle = handle;
     }
     private static bool IsSceneLoaded(string sceneName)
     {
