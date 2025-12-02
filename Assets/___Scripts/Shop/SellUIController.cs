@@ -13,9 +13,20 @@ public class SellUIController : MonoBehaviour
     [Header("Settings")]
     public int slotCount = 16;
 
+    [Header("Confirmation Popup")]
+    [SerializeField] private GameObject sellConfirmationPanel;
+    [SerializeField] private Button okayButton;
+    [SerializeField] private Button cancelButton;
+
+    private System.Action onConfirmCallback;
+    private ShopUIController shopUIController;
+    public bool IsConfirmationActive { get; private set; }
+
     private void Awake()
     {
         InitializeSlots();
+        SetupConfirmationButtons();
+        shopUIController = GetComponentInParent<ShopUIController>();
     }
 
     private void OnEnable()
@@ -119,5 +130,44 @@ public class SellUIController : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(
             InventoryPanel.GetComponent<RectTransform>()
         );
+    }
+
+    // -----------------------------------------------------------
+    // CONFIRMATION SYSTEM
+    // -----------------------------------------------------------
+    private void SetupConfirmationButtons()
+    {
+        if (okayButton != null)
+            okayButton.onClick.AddListener(OnConfirmOkay);
+
+        if (cancelButton != null)
+            cancelButton.onClick.AddListener(OnConfirmCancel);
+    }
+
+    public void ShowSellConfirmation(System.Action onConfirm)
+    {
+        IsConfirmationActive = true;
+        onConfirmCallback = onConfirm;
+        sellConfirmationPanel.SetActive(true);
+        shopUIController.PlayClickSound();
+    }
+
+    private void OnConfirmOkay()
+    {
+        var callback = onConfirmCallback;
+        HideConfirmation();
+        callback?.Invoke();
+    }
+
+    private void OnConfirmCancel()
+    {
+        HideConfirmation();
+    }
+
+    public void HideConfirmation()
+    {
+        IsConfirmationActive = false;
+        onConfirmCallback = null;
+        sellConfirmationPanel.SetActive(false);
     }
 }
