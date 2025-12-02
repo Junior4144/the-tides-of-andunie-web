@@ -17,7 +17,7 @@ public class PausedMenuController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive && GameManager.Instance.CurrentState != GameState.Menu)
         {
             UIEvents.OnRequestPauseToggle?.Invoke();
         }
@@ -113,7 +113,7 @@ public class PausedMenuController : MonoBehaviour
         AudioManager.Instance.FadeAudio();
         SaveManager.Instance.SavePlayerStats();
         PlayerManager.Instance.HandleDestroy();
-        GlobalStoryManager.Instance.comingFromPauseMenu = true;
+        GlobalStoryManager.Instance.SetBool("comingFromPauseMenu", true);
         LoadNextStage();
         UIEvents.OnPauseMenuDeactivated?.Invoke();
     }

@@ -17,12 +17,10 @@ public class RewardListener : MonoBehaviour
     private void HandleRewardCollected()
     {
         LSManager.Instance.SetVillageState(VillageLiberationID, VillageState.Liberated_Done);
-        GlobalStoryManager.Instance.HasExitedLiberation = true;
+        GlobalStoryManager.Instance.SetBool("HasExitedLiberation", true);
         VillageSet?.Invoke();
 
         SceneSavePositionManager.Instance.ResetPlayerPosition(gameObject.scene.name);
-
-        SaveGameManager.Instance.SaveGame();
 
         Debug.Log($"[LS UI MANAGER] Next scene : {NextScene}");
 

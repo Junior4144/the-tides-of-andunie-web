@@ -38,7 +38,7 @@ public class LiberationUIController : MonoBehaviour
             string id = GlobalStoryManager.Instance.LastLiberatedVillageID;
             VillageNameText.text = LSManager.Instance.GetVillageName(id);
 
-            GlobalStoryManager.Instance.HasExitedLiberation = false;
+            GlobalStoryManager.Instance.SetBool("playLSInvasionCutscene", false);
         }
     }
 

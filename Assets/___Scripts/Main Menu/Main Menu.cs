@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
 
         Debug.Log("Clicked Play");
         isStarting = true;
-
+        SaveGameManager.Instance.DeleteSaveFile();
         AudioManager.Instance.FadeAudio();
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, "Level0Cutscene");
     }

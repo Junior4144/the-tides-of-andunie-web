@@ -60,8 +60,8 @@ public class TownhallStoryManager : MonoBehaviour
         if (GlobalStoryManager.Instance.playTownhallCutscene && _cutscene)
         {
             LSManager.Instance.TriggerGlobalInvasion();
-            GlobalStoryManager.Instance.playLSInvasionCutscene = true;
-            GlobalStoryManager.Instance.showWaypoints = false;
+            GlobalStoryManager.Instance.SetBool("playLSInvasionCutscene", true);
+            GlobalStoryManager.Instance.SetBool("showWaypoints", false);
             StartCutscene();
         }
         else
@@ -72,7 +72,7 @@ public class TownhallStoryManager : MonoBehaviour
     {
         _cutscene.Play();
         SetGameplayElementsActive(false);
-        GlobalStoryManager.Instance.playTownhallCutscene = false;
+        GlobalStoryManager.Instance.SetBool("playTownhallCutscene", false);
     }
 
     private void StartGameplay()

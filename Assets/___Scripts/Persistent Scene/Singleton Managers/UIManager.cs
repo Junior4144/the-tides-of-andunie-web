@@ -233,7 +233,7 @@ public class UIManager : MonoBehaviour
         _healthBarHUD.SetActive(false);
         _coinHUD.SetActive(false);
         _CombatHUD.SetActive(false);
-        _PerkHUD.SetActive(true);
+        _PerkHUD.SetActive(false);
     }
 
     private void ShowCutsceneUI()

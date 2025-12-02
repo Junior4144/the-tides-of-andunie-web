@@ -132,4 +132,18 @@ public class SaveGameManager : MonoBehaviour
         }
         return true;
     }
+
+    public void DeleteSaveFile()
+    {
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+            data = null;    // Clear loaded data
+            Debug.Log("Save file deleted and data cleared from memory.");
+        }
+        else
+        {
+            Debug.LogWarning("No save file found to delete.");
+        }
+    }
 }

@@ -29,7 +29,6 @@ public class SceneChangeController : MonoBehaviour
     {
         Utility.PreSceneChangeSetup();
         SceneSavePositionManager.Instance.SaveLastScene(nextScene);
-        SaveGameManager.Instance.SaveGame();
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
     }
 }
