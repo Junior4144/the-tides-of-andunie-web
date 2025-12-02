@@ -14,20 +14,51 @@ public class SellSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public float scaleDuration = 0.15f;
 
     private RectTransform rect;
+    private SellUIController sellUIController;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         rect = GetComponent<RectTransform>();
+
+        sellUIController = GetComponentInParent<SellUIController>();
+
+        if (sellUIController == null)
+        {
+            Debug.LogError("[SellSlot] Could not find SellUIController in parent hierarchy!");
+        }
     }
     public void SellItem()
     {
         if (currentItem == null) return;
 
-        ShopManager.Instance.TryToSell(currentItem);
+        if (sellUIController != null && sellUIController.IsConfirmationActive)
+            return;
 
-        if (sellSound != null)
+        if (sellUIController != null)
+        {
+            sellUIController.ShowSellConfirmation(ExecuteSell);
+        }
+        else
+        {
+            ExecuteSell();
+        }
+    }
+
+    private void ExecuteSell()
+    {
+        if (currentItem == null) return;
+
+        string result = ShopManager.Instance.TryToSell(currentItem);
+
+        if (result == "Success" && sellSound != null)
+        {
             audioSource.PlayOneShot(sellSound);
+        }
+        else if (result != "Success")
+        {
+            Debug.LogWarning($"[SellSlot] Sell failed: {result}");
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
