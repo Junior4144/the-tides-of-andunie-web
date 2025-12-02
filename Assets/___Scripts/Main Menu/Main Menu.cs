@@ -17,9 +17,9 @@ public class MainMenu : MonoBehaviour
 
         Debug.Log("Clicked Play");
         isStarting = true;
-
+        SaveGameManager.Instance.DeleteSaveFile();
         AudioManager.Instance.FadeAudio();
-        SceneControllerManager.Instance.LoadNextStage("Main Menu", "Level0Cutscene");
+        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, "Level0Cutscene");
     }
 
     public void OpenOptions()
@@ -30,6 +30,22 @@ public class MainMenu : MonoBehaviour
     public void CloseOptions()
     {
         StartCoroutine(SwitchPanels(optionsPanel, MainPanel));
+    }
+
+    public void HandleLoadSave()
+    {
+        if (!SaveGameManager.Instance.CheckSaveFile()) return;
+        if (isStarting) return;
+
+        Debug.Log("Clicked Play");
+        isStarting = true;
+
+        AudioManager.Instance.FadeAudio();
+
+        SaveGameManager.Instance.LoadGame();
+
+        string lastScene = SaveGameManager.Instance.data.lastScene;
+        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, lastScene);
     }
 
     private IEnumerator SwitchPanels(GameObject panelToDeactivate, GameObject panelToActivate)

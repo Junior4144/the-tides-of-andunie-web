@@ -125,7 +125,7 @@ public class RangedGiantPirateMovement : MonoBehaviour
 
     private void HandleApproachingState()
     {
-        Debug.Log($"[RangedGiantPirateMovement] APPROACHING - moving towards player");
+        //Debug.Log($"[RangedGiantPirateMovement] APPROACHING - moving towards player");
         RotateTowardsMovementDirection();
         agent.isStopped = false;
         agent.SetDestination(player.position);

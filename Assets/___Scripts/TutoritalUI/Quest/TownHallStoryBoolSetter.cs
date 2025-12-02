@@ -4,7 +4,7 @@ public class TownHallStoryBoolSetter : MonoBehaviour
 {
     private void Start()
     {
-        GlobalStoryManager.Instance.HasTalkedToChief = true;
-        GlobalStoryManager.Instance.enterLevelSelectorFirstTime = true;
+        GlobalStoryManager.Instance.SetBool("HasTalkedToChief", true);
+        GlobalStoryManager.Instance.SetBool("enterLevelSelectorFirstTime", true);
     }
 }

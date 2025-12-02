@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static SaveGameManager;
 public enum Region
 {
     Orrostar,
@@ -37,8 +38,6 @@ public class LSRegionLockManager : MonoBehaviour
     private void OnEnable() => RewardListener.VillageSet += HandleRegionCheck;
 
     private void OnDisable() => RewardListener.VillageSet -= HandleRegionCheck;
-    //check if region which region are unlock or locked
-    //the check will be based on if every village is in a region is liberated -> based on some liberated event
 
     public bool IsRegionLocked(Region region)
     {
@@ -92,5 +91,26 @@ public class LSRegionLockManager : MonoBehaviour
             if (result.Add(prereq))
                 CollectPrerequisites(prereq, result);
         }
+    }
+
+    public RegionLockSaveData GetSaveData()
+    {
+        return new RegionLockSaveData
+        {
+            orrostarLocked = _orrostarLocked,
+            hyarrostarLocked = _hyarrostarLocked,
+            hyarnustarLocked = _hyarnustarLocked,
+            andustarLocked = _andustarLocked,
+            forostarLocked = _forostarLocked
+        };
+    }
+
+    public void ApplySaveData(RegionLockSaveData data)
+    {
+        _orrostarLocked = data.orrostarLocked;
+        _hyarrostarLocked = data.hyarrostarLocked;
+        _hyarnustarLocked = data.hyarnustarLocked;
+        _andustarLocked = data.andustarLocked;
+        _forostarLocked = data.forostarLocked;
     }
 }

@@ -71,7 +71,7 @@ public class LSStoryManager : MonoBehaviour
     private void StartCutscene()
     {
         _cutscene.Play();
-        GlobalStoryManager.Instance.playLSInvasionCutscene = false;
+        GlobalStoryManager.Instance.SetBool("playLSInvasionCutscene", false);
     }
 
     private void StartGameplay()

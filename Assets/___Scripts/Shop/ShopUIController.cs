@@ -9,8 +9,11 @@ public class ShopUIController : MonoBehaviour
     [SerializeField] private GameObject mainShopPanel;
     [SerializeField] private GameObject shopItemContainer;
     [SerializeField] private GameObject canvas;
-
     [SerializeField] private GameObject shopItemUIPrefab;
+    [SerializeField] private SellUIController sellUIController;
+    [SerializeField] private AudioClip clickSound;
+
+    private AudioSource audioSource;
 
     public static event Action ShopActivated;
     public static event Action ShopDeactivated;
@@ -24,6 +27,7 @@ public class ShopUIController : MonoBehaviour
         }
 
         Instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -71,7 +75,6 @@ public class ShopUIController : MonoBehaviour
 
         ShopActivated?.Invoke();
         mainShopPanel.SetActive(true);
-
     }
 
     public void HandleShopDeactivation()
@@ -81,12 +84,22 @@ public class ShopUIController : MonoBehaviour
         if (mainShopPanel.activeInHierarchy && !scaler.IsAnimating)
         {
             scaler.HideWithScale();
+            sellUIController.HideConfirmation();
         }
         else
         {
             mainShopPanel.SetActive(false);
+            sellUIController.HideConfirmation();
         }
 
             ShopDeactivated?.Invoke();
+    }
+
+    public void PlayClickSound()
+    {
+        if (audioSource != null && clickSound != null)
+        {
+            audioSource.PlayOneShot(clickSound);
+        }
     }
 }

@@ -88,4 +88,14 @@ public class SaveManager : MonoBehaviour
         Debug.Log($"[SaveManager] Saved lastLocation in LevelSelector = {id}");
     }
 
+    public void SetPlayerSave(PlayerSaveData data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        CurrentSave = data;
+        Debug.Log("[SaveManager] PlayerSaveData applied.");
+    }
 }

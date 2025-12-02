@@ -1,4 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 public class PausedMenuController : MonoBehaviour
 {
@@ -14,7 +17,7 @@ public class PausedMenuController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive && GameManager.Instance.CurrentState != GameState.Menu)
         {
             UIEvents.OnRequestPauseToggle?.Invoke();
         }
@@ -63,7 +66,7 @@ public class PausedMenuController : MonoBehaviour
 
     public void HandleOptions()
     {
-        Debug.Log("OPTIONS pressed � opening options menu");
+        Debug.Log("OPTIONS pressed opening options menu");
         isOptionPanelActive = true;
         pauseMenu.SetActive(false);
         optionPanel.SetActive(true);
@@ -71,14 +74,14 @@ public class PausedMenuController : MonoBehaviour
 
     public void OptionsToPauseMenu()
     {
-        Debug.Log("BACK pressed � returning to pause menu");
+        Debug.Log("BACK pressed returning to pause menu");
         isOptionPanelActive = false;
         optionPanel.SetActive(false);
         pauseMenu.SetActive(true);
     }
     public void HandleSkip()
     {
-        Debug.Log("SKIP pressed � handling all transitions");
+        Debug.Log("SKIP pressed handling all transitions");
 
         GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
         if (obj.TryGetComponent(out SceneChangeController ecs))
@@ -95,4 +98,29 @@ public class PausedMenuController : MonoBehaviour
     public void PlayClickSound() =>
         AudioManager.Instance?.PlayOneShot(clickSound, volumeScale: 0.6f);
 
+    public void HandleMainMenuClick()
+    {
+        GoToMainMenu();
+    }
+
+    public void HandleSavingGame()
+    {
+
+    }
+
+    public void GoToMainMenu()
+    {
+        AudioManager.Instance.FadeAudio();
+        SaveManager.Instance.SavePlayerStats();
+        PlayerManager.Instance.HandleDestroy();
+        GlobalStoryManager.Instance.SetBool("comingFromPauseMenu", true);
+        LoadNextStage();
+        UIEvents.OnPauseMenuDeactivated?.Invoke();
+    }
+
+    private void LoadNextStage()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneControllerManager.Instance.LoadNextStage(currentScene, "TransitionMainMenu");
+    }
 }

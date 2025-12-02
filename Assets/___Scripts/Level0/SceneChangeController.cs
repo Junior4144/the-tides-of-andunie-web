@@ -1,6 +1,3 @@
-using System;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,14 +17,18 @@ public class SceneChangeController : MonoBehaviour
 
     public void SkipStage()
     {
-        Utility.PreSceneChangeSetup();
-
         LoadNextStage();
     }
 
-    public void NextStage() =>
+    public void NextStage()
+    {
         LoadNextStage();
+    }
 
-    void LoadNextStage() =>
+    void LoadNextStage()
+    {
+        Utility.PreSceneChangeSetup();
+        SceneSavePositionManager.Instance.SaveLastScene(nextScene);
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
+    }
 }
