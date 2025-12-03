@@ -30,9 +30,20 @@ public class LSRegionLockManager : MonoBehaviour
     public bool _forostarLocked = true;
     public RegionProgression progressionData;
 
+    private Dictionary<Region, bool> _previousLockStates;
+
     private void Awake()
     {
         Instance = this;
+
+        _previousLockStates = new Dictionary<Region, bool>
+    {
+        { Region.Orrostar, _orrostarLocked },
+        { Region.Hyarrostar, _hyarrostarLocked },
+        { Region.Hyarnustar, _hyarnustarLocked },
+        { Region.Andustar, _andustarLocked },
+        { Region.Forostar, _forostarLocked }
+    };
     }
 
     private void OnEnable() => RewardListener.VillageSet += HandleRegionCheck;
@@ -91,6 +102,38 @@ public class LSRegionLockManager : MonoBehaviour
             if (result.Add(prereq))
                 CollectPrerequisites(prereq, result);
         }
+    }
+
+    public Region CheckForNewUnlockedRegion()
+    {
+        // Compare each region
+        Region[] regions = new Region[]
+        {
+        Region.Orrostar,
+        Region.Hyarrostar,
+        Region.Hyarnustar,
+        Region.Andustar,
+        Region.Forostar
+        };
+
+        foreach (Region region in regions)
+        {
+            bool previouslyLocked = _previousLockStates[region];
+            bool currentlyLocked = IsRegionLocked(region);
+
+            // Detect unlock
+            if (previouslyLocked && !currentlyLocked)
+            {
+                // Update saved state
+                _previousLockStates[region] = currentlyLocked;
+                return region;
+            }
+
+            // Update saved state if changed, but not unlocked
+            _previousLockStates[region] = currentlyLocked;
+        }
+
+        return Region.None;
     }
 
     public RegionLockSaveData GetSaveData()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,6 +6,8 @@ using UnityEngine.InputSystem;
 public class LSCameraManager : MonoBehaviour
 {
     public static LSCameraManager Instance;
+
+    public static event Action InvasionCutsceneEnded;
 
     [SerializeField] private PlayerInput playerInput;
     private CameraLSController CameraLSController;
@@ -35,6 +38,7 @@ public class LSCameraManager : MonoBehaviour
         if (PlayerManager.Instance == null) yield return null;
 
         PlayerManager.Instance.EnableLSPlayerMovement();
+        InvasionCutsceneEnded.Invoke();
     }
 
     public void DisableCamera()
