@@ -25,7 +25,13 @@ public class SceneChangeController : MonoBehaviour
 
     void LoadNextStage()
     {
-        Utility.PreSceneChangeSetup();
+        AudioManager.Instance.FadeAudio();
+        SaveManager.Instance.SavePlayerStats();
+
+        if (PlayerManager.Instance && gameObject.scene.name != "Level0Cutscene")
+            PlayerManager.Instance.HandleDestroy();
+
+
         SceneSavePositionManager.Instance.SaveLastScene(nextScene);
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
     }
