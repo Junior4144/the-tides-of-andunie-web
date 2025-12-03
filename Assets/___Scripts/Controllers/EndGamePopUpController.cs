@@ -22,7 +22,7 @@ public class EndGamePopUpController : MonoBehaviour
 
     private IEnumerator CheckAfterLoading(Scene newScene)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         if (newScene == gameObject.scene)
             HandleSetup();
@@ -41,6 +41,20 @@ public class EndGamePopUpController : MonoBehaviour
 
     public void HandleButtonClick()
     {
-        Application.Quit();
+        GoToMainMenu();
+    }
+
+    public void GoToMainMenu()
+    {
+        AudioManager.Instance.FadeAudio();
+        SaveGameManager.Instance.DeleteSaveFile();
+        LoadNextStage();
+        UIEvents.OnPauseMenuDeactivated?.Invoke();
+    }
+
+    private void LoadNextStage()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneControllerManager.Instance.LoadNextStage(currentScene, "TransitionMainMenu");
     }
 }
