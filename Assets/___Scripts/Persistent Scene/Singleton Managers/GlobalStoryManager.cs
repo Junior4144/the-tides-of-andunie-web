@@ -28,7 +28,7 @@ public class GlobalStoryManager : MonoBehaviour
     #endregion
 
     #region WayPoint
-    public bool showWaypoints { get; private set; } = false;
+    public bool showWaypoints { get; private set; } = true;
     #endregion
 
     #region GameLogic
