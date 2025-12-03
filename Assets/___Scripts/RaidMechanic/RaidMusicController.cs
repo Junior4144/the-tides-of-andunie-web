@@ -10,11 +10,13 @@ public class RaidMusicController : MonoBehaviour
     [SerializeField] private RaidController raidController;
 
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] preRaidClips;
     [SerializeField] private AudioClip[] inProgressClips;
     [SerializeField] private AudioClip[] postRaidClips;
     
     private void Awake()
     {
+        if (preRaidClips != null) foreach (var clip in preRaidClips) clip.LoadAudioData();
         if (inProgressClips != null) foreach (var clip in inProgressClips) clip.LoadAudioData();
         if (postRaidClips != null) foreach (var clip in postRaidClips) clip.LoadAudioData();
     }
@@ -28,6 +30,7 @@ public class RaidMusicController : MonoBehaviour
         }
 
         raidController.OnRaidReset += Stop;
+        RaidController.OnRaidTriggered += PlayPreRaid;
         RaidController.OnRaidStart += PlayInProgress;
         raidController.OnRaidComplete += PlayPostRaid;
         raidController.OnRaidFailed += PlayPostRaid;
@@ -39,11 +42,16 @@ public class RaidMusicController : MonoBehaviour
         if (raidController == null) return;
 
         raidController.OnRaidReset -= Stop;
+        RaidController.OnRaidTriggered -= PlayPreRaid;
         RaidController.OnRaidStart -= PlayInProgress;
         raidController.OnRaidComplete -= PlayPostRaid;
         raidController.OnRaidFailed -= PlayPostRaid;
     }
 
+    private void PlayPreRaid()
+    {
+        Play(RandomClip(preRaidClips), loop: false);
+    }
 
     private void PlayInProgress()
     {
