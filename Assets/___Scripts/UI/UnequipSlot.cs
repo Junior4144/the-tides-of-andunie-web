@@ -6,20 +6,31 @@ public class UnequipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     public InventoryItem currentItem;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip unequipSound;
+
     [Header("Scale Settings")]
     public float hoverScale = 1.05f;
     public float scaleDuration = 0.15f;
 
     private RectTransform rect;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void HandlesUnequip()
     {
         if (currentItem == null) return;
+
+        if (unequipSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(unequipSound);
+        }
+
         InventoryManager.Instance.UnequipItem(currentItem?.ItemId);
     }
 
