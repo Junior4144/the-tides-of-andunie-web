@@ -15,10 +15,23 @@ public class HeavyAttack : BaseAttack
     private WeaponCooldownHandler _cooldownHandler;
     private Dictionary<Collider2D, float> _lastHitTimes = new Dictionary<Collider2D, float>();
 
+    private bool _hasAppliedBuffs = false;
+
     protected override void Awake()
     {
         base.Awake();
         _cooldownHandler = GetComponentInParent<WeaponCooldownHandler>();
+    }
+
+    protected override void OnDisable()
+    {
+
+        ResetAllPlayerChanges();
+
+        if (_animator != null)
+            _animator.CancelHeavyAttackAnimation();
+
+        base.OnDisable();
     }
 
     public override void Execute()
@@ -48,6 +61,8 @@ public class HeavyAttack : BaseAttack
 
     void CompleteHeavyAttack()
     {
+        if (!isActiveAndEnabled) return;   // <--- add safety check
+
         if (_deflectionCollider != null)
             _deflectionCollider.SetActive(false);
 
@@ -66,8 +81,13 @@ public class HeavyAttack : BaseAttack
         _audioSrc.Play();
     }
 
-    void StopLoopingAttackSound() =>
+    void StopLoopingAttackSound()
+    {
+        if (!isActiveAndEnabled)   // <- critical fix
+            return;
+
         StartCoroutine(FadeOutAttackSound());
+    }
 
     IEnumerator FadeOutAttackSound()
     {
@@ -93,13 +113,19 @@ public class HeavyAttack : BaseAttack
 
         stats.SetSpeed(_originalStats.speed + _movementSpeedIncrease);
         stats.SetMeleeDamage(_originalStats.damage + _meleeDamageIncrease);
+
+        _hasAppliedBuffs = true;  // <-- track it
     }
 
     void ResetStatBuffs()
     {
+        if (!_hasAppliedBuffs) return;  // <-- prevents zeroing out on disable
+
         var stats = PlayerStatsManager.Instance;
         stats.SetSpeed(_originalStats.speed);
         stats.SetMeleeDamage(_originalStats.damage);
+
+        _hasAppliedBuffs = false;  // <-- clear state
     }
 
     void EndAttack()
@@ -108,6 +134,24 @@ public class HeavyAttack : BaseAttack
         WeaponManager.Instance.SetBusy(false);
         _hitEnemies.Clear();
         _lastHitTimes.Clear();
+    }
+
+    private void ResetAllPlayerChanges()
+    {
+        // ONLY reset if actual heavy attack was active
+        if (_isAttacking)
+        {
+            ResetStatBuffs();
+            PlayerManager.Instance.SetInvincible(false);
+            EndAttack();
+        }
+
+        // Reset collider only if used
+        if (_deflectionCollider != null)
+            _deflectionCollider.SetActive(false);
+
+        // Reset audio — safe early exit inside StopLoopingAttackSound
+        StopLoopingAttackSound();
     }
 
     protected override void OnTriggerEnter2D(Collider2D col)
