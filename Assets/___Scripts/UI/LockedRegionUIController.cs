@@ -23,7 +23,7 @@ public class LockedRegionUI : MonoBehaviour
 
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUIWithAnimation;
 
@@ -37,7 +37,7 @@ public class LockedRegionUI : MonoBehaviour
         OnClickOutline.RegionClicked -= HandleRegionClicked;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUIWithAnimation;
 

@@ -30,6 +30,8 @@ public class LSCameraManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        RegionEventBus.NoLongerDisableOfRegionUI.Invoke();
+
         if (PlayerManager.Instance == null) yield return null;
 
         PlayerManager.Instance.EnableLSPlayerMovement();
@@ -41,6 +43,8 @@ public class LSCameraManager : MonoBehaviour
         CameraZoomController.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        RegionEventBus.OnDisableOfRegionUI.Invoke();
 
         if (PlayerManager.Instance == null) return;
 

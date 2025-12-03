@@ -99,7 +99,7 @@ public class RegionUIController : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUIWithAnimation;
 
@@ -115,7 +115,7 @@ public class RegionUIController : MonoBehaviour
         RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
         RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUIWithAnimation;
 
