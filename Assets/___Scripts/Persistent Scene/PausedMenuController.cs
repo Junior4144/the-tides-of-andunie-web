@@ -7,17 +7,23 @@ public class PausedMenuController : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject optionPanel;
+    public GameObject instructionsPanel;
     public bool isPaused;
     public AudioClip clickSound;
 
     private bool isOptionPanelActive = false;
+    private bool isInstructionsPanelActive = false;
 
     void Start() =>
         pauseMenu.SetActive(false);
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive && GameManager.Instance.CurrentState != GameState.Menu)
+        if (Input.GetKeyDown(KeyCode.Escape) && 
+            !isOptionPanelActive && 
+            !isInstructionsPanelActive &&
+            GameManager.Instance.CurrentState != GameState.Menu
+        )
         {
             UIEvents.OnRequestPauseToggle?.Invoke();
         }
@@ -72,13 +78,27 @@ public class PausedMenuController : MonoBehaviour
         optionPanel.SetActive(true);
     }
 
+    public void HandleInstructions()
+    {
+        isInstructionsPanelActive = true;
+        pauseMenu.SetActive(false);
+        instructionsPanel.SetActive(true);
+    }
+
     public void OptionsToPauseMenu()
     {
-        Debug.Log("BACK pressed returning to pause menu");
         isOptionPanelActive = false;
         optionPanel.SetActive(false);
         pauseMenu.SetActive(true);
     }
+
+    public void InstructionsToPauseMenu()
+    {
+        isInstructionsPanelActive = false;
+        instructionsPanel.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+
     public void HandleSkip()
     {
         Debug.Log("SKIP pressed handling all transitions");
@@ -101,11 +121,6 @@ public class PausedMenuController : MonoBehaviour
     public void HandleMainMenuClick()
     {
         GoToMainMenu();
-    }
-
-    public void HandleSavingGame()
-    {
-
     }
 
     public void GoToMainMenu()
