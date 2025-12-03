@@ -27,6 +27,9 @@ public class RegionColliderController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive += HandleDisablingOfRegionUI;
         UIEvents.OnPauseMenuDeactivated += HandleNoLongerDisabledUI;
+
+        UIEvents.DefaultPopUPActive += HandleDisablingOfRegionUI;
+        UIEvents.DefaultPopUpDisabled += HandleNoLongerDisabledUI;
     }
 
     private void OnDisable()
@@ -47,6 +50,9 @@ public class RegionColliderController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive -= HandleDisablingOfRegionUI;
         UIEvents.OnPauseMenuDeactivated -= HandleNoLongerDisabledUI;
+
+        UIEvents.DefaultPopUPActive -= HandleDisablingOfRegionUI;
+        UIEvents.DefaultPopUpDisabled -= HandleNoLongerDisabledUI;
     }
 
     private void Awake()
