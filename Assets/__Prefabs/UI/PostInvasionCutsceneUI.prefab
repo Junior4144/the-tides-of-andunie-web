@@ -191,7 +191,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7011246928653814314}
-  - component: {fileID: 332599485629208488}
   m_Layer: 0
   m_Name: VillagePostLiberationUI (1)
   m_TagString: Untagged
@@ -215,20 +214,6 @@ Transform:
   - {fileID: 2629221815921690943}
   m_Father: {fileID: 6450002115627530992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &332599485629208488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2244393485112360533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea63af4701492a478ed2237bbc707d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  targetObject: {fileID: 6286257488841089526}
-  VillageNameText: {fileID: 6382679413283582475}
 --- !u!1 &2309105993107981361
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,8 +336,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 332599485629208488}
-        m_TargetAssemblyTypeName: LiberationUIController, Assembly-CSharp
+      - m_Target: {fileID: 7848009272728302567}
+        m_TargetAssemblyTypeName: PostInvasionCutsceneUIController, Assembly-CSharp
         m_MethodName: OnButtonClicked
         m_Mode: 1
         m_Arguments:
