@@ -14,7 +14,4 @@ public class RegionZoomController : MonoBehaviour
     public float threshold = 200f;
     public float PreInvasionThreshold = 400f;
 
-    public static event Action ZoomBelowThreshold;
-    public static event Action ZoomAboveThreshold;
-
 }
