@@ -57,6 +57,8 @@ public class UIFadeOut : MonoBehaviour
 
         if (!GlobalStoryManager.Instance.playTownhallCutscene) return;
 
+        GlobalStoryManager.Instance.SetBool("playTownhallCutscene", false);
+
         panel.SetActive(true);
 
         StopAllCoroutines();

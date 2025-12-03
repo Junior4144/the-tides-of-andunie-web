@@ -72,7 +72,6 @@ public class TownhallStoryManager : MonoBehaviour
     {
         _cutscene.Play();
         SetGameplayElementsActive(false);
-        GlobalStoryManager.Instance.SetBool("playTownhallCutscene", false);
     }
 
     private void StartGameplay()
