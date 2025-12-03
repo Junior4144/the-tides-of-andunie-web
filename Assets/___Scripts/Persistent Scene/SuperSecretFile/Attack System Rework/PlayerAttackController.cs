@@ -76,10 +76,10 @@ public class PlayerAttackController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !_isAttacking)
+        if (Input.GetMouseButtonDown(0) && !_isAttacking && GameManager.Instance.CurrentState == GameState.Gameplay)
             StartAttack();
 
-        if (Input.GetMouseButtonDown(1) && !_isAttacking)
+        if (Input.GetMouseButtonDown(1) && !_isAttacking && GameManager.Instance.CurrentState == GameState.Gameplay)
             StartSweepAttack();
 
         _impulseCollider.SetActive(_isAttacking);

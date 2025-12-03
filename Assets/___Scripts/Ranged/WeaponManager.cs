@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -173,7 +174,7 @@ public class WeaponManager : MonoBehaviour
     {
         Debug.Log($"Weapon Manager: Reward is {_rewardActive}");
 
-        if (!_rewardActive)
+        if (!_rewardActive && GameManager.Instance.CurrentState == GameState.Gameplay)
         {
             IsBusy = false;
             WeaponEvents.OnNewWeaponEquipped?.Invoke(WeaponType.Axe);

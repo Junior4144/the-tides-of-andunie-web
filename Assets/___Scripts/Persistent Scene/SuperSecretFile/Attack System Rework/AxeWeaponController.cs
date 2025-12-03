@@ -8,10 +8,10 @@ public class AxeWeaponController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !IsAnyAttackActive() && IsAttackPointActive(normalAttack))
+        if (Input.GetMouseButtonDown(0) && !IsAnyAttackActive() && IsAttackPointActive(normalAttack) && GameManager.Instance.CurrentState == GameState.Gameplay)
             normalAttack.Execute();
 
-        if (Input.GetMouseButtonDown(1) && !IsAnyAttackActive() && IsAttackPointActive(heavyAttack))
+        if (Input.GetMouseButtonDown(1) && !IsAnyAttackActive() && IsAttackPointActive(heavyAttack) && GameManager.Instance.CurrentState == GameState.Gameplay)
             heavyAttack.Execute();
     }
 
