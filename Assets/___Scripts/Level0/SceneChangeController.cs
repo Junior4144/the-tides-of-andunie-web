@@ -10,8 +10,6 @@ public class SceneChangeController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        Utility.PreSceneChangeSetup();
-
         LoadNextStage();
     }
 

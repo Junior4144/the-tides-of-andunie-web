@@ -39,7 +39,8 @@ public class Utility : MonoBehaviour
     {
         AudioManager.Instance.FadeAudio();
         SaveManager.Instance.SavePlayerStats();
-        PlayerManager.Instance.HandleDestroy();
+        if (PlayerManager.Instance)
+            PlayerManager.Instance.HandleDestroy();
     }
 
     public static void ResetGameSceneSetup()
@@ -48,6 +49,7 @@ public class Utility : MonoBehaviour
 
         AudioManager.Instance.FadeAudio();
 
-        PlayerManager.Instance.HandleDestroy();
+        if (PlayerManager.Instance)
+            PlayerManager.Instance.HandleDestroy();
     }
 }

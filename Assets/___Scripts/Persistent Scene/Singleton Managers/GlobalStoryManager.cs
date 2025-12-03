@@ -37,24 +37,23 @@ public class GlobalStoryManager : MonoBehaviour
 
     public void SetBool(string booleanName, bool value)
     {
-        FieldInfo field = typeof(GlobalStoryManager)
-            .GetField(booleanName);
+        PropertyInfo prop = typeof(GlobalStoryManager)
+            .GetProperty(booleanName, BindingFlags.Public | BindingFlags.Instance);
 
-        if (field == null)
+        if (prop == null)
         {
-            Debug.LogError($"[GlobalStoryManager] Bool '{booleanName}' not found!");
+            Debug.LogError($"[GlobalStoryManager] Property '{booleanName}' not found!");
             return;
         }
 
-        if (field.FieldType != typeof(bool))
+        if (prop.PropertyType != typeof(bool))
         {
-            Debug.LogError($"[GlobalStoryManager] Field '{booleanName}' exists but is NOT a bool!");
+            Debug.LogError($"[GlobalStoryManager] Property '{booleanName}' is not a bool!");
             return;
         }
 
-        field.SetValue(this, value);
+        prop.SetValue(this, value);
         SaveGameManager.Instance.SaveGame();
-        Debug.Log($"[GlobalStoryManager] Set {booleanName} = {value}");
     }
 
     public StorySaveData GetSaveData()
