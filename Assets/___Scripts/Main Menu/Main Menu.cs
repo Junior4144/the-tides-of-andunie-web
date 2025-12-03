@@ -8,6 +8,8 @@ public class MainMenu : MonoBehaviour
     private bool isStarting = false;
     public GameObject optionsPanel;
     public GameObject MainPanel;
+    public GameObject titlePanel;
+    public GameObject creditsPanel;
 
     [SerializeField] private float panelSwitchDelay = 0.05f;
 
@@ -30,6 +32,34 @@ public class MainMenu : MonoBehaviour
     public void CloseOptions()
     {
         StartCoroutine(SwitchPanels(optionsPanel, MainPanel));
+    }
+
+    public void OpenCredits()
+    {
+        StartCoroutine(OpenCreditsCoroutine());
+    }
+
+    public void CloseCredits()
+    {
+        StartCoroutine(CloseCreditsCoroutine());
+    }
+
+    private IEnumerator OpenCreditsCoroutine()
+    {
+        yield return new WaitForSeconds(panelSwitchDelay);
+
+        MainPanel.SetActive(false);
+        titlePanel.SetActive(false);
+        creditsPanel.SetActive(true);
+    }
+
+    private IEnumerator CloseCreditsCoroutine()
+    {
+        yield return new WaitForSeconds(panelSwitchDelay);
+
+        creditsPanel.SetActive(false);
+        MainPanel.SetActive(true);
+        titlePanel.SetActive(true);
     }
 
     public void HandleLoadSave()
