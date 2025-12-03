@@ -402,10 +402,11 @@ MonoBehaviour:
   _damageDelay: 0
   shakeCooldown: 0.2
   shakeForce: 0.4
-  _movementSpeedIncrease: 10
-  _meleeDamageIncrease: 10
+  _movementSpeedIncrease: 8
+  _meleeDamageIncrease: -10
   _audioFadeOutDuration: 0.3
   _deflectionCollider: {fileID: 4660484581588781656}
+  _damageTickInterval: 0.15
 --- !u!114 &2826577184952916628
 MonoBehaviour:
   m_ObjectHideFlags: 0

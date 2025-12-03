@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HeavyAttack : BaseAttack
@@ -8,9 +9,11 @@ public class HeavyAttack : BaseAttack
     [SerializeField] private float _meleeDamageIncrease = 10f;
     [SerializeField] private float _audioFadeOutDuration = 0.3f;
     [SerializeField] private GameObject _deflectionCollider;
+    [SerializeField] private float _damageTickInterval = 0.1f; // Time between continuous damage hits
 
     private (float speed, float damage) _originalStats;
     private WeaponCooldownHandler _cooldownHandler;
+    private Dictionary<Collider2D, float> _lastHitTimes = new Dictionary<Collider2D, float>();
 
     protected override void Awake()
     {
@@ -104,6 +107,7 @@ public class HeavyAttack : BaseAttack
         _isAttacking = false;
         WeaponManager.Instance.SetBusy(false);
         _hitEnemies.Clear();
+        _lastHitTimes.Clear();
     }
 
     protected override void OnTriggerEnter2D(Collider2D col)
@@ -112,6 +116,21 @@ public class HeavyAttack : BaseAttack
 
         if (col.TryGetComponent(out HealthController health))
         {
+            StartCoroutine(DealDamageRoutine(health));
+            SpawnHitEffect(col.transform.position);
+            Shake();
+        }
+    }
+
+    protected void OnTriggerStay2D(Collider2D col)
+    {
+        if (!_isAttacking) return;
+        if (!col.TryGetComponent(out HealthController health)) return;
+
+        if (!_lastHitTimes.TryGetValue(col, out float lastHitTime) ||
+            Time.time >= lastHitTime + _damageTickInterval)
+        {
+            _lastHitTimes[col] = Time.time;
             StartCoroutine(DealDamageRoutine(health));
             SpawnHitEffect(col.transform.position);
             Shake();
