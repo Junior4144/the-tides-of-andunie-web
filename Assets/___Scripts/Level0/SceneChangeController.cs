@@ -25,7 +25,11 @@ public class SceneChangeController : MonoBehaviour
 
     void LoadNextStage()
     {
-        AudioManager.Instance.FadeAudio();
+        if(gameObject.scene.name != "Level0Cutscene")
+        {
+            AudioManager.Instance.FadeAudio();
+        }
+
         SaveManager.Instance.SavePlayerStats();
 
         if (PlayerManager.Instance && gameObject.scene.name != "Level0Cutscene")
