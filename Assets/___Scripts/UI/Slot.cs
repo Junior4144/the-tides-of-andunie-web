@@ -6,20 +6,31 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public InventoryItem currentItem;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip equipSound;
+
     [Header("Scale Settings")]
     public float hoverScale = 1.05f;
     public float scaleDuration = 0.15f;
 
     private RectTransform rect;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void EquipItem()
     {
         if (currentItem == null) return;
+
+        if (equipSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(equipSound);
+        }
+
         InventoryManager.Instance.EquipAllOfItem(currentItem.ItemId);
     }
     public void OnPointerEnter(PointerEventData eventData)
