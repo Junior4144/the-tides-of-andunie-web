@@ -55,6 +55,8 @@ public class UIFadeOut : MonoBehaviour
     {
         if (canvasGroup == null) return;
 
+        if (!GlobalStoryManager.Instance.playTownhallCutscene) return;
+
         panel.SetActive(true);
 
         StopAllCoroutines();
