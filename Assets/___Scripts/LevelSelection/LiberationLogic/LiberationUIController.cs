@@ -67,6 +67,7 @@ public class LiberationUIController : MonoBehaviour
             UnlockedRegionUI.SetActive(false);
             UnlockedRegionUISecondPart.SetActive(false);
             targetObject.SetActive(false);
+            GlobalStoryManager.Instance.SetBool("HasExitedLiberation", false);
         }
     }
 }
