@@ -6,7 +6,7 @@ public class HeavyAttack : BaseAttack
 {
     [Header("Heavy Attack Settings")]
     [SerializeField] private float _movementSpeedIncrease = -2f;
-    [SerializeField] private float _meleeDamageIncrease = 10f;
+    [SerializeField] private float _meleeDamageMultiplier = 0.7f;
     [SerializeField] private float _audioFadeOutDuration = 0.3f;
     [SerializeField] private GameObject _deflectionCollider;
     [SerializeField] private float _damageTickInterval = 0.1f; // Time between continuous damage hits
@@ -112,7 +112,7 @@ public class HeavyAttack : BaseAttack
         _originalStats = (stats.Speed, stats.MeleeDamage);
 
         stats.SetSpeed(_originalStats.speed + _movementSpeedIncrease);
-        stats.SetMeleeDamage(_originalStats.damage + _meleeDamageIncrease);
+        stats.SetMeleeDamage(_originalStats.damage * _meleeDamageMultiplier);
 
         _hasAppliedBuffs = true;  // <-- track it
     }
