@@ -22,7 +22,7 @@ public class EndGamePopUpController : MonoBehaviour
 
     private IEnumerator CheckAfterLoading(Scene newScene)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(.5f);
 
         if (newScene == gameObject.scene)
             HandleSetup();

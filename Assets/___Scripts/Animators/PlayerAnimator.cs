@@ -220,7 +220,20 @@ public class PlayerAnimator : MonoBehaviour
 
     public void ReturnToDefaultIdle() =>
         _currentBowState = BowState.None;
-    
+
+    public void CancelHeavyAttackAnimation()
+    {
+        CancelInvoke(nameof(TransitionToHeavyLoop));
+        CancelInvoke(nameof(TransitionToHeavyEnd));
+        CancelInvoke(nameof(CompleteHeavyAttack));
+
+        _heavyAttackPhase = HeavyAttackPhase.None;
+
+        // Snap to idle, no blend
+        _currentState = IdleDefault;
+        _anim.Play(IdleDefault, 0, 0f);
+    }
+
     #region Cached Properties
     private int _currentState;
     private static readonly int IdleDefault = Animator.StringToHash("AldarionIdle");
