@@ -16,10 +16,43 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private RectTransform rect;
     private AudioSource _audioSource;
 
+    private bool _disableHover = false;
+
+    private void OnEnable()
+    {
+        UIEvents.OnShopDeactivated += HandleChange;
+
+
+        UIEvents.OnPreScreenDeactivated += HandleChange;
+        UIEvents.OnPauseMenuActive += HandleChange;
+
+        UIEvents.OnPauseMenuDeactivated += RevertChanges;
+    }
+
+    private void OnDisable()
+    {
+        UIEvents.OnShopDeactivated -= HandleChange;
+
+        UIEvents.OnPreScreenDeactivated -= HandleChange;
+        UIEvents.OnPauseMenuActive -= HandleChange;
+
+        UIEvents.OnPauseMenuDeactivated -= RevertChanges;
+    }
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
         _audioSource = GetComponent<AudioSource>();
+    }
+
+    private void HandleChange()
+    {
+        _disableHover = true;
+    }
+
+    private void RevertChanges()
+    {
+        _disableHover = false;
     }
 
     public void EquipItem()
@@ -33,8 +66,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         InventoryManager.Instance.EquipAllOfItem(currentItem.ItemId);
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (_disableHover) return;
+
         rect.DOScale(hoverScale, scaleDuration).SetEase(Ease.OutQuad);
 
         if (currentItem == null)
