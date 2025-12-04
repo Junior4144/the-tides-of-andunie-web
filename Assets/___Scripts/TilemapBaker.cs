@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.IO;
 
 public class TilemapBaker : MonoBehaviour
@@ -37,7 +39,9 @@ public class TilemapBaker : MonoBehaviour
         }
 
         Debug.Log("[TilemapBaker] Bake completed!");
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
+#endif
     }
 
 
