@@ -13,15 +13,25 @@ public class SceneAudioFader : MonoBehaviour
     public float WaitForSceneToLoad = 1f;
     public float fadeToNormal = 1.5f;
 
-    public void FadeAndLoad() =>
-        StartCoroutine(FadeRoutine());
+    private void Awake()
+    {
+        StartCoroutine(HandleSetup());
+    }
 
-    private IEnumerator FadeRoutine()
+    private IEnumerator HandleSetup()
+    {
+        yield return null;
+
+        normalSnapshot.TransitionTo(fadeToNormal);
+    }
+
+    public void FadeAndLoad() => FadeRoutine();
+
+    private void FadeRoutine()
     {
         Debug.Log("Transition Audio to fade");
         transitionSnapshot.TransitionTo(fadeToTransition);
-        yield return new WaitForSecondsRealtime(WaitForSceneToLoad);
 
-        normalSnapshot.TransitionTo(fadeToNormal);
+        //normalSnapshot.TransitionTo(fadeToNormal);
     }
 }
