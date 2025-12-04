@@ -916,7 +916,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 8
   m_ObstacleAvoidanceType: 0
 --- !u!114 &2804547222482433599
 MonoBehaviour:
@@ -973,7 +973,8 @@ MonoBehaviour:
   soundIntervalTime: 15
   phase2Sound: {fileID: 8300000, guid: b5d6f39cc82120940a0cdf2ced80fb32, type: 3}
   spinningSound: {fileID: 8300000, guid: b68e5ff1622f32842a32c4b1de739296, type: 3}
-  loopSpinningSound: 1
+  useScriptControlledSpinningAudio: 1
+  spinningAudioDelay: 0.1
 --- !u!114 &2998254197292985072
 MonoBehaviour:
   m_ObjectHideFlags: 0
