@@ -3,6 +3,7 @@ using UnityEngine.Playables;
 using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 public class TownhallStoryManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class TownhallStoryManager : MonoBehaviour
     [SerializeField] private CinemachineCamera _cutsceneCamera;
     [SerializeField] private GameObject _playerSpawner;
     [SerializeField] private AudioSource _backgroundChatter;
+
+    public static event Action TownHallStoryStarted;
 
     private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
@@ -60,8 +63,10 @@ public class TownhallStoryManager : MonoBehaviour
         if (GlobalStoryManager.Instance.playTownhallCutscene && _cutscene)
         {
             LSManager.Instance.TriggerGlobalInvasion();
-            GlobalStoryManager.Instance.playLSInvasionCutscene = true;
-            GlobalStoryManager.Instance.showWaypoints = false;
+            GlobalStoryManager.Instance.SetBool("playLSInvasionCutscene", true);
+            GlobalStoryManager.Instance.SetBool("showWaypoints", false);
+            GlobalStoryManager.Instance.SetBool("playTownhallCutscene", false);
+            TownHallStoryStarted?.Invoke();
             StartCutscene();
         }
         else
@@ -72,7 +77,6 @@ public class TownhallStoryManager : MonoBehaviour
     {
         _cutscene.Play();
         SetGameplayElementsActive(false);
-        GlobalStoryManager.Instance.playTownhallCutscene = false;
     }
 
     private void StartGameplay()

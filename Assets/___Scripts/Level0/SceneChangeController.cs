@@ -1,6 +1,3 @@
-using System;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,21 +10,33 @@ public class SceneChangeController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        Utility.PreSceneChangeSetup();
-
         LoadNextStage();
     }
 
     public void SkipStage()
     {
-        Utility.PreSceneChangeSetup();
-
         LoadNextStage();
     }
 
-    public void NextStage() =>
+    public void NextStage()
+    {
         LoadNextStage();
+    }
 
-    void LoadNextStage() =>
+    void LoadNextStage()
+    {
+        if(gameObject.scene.name != "Level0Cutscene")
+        {
+            AudioManager.Instance.FadeAudio();
+        }
+
+        SaveManager.Instance.SavePlayerStats();
+
+        if (PlayerManager.Instance && gameObject.scene.name != "Level0Cutscene")
+            PlayerManager.Instance.HandleDestroy();
+
+
+        SceneSavePositionManager.Instance.SaveLastScene(nextScene);
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
+    }
 }

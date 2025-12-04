@@ -7,8 +7,12 @@ using UnityEngine.SceneManagement;
 public class LiberationUIController : MonoBehaviour
 {
     public GameObject targetObject;
+    public GameObject UnlockedRegionUI;
+    public GameObject UnlockedRegionUISecondPart;
 
     public TextMeshProUGUI VillageNameText;
+
+    public TextMeshProUGUI RegionNameText;
 
     private void OnEnable() => SceneManager.activeSceneChanged += HandleCheck;
 
@@ -31,6 +35,7 @@ public class LiberationUIController : MonoBehaviour
     {
         if (GlobalStoryManager.Instance.HasExitedLiberation)
         {
+            //LIBERATION SECTION
             yield return new WaitForSeconds(.5f);
             targetObject.SetActive(true);
             UIEvents.DefaultPopUPActive?.Invoke();
@@ -38,7 +43,19 @@ public class LiberationUIController : MonoBehaviour
             string id = GlobalStoryManager.Instance.LastLiberatedVillageID;
             VillageNameText.text = LSManager.Instance.GetVillageName(id);
 
-            GlobalStoryManager.Instance.HasExitedLiberation = false;
+            GlobalStoryManager.Instance.SetBool("playLSInvasionCutscene", false);
+
+            // REGION SECTION
+            yield return new WaitForSeconds(.2f);
+
+            Region unlockedRegion = LSRegionLockManager.Instance.CheckForNewUnlockedRegion();
+            if (unlockedRegion != Region.None)
+            {
+                Debug.Log("New region unlocked: " + unlockedRegion);
+                UnlockedRegionUI.SetActive(true);
+                UnlockedRegionUISecondPart.SetActive(true);
+                RegionNameText.text = unlockedRegion.ToString();
+            }
         }
     }
 
@@ -47,7 +64,10 @@ public class LiberationUIController : MonoBehaviour
         if (targetObject != null)
         {
             UIEvents.DefaultPopUpDisabled.Invoke();
+            UnlockedRegionUI.SetActive(false);
+            UnlockedRegionUISecondPart.SetActive(false);
             targetObject.SetActive(false);
+            GlobalStoryManager.Instance.SetBool("HasExitedLiberation", false);
         }
     }
 }

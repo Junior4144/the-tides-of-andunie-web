@@ -96,10 +96,7 @@ public class RegionUIController : MonoBehaviour
     {
         OnClickOutline.RegionClicked += HandleRegionClicked;
 
-        RegionZoomController.ZoomAboveThreshold += ZoomAboveThreshold;
-        RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
-
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUIWithAnimation;
 
@@ -112,10 +109,8 @@ public class RegionUIController : MonoBehaviour
     private void OnDisable()
     {
         OnClickOutline.RegionClicked -= HandleRegionClicked;
-        RegionZoomController.ZoomAboveThreshold -= ZoomAboveThreshold;
-        RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUIWithAnimation;
 
@@ -177,31 +172,6 @@ public class RegionUIController : MonoBehaviour
         isClickOnCooldown = true;
         yield return new WaitForSeconds(clickCooldown);
         isClickOnCooldown = false;
-    }
-
-    private void ZoomBelowThreshold()
-    {
-        var scaler = RegionPanel.GetComponent<ScaleOnEnable>();
-
-        if (scaler != null && scaler.IsAnimating)
-            return;
-
-        if (RegionPanel.activeSelf)
-        {
-            if (scaler != null)
-            {
-                scaler.HideWithScale();
-            }
-            else
-            {
-                RegionPanel.SetActive(false);
-            }
-        }
-    }
-
-    private void ZoomAboveThreshold()
-    {
-        RegionCanvas.SetActive(true);
     }
 
     private void HandlePanelPopulation(Region region)

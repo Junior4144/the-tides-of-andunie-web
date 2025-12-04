@@ -115,6 +115,7 @@ public class LSUIManager : MonoBehaviour
         SaveManager.Instance.SavePlayerStats();
         PlayerManager.Instance.HandleDestroy();
 
+        SceneSavePositionManager.Instance.SaveLastScene(NextScene);
         LoadNextStage();
     }
 

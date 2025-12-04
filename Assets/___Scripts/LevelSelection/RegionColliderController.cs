@@ -9,17 +9,12 @@ public class RegionColliderController : MonoBehaviour
     private LineRenderer[] lineRenderers;
     private MeshRenderer[] meshRenderers;
 
-    private bool canShowUI = false;   // gate controlled by zoom level
-
     private void OnEnable()
     {
         SceneManager.activeSceneChanged += HandleCheck;
 
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
-        RegionZoomController.NoLongerDisableOfRegionUI += HandleNoLongerDisabledUI;
-
-        RegionZoomController.ZoomBelowThreshold += DisableZoomUI;
-        RegionZoomController.ZoomAboveThreshold += EnableZoomUI;
+        RegionEventBus.OnDisableOfRegionUI += HandleDisablingOfRegionUI;
+        RegionEventBus.NoLongerDisableOfRegionUI += HandleNoLongerDisabledUI;
 
         UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUI;
         UIEvents.OnPreScreenDeactivated += HandleNoLongerDisabledUI;
@@ -32,17 +27,17 @@ public class RegionColliderController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive += HandleDisablingOfRegionUI;
         UIEvents.OnPauseMenuDeactivated += HandleNoLongerDisabledUI;
+
+        UIEvents.DefaultPopUPActive += HandleDisablingOfRegionUI;
+        UIEvents.DefaultPopUpDisabled += HandleNoLongerDisabledUI;
     }
 
     private void OnDisable()
     {
         SceneManager.activeSceneChanged -= HandleCheck;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
-        RegionZoomController.NoLongerDisableOfRegionUI -= HandleNoLongerDisabledUI;
-
-        RegionZoomController.ZoomBelowThreshold -= DisableZoomUI;
-        RegionZoomController.ZoomAboveThreshold -= EnableZoomUI;
+        RegionEventBus.OnDisableOfRegionUI -= HandleDisablingOfRegionUI;
+        RegionEventBus.NoLongerDisableOfRegionUI -= HandleNoLongerDisabledUI;
 
         UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUI;
         UIEvents.OnPreScreenDeactivated -= HandleNoLongerDisabledUI;
@@ -55,6 +50,9 @@ public class RegionColliderController : MonoBehaviour
 
         UIEvents.OnPauseMenuActive -= HandleDisablingOfRegionUI;
         UIEvents.OnPauseMenuDeactivated -= HandleNoLongerDisabledUI;
+
+        UIEvents.DefaultPopUPActive -= HandleDisablingOfRegionUI;
+        UIEvents.DefaultPopUpDisabled -= HandleNoLongerDisabledUI;
     }
 
     private void Awake()
@@ -83,19 +81,18 @@ public class RegionColliderController : MonoBehaviour
         if (!LSManager.Instance.HasInvasionStarted)
             gameObject.SetActive(false);
 
-        canShowUI = false;
-        SetAll(false);
+        //SetAll(false);
     }
 
 
     private void DisableZoomUI()
     {
-        canShowUI = false;
+        //canShowUI = false;
     }
 
     private void EnableZoomUI()
     {
-        canShowUI = true;
+        //canShowUI = true;
     }
 
     private void HandleDisablingOfRegionUI()
@@ -112,8 +109,8 @@ public class RegionColliderController : MonoBehaviour
 
     private void HandleNoLongerDisabledUI()
     {
-        if (canShowUI)
-            SetAll(true);
+        SetAll(true);
+        Debug.Log("RegionColliderController ENABLING ALL REGION UI");
     }
 
     private void SetAll(bool state)

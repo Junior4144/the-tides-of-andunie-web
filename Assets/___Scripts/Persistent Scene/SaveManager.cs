@@ -60,7 +60,7 @@ public class SaveManager : MonoBehaviour
     {
         CurrentSave.sceneName = SceneManager.GetActiveScene().name;
         CurrentSave.health = PlayerStatsManager.Instance.MaxHealth;
-        CurrentSave.damageAmount = PlayerManager.Instance.GetDamageAmount();
+        //CurrentSave.damageAmount = PlayerManager.Instance.GetDamageAmount();
         Debug.Log($"[SaveManager] Saves player health at {CurrentSave.health}");
         Debug.Log($"[SaveManager] Saves player health at {CurrentSave.lastLocation}");
     }
@@ -88,4 +88,14 @@ public class SaveManager : MonoBehaviour
         Debug.Log($"[SaveManager] Saved lastLocation in LevelSelector = {id}");
     }
 
+    public void SetPlayerSave(PlayerSaveData data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        CurrentSave = data;
+        Debug.Log("[SaveManager] PlayerSaveData applied.");
+    }
 }

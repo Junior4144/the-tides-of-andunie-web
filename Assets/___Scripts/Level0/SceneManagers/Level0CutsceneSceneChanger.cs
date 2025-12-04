@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Level0CutsceneSceneChanger : MonoBehaviour
@@ -55,9 +55,11 @@ public class Level0CutsceneSceneChanger : MonoBehaviour
         NextStage();
     }
 
-    public void NextStage() =>
-        LoadNextStage();
+    public void NextStage()
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
+        if (obj.TryGetComponent(out SceneChangeController ecs))
+            ecs.NextStage();
 
-    void LoadNextStage() =>
-        SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, nextScene);
+    }
 }

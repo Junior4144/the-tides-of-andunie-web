@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Level1StoryWaypointUIController : MonoBehaviour
+public class Level1StoryWaypointUIController : MonoBehaviour // to leave
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _edgePadding = 50f;
@@ -9,10 +9,13 @@ public class Level1StoryWaypointUIController : MonoBehaviour
     {
         if (GlobalStoryManager.Instance == null) return;
 
-        if (GlobalStoryManager.Instance.HasTalkedToChief == false) return;
-
-        if (GlobalStoryManager.Instance.playLSInvasionCutscene == false) return;
-
+        if (!GlobalStoryManager.Instance.HasTalkedToChief ||
+            !GlobalStoryManager.Instance.playLSInvasionCutscene ||
+            GlobalStoryManager.Instance.playTownhallCutscene)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
         if (_target == null || Camera.main == null)
             return;

@@ -6,8 +6,6 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(CavalryMovementController))]
 public class CavalrySoundController : MonoBehaviour
 {
-    [Header("Component References")]
-    [SerializeField] private CavalryMovementController _movementController;
 
     [Header("Audio Sources")]
     [Tooltip("This source should have 'Loop' checked.")]
@@ -33,22 +31,32 @@ public class CavalrySoundController : MonoBehaviour
     [SerializeField] private float _chargeSoundCooldown = 5.0f;
 
 
-
+    private CavalryMovementController _movementController;
+    private CavalryMeleeController _meleeController;
 
     private float _lastChargeSoundTime;
     private float _pitchOffset;
+
+    void Awake()
+    {
+        _runLoopSource.clip?.LoadAudioData();
+        if (_chargeStartClips != null) foreach (var clip in _chargeStartClips) clip.LoadAudioData();
+        if (_playerHitClips != null) foreach (var clip in _playerHitClips) clip.LoadAudioData();
+        _movementController = gameObject.GetComponent<CavalryMovementController>();
+        _meleeController = gameObject.GetComponentInChildren<CavalryMeleeController>();
+    }
 
 
     private void OnEnable()
     {
         _movementController.OnChargeStart += PlayChargeSound;
-        _movementController.OnPlayerHit += PlayHitSound;
+        _meleeController.OnAttack += PlayHitSound;
     }
 
     private void OnDisable()
     {
         _movementController.OnChargeStart -= PlayChargeSound;
-        _movementController.OnPlayerHit -= PlayHitSound;
+        _meleeController.OnAttack -= PlayHitSound;
     }
 
     private void PlayChargeSound()

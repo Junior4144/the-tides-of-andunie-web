@@ -24,6 +24,7 @@ public class CurrencyManager : MonoBehaviour
     {
         Coins += amount;
         OnCoinsChanged?.Invoke(Coins);
+        SaveGameManager.Instance.SaveGame();
         Debug.Log($"[Curreny Manager] Coins: {Coins}");
     }
 
@@ -32,7 +33,15 @@ public class CurrencyManager : MonoBehaviour
         if (Coins < amount) return false;
         Coins -= amount;
         OnCoinsChanged?.Invoke(Coins);
+        SaveGameManager.Instance.SaveGame();
         return true;
+    }
+
+    public void SetCoins(int amount)
+    {
+        Coins = amount;
+        OnCoinsChanged?.Invoke(Coins);
+        Debug.Log($"[CurrencyManager] Loaded coins = {Coins}");
     }
 }
 

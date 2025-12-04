@@ -3,6 +3,26 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
+[System.Serializable]
+public class InventorySaveData
+{
+    public List<ItemStack> inventory = new();
+    public List<ItemStack> equipped = new();
+}
+
+[System.Serializable]
+public class ItemStack
+{
+    public string itemId;
+    public int quantity;
+
+    public ItemStack(string id, int qty)
+    {
+        itemId = id;
+        quantity = qty;
+    }
+}
+
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
@@ -11,6 +31,7 @@ public class InventoryManager : MonoBehaviour
     private readonly Dictionary<string, InventorySlot> _equippedItems = new();
 
     [SerializeField] private int _maxEquippedSlots = 3;
+    [SerializeField] private ItemDatabase itemDatabase;
 
     public static event Action OnInventoryChanged;
     public static event Action OnEquippedItemsChanged;
@@ -45,6 +66,7 @@ public class InventoryManager : MonoBehaviour
             result = CreateNewSlot(item, quantity);
 
         OnInventoryChanged?.Invoke();
+        SaveGameManager.Instance.SaveGame();
         return result;
     }
 
@@ -59,6 +81,7 @@ public class InventoryManager : MonoBehaviour
         RemoveEmptySlot(itemId, inventorySlot);
         
         OnInventoryChanged?.Invoke();
+        SaveGameManager.Instance.SaveGame();
         return true;
     }
 
@@ -71,6 +94,7 @@ public class InventoryManager : MonoBehaviour
 
         RecalculateStats();
         OnEquippedItemsChanged?.Invoke();
+        SaveGameManager.Instance.SaveGame();
         return true;
     }
 
@@ -98,6 +122,7 @@ public class InventoryManager : MonoBehaviour
 
         RecalculateStats();
         OnEquippedItemsChanged?.Invoke();
+        SaveGameManager.Instance.SaveGame();
         return true;
     }
 
@@ -205,5 +230,55 @@ public class InventoryManager : MonoBehaviour
     {
         _equippedItems.Keys.ToList().ForEach(UnequipAllOfItem);
         _inventory.Clear();
+    }
+
+    public InventorySaveData GetSaveData()
+    {
+        InventorySaveData data = new InventorySaveData();
+
+        // Save inventory
+        foreach (var slot in _inventory.Values)
+        {
+            data.inventory.Add(new ItemStack(slot.Item.ItemId, slot.Quantity));
+        }
+
+        // Save equipped items
+        foreach (var slot in _equippedItems.Values)
+        {
+            data.equipped.Add(new ItemStack(slot.Item.ItemId, slot.Quantity));
+        }
+
+        return data;
+    }
+    public void ApplySaveData(InventorySaveData data)
+    {
+        ClearInventory();
+
+        foreach (var stack in data.inventory)
+        {
+            InventoryItem item = itemDatabase.GetItem(stack.itemId);
+
+            if (item == null)
+            {
+                Debug.LogWarning($"[InventoryManager] Item not found in database: {stack.itemId}");
+                continue;
+            }
+
+            AddItem(item, stack.quantity);
+        }
+
+        foreach (var stack in data.equipped)
+        {
+            InventoryItem item = itemDatabase.GetItem(stack.itemId);
+
+            if (item == null)
+                continue;
+
+            for (int i = 0; i < stack.quantity; i++)
+                EquipItem(item.ItemId);
+        }
+
+        OnInventoryChanged?.Invoke();
+        OnEquippedItemsChanged?.Invoke();
     }
 }

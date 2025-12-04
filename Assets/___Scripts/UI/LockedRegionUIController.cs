@@ -21,9 +21,7 @@ public class LockedRegionUI : MonoBehaviour
     {
         OnClickOutline.RegionClicked += HandleRegionClicked;
 
-        RegionZoomController.ZoomBelowThreshold += ZoomBelowThreshold;
-
-        RegionZoomController.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI += HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm += HandleDisablingOfRegionUIWithAnimation;
 
@@ -35,9 +33,8 @@ public class LockedRegionUI : MonoBehaviour
     private void OnDisable()
     {
         OnClickOutline.RegionClicked -= HandleRegionClicked;
-        RegionZoomController.ZoomBelowThreshold -= ZoomBelowThreshold;
 
-        RegionZoomController.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
+        RegionEventBus.OnDisableOfRegionUI -= HandleDisablingOfRegionUIWithAnimation;
 
         UIEvents.OnPreScreenConfirm -= HandleDisablingOfRegionUIWithAnimation;
 
@@ -53,26 +50,6 @@ public class LockedRegionUI : MonoBehaviour
     private void HandleDisablingOfRegionUIWithAnimation(bool isExit)
     {
         panel.SetActive(false);
-    }
-
-    private void ZoomBelowThreshold()
-    {
-        var scaler = panel.GetComponent<ScaleOnEnable>();
-
-        if (scaler != null && scaler.IsAnimating)
-            return;
-
-        if (panel.activeSelf)
-        {
-            if (scaler != null)
-            {
-                scaler.HideWithScale();
-            }
-            else
-            {
-                panel.SetActive(false);
-            }
-        }
     }
 
     private void HandleRegionClicked(Region region)

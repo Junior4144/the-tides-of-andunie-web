@@ -1,20 +1,29 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 public class PausedMenuController : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject optionPanel;
+    public GameObject instructionsPanel;
     public bool isPaused;
     public AudioClip clickSound;
 
     private bool isOptionPanelActive = false;
+    private bool isInstructionsPanelActive = false;
 
     void Start() =>
         pauseMenu.SetActive(false);
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isOptionPanelActive)
+        if (Input.GetKeyDown(KeyCode.Escape) && 
+            !isOptionPanelActive && 
+            !isInstructionsPanelActive &&
+            GameManager.Instance.CurrentState != GameState.Menu
+        )
         {
             UIEvents.OnRequestPauseToggle?.Invoke();
         }
@@ -63,22 +72,36 @@ public class PausedMenuController : MonoBehaviour
 
     public void HandleOptions()
     {
-        Debug.Log("OPTIONS pressed � opening options menu");
+        Debug.Log("OPTIONS pressed opening options menu");
         isOptionPanelActive = true;
         pauseMenu.SetActive(false);
         optionPanel.SetActive(true);
     }
 
+    public void HandleInstructions()
+    {
+        isInstructionsPanelActive = true;
+        pauseMenu.SetActive(false);
+        instructionsPanel.SetActive(true);
+    }
+
     public void OptionsToPauseMenu()
     {
-        Debug.Log("BACK pressed � returning to pause menu");
         isOptionPanelActive = false;
         optionPanel.SetActive(false);
         pauseMenu.SetActive(true);
     }
+
+    public void InstructionsToPauseMenu()
+    {
+        isInstructionsPanelActive = false;
+        instructionsPanel.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+
     public void HandleSkip()
     {
-        Debug.Log("SKIP pressed � handling all transitions");
+        Debug.Log("SKIP pressed handling all transitions");
 
         GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
         if (obj.TryGetComponent(out SceneChangeController ecs))
@@ -95,4 +118,24 @@ public class PausedMenuController : MonoBehaviour
     public void PlayClickSound() =>
         AudioManager.Instance?.PlayOneShot(clickSound, volumeScale: 0.6f);
 
+    public void HandleMainMenuClick()
+    {
+        GoToMainMenu();
+    }
+
+    public void GoToMainMenu()
+    {
+        AudioManager.Instance.FadeAudio();
+        SaveManager.Instance.SavePlayerStats();
+        PlayerManager.Instance.HandleDestroy();
+        GlobalStoryManager.Instance.SetBool("comingFromPauseMenu", true);
+        LoadNextStage();
+        UIEvents.OnPauseMenuDeactivated?.Invoke();
+    }
+
+    private void LoadNextStage()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneControllerManager.Instance.LoadNextStage(currentScene, "TransitionMainMenu");
+    }
 }

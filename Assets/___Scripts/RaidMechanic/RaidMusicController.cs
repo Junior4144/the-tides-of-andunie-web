@@ -1,20 +1,24 @@
 using UnityEngine;
 using System.Collections;
+using System;
+using Random = UnityEngine.Random;
+using System.Collections.Generic;
+using System.Linq;
 
 public class RaidMusicController : MonoBehaviour
 {
     [SerializeField] private RaidController raidController;
 
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip preWaveClip;
-    [SerializeField] private AudioClip inProgressClip;
-    [SerializeField] private AudioClip postRaidClip;
+    [SerializeField] private AudioClip[] preRaidClips;
+    [SerializeField] private AudioClip[] inProgressClips;
+    [SerializeField] private AudioClip[] postRaidClips;
     
     private void Awake()
     {
-        if (preWaveClip != null) preWaveClip.LoadAudioData();
-        if (inProgressClip != null) inProgressClip.LoadAudioData();
-        if (postRaidClip != null) postRaidClip.LoadAudioData();
+        if (preRaidClips != null) foreach (var clip in preRaidClips) clip.LoadAudioData();
+        if (inProgressClips != null) foreach (var clip in inProgressClips) clip.LoadAudioData();
+        if (postRaidClips != null) foreach (var clip in postRaidClips) clip.LoadAudioData();
     }
 
     private void OnEnable()
@@ -26,7 +30,7 @@ public class RaidMusicController : MonoBehaviour
         }
 
         raidController.OnRaidReset += Stop;
-        RaidController.OnRaidTriggered += PlayPreWave;
+        RaidController.OnRaidTriggered += PlayPreRaid;
         RaidController.OnRaidStart += PlayInProgress;
         raidController.OnRaidComplete += PlayPostRaid;
         raidController.OnRaidFailed += PlayPostRaid;
@@ -38,26 +42,28 @@ public class RaidMusicController : MonoBehaviour
         if (raidController == null) return;
 
         raidController.OnRaidReset -= Stop;
-        RaidController.OnRaidTriggered -= PlayPreWave;
+        RaidController.OnRaidTriggered -= PlayPreRaid;
         RaidController.OnRaidStart -= PlayInProgress;
         raidController.OnRaidComplete -= PlayPostRaid;
         raidController.OnRaidFailed -= PlayPostRaid;
     }
 
-    private void PlayPreWave()
+    private void PlayPreRaid()
     {
-        Play(preWaveClip, loop: false);
+        Play(RandomClip(preRaidClips), loop: false);
     }
 
     private void PlayInProgress()
     {
-        Play(inProgressClip, loop: true);
+        Play(RandomClip(inProgressClips), loop: true);
     }
 
     private void PlayPostRaid()
     {
-        Play(postRaidClip, loop: false);
+        Play(RandomClip(postRaidClips), loop: false);
     }
+
+    private AudioClip RandomClip(AudioClip[] clips) => clips?.Length > 0 ? clips[Random.Range(0, clips.Length)] : null;
 
     private void Stop() => audioSource.Stop();
 

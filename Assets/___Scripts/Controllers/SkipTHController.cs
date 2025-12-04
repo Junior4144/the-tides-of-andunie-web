@@ -16,8 +16,6 @@ public class SkipTHController : MonoBehaviour
 
     public void HandleSkip()
     {
-        Debug.Log("SKIP pressed � handling all transitions");
-
         GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
         if (obj.TryGetComponent(out SceneChangeController ecs))
             ecs.NextStage();
