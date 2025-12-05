@@ -156,4 +156,14 @@ public class LSRegionLockManager : MonoBehaviour
         _andustarLocked = data.andustarLocked;
         _forostarLocked = data.forostarLocked;
     }
+
+    public void ResetRegionLocks()
+    {
+        _orrostarLocked = false;
+        _hyarrostarLocked = true;
+        _hyarnustarLocked = true;
+        _andustarLocked = true;
+        _forostarLocked = true;
+
+    }
 }
