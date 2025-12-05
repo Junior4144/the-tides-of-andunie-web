@@ -118,7 +118,7 @@ public class SaveGameManager : MonoBehaviour
         GlobalStoryManager.Instance.ApplySaveData(data.storyData);
         LSRegionLockManager.Instance.ApplySaveData(data.regionLockData);
 
-        SceneSavePositionManager.Instance.SavePlayerPosition(data.lastScene, data.lastPlayerPos, data.lastPlayerRot);
+        SceneSavePositionManager.Instance.SaveLastScene(data.lastScene);
         Debug.Log("Game Loaded");
     }
 
