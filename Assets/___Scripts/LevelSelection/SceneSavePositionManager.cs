@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneSavePositionManager : MonoBehaviour
 {
@@ -70,5 +71,14 @@ public class SceneSavePositionManager : MonoBehaviour
             var (pos, rot) = kvp.Value;
             Debug.Log($"[SceneSavePositionManager] Scene {kvp.Key} pos:{pos} rot:{rot}");
         }
+    }
+
+    public void ResetSceneSaveData()
+    {
+        _playerPrevPosition.Clear();
+
+        _lastSceneName = SceneManager.GetActiveScene().name;
+        _lastPosition = Vector3.zero;
+        _lastRotation = Quaternion.identity;
     }
 }

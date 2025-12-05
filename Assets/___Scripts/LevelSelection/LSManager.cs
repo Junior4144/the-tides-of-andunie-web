@@ -49,6 +49,9 @@ public class LSManager : MonoBehaviour
     [Header("Village Data")]
     [SerializeField] private List<VillageData> villages = new List<VillageData>();
 
+
+    private Dictionary<string, VillageState> defaultStates;
+
     private bool invasionStarted = false;
 
     [Header("Global Invasion Trigger")]
@@ -65,6 +68,13 @@ public class LSManager : MonoBehaviour
         if (Instance != null && Instance != this) {Destroy(gameObject); return;}
         Instance = this;
         Debug.Log($"LSManager Awake — villages count: {villages.Count}", this);
+        
+        defaultStates = new Dictionary<string, VillageState>();
+
+        foreach (var v in villages)
+        {
+            defaultStates[v.id] = v.state;
+        }
     }
 
     private void OnEnable()
@@ -213,5 +223,25 @@ public class LSManager : MonoBehaviour
                 village.state = savedVillage.state;
             }
         }
+    }
+
+    public void ResetLSManager()
+    {
+        invasionStarted = false;
+
+        foreach (var v in villages)
+        {
+            if (defaultStates.TryGetValue(v.id, out var defaultState))
+            {
+                v.state = defaultState;
+            }
+            else
+            {
+                // fallback just in case a new village was added
+                v.state = VillageState.PreInvasion;
+            }
+        }
+
+        Debug.Log("[LSManager] Reset complete — default states restored");
     }
 }
