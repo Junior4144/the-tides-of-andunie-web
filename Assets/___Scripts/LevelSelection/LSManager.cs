@@ -15,6 +15,7 @@ public class VillageSaveData
 public class LSManagerSave
 {
     public List<VillageSaveData> villages = new();
+    public bool invasionStarted;
 }
 
 public enum VillageState
@@ -210,6 +211,8 @@ public class LSManager : MonoBehaviour
             });
         }
 
+        save.invasionStarted = invasionStarted;
+
         return save;
     }
 
@@ -223,6 +226,7 @@ public class LSManager : MonoBehaviour
                 village.state = savedVillage.state;
             }
         }
+        invasionStarted = data.invasionStarted;
     }
 
     public void ResetLSManager()
