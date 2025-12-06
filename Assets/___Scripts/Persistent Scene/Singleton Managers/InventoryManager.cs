@@ -281,4 +281,16 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
         OnEquippedItemsChanged?.Invoke();
     }
+
+    public void ResetInventory()
+    {
+        _equippedItems.Clear();
+
+        _inventory.Clear();
+
+        PlayerStatsManager.Instance.ResetToDefaults();
+
+        OnInventoryChanged?.Invoke();
+        OnEquippedItemsChanged?.Invoke();
+    }
 }

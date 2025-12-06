@@ -47,7 +47,6 @@ public class EndGamePopUpController : MonoBehaviour
     public void GoToMainMenu()
     {
         AudioManager.Instance.FadeAudio();
-        SaveGameManager.Instance.DeleteSaveFile();
         LoadNextStage();
         UIEvents.OnPauseMenuDeactivated?.Invoke();
     }

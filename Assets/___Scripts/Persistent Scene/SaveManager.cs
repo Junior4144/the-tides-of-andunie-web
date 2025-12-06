@@ -98,4 +98,15 @@ public class SaveManager : MonoBehaviour
         CurrentSave = data;
         Debug.Log("[SaveManager] PlayerSaveData applied.");
     }
+
+    public void ResetToDefaults()
+    {
+        CurrentSave = new PlayerSaveData
+        {
+            sceneName = "Level0Cutscene",
+            health = 100f,
+            damageAmount = 20f,
+            lastLocation = "DefaultSpawn"
+        };
+    }
 }

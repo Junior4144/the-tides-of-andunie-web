@@ -86,5 +86,21 @@ public class GlobalStoryManager : MonoBehaviour
         showWaypoints = data.showWaypoints;
         comingFromPauseMenu = data.comingFromPauseMenu;
     }
+
+    public void ResetStoryState()
+    {
+        LastLiberatedVillageID = "";
+
+        playTownhallCutscene = true;
+
+        enterLevelSelectorFirstTime = false;
+        playLSInvasionCutscene = false;
+        HasTalkedToChief = false;
+        HasExitedLiberation = false;
+
+        showWaypoints = true;
+
+        comingFromPauseMenu = false;
+    }
 }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,8 +20,12 @@ public class MainMenu : MonoBehaviour
 
         Debug.Log("Clicked Play");
         isStarting = true;
-        SaveGameManager.Instance.DeleteSaveFile();
+
+        SaveGameManager.Instance.NewGame();
+        SaveGameManager.Instance.SaveGame();
+
         AudioManager.Instance.FadeAudio();
+
         SceneControllerManager.Instance.LoadNextStage(SceneManager.GetActiveScene().name, "Level0Cutscene");
     }
 

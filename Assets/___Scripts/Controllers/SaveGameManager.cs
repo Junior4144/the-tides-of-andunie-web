@@ -1,7 +1,5 @@
 using System.IO;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SaveGameManager : MonoBehaviour
 {
@@ -13,7 +11,7 @@ public class SaveGameManager : MonoBehaviour
     [HideInInspector]
     public GameSaveData data;
 
-    private string savePath;
+    private string savePath = "";
 
     [System.Serializable]
     public class GameSaveData
@@ -73,6 +71,7 @@ public class SaveGameManager : MonoBehaviour
         Instance = this;
     }
 
+
     public void SaveGame()
     {
         GameSaveData data = new GameSaveData();
@@ -110,7 +109,6 @@ public class SaveGameManager : MonoBehaviour
 
         data = JsonUtility.FromJson<GameSaveData>(json);
 
-
         lsManager.ApplySaveData(data.levelSelectorData);
         SaveManager.Instance.SetPlayerSave(data.playerSaveData);
         CurrencyManager.Instance.SetCoins(data.coins);
@@ -120,8 +118,10 @@ public class SaveGameManager : MonoBehaviour
         GlobalStoryManager.Instance.ApplySaveData(data.storyData);
         LSRegionLockManager.Instance.ApplySaveData(data.regionLockData);
 
+        SceneSavePositionManager.Instance.SaveLastScene(data.lastScene);
         Debug.Log("Game Loaded");
     }
+
 
     public bool CheckSaveFile()
     {
@@ -133,17 +133,14 @@ public class SaveGameManager : MonoBehaviour
         return true;
     }
 
-    public void DeleteSaveFile()
+    public void NewGame()
     {
-        if (File.Exists(savePath))
-        {
-            File.Delete(savePath);
-            data = null;    // Clear loaded data
-            Debug.Log("Save file deleted and data cleared from memory.");
-        }
-        else
-        {
-            Debug.LogWarning("No save file found to delete.");
-        }
+        InventoryManager.Instance.ResetInventory();
+        CurrencyManager.Instance.SetCoins(0);
+        GlobalStoryManager.Instance.ResetStoryState();
+        LSRegionLockManager.Instance.ResetRegionLocks();
+        SaveManager.Instance.ResetToDefaults();
+        SceneSavePositionManager.Instance.ResetSceneSaveData();
+        LSManager.Instance.ResetLSManager();
     }
 }
