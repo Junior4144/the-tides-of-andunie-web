@@ -23,8 +23,7 @@ public class DynamicCrosshair : MonoBehaviour
 
     float currentSpread;
     Image[] crosshairParts;
-
-    // ---------------- UNITY LIFECYCLE ----------------
+    
     void OnEnable()
     {
         SetupCursor(false);
@@ -44,18 +43,23 @@ public class DynamicCrosshair : MonoBehaviour
         ApplyCrosshairTransforms();
         ApplyVisualEffects();
     }
-
-    // ---------------- CORE BEHAVIOR ----------------
+    
     void UpdatePosition()
     {
-        crosshairRoot.position = Input.mousePosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            (RectTransform)crosshairRoot.parent,
+            Input.mousePosition,
+            null,
+            out Vector2 localPos
+        );
+
+        crosshairRoot.anchoredPosition = localPos;
     }
 
     void UpdateSpread()
     {
         float targetSpread = GetTargetSpread();
-
-        // If you're not aiming or charging, instantly reset
+        
         if (!WeaponManager.Instance.IsNormalAiming && !WeaponManager.Instance.IsAbilityAiming)
             currentSpread = targetSpread;
         else
@@ -78,13 +82,12 @@ public class DynamicCrosshair : MonoBehaviour
         Vector3 up = Vector3.up * currentSpread;
         Vector3 rightDir = Vector3.right * currentSpread;
 
-        top.localPosition = up;
-        bottom.localPosition = -up;
-        left.localPosition = -rightDir;
-        right.localPosition = rightDir;
+        top.anchoredPosition = up;
+        bottom.anchoredPosition = -up;
+        left.anchoredPosition = -rightDir;
+        right.anchoredPosition = rightDir;
     }
-
-    // ---------------- VISUAL EFFECTS ----------------
+    
     void ApplyVisualEffects()
     {
         bool isAbility = WeaponManager.Instance.IsAbilityAiming;
@@ -113,8 +116,7 @@ public class DynamicCrosshair : MonoBehaviour
             crosshairRoot.localRotation = Quaternion.Lerp(crosshairRoot.localRotation, Quaternion.identity, Time.deltaTime * 8f);
         }
     }
-
-    // ---------------- HELPERS ----------------
+    
     void SetupCursor(bool visible)
     {
         Cursor.visible = visible;

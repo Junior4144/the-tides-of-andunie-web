@@ -9,10 +9,12 @@ public class BowPowerUIManager : MonoBehaviour
     [SerializeField] public Slider slider;
     [SerializeField] RectTransform sliderRoot;
     [SerializeField] Image sliderImageFill;
+    [SerializeField] private RectTransform _canvasRect;
 
     [Header("Offset Settings")]
-    [SerializeField] Vector2 positionOffset = new Vector2(50f, -50f); // adjust in inspector
-    Color defaultColor;
+    [SerializeField] Vector2 positionOffset = new Vector2(50f, -50f);
+    
+    private Color defaultColor;
 
     private void Awake()
     {
@@ -20,7 +22,7 @@ public class BowPowerUIManager : MonoBehaviour
         ColorUtility.TryParseHtmlString("#FCCE00", out defaultColor);
     }
 
-    void Update()
+    private void Update()
     {
         if (sliderRoot == null) return;
         if(WeaponManager.Instance == null) return;
@@ -34,7 +36,18 @@ public class BowPowerUIManager : MonoBehaviour
             sliderImageFill.color = defaultColor;
         }
 
-            sliderRoot.position = Input.mousePosition + (Vector3)positionOffset;
+        UpdatePosition();
     }
+    
+    void UpdatePosition()
+    {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _canvasRect,
+            Input.mousePosition,
+            null,
+            out Vector2 localPos
+        );
 
+        sliderRoot.anchoredPosition = localPos + positionOffset;
+    }
 }

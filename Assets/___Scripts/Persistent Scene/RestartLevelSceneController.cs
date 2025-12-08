@@ -22,11 +22,6 @@ public class RestartLevelSceneController : MonoBehaviour
         _sceneFade = GetComponentInChildren<SceneFade>();
     }
 
-    private IEnumerator Start()
-    {
-        yield return _sceneFade.FadeInCoroutine(_sceneFadeDuration);
-    }
-
     public void LoadNextStage(string sceneToBeUnloaded)
     {
         StopAllCoroutines();

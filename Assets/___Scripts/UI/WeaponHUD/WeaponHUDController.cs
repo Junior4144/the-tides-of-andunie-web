@@ -9,6 +9,12 @@ public class WeaponHUDController : MonoBehaviour
     [SerializeField] private GameObject AxeCoolDown;
     [SerializeField] private GameObject BowCoolDown;
 
+    private void Awake()
+    {
+        AxeCoolDown.SetActive(false);
+        BowCoolDown.SetActive(false);
+    }
+    
     private void OnEnable()
     {
         WeaponEvents.OnNewWeaponEquipped += HandleEquippedWeapon;
@@ -19,11 +25,6 @@ public class WeaponHUDController : MonoBehaviour
     {
         WeaponEvents.OnNewWeaponEquipped -= HandleEquippedWeapon;
         WeaponEvents.OnWeaponAbilityActivation -= HandleAbilityRequest;
-    }
-    private void Start()
-    {
-        AxeCoolDown.SetActive(false);
-        BowCoolDown.SetActive(false);
     }
 
     private void HandleEquippedWeapon(WeaponType equippedWeapon)

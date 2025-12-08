@@ -85,6 +85,11 @@ public class UIManager : MonoBehaviour
         }
 
         Instance = this;
+
+        _healthBarHUD.SetActive(false);
+        _CombatHUD.SetActive(false);
+        _PerkHUD.SetActive(false);
+        _coinHUD.SetActive(false);
     }
 
     private void OnEnable()
