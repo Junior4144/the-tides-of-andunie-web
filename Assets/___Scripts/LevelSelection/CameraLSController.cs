@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-enum MouseButton { Left = 0, Right = 1, Middle = 2 }
+enum MouseButton { Left = 0, Right = 1 }
 
 public class CameraLSController : MonoBehaviour
 {
@@ -50,7 +50,6 @@ public class CameraLSController : MonoBehaviour
     void Update()
     {
         HandleDrag(MouseButton.Right);
-        HandleDrag(MouseButton.Middle);
         HandleLeftClick();
     }
 
