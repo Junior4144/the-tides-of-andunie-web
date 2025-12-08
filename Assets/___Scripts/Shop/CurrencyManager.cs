@@ -4,8 +4,6 @@ using System;
 public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager Instance { get; private set; }
-
-    [SerializeField]
     public int Coins { get; private set; }
     public event Action<int> OnCoinsChanged;
 

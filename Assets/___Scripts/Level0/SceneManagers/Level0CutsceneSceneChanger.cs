@@ -1,65 +1,91 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Playables;
 
 public class Level0CutsceneSceneChanger : MonoBehaviour
 {
-    public float changeTime;
-    public string sceneName;
+    [Header("Cutscene Settings")]
+    public PlayableDirector director;
+    public float skipToLastSeconds = 5f;
 
-    [Header("Loading Settings")]
-    public float preloadTime = 2f;
-    public CanvasGroup fadeCanvas;
-    public float fadeDuration = 1f;
+    [Header("Scene Change System")]
+    public string stageEndTag = "StageEnd";
 
-    public string nextScene;
-    public bool timerStop = false;
-    private float timer;
+    private bool hasSkipped = false;
+    private bool sceneTriggered = false;
+    private double sceneChangeTime;
+    private double finalTime;
+    private bool lockTimeline = false;
 
     void Start()
     {
-        timer = changeTime;
+        if (director == null)
+            director = GetComponent<PlayableDirector>();
 
-        if (fadeCanvas != null)
-        {
-            fadeCanvas.alpha = 0f;
-            fadeCanvas.gameObject.SetActive(true);
-        }
+        double duration = director.duration;
+
+        sceneChangeTime = duration - .1;
+        finalTime = duration;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && hasSkipped == false)
+            SkipTimeline();
+
+        CheckTimeline();
+    }
+
+    private void CheckTimeline()
+    {
+        if (sceneTriggered || director == null) return;
+
+        if (!hasSkipped && director.time >= sceneChangeTime)
         {
-            SkipCutscene();
+            sceneTriggered = true;
+            ChangeStage();
             return;
         }
 
-        if (timerStop) return;
-
-        timer -= Time.deltaTime;
-
-        if (timer <= 0f)
+        if (hasSkipped && director.time >= finalTime - .1 )
         {
-            timerStop = true;
-            NextStage();
+            sceneTriggered = true;
+            ChangeStage();
         }
     }
 
-    public void SkipCutscene()
+    public void SkipTimeline()
     {
-        if (timerStop) return;
+        if (director == null || hasSkipped) return;
 
-        timerStop = true;
-        StopAllCoroutines();
-        Debug.Log("Cutscene skipped.");
-        NextStage();
+        if (director.time >= finalTime - skipToLastSeconds - 1)
+        {
+            Debug.Log("[TimelineSkipController] Skip disabled — already past skip section.");
+            lockTimeline = true;
+            return;
+        }
+        
+        if(lockTimeline) return;
+
+        hasSkipped = true;
+
+        double duration = director.duration;
+        double targetTime = Mathf.Max(0f, (float)(duration - skipToLastSeconds));
+
+        Debug.Log($"[TimelineSkipController] Skipping to last {skipToLastSeconds} seconds at time {targetTime:0.00}");
+
+        director.time = targetTime;
+        director.Evaluate();
+        director.Play();
     }
 
-    public void NextStage()
+    private void ChangeStage()
     {
-        GameObject obj = GameObject.FindGameObjectWithTag("StageEnd");
-        if (obj.TryGetComponent(out SceneChangeController ecs))
-            ecs.NextStage();
+        GameObject obj = GameObject.FindGameObjectWithTag(stageEndTag);
 
+        if (obj != null && obj.TryGetComponent(out SceneChangeController ecs))
+        {
+            ecs.NextStage();
+        }
     }
 }
