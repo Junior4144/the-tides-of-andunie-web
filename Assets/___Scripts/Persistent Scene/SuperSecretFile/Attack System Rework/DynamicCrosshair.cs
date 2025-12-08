@@ -23,6 +23,8 @@ public class DynamicCrosshair : MonoBehaviour
 
     float currentSpread;
     Image[] crosshairParts;
+    
+    
 
     // ---------------- UNITY LIFECYCLE ----------------
     void OnEnable()
@@ -48,7 +50,14 @@ public class DynamicCrosshair : MonoBehaviour
     // ---------------- CORE BEHAVIOR ----------------
     void UpdatePosition()
     {
-        crosshairRoot.position = Input.mousePosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            (RectTransform)crosshairRoot.parent,
+            Input.mousePosition,
+            null,
+            out Vector2 localPos
+        );
+
+        crosshairRoot.anchoredPosition = localPos;
     }
 
     void UpdateSpread()
@@ -78,10 +87,10 @@ public class DynamicCrosshair : MonoBehaviour
         Vector3 up = Vector3.up * currentSpread;
         Vector3 rightDir = Vector3.right * currentSpread;
 
-        top.localPosition = up;
-        bottom.localPosition = -up;
-        left.localPosition = -rightDir;
-        right.localPosition = rightDir;
+        top.anchoredPosition = up;
+        bottom.anchoredPosition = -up;
+        left.anchoredPosition = -rightDir;
+        right.anchoredPosition = rightDir;
     }
 
     // ---------------- VISUAL EFFECTS ----------------
