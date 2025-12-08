@@ -24,9 +24,6 @@ public class DynamicCrosshair : MonoBehaviour
     float currentSpread;
     Image[] crosshairParts;
     
-    
-
-    // ---------------- UNITY LIFECYCLE ----------------
     void OnEnable()
     {
         SetupCursor(false);
@@ -46,8 +43,7 @@ public class DynamicCrosshair : MonoBehaviour
         ApplyCrosshairTransforms();
         ApplyVisualEffects();
     }
-
-    // ---------------- CORE BEHAVIOR ----------------
+    
     void UpdatePosition()
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -63,8 +59,7 @@ public class DynamicCrosshair : MonoBehaviour
     void UpdateSpread()
     {
         float targetSpread = GetTargetSpread();
-
-        // If you're not aiming or charging, instantly reset
+        
         if (!WeaponManager.Instance.IsNormalAiming && !WeaponManager.Instance.IsAbilityAiming)
             currentSpread = targetSpread;
         else
@@ -92,8 +87,7 @@ public class DynamicCrosshair : MonoBehaviour
         left.anchoredPosition = -rightDir;
         right.anchoredPosition = rightDir;
     }
-
-    // ---------------- VISUAL EFFECTS ----------------
+    
     void ApplyVisualEffects()
     {
         bool isAbility = WeaponManager.Instance.IsAbilityAiming;
@@ -122,8 +116,7 @@ public class DynamicCrosshair : MonoBehaviour
             crosshairRoot.localRotation = Quaternion.Lerp(crosshairRoot.localRotation, Quaternion.identity, Time.deltaTime * 8f);
         }
     }
-
-    // ---------------- HELPERS ----------------
+    
     void SetupCursor(bool visible)
     {
         Cursor.visible = visible;

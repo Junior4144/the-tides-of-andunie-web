@@ -12,7 +12,7 @@ public class BowPowerUIManager : MonoBehaviour
     [SerializeField] private RectTransform _canvasRect;
 
     [Header("Offset Settings")]
-    [SerializeField] Vector2 positionOffset = new Vector2(50f, -50f); // adjust in inspector
+    [SerializeField] Vector2 positionOffset = new Vector2(50f, -50f);
     
     private Color defaultColor;
 
