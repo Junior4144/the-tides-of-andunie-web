@@ -4,8 +4,8 @@ using UnityEditor;
 
 public class RemoveHiddenTiles : EditorWindow
 {
-    public Tilemap topTilemap;     // Trees
-    public Tilemap bottomTilemap;  // Ground
+    public Tilemap topTilemap;
+    public Tilemap bottomTilemap;
 
     [MenuItem("Tools/Tilemap/Remove Hidden Tiles")]
     public static void ShowWindow()

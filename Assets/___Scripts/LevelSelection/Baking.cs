@@ -6,19 +6,16 @@ public class Baking : MonoBehaviour
     public RenderTexture sourceRT;
 
     [Header("Output")]
-    public string fileName = "4kTotalMap.png";  // <- serialized in inspector
+    public string fileName = "4kTotalMap.png";
 
     [ContextMenu("Save RenderTexture")]
     void SaveRT()
     {
-        // Force render
         GetComponent<Camera>().Render();
-
-        // Bind RT
+        
         RenderTexture currentRT = RenderTexture.active;
         RenderTexture.active = sourceRT;
-
-        // Read pixels
+        
         Texture2D tex = new Texture2D(
             sourceRT.width,
             sourceRT.height,
@@ -31,11 +28,9 @@ public class Baking : MonoBehaviour
         tex.Apply();
 
         RenderTexture.active = currentRT;
-
-        // Build full path
+        
         string fullPath = Path.Combine(Application.dataPath, fileName);
-
-        // Encode & save
+        
         byte[] bytes = tex.EncodeToPNG();
         File.WriteAllBytes(fullPath, bytes);
 

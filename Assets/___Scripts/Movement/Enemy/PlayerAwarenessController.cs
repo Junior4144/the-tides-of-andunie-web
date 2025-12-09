@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerAwarenessController : MonoBehaviour
 {   
-    // FIX TO INTERFACE
     [SerializeField] private PirateAttributes _pirateAttributes;
 
     private Transform _playerTransform;

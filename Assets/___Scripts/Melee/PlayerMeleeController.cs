@@ -11,7 +11,7 @@ public class PlayerMeleeController : MonoBehaviour
     [SerializeField] private AudioClip _attackSound;
 
     private bool _isAttacking = false;
-    public float AttackDuration => _animDuration; // exposes animation time
+    public float AttackDuration => _animDuration;
     [SerializeField] private PlayerAnimator _animator;
     private AudioSource _audioSource;
 

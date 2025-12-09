@@ -14,7 +14,6 @@ public class LevelSelectionDebugger : MonoBehaviour
 
     public void CountAllTiles()
     {
-        // Replacement for deprecated FindObjectsOfType
         Tilemap[] maps = FindObjectsByType<Tilemap>(FindObjectsSortMode.None);
 
         int total = 0;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraZoomController : MonoBehaviour
 {
     [Header("Zoom")]
-    [SerializeField] private float zoomFactor = 0.15f;      // Controls normalized zoom strength
+    [SerializeField] private float zoomFactor = 0.15f;
     [SerializeField] private float minZoom = 10f;
     [SerializeField] private float maxZoom = 400f;
 
@@ -34,18 +34,7 @@ public class CameraZoomController : MonoBehaviour
     {
         float current = cam.Lens.OrthographicSize;
         float scroll = Input.mouseScrollDelta.y;
-        
-        if(current == maxZoom)
-        {
-            //OnDisableOfRegionUI?.Invoke();
-        }
-        else
-        {
-            //NoLongerDisableOfRegionUI?.Invoke();
-        }
-        // ------------------------------------------------------------
-        // MANUAL ZOOM (normalized)
-        // ------------------------------------------------------------
+
         if (Mathf.Abs(scroll) > 0.01f)
         {
             float delta = NormalizedZoomDelta(-scroll);
@@ -57,20 +46,13 @@ public class CameraZoomController : MonoBehaviour
             cam.Lens.OrthographicSize = target;
         }
     }
-
-    // ------------------------------------------------------------
-    // NORMALIZED ZOOM DELTA (consistent zoom everywhere)
-    // ------------------------------------------------------------
+    
     float NormalizedZoomDelta(float input)
     {
         float scale = cam.Lens.OrthographicSize;
         return input * (scale * zoomFactor);
     }
-
-
-    // ------------------------------------------------------------
-    // BOUNDARY CHECK
-    // ------------------------------------------------------------
+    
     bool IsTouchingBounds(float ortho)
     {
         if (boundary == null) return false;

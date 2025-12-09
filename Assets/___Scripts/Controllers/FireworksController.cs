@@ -75,12 +75,10 @@ public class FireworksController : MonoBehaviour
                 ];
 
                 Instantiate(chosen, pos, Quaternion.identity);
-
-                // 💥 Small random delay BETWEEN each firework
+                
                 yield return new WaitForSeconds(Random.Range(0.05f, 0.25f));
             }
-
-            // Wait between waves
+            
             yield return new WaitForSeconds(delay);
         }
     }

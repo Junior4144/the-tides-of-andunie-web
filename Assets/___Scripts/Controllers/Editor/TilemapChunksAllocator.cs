@@ -9,7 +9,7 @@ public class TilemapChunksAllocator : MonoBehaviour
     public Tilemap sourceTilemap;
 
     [Header("Import Settings")]
-    public string pngPrefix = "Baked_Tilemap_";  // prefix PNG name
+    public string pngPrefix = "Baked_Tilemap_";
     public int chunks = 5;
     public int tilePixelSize = 16;
 

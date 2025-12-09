@@ -77,7 +77,6 @@ public class LSPlayerMovement : MonoBehaviour
             Vector3 dest = controller.navigationTarget.transform.position;
 
             SpawnNewTarget(dest); 
-            // <-- spawn exactly on pointer destination
             agent.SetDestination(dest);
             return;
         }

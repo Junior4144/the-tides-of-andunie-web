@@ -36,8 +36,7 @@ public class EnemyMovementSquad : MonoBehaviour
     private void Update()
     {
         if (_leaderRigidbody == null) return;
-
-        UpdateTargetDirection();
+        
         RotateTowardsTarget();
         SetVelocity();
         SyncSquadParentToLeader();
@@ -51,12 +50,7 @@ public class EnemyMovementSquad : MonoBehaviour
         _leaderTransform.localPosition = Vector3.zero;
         _leaderTransform.localRotation = Quaternion.identity;
     }
-
-    private void UpdateTargetDirection()
-    {
-        //REMOVED AWARENESS DISTANCE
-    }
-
+    
     private void RotateTowardsTarget()
     {
         if (_targetDirection == Vector2.zero) return;

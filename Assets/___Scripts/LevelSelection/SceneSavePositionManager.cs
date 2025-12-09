@@ -11,8 +11,6 @@ public class SceneSavePositionManager : MonoBehaviour
     private string _lastSceneName;
     public string LastSceneName => _lastSceneName;
 
-    //public bool HasLastSave => _lastSceneName != null;
-
     private Vector3 _lastPosition;
     public Vector3 LastPosition => _lastPosition;
 

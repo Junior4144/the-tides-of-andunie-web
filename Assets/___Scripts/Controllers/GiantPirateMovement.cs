@@ -28,7 +28,6 @@ public class GiantPirateMovement : MonoBehaviour
 
     void Start()
     {
-        // Get player transform + rigidbody once
         player = PlayerManager.Instance.GetPlayerTransform();
         playerRb = player.GetComponent<Rigidbody2D>();
     }
@@ -46,7 +45,6 @@ public class GiantPirateMovement : MonoBehaviour
     {
         if (playerRb == null)
         {
-            // fallback to old behavior
             RotateTowardsMovementDirection();
             return;
         }
@@ -55,12 +53,10 @@ public class GiantPirateMovement : MonoBehaviour
 
         if (pirateSpeed > playerVelocityThreshold)
         {
-            // Player is moving → Rotate using movement direction
             RotateTowardsMovementDirection();
         }
         else
         {
-            // Player is slow/idle → Rotate to look at the player
             RotateTowardsPlayer();
         }
     }

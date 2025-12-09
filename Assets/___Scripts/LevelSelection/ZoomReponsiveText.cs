@@ -16,7 +16,7 @@ public class ZoomResponsiveLabel : MonoBehaviour
     public float maxFontSize = 200f;
 
     [Header("Panel Height Scale")]
-    public RectTransform panelRect; // ✅ Assign your panel here
+    public RectTransform panelRect;
     public float minHeight = 6f;
     public float maxHeight = 30f;
 
@@ -45,21 +45,17 @@ public class ZoomResponsiveLabel : MonoBehaviour
         if (_camera == null) return;
 
         float zoom = _camera.orthographicSize;
-
-        // Zoom ratio (0 = closest, 1 = farthest)
+        
         float t = Mathf.InverseLerp(minZoom, maxZoom, zoom);
-
-        // Scale font
+        
         _text.fontSize = Mathf.Lerp(minFontSize, maxFontSize, t);
-
-        // ✅ Scale Panel Height
+        
         if (panelRect != null)
         {
             float targetHeight = Mathf.Lerp(minHeight, maxHeight, t);
             panelRect.sizeDelta = new Vector2(panelRect.sizeDelta.x, targetHeight);
         }
-
-        // Fade
+        
         float fadeT = Mathf.InverseLerp(fadeEnd, fadeStart, zoom);
         _group.alpha = fadeT;
     }

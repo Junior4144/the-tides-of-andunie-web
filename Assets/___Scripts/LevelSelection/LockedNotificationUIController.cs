@@ -27,12 +27,10 @@ public class LockedNotificationUIController : MonoBehaviour
     {
         if (!canShowPopup)
             return;
-
-        // Spawn popup
+        
         var popup = Instantiate(popupPrefab, worldCanvas);
         popup.transform.position = worldPos;
-
-        // Start cooldown to prevent spam
+        
         StartCoroutine(PopupCooldown());
         _audioSource.PlayOneShot(errorSound);
     }

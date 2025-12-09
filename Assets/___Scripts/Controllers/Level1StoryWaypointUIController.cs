@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Level1StoryWaypointUIController : MonoBehaviour // to leave
+public class Level1StoryWaypointUIController : MonoBehaviour // To Leave Level 1
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _edgePadding = 50f;

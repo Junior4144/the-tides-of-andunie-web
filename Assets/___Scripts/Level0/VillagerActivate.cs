@@ -6,14 +6,12 @@ public class VillagerActivate : MonoBehaviour
 
     private Camera _camera;
 
-
     private void LateUpdate()
     {
         if(CameraManager.Instance)
             _camera = CameraManager.Instance.GetComponent<Camera>();
     }
-
-       
+    
 
     private void Update()
     {

@@ -57,7 +57,6 @@ public class RegionColliderController : MonoBehaviour
 
     private void Awake()
     {
-        // Collect all matching components in children (including inactive)
         polygonOutlines = GetComponentsInChildren<PolygonOutline>(true);
         onClickOutlines = GetComponentsInChildren<OnClickOutline>(true);
         lineRenderers = GetComponentsInChildren<LineRenderer>(true);
@@ -80,19 +79,6 @@ public class RegionColliderController : MonoBehaviour
     {
         if (!LSManager.Instance.HasInvasionStarted)
             gameObject.SetActive(false);
-
-        //SetAll(false);
-    }
-
-
-    private void DisableZoomUI()
-    {
-        //canShowUI = false;
-    }
-
-    private void EnableZoomUI()
-    {
-        //canShowUI = true;
     }
 
     private void HandleDisablingOfRegionUI()

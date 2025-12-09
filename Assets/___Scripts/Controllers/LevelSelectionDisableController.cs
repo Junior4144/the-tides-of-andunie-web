@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class LevelSelectionDisableController : MonoBehaviour
 {
-
     private Collider2D _collider;
 
     private void Awake()

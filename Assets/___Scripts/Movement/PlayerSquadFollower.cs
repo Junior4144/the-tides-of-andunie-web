@@ -86,10 +86,6 @@ public class PlayerSquadFollower : MonoBehaviour
             _playerRb = playerObj.GetComponent<Rigidbody2D>();
             _playerHeroMovement = playerObj.GetComponent<PlayerController>();
             _ImpulseController = playerObj.GetComponent<ImpulseController>();
-            
-            // TODO clean up or keep for later
-            // if (_playerHeroMovement != null)
-            //     _playerHeroMovement.OnPlayerDash += HandlePlayerDash;
         }
 
         _rb = GetComponent<Rigidbody2D>();

@@ -43,14 +43,12 @@ public class ZoomResponsiveIcon : MonoBehaviour
         if (_camera == null) return;
 
         float zoom = _camera.orthographicSize;
-
-        // Scale width & height independently
+        
         float t = Mathf.InverseLerp(minZoom, maxZoom, zoom);
         float width = Mathf.Lerp(minWidth, maxWidth, t);
         float height = Mathf.Lerp(minHeight, maxHeight, t);
         _rect.sizeDelta = new Vector2(width, height);
-
-        // Fade with zoom
+        
         float fadeT = Mathf.InverseLerp(fadeEnd, fadeStart, zoom);
         _group.alpha = fadeT;
     }

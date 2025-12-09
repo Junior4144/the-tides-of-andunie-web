@@ -13,7 +13,6 @@ public class CameraLSController : MonoBehaviour
 
     [Header("Cursor Sprites")]
     public Texture2D defaultCursor;  
-    // same as valid for now
     public Texture2D validClickCursor;
     public Texture2D invalidClickCursor;
 
