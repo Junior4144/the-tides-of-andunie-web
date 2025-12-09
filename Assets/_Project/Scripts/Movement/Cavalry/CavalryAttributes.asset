@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00214df442a6064082448d0bfcaa41d, type: 3}
+  m_Name: CavalryAttributes
+  m_EditorClassIdentifier: Assembly-CSharp::CavalryAttributes
+  TurningSpeed: 180
+  Health: 170
+  DamageAmount: 10
+  ReadyDistance: 0
+  MinSpeedForTurning: 10
+  MaxSpeedForTurning: 50
+  ChargeSpeed: 55
+  PatrollingSpeed: 12
+  ChargeAngle: 50
+  Acceleration: 5
+  ChargeAcceleration: 25
+  Deceleration: 150
+  MinPathStraightnessToAttack: 0.75
+  AttackCoolDown: 3
+  PatrolPointReachedThreshold: 5
+  TargetBehindnessPenalty: 1
+  StuckDetectionTime: 1
