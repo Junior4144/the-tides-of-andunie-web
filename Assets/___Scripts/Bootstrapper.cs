@@ -8,22 +8,16 @@ using UnityEngine.SceneManagement;
 public static class PersistentSceneManager
 {
     public static AsyncOperationHandle<SceneInstance>? PersistentHandle;
-
-    /// <summary>
-    /// Reloads the PersistentGameplay scene using Addressables.
-    /// Unloads existing persistent scene (if any), then loads it again inactive.
-    /// </summary>
+    
     public static IEnumerator ReloadPersistentAsync()
     {
-        // --- UNLOAD ---
         if (PersistentHandle.HasValue)
         {
             var unloadOp = Addressables.UnloadSceneAsync(PersistentHandle.Value);
             yield return unloadOp;
             PersistentHandle = null;
         }
-
-        // --- LOAD INACTIVE ---
+        
         var loadOp = Addressables.LoadSceneAsync(
             "PersistentGameplay",
             LoadSceneMode.Additive,
@@ -31,9 +25,8 @@ public static class PersistentSceneManager
         );
 
         PersistentHandle = loadOp;
-        yield return loadOp; // loaded but not active yet
-
-        // --- ACTIVATE ---
+        yield return loadOp;
+        
         yield return loadOp.Result.ActivateAsync();
     }
 }
@@ -43,12 +36,12 @@ public static class Bootstrapper
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Execute()
     {
-        Debug.Log("Load Persistent Scene Automatically");
+        Debug.Log("Starting Load Persistent Scene Automatically");
 
         if (IsSceneLoaded("PersistentGameplay"))
         {
         #if UNITY_EDITOR
-            Debug.Log("[Bootstrapper] PersistentGameplay scene already loaded — skipping bootstrap load.");
+            Debug.Log("[Bootstrapper] PersistentGameplay scene already loaded skipping bootstrap load.");
         #endif
             return;
         }
