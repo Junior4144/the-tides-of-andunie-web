@@ -1,0 +1,156 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class SellUIController : MonoBehaviour
+{
+    [Header("UI References")]
+    public GameObject InventoryPanel;
+
+    [Header("Prefabs")]
+    public GameObject sellSlotPrefab;
+
+    [Header("Settings")]
+    public int slotCount = 16;
+
+    [Header("Confirmation Popup")]
+    [SerializeField] private GameObject sellConfirmationPanel;
+    [SerializeField] private Button okayButton;
+    [SerializeField] private Button cancelButton;
+
+    private System.Action onConfirmCallback;
+    private ShopUIController shopUIController;
+    public bool IsConfirmationActive { get; private set; }
+
+    private void Awake()
+    {
+        InitializeSlots();
+        SetupConfirmationButtons();
+        shopUIController = GetComponentInParent<ShopUIController>();
+    }
+
+    private void OnEnable()
+    {
+        InventoryManager.OnInventoryChanged += RefreshUI;
+        RefreshUI();
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.OnInventoryChanged -= RefreshUI;
+    }
+    
+    private void InitializeSlots()
+    {
+        // Prevent double-building
+        if (InventoryPanel.transform.childCount > 0) return;
+
+        for (int i = 0; i < slotCount; i++)
+            CreateSellSlot();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(
+            InventoryPanel.GetComponent<RectTransform>()
+        );
+    }
+
+    private void CreateSellSlot()
+    {
+        var slotObj = Instantiate(sellSlotPrefab, InventoryPanel.transform);
+        
+        if (!slotObj.GetComponent<SellSlot>())
+        {
+            Debug.LogError("[SellUI] sellSlotPrefab MUST contain a SellSlot component.");
+        }
+    }
+    
+    private void RefreshUI()
+    {
+        if (!InventoryPanel) return;
+
+        Debug.Log("[SellUI] RefreshUI");
+
+        foreach (Transform slotTransform in InventoryPanel.transform)
+        {
+            for (int i = slotTransform.childCount - 1; i >= 0; i--)
+                Destroy(slotTransform.GetChild(i).gameObject);
+            
+            var sellSlot = slotTransform.GetComponent<SellSlot>();
+            if (sellSlot) sellSlot.currentItem = null;
+        }
+        
+        var items = InventoryManager.Instance.GetAllItems();
+        if (items == null)
+        {
+            Debug.LogError("[SellUI] InventoryManager returned NULL items list.");
+            return;
+        }
+
+        int index = 0;
+        foreach (var entry in items)
+        {
+            if (index >= InventoryPanel.transform.childCount) break;
+
+            var slotTransform = InventoryPanel.transform.GetChild(index);
+            var sellSlot = slotTransform.GetComponent<SellSlot>();
+
+            InventoryItem item = entry.Item;
+            
+            var newIcon = Instantiate(item.InventoryIconPrefab, slotTransform);
+            
+            var rect = newIcon.GetComponent<RectTransform>();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            rect.localScale = Vector3.one;
+            
+            var qtyText = newIcon.GetComponentInChildren<TMP_Text>();
+            if (qtyText != null)
+                qtyText.text = entry.Quantity > 1 ? entry.Quantity.ToString() : "";
+            
+            sellSlot.currentItem = item;
+
+            index++;
+        }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(
+            InventoryPanel.GetComponent<RectTransform>()
+        );
+    }
+    
+    private void SetupConfirmationButtons()
+    {
+        if (okayButton != null)
+            okayButton.onClick.AddListener(OnConfirmOkay);
+
+        if (cancelButton != null)
+            cancelButton.onClick.AddListener(OnConfirmCancel);
+    }
+
+    public void ShowSellConfirmation(System.Action onConfirm)
+    {
+        IsConfirmationActive = true;
+        onConfirmCallback = onConfirm;
+        sellConfirmationPanel.SetActive(true);
+        shopUIController.PlayClickSound();
+    }
+
+    private void OnConfirmOkay()
+    {
+        var callback = onConfirmCallback;
+        HideConfirmation();
+        callback?.Invoke();
+    }
+
+    private void OnConfirmCancel()
+    {
+        HideConfirmation();
+    }
+
+    public void HideConfirmation()
+    {
+        IsConfirmationActive = false;
+        onConfirmCallback = null;
+        sellConfirmationPanel.SetActive(false);
+    }
+}
