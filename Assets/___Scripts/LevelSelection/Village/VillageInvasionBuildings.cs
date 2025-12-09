@@ -59,10 +59,7 @@ public class VillageInvasionBuildings : MonoBehaviour
                 villageId = VillageIDManager.Instance.villageId;
             }
         }
-            
-
-       
-
+        
         if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 

@@ -15,7 +15,7 @@ public enum Region
 public class RegionNode
 {
     public Region region;
-    public List<Region> prerequisites; // all regions required before unlocking this one
+    public List<Region> prerequisites;
 }
 
 public class LSRegionLockManager : MonoBehaviour
@@ -91,14 +91,12 @@ public class LSRegionLockManager : MonoBehaviour
 
     private void CollectPrerequisites(Region region, HashSet<Region> result)
     {
-        // Find the region node
         RegionNode node = progressionData.regionNodes.Find(n => n.region == region);
         if (node == null)
             return;
 
         foreach (var prereq in node.prerequisites)
         {
-            // Add prereq and recursively collect its prereqs
             if (result.Add(prereq))
                 CollectPrerequisites(prereq, result);
         }
@@ -106,7 +104,6 @@ public class LSRegionLockManager : MonoBehaviour
 
     public Region CheckForNewUnlockedRegion()
     {
-        // Compare each region
         Region[] regions = new Region[]
         {
         Region.Orrostar,
@@ -120,16 +117,13 @@ public class LSRegionLockManager : MonoBehaviour
         {
             bool previouslyLocked = _previousLockStates[region];
             bool currentlyLocked = IsRegionLocked(region);
-
-            // Detect unlock
+            
             if (previouslyLocked && !currentlyLocked)
             {
-                // Update saved state
                 _previousLockStates[region] = currentlyLocked;
                 return region;
             }
-
-            // Update saved state if changed, but not unlocked
+            
             _previousLockStates[region] = currentlyLocked;
         }
 

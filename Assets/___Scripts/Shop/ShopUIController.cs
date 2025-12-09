@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class ShopUIController : MonoBehaviour
 {
-    public static ShopUIController Instance { get; private set; } // TODO consider changing this to be named manager
-
-
+    public static ShopUIController Instance { get; private set; }
+    
     [SerializeField] private GameObject mainShopPanel;
     [SerializeField] private GameObject shopItemContainer;
     [SerializeField] private GameObject canvas;

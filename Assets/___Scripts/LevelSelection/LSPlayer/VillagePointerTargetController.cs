@@ -9,7 +9,7 @@ public class VillagePointerTargetController : MonoBehaviour
         if (transform.childCount > 0)
             navigationTarget = transform.GetChild(0).gameObject;
         else
-            Debug.LogWarning($"{name} has no child object — navigationTarget was not set.");
+            Debug.LogWarning($"{name} has no child object navigationTarget was not set.");
     }
 
 }

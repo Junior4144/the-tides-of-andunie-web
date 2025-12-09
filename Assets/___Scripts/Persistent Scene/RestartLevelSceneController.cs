@@ -9,7 +9,6 @@ public class RestartLevelSceneController : MonoBehaviour
     [SerializeField] private float _sceneFadeDuration = 1f;
     private SceneFade _sceneFade;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -57,4 +56,5 @@ public class RestartLevelSceneController : MonoBehaviour
 
         Debug.Log($"Finished loading {additiveScene}");
     }
+    
 }

@@ -11,8 +11,7 @@ public class FollowPlayer : MonoBehaviour
     private IEnumerator Start()
     {
         rect = GetComponent<RectTransform>();
-
-        // Wait until both managers exist
+        
         yield return new WaitUntil(() => CameraManager.Instance != null && PlayerManager.Instance != null);
         yield return new WaitUntil(() => PlayerManager.Instance.transform != null);
 

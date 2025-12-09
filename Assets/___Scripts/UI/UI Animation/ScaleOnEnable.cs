@@ -23,7 +23,7 @@ public class ScaleOnEnable : MonoBehaviour
 
     private void OnDisable()
     {
-        rt.DOKill();     // Prevent DOTween NULL errors
+        rt.DOKill();
         IsAnimating = false;
     }
 

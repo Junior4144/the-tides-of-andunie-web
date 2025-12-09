@@ -26,8 +26,7 @@ public class EnemyBombExplosionDamageController : MonoBehaviour
             playerHealth.TakeDamage(pirateAttribute.DamageAmount, DamageType.Explosion);
 
             _impulseSource.GenerateImpulseWithForce(2f);
-
-            // Disable collider so no more triggers happen
+            
             GetComponent<Collider2D>().enabled = false;
         }
     }

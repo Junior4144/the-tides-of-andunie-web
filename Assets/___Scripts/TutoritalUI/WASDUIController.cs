@@ -25,25 +25,21 @@ public class WASDUIController : MonoBehaviour
 
     void Update()
     {
-        // W Key
         if (Input.GetKey(KeyCode.W))
             wImage.sprite = wPressed;
         else
             wImage.sprite = wNormal;
-
-        // A Key
+        
         if (Input.GetKey(KeyCode.A))
             aImage.sprite = aPressed;
         else
             aImage.sprite = aNormal;
-
-        // S Key
+        
         if (Input.GetKey(KeyCode.S))
             sImage.sprite = sPressed;
         else
             sImage.sprite = sNormal;
-
-        // D Key
+        
         if (Input.GetKey(KeyCode.D))
             dImage.sprite = dPressed;
         else

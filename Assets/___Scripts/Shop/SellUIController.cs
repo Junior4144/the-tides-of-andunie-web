@@ -8,7 +8,7 @@ public class SellUIController : MonoBehaviour
     public GameObject InventoryPanel;
 
     [Header("Prefabs")]
-    public GameObject sellSlotPrefab;   // Slot used strictly for selling
+    public GameObject sellSlotPrefab;
 
     [Header("Settings")]
     public int slotCount = 16;
@@ -39,10 +39,7 @@ public class SellUIController : MonoBehaviour
     {
         InventoryManager.OnInventoryChanged -= RefreshUI;
     }
-
-    // -----------------------------------------------------------
-    // INITIAL SLOT CREATION
-    // -----------------------------------------------------------
+    
     private void InitializeSlots()
     {
         // Prevent double-building
@@ -59,36 +56,28 @@ public class SellUIController : MonoBehaviour
     private void CreateSellSlot()
     {
         var slotObj = Instantiate(sellSlotPrefab, InventoryPanel.transform);
-
-        // Must always have a SellSlot
+        
         if (!slotObj.GetComponent<SellSlot>())
         {
             Debug.LogError("[SellUI] sellSlotPrefab MUST contain a SellSlot component.");
         }
     }
-
-    // -----------------------------------------------------------
-    // UI REFRESH
-    // -----------------------------------------------------------
+    
     private void RefreshUI()
     {
         if (!InventoryPanel) return;
 
         Debug.Log("[SellUI] RefreshUI");
 
-        // ---------- CLEAR ALL SLOTS ----------
         foreach (Transform slotTransform in InventoryPanel.transform)
         {
-            // Clear visuals
             for (int i = slotTransform.childCount - 1; i >= 0; i--)
                 Destroy(slotTransform.GetChild(i).gameObject);
-
-            // Clear data reference
+            
             var sellSlot = slotTransform.GetComponent<SellSlot>();
             if (sellSlot) sellSlot.currentItem = null;
         }
-
-        // ---------- DRAW INVENTORY ITEMS ----------
+        
         var items = InventoryManager.Instance.GetAllItems();
         if (items == null)
         {
@@ -105,23 +94,20 @@ public class SellUIController : MonoBehaviour
             var sellSlot = slotTransform.GetComponent<SellSlot>();
 
             InventoryItem item = entry.Item;
-
-            // Create icon UI
+            
             var newIcon = Instantiate(item.InventoryIconPrefab, slotTransform);
-
-            // Anchor fill
+            
             var rect = newIcon.GetComponent<RectTransform>();
             rect.anchorMin = Vector2.zero;
             rect.anchorMax = Vector2.one;
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
-            rect.localScale = Vector3.one; // <--- ADD THIS
-            // Set quantity text
+            rect.localScale = Vector3.one;
+            
             var qtyText = newIcon.GetComponentInChildren<TMP_Text>();
             if (qtyText != null)
                 qtyText.text = entry.Quantity > 1 ? entry.Quantity.ToString() : "";
-
-            // Assign the actual item
+            
             sellSlot.currentItem = item;
 
             index++;
@@ -131,10 +117,7 @@ public class SellUIController : MonoBehaviour
             InventoryPanel.GetComponent<RectTransform>()
         );
     }
-
-    // -----------------------------------------------------------
-    // CONFIRMATION SYSTEM
-    // -----------------------------------------------------------
+    
     private void SetupConfirmationButtons()
     {
         if (okayButton != null)

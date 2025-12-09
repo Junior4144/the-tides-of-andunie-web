@@ -20,8 +20,7 @@ public class LowHealthController : MonoBehaviour
     {
         if (speechBubble) speechBubble.SetActive(false);
         if (pauseDialogue) pauseDialogue.gameObject.SetActive(false);
-
-        // Wait until player spawns
+        
         yield return new WaitUntil(() => PlayerManager.Instance != null);
         yield return new WaitUntil(() => PlayerManager.Instance.GetComponentInChildren<PlayerHealthController>() != null);
 

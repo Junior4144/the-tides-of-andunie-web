@@ -26,20 +26,18 @@ public class TMPFader : MonoBehaviour
 
     private IEnumerator FadeSequence()
     {
-        yield return Fade(0f, 1f);                      // fade in
+        yield return Fade(0f, 1f);
         yield return new WaitForSeconds(waitDuration);
-        yield return Fade(1f, 0f);                      // fade out
+        yield return Fade(1f, 0f);
     }
 
     private IEnumerator Fade(float startAlpha, float endAlpha)
     {
         float t = 0f;
-
-        // apply to canvas group
+        
         if (canvasGroup != null)
             canvasGroup.alpha = startAlpha;
-
-        // apply to TMP text
+        
         if (tmp != null)
         {
             Color c = tmp.color;
@@ -53,12 +51,10 @@ public class TMPFader : MonoBehaviour
             float blend = t / fadeDuration;
 
             float newAlpha = Mathf.Lerp(startAlpha, endAlpha, blend);
-
-            // Fade the panel / UI group
+            
             if (canvasGroup != null)
                 canvasGroup.alpha = newAlpha;
-
-            // Fade the TMP text
+            
             if (tmp != null)
             {
                 Color c = tmp.color;

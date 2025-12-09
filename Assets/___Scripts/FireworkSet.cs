@@ -7,10 +7,9 @@ public class FireworkSet : ScriptableObject
     public AudioClip fireworkClip;
 
     [Header("Wave Settings")]
-    public int[] spawnCounts;              // how many fireworks in each wave
-    public float[] waveDelays;             // delay after each wave
-
-    // Validation helper (optional)
+    public int[] spawnCounts;
+    public float[] waveDelays;
+    
     private void OnValidate()
     {
         if (spawnCounts.Length != waveDelays.Length)

@@ -106,7 +106,7 @@ public class Triangulator
 [RequireComponent(typeof(LineRenderer), typeof(MeshFilter), typeof(MeshRenderer))]
 public class LineRendererFill : MonoBehaviour
 {
-    public Color fillColor = new Color(1, 1, 1, 0.2f); // transparent white
+    public Color fillColor = new Color(1, 1, 1, 0.2f);
 
     void Start()
     {

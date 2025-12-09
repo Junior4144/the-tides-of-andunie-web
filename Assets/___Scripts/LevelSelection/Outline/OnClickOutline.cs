@@ -90,8 +90,7 @@ public class OnClickOutline : MonoBehaviour
                 Debug.Log("[OnClickOutline] Ignored click (navmesh or collider present)");
             }
         }
-
-        // --- HOVER CHECK ---
+        
         bool isHovering = col.OverlapPoint(mousePos);
 
         if (isHovering && !wasHovering)

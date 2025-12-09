@@ -72,20 +72,13 @@ public class LSBuildingsInvasion : MonoBehaviour
         if (LSManager.Instance.GetVillageState(villageId) != VillageState.Invaded)
             return;
 
-
-
-        // Fire logic
         if (bigBuilding) HandleFireBigBuilding();
         else if (smallBuilding) HandleFireSmallBuilding();
-        else HandleFireUsingData(); // NEW: use ScriptableObject fallback
-
-        // Audio logic
-        if (fireSoundPrefab != null)
-            SpawnFireSound();
-        else
-            SpawnFireSoundUsingData(); // NEW fallback
-
-        // Sprite replace logic
+        else HandleFireUsingData();
+        
+        if (fireSoundPrefab == null)
+            SpawnFireSoundUsingData();
+        
         ReplaceSprite();
     }
     private void HandleFireBigBuilding()
@@ -109,16 +102,10 @@ public class LSBuildingsInvasion : MonoBehaviour
         }
         else
         {
-            // Use data-based fire if no local prefab assigned
             SpawnFireUsingData(scale);
         }
     }
-
-    private void SpawnFireSound()
-    {
-        //if (fireSoundPrefab != null)
-            //Instantiate(fireSoundPrefab, transform.position, Quaternion.identity, transform);
-    }
+    
     private void ReplaceSprite()
     {
         if (spriteRenderer != null && destroyedSprite != null)
@@ -164,8 +151,6 @@ public class LSBuildingsInvasion : MonoBehaviour
     {
         if (_buildingData == null || _buildingData.fireSoundPrefab == null)
             return;
-
-        //Instantiate(_buildingData.fireSoundPrefab, transform.position, Quaternion.identity, transform);
     }
 
     private void ReplaceSpriteUsingData()

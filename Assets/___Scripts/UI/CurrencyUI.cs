@@ -26,11 +26,9 @@ public class CurrencyUI : MonoBehaviour
     private void UpdateUI(int newAmount)
     {
         int digitCount = newAmount.ToString().Length;
-
-        // Each digit = 40 width
+        
         int baseWidthPerDigit = 40;
-
-        // Max 4 digits -> 160 width
+        
         int newWidth = Mathf.Min(digitCount * baseWidthPerDigit, baseWidthPerDigit * 4);
 
         if (coinContainer != null)

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(LineRenderer))]
 public class PolygonOutline : MonoBehaviour
 {
-    public Color fillColor = new Color(1f, 1f, 1f, 0.25f); // transparent white
+    public Color fillColor = new Color(1f, 1f, 1f, 0.25f);
     private RegionInfo regionInfo;
     private void Awake()
     {
@@ -34,12 +34,10 @@ public class PolygonOutline : MonoBehaviour
     {
         PolygonCollider2D poly = GetComponent<PolygonCollider2D>();
         LineRenderer lr = GetComponent<LineRenderer>();
-
-        // Smooth corners visually
+        
         lr.numCornerVertices = 5;
         lr.numCapVertices = 5;
-
-        // Recommended for map outlines
+        
         lr.useWorldSpace = false;
         lr.loop = true;
 
@@ -48,9 +46,7 @@ public class PolygonOutline : MonoBehaviour
         {
             fillColor.a = 0f;
         }
-
-
-        // Generate the outline based on *all* collider paths
+        
         CreateOutline(poly, lr);
         CreateFill(poly);
     }
@@ -58,17 +54,14 @@ public class PolygonOutline : MonoBehaviour
     private void CreateOutline(PolygonCollider2D poly, LineRenderer lr)
     {
         int totalPoints = 0;
-
-        // PolygonCollider2D can have multiple paths (like holes or separated regions)
+        
         for (int i = 0; i < poly.pathCount; i++)
             totalPoints += poly.GetPath(i).Length;
-
-        // +1 only if you want a closed loop for the whole shape (not per-path)
+        
         lr.positionCount = totalPoints;
 
         int index = 0;
-
-        // Copy collider paths into the LineRenderer
+        
         for (int p = 0; p < poly.pathCount; p++)
         {
             Vector2[] path = poly.GetPath(p);
@@ -83,7 +76,6 @@ public class PolygonOutline : MonoBehaviour
 
     private void CreateFill(PolygonCollider2D poly)
     {
-        // Get mesh components
         MeshFilter mf = GetComponent<MeshFilter>();
         MeshRenderer mr = GetComponent<MeshRenderer>();
 
@@ -125,11 +117,7 @@ public class PolygonOutline : MonoBehaviour
         mat.color = fillColor;
         mr.material = mat;
     }
-
-
-
-    // ===== Triangulator Helper Class =====
-
+    
     public class Triangulator
     {
         private List<Vector2> points;

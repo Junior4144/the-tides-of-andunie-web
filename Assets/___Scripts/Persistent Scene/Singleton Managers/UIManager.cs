@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public static class UIEvents
 {
-    //public static Action OnRequestInventoryToggle;
-
     public static Action OnRequestShopToggle;
 
     public static Action<bool> OnRequestLSEnterToggle;
@@ -16,9 +14,6 @@ public static class UIEvents
     public static Action OnRequestTutorialToggle;
 
     public static Action OnRequestPauseToggle;
-
-    //public static Action OnInventoryActive;
-    //public static Action OnInventoryDeactivated;
 
     public static Action OnRewardActive;
     public static Action OnRewardDeactivated;
@@ -62,7 +57,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _PerkHUD;
 
     [Header("UI Groups")]
-    //[SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _pauseUI;
 
     private bool _isPaused;
@@ -76,7 +70,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        // If instance exists and it's not us, destroy duplicate
         if (Instance != null && Instance != this)
         {
             Debug.LogWarning($"{nameof(CameraManager)} duplicate found, destroying.");
@@ -96,8 +89,6 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnGameStateChanged += HandleGameStateChanged;
 
-        //UIEvents.OnRequestInventoryToggle += ToggleInventory;
-
         UIEvents.OnRequestShopToggle += ToggleShop;
 
         UIEvents.OnRequestPauseToggle += TogglePause;
@@ -107,9 +98,6 @@ public class UIManager : MonoBehaviour
         UIEvents.OnRequestLSEnterToggle += ToggleLSEnterUI;
 
         UIEvents.OnRequestTutorialToggle += ToggleTutorialUI;
-
-        //UIEvents.OnInventoryActive += () => _inventoryOpen = true;
-        //UIEvents.OnInventoryDeactivated += () => _inventoryOpen = false;
 
         UIEvents.OnPauseMenuActive += () => _isPaused = true;
         UIEvents.OnPauseMenuDeactivated += () => _isPaused = false;
@@ -262,38 +250,11 @@ public class UIManager : MonoBehaviour
 
     private bool IsLevel0Stage1 => SceneManager.GetActiveScene().name == "Level0Stage1";
 
-    //private void HideAll()
-    //{
-    //    _inventoryUI.SetActive(false);
-    //}
-
-    //private void ToggleInventory()
-    //{
-    //    if (_isPaused)
-    //    {
-    //        _inventoryUI.SetActive(false);
-    //        UIEvents.OnInventoryDeactivated?.Invoke();
-    //        return;
-    //    }
-
-    //    if (_inventoryUI.activeInHierarchy)
-    //    {
-    //        _inventoryUI.SetActive(false);
-    //        UIEvents.OnInventoryDeactivated?.Invoke();
-    //        return;
-    //    }
-
-    //    UIEvents.OnRequestCloseAllUI?.Invoke();
-
-    //    _inventoryUI.SetActive(true);
-    //    UIEvents.OnInventoryActive?.Invoke();
-    //}
-
     private void ToggleShop()
     {
-        if (_isPaused) // already paused
+        if (_isPaused)
         {
-            UIEvents.OnShopDeactivated?.Invoke(); // consider removing
+            UIEvents.OnShopDeactivated?.Invoke();
             return;
         }
 
@@ -353,12 +314,6 @@ public class UIManager : MonoBehaviour
 
     private void CloseAllUI()
     {
-        //if (_inventoryOpen)
-        //{
-        //    _inventoryUI.SetActive(false);
-        //    UIEvents.OnInventoryDeactivated?.Invoke();
-        //}
-
         if (_shopOpen)
         {
             UIEvents.OnShopDeactivated?.Invoke();
@@ -382,14 +337,12 @@ public class UIManager : MonoBehaviour
 
     private void TogglePause()
     {
-        // 1. If ANY UI popup is open, close it and STOP pause from happening
         if (_inventoryOpen || _shopOpen || _preScreenUIOpen || _lSEnterUIOpen || _tutorialOpen)
         {
             UIEvents.OnRequestCloseAllUI?.Invoke();
             return;
         }
-
-        // 2. If no popups are open, proceed with pause logic
+        
         if (_isPaused)
         {
             UIEvents.OnPauseMenuDeactivated?.Invoke();

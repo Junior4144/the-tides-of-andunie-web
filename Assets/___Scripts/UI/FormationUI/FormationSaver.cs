@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class FormationSaver : MonoBehaviour
 {
-    public RectTransform formationPanel;     // assign in Inspector
-    public RectTransform formationCenter;    // assign in Inspector
+    public RectTransform formationPanel;
+    public RectTransform formationCenter;
 
     [System.Serializable]
     public class UnitPosition
@@ -27,11 +27,9 @@ public class FormationSaver : MonoBehaviour
 
         foreach (RectTransform child in formationPanel)
         {
-            // Skip the center object
             if (child == formationCenter)
                 continue;
-
-            // Compute offset relative to the center
+            
             Vector2 offset = child.anchoredPosition - formationCenter.anchoredPosition;
 
             unitPositions.Add(new UnitPosition

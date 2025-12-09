@@ -9,7 +9,7 @@ public class WaypointUIController : MonoBehaviour
     {
         if (GlobalStoryManager.Instance == null) return;
 
-        if (!GlobalStoryManager.Instance.showWaypoints) // if is false
+        if (!GlobalStoryManager.Instance.showWaypoints)
         {
             gameObject.SetActive(false);
             return;

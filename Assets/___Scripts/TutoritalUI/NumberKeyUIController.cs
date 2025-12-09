@@ -15,13 +15,11 @@ public class NumberKeyUIController : MonoBehaviour
 
     void Update()
     {
-        // Key 1
         if (Input.GetKey(KeyCode.Alpha1))
             key1Image.sprite = key1Pressed;
         else
             key1Image.sprite = key1Normal;
-
-        // Key 2
+        
         if (Input.GetKey(KeyCode.Alpha2))
             key2Image.sprite = key2Pressed;
         else

@@ -1,7 +1,7 @@
 [System.Serializable]
 public class ShopListing
 {
-    public InventoryItem inventoryItem; // must assign a prefab with IInventoryItem
+    public InventoryItem inventoryItem;
     public int quantity;
     public int price;
 
